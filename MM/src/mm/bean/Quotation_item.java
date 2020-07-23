@@ -12,6 +12,9 @@ public class Quotation_item implements Serializable {
 	private int quantity;
 	private Date delivery_date;
 	private String currency_unit;
+	private int quotation_status;
+	
+	
 	public int getQuotation_item_num() {
 		return quotation_item_num;
 	}
@@ -53,6 +56,12 @@ public class Quotation_item implements Serializable {
 	}
 	public void setCurrency_unit(String currency_unit) {
 		this.currency_unit = currency_unit;
+	}
+	public int getQuotation_status() {
+		return quotation_status;
+	}
+	public void setQuotation_status(int quotation_status) {
+		this.quotation_status = quotation_status;
 	}
 	
 	
