@@ -2,7 +2,7 @@ package mm.utils;
 import java.sql.*;
 public class DBUtil {
 	public static Connection getConnection() {
-		String driverName="com.mysql.cj.jdbc.Driver";
+		String driverName="com.mysql.jdbc.Driver";
 		String dbURL="jdbc:mysql://49.235.199.30:3306/MM?zeroDateTimeBehavior=convertToNull";
 		String userName="root";
 		String userPwd="2020";
