@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>创建请购单</title>
+<title>创建RFQ</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -19,6 +19,7 @@
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 
+
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 
@@ -27,8 +28,6 @@
 
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
-
-
 
 
 
@@ -71,10 +70,10 @@
 							<li><a href="graph_morris.html">维护供应商</a></li>
 						</ul></li>
 					<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
-							class="nav-label">请购</span><span class="fa arrow"></span></a>
+							class="nav-label">RFQ</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
 							<li><a href="form_basic.html"></a></li>
-							<li><a href="form_advanced.html">创建请购单</a></li>
+							<li><a href="form_advanced.html">创建RFQ</a></li>
 							<li><a href="form_wizard.html">分步引导</a></li>
 							<li><a href="form_file_upload.html">文件上传</a></li>
 							<li><a href="form_editors.html">富文本编辑</a></li>
@@ -181,11 +180,11 @@
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>创建请购单</h2>
+					<h2>创建RFQ</h2>
 					<ol class="breadcrumb">
 						<li><a href="index.html">主页</a></li>
 						<li>请购管理</li>
-						<li class="active"><strong>创建请购单</strong></li>
+						<li class="active"><strong>创建RFQ</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -199,7 +198,7 @@
 						<div class="ibox float-e-margins">
 
 							<div class="ibox-title">
-								<h5>创建请购单</h5>
+								<h5>创建RFQ</h5>
 								<div class="ibox-tools">
 									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -218,62 +217,41 @@
 								<form class="m-t" role="form" action="Login" method="post">
 									<div class="row">
 
-										<div class="form-group">
-											<label class="col-sm-2 control-label">头部注明</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control"> <span
-													class="help-block m-b-none">文本内容可能延伸超出一行</span>
-											</div>
-										</div>
-
 										<div class="col-md-4">
-											<!--请购单具体信息 -->
+											<!--RFQ具体信息 -->
 											<div class="form-group">
-												<label for="title">材料</label> <input id="vname" type="text"
-													class="form-control" placeholder="输入材料编号..." />
+												<label for="title">RFQ种类：AN(参考)</label>
 											</div>
 
 											<div class="form-group">
-												<label for="message">请购数量</label> <input
-													class="form-control" id="vaddress" type="text"
-													class="form-control" placeholder="输入请购数量 ..."></input>
+												<label for="message">供应商名称：EN(参考)</label>
 											</div>
 
 											<div class="form-group">
-												<label for="message">请购运送时间</label> <input
-													class="form-control" id="vaddress" type="text"
-													class="form-control" placeholder="输入请购运送时间 ..."></input>
+												<label for="message">RFQ日期：23.07.2020(参考)</label>
 											</div>
 
 											<div class="form-group">
-												<label for="message">请购运送时间</label> <input
+												<label for="message">RFQ截止日期</label> <input
 													class="form-control" id="vaddress" type="text"
-													class="form-control" placeholder="输入请购运送时间 ..."></input>
+													class="form-control" placeholder="输入RFQ截止日期 ..."></input>
+											</div>
+
+											<div class="form-group">
+												<label for="message">RFQ集</label> <input
+													class="form-control" id="vaddress" type="text"
+													class="form-control" placeholder="输入RFQ集 ..."></input>
+											</div>
+
+											<div class="form-group">
+												<label for="message">供应商编号</label> <input
+													class="form-control" id="vaddress" type="text"
+													class="form-control" placeholder="输入供应商编号..."></input>
 											</div>
 
 										</div>
 
 										<div class="col-md-2"></div>
-
-										<div class="col-md-2">
-											<div class="form-group">
-												<label for="showEasing">请购运送工厂</label> <input
-													id="showEasing" type="text" placeholder="输入请购运送工厂..."
-													class="form-control" />
-											</div>
-
-											<div class="form-group">
-												<label for="hideEasing">请购运送地点</label> <input
-													id="hideEasing" type="text" placeholder="输入请购运送地点..."
-													class="form-control" />
-											</div>
-
-											<div class="form-group">
-												<label for="showMethod">请购组织</label> <input id="showMethod"
-													type="text" placeholder="输入请购组织" class="form-control" />
-											</div>
-
-										</div>
 
 
 
@@ -281,11 +259,108 @@
 
 									<div class="row">
 										<div class="col-lg-12">
-											<button type="button" class="btn btn-primary"
-												id="showsimple">增加</button>
-											<button type="button" class="btn btn-white"
-												id="clearlasttoast">清除</button>
+											<div class="ibox float-e-margins">
+												<div class="ibox-title">
+													<h5>搜索供应商编号</h5>
+													<div class="ibox-tools">
+														<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+														</a> <a class="dropdown-toggle" data-toggle="dropdown"
+															href="#"> <i class="fa fa-wrench"></i>
+														</a>
+														<ul class="dropdown-menu dropdown-user">
+															<li><a href="#">配置选项 1</a></li>
+															<li><a href="#">配置选项 2</a></li>
+														</ul>
+														<a class="close-link"> <i class="fa fa-times"></i>
+														</a>
+													</div>
+												</div>
+
+
+
+
+												<div class="ibox-content">
+													<div class="table-responsive">
+														<table class="table table-striped">
+															<div class="col-md-4">
+																<!--供应商具体信息 -->
+																<div class="form-group">
+																	<label for="title">供应商搜索关键词</label> <input id="vname"
+																		type="text" class="form-control"
+																		placeholder="输入供应商搜索关键词..." />
+																</div>
+
+																<div class="form-group">
+																	<label for="message">供应商名称</label> <input
+																		class="form-control" id="vaddress" type="text"
+																		class="form-control" placeholder="输入供应商名称..."></input>
+																</div>
+
+
+															</div>
+
+
+
+															<div class="col-md-2">
+
+
+																<div class="form-group">
+																	<label for="showMethod">供应商所在城市</label> <input
+																		id="showMethod" type="text" placeholder="输入供应商所在城市"
+																		class="form-control" />
+																</div>
+																<div class="form-group">
+																	<label for="showMethod">供应商所在国家</label> <input
+																		id="showMethod" type="text" placeholder="输入供应商所在国家"
+																		class="form-control" />
+																</div>
+
+
+																<div class="form-group">
+																	<label for="showEasing">供应商所在地区</label> <input
+																		id="showEasing" type="text" placeholder="输入供应商所在地区..."
+																		class="form-control" />
+																</div>
+
+															</div>
+
+
+															<div class="row">
+																<div class="col-lg-12">
+																	<button type="button" class="btn btn-primary"
+																		id="showsimple">搜索</button>
+																</div>
+															</div>
+
+															<thead>
+																<tr>
+																	<th></th>
+																	<th>供应商编号</th>
+																	<th>供应商名称</th>
+																	<th>供应商所在城市</th>
+																</tr>
+															</thead>
+
+
+															<tbody>
+																<tr>
+																	<td><input type="checkbox" checked
+																		class="i-checks" name="input[]"></td>
+																	<td>000100021<small>example</small></td>
+																	<td><span class="pie">CHLO105</span></td>
+
+																	<td>Jul 14, 2013</td>
+
+																</tr>
+
+															</tbody>
+														</table>
+													</div>
+
+												</div>
+											</div>
 										</div>
+
 									</div>
 								</form>
 
@@ -299,7 +374,7 @@
 				<div class="pull-right">
 					<div class="text-right">
 						<button type="submit" class="btn btn-success btn-sm demo2" id="showtoast">保存</button>
-						<button type="button" class="btn btn-white" id="cleartoasts"><a href="Home.jsp">返回</a></button>
+						<button type="button" class="btn btn-white" id="cleartoasts">取消</button>
 					</div>
 				</div>
 				<div>
@@ -336,7 +411,7 @@
 
 			$('#showsimple').click(function() {
 				// Display a success toast, with a title
-				toastr.success('可以添加新的请购材料', '提示!')
+				toastr.success('可以添加新的RFQ材料', '提示!')
 			});
 			$('#showtoast')
 					.click(
@@ -457,78 +532,97 @@
 			$('#cleartoasts').click(function() {
 				toastr.clear();
 			});
-		});
-		 
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+		})
+	</script>
 
-    <!-- Custom and plugin javascript -->
-    <script src="js/inspinia.js"></script>
-    <script src="js/plugins/pace/pace.min.js"></script>
+	<!-- Mainly scripts -->
+	<script src="js/jquery-2.1.1.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-    <!-- Sweet alert -->
-    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+	<!-- Custom and plugin javascript -->
+	<script src="js/inspinia.js"></script>
+	<script src="js/plugins/pace/pace.min.js"></script>
 
-<script>
+	<!-- Sweet alert -->
+	<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 
-    $(document).ready(function () {
+	<script>
+		$(document)
+				.ready(
+						function() {
 
-        $('.demo1').click(function(){
-            swal({
-                title: "Welcome in Alerts",
-                text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-            });
-        });
+							$('.demo1')
+									.click(
+											function() {
+												swal({
+													title : "Welcome in Alerts",
+													text : "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+												});
+											});
 
-        $('.demo2').click(function(){
-            swal({
-                title: "请购单添加成功!",
-                text: "您的请购单号是10034245",
-                type: "success"
-            });
-        });
+							$('.demo2').click(function() {
+								swal({
+									title : "Good job!",
+									text : "You clicked the button!",
+									type : "success"
+								});
+							});
 
-        $('.demo3').click(function () {
-            swal({
-                title: "Are you sure?",
-                text: "You will not be able to recover this imaginary file!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                closeOnConfirm: false
-            }, function () {
-                swal("Deleted!", "Your imaginary file has been deleted.", "success");
-            });
-        });
+							$('.demo3')
+									.click(
+											function() {
+												swal(
+														{
+															title : "Are you sure?",
+															text : "You will not be able to recover this imaginary file!",
+															type : "warning",
+															showCancelButton : true,
+															confirmButtonColor : "#DD6B55",
+															confirmButtonText : "Yes, delete it!",
+															closeOnConfirm : false
+														},
+														function() {
+															swal(
+																	"Deleted!",
+																	"Your imaginary file has been deleted.",
+																	"success");
+														});
+											});
 
-        $('.demo4').click(function () {
-            swal({
-                        title: "Are you sure?",
-                        text: "Your will not be able to recover this imaginary file!",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Yes, delete it!",
-                        cancelButtonText: "No, cancel plx!",
-                        closeOnConfirm: false,
-                        closeOnCancel: false },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            swal("Deleted!", "Your imaginary file has been deleted.", "success");
-                        } else {
-                            swal("Cancelled", "Your imaginary file is safe :)", "error");
-                        }
-                    });
-        });
+							$('.demo4')
+									.click(
+											function() {
+												swal(
+														{
+															title : "Are you sure?",
+															text : "Your will not be able to recover this imaginary file!",
+															type : "warning",
+															showCancelButton : true,
+															confirmButtonColor : "#DD6B55",
+															confirmButtonText : "Yes, delete it!",
+															cancelButtonText : "No, cancel plx!",
+															closeOnConfirm : false,
+															closeOnCancel : false
+														},
+														function(isConfirm) {
+															if (isConfirm) {
+																swal(
+																		"Deleted!",
+																		"Your imaginary file has been deleted.",
+																		"success");
+															} else {
+																swal(
+																		"Cancelled",
+																		"Your imaginary file is safe :)",
+																		"error");
+															}
+														});
+											});
 
-
-    });
-
-</script>
-	
+						});
+	</script>
 </body>
 
 </html>

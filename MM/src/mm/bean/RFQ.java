@@ -14,7 +14,8 @@ public class RFQ implements Serializable {
 	private String rfq_purchasing_group;
 	private String rfq_plant;
 	private int requisition_num;
-	
+	private String vendor_code;
+	private String rfq_coll;
 	public int getRfq_num() {
 		return rfq_num;
 	}
@@ -69,7 +70,21 @@ public class RFQ implements Serializable {
 	public void setRequisition_num(int requisition_num) {
 		this.requisition_num = requisition_num;
 	}
+	public String getVendor_code() {
+		return vendor_code;
+	}
+	public void setVendor_code(String vendor_code) {
+		this.vendor_code = vendor_code;
+	}
+	public String getRfq_coll() {
+		return rfq_coll;
+	}
+	public void setRfq_coll(String rfq_coll) {
+		this.rfq_coll = rfq_coll;
+	}
 	
+	
+
 	
 	
 	
