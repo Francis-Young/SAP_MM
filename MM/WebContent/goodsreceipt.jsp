@@ -17,7 +17,7 @@
 		td_1.innerHTML = itemNo;
 		itemNo += 1;
 		var td_2 = tr.insertCell(1);
-		td_2.innerHTML = '<input id="vname" type="text" class="form-control" placeholder="输入物料简述..." />';
+		td_2.innerHTML = '<input id="vname" type="text" class="form-control" placeholder="输入物料编号..." />';
 		var td_3 = tr.insertCell(2);
 		td_3.innerHTML = '<input id="closeButton" type="checkbox" value="checked" class="input-mini" checked="">';
 		var td_4 = tr.insertCell(3);
@@ -257,16 +257,16 @@
 															<option value="100">运输</option>
 															<option value="100">运输码</option>
 														</select>
-
-
 													</div>
 												</div>
 												<div class="col-sm-4">
 													<div class="form-group">
 														<input type="text" id="order_id" name="order_id" value=""
 															placeholder="采购单号" class="form-control">
+													</div>
+												</div>
 
-														<!--失败的提示弹窗
+												<!--失败的提示弹窗
 														<div class="ibox-content">
 														<div class="text-center">
 															<button type="button" class="btn btn-primary"
@@ -316,8 +316,7 @@
 														</div></div>
 														-->
 
-													</div>
-												</div>
+
 											</div>
 										</div>
 
@@ -354,7 +353,25 @@
 												</div>
 											</div>
 										</div>
-
+										<div class="row">
+											<div class="col-sm-4">
+												<div class="form-group">
+													<select name="DataTables_Table_0_length"
+														aria-controls="DataTables_Table_0"
+														class="form-control form-control-sm">
+														<option value="10">单独放置</option>
+														<option value="25">共同放置</option>
+														<option value="50">单独放置（带备注）</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-sm-4">
+												<div class="form-group">
+													<input type="text" id="order_id" name="order_id" value=""
+														placeholder="运输备注" class="form-control">
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -370,7 +387,7 @@
 										<th>条目</th>
 										<!--  这些是表头，可以自己改列数和内容-->
 
-										<th>物料简述</th>
+										<th>物料编号</th>
 										<th>OK</th>
 										<th>物料数量</th>
 										<th>存储位置</th>
