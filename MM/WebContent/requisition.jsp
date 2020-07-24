@@ -27,10 +27,37 @@
 
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+<script type="text/javascript">
+var itemNo = 10;
+</script>
+<script>
+function addRow(){
+    var oTable = document.getElementById("oTable");
+    var tBodies = oTable.tBodies;
+    var tbody = tBodies[0];
+    var tr = tbody.insertRow(tbody.rows.length);
+    var td_1 = tr.insertCell(0);
+    td_1.innerHTML = itemNo;
+    itemNo+=10;
+    var td_2 = tr.insertCell(1);
+    td_2.innerHTML = '<input id="vname" type="text" class="form-control" placeholder="输入材料编号..." />';
+    var td_3 = tr.insertCell(2);
+    td_3.innerHTML = '<input class="form-control" id="vaddress" type="text" class="form-control" placeholder="输入请购数量 ..."></input>';
+    var td_4 = tr.insertCell(3);
+    td_4.innerHTML =  '<input class="form-control" id="vaddress" type="text" class="form-control" placeholder="输入运送时间 ..."></input>';
+    var td_5 = tr.insertCell(4);
+    td_5.innerHTML = '<input id="showEasing" type="text" placeholder="输入运送工厂..." class="form-control" />';
+    var td_6 = tr.insertCell(5);
+    td_6.innerHTML = '<input id="showEasing" type="text" placeholder="输入仓库地点..." class="form-control" />';
+    var td_7 = tr.insertCell(6);
+    td_7.innerHTML = '<input id="showMethod" type="text" placeholder="输入请购组织" class="form-control" />';
+    }
 
+</script>
 
-
-
+<style type="text/css">
+.table-b table td{border:2px solid #808080}
+</style>
 
 </head>
 
@@ -209,72 +236,48 @@
 										<li><a href="#">配置 1</a></li>
 										<li><a href="#">配置 2</a></li>
 									</ul>
-									<a class="close-link"> <i class="fa fa-times"></i>
+									<a class="close-link" hidden="hidden"> <i class="fa fa-times"></i>
 									</a>
 								</div>
 							</div>
 
 							<div class="ibox-content">
-								<form class="m-t" role="form" action="Login" method="post">
+								<form class="m-t" role="form" action="creat_requisition" method="post">
 									<div class="row">
 
 										<div class="form-group">
 											<label class="col-sm-2 control-label">头部注明</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control"> <span
-													class="help-block m-b-none">文本内容可能延伸超出一行</span>
+												<textarea name="a" style="width:700px;height:100px;" class="form-control"> 
+												</textarea >
+												<span class="help-block m-b-none">文本内容可能延伸超出一行</span>
 											</div>
 										</div>
+										
+<div class="table-b">
+<table id="oTable" style="background-color:#eeeeee;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="100%">
+<thead>
+<tr>
+<th>条目</th>
+<th>材料编号</th>
+<th>请购数量</th>
+<th>请购运送时间</th>
+<th>请购运送工厂</th>
+<th>请购运送地点</th>
+<th>请购组织</th>
 
-										<div class="col-md-4">
-											<!--请购单具体信息 -->
-											<div class="form-group">
-												<label for="title">材料</label> <input id="vname" type="text"
-													class="form-control" placeholder="输入材料编号..." />
-											</div>
+</tr>
+</thead>
+<tbody>
+<tr>
 
-											<div class="form-group">
-												<label for="message">请购数量</label> <input
-													class="form-control" id="vaddress" type="text"
-													class="form-control" placeholder="输入请购数量 ..."></input>
-											</div>
-
-											<div class="form-group">
-												<label for="message">请购运送时间</label> <input
-													class="form-control" id="vaddress" type="text"
-													class="form-control" placeholder="输入请购运送时间 ..."></input>
-											</div>
-
-											<div class="form-group">
-												<label for="message">请购运送时间</label> <input
-													class="form-control" id="vaddress" type="text"
-													class="form-control" placeholder="输入请购运送时间 ..."></input>
-											</div>
-
-										</div>
-
-										<div class="col-md-2"></div>
-
-										<div class="col-md-2">
-											<div class="form-group">
-												<label for="showEasing">请购运送工厂</label> <input
-													id="showEasing" type="text" placeholder="输入请购运送工厂..."
-													class="form-control" />
-											</div>
-
-											<div class="form-group">
-												<label for="hideEasing">请购运送地点</label> <input
-													id="hideEasing" type="text" placeholder="输入请购运送地点..."
-													class="form-control" />
-											</div>
-
-											<div class="form-group">
-												<label for="showMethod">请购组织</label> <input id="showMethod"
-													type="text" placeholder="输入请购组织" class="form-control" />
-											</div>
-
-										</div>
-
+</tr>
+</tbody>
+</table>
+<input type="button" onClick="addRow();" style="font-size:16px;" value="+"/>
+</div>
+<br>
+<script type="text/javascript">addRow();</script>
 
 
 									</div>
