@@ -7,6 +7,7 @@
 <script type="text/javascript">
 	var itemNo = 1;
 </script>
+
 <script>
 	function addRow() {
 		var oTable = document.getElementById("oTable");
@@ -227,20 +228,20 @@
 									<div class="ibox-content m-b-sm border-bottom">
 										<div class="row">
 											<div class="input-group m-b">
-												<!-- 一个下拉框 -->
 
+												<!-- 两个暂无选择意义的下拉框 -->
 												<div class="col-sm-4">
 													<div class="form-group">
 
 														<select name="DataTables_Table_0_length"
 															aria-controls="DataTables_Table_0"
 															class="form-control form-control-sm">
-															<option value="10">取消</option>
-															<option value="25">展示</option>
-															<option value="50">进货单</option>
-															<option value="100">存储位置</option>
-															<option value="100">重新运输</option>
-															<option value="100">接连运输</option>
+															<option value="1">收货单</option>
+															<option value="2">取消</option>
+															<option value="3">展示</option>
+															<option value="4">存储位置</option>
+															<option value="5">重新运输</option>
+															<option value="6">接连运输</option>
 														</select>
 
 													</div>
@@ -250,19 +251,21 @@
 														<select name="DataTables_Table_0_length"
 															aria-controls="DataTables_Table_0"
 															class="form-control form-control-sm">
-															<option value="10">进货</option>
-															<option value="25">物料文件</option>
-															<option value="50">出货</option>
-															<option value="100">采购订单</option>
-															<option value="100">运输</option>
-															<option value="100">运输码</option>
+															<option value="1">采购订单</option>
+															<option value="2">进货</option>
+															<option value="3">物料文件</option>
+															<option value="4">出货</option>
+															<option value="5">运输</option>
+															<option value="6">运输码</option>
 														</select>
 													</div>
 												</div>
+
+												<!-- 还要做出搜索效果 -->
 												<div class="col-sm-4">
 													<div class="form-group">
-														<input type="text" id="order_id" name="order_id" value=""
-															placeholder="采购单号" class="form-control">
+														<input type="text" id="order_num" name="order_num"
+															value="" placeholder="采购单号" class="form-control">
 													</div>
 												</div>
 
@@ -319,40 +322,30 @@
 
 											</div>
 										</div>
-
+										<!-- 两个日期 需返回  -->
 										<div class="row">
 											<div class="col-sm-4">
-												<div class="form-group" id="data_2">
+												<div class="form-group" id="posting_date">
 													<label class="font-normal">文件日期</label>
 													<div class="input-group date">
 														<span class="input-group-addon"><i
 															class="fa fa-calendar"></i></span><input type="text"
-															class="form-control" value="08/09/2014">
+															class="form-control" value="08/01/2020">
 													</div>
 												</div>
 											</div>
 											<div class="col-sm-4">
-												<div class="form-group">
-													<label class="col-form-label" for="date_modified">文件打印日期</label>
+												<div class="form-group" id="document_date">
+													<label class="font-normal">文件打印日期</label>
 													<div class="input-group date">
 														<span class="input-group-addon"><i
-															class="fa fa-calendar"></i></span><input id="date_modified"
-															type="text" class="form-control" value="08/01/2020">
-													</div>
-												</div>
-											</div>
-
-											<div class="col-sm-4">
-												<div class="form-group">
-													<label class="col-form-label" for="date_modified">运输日期</label>
-													<div class="input-group date">
-														<span class="input-group-addon"><i
-															class="fa fa-calendar"></i></span><input id="date_modified"
-															type="text" class="form-control" value="08/01/2020">
+															class="fa fa-calendar"></i></span><input type="text"
+															class="form-control" value="08/01/2020">
 													</div>
 												</div>
 											</div>
 										</div>
+
 										<div class="row">
 											<div class="col-sm-4">
 												<div class="form-group">
@@ -367,8 +360,8 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" id="order_id" name="order_id" value=""
-														placeholder="运输备注" class="form-control">
+													<input type="text" id="order_id" name="delivery_note"
+														value="" placeholder="运输备注" class="form-control">
 												</div>
 											</div>
 										</div>
@@ -377,214 +370,98 @@
 							</div>
 						</div>
 					</div>
-					<div class="table-b">
-						<div class="wrapper wrapper-content animated fadeIn">
-							<table id="oTable" style="background-color: #eeeeee;"
-								bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2"
-								width="100%">
-								<thead>
-									<tr>
-										<th>条目</th>
-										<!--  这些是表头，可以自己改列数和内容-->
-
-										<th>物料编号</th>
-										<th>OK</th>
-										<th>物料数量</th>
-										<th>存储位置</th>
-
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-									</tr>
-								</tbody>
-							</table>
-							<input type="button" onClick="addRow();" style="font-size: 16px;"
-								value="+" />
-						</div>
-					</div>
-					<script type="text/javascript">
-						addRow();
-					</script>
 					<div class="wrapper wrapper-content animated fadeIn">
 						<div class="row">
 							<div class="col-lg-12">
 								<div class="ibox float-e-margins">
-									<div class="ibox ">
-										<div class="ibox-title">
-											<h5>运输数据</h5>
-											<div class="ibox-tools">
-												<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
-												</a> <a class="close-link"> <i class="fa fa-times"></i>
-												</a>
-											</div>
-										</div>
-
-
-										<div class="ibox-content m-b-sm border-bottom">
-
-											<table class="table">
-
-												<thead>
-													<tr>
-														<th>行数</th>
-														<th>物料简述</th>
-														<th>OK</th>
-														<th>物料数量</th>
-														<th>存储位置</th>
-
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>
-															<div class="switch">
-																<div class="onoffswitch">
-																	<input type="checkbox" checked=""
-																		class="onoffswitch-checkbox" id="example1"> <label
-																		class="onoffswitch-label" for="example1"> <span
-																		class="onoffswitch-inner"></span> <span
-																		class="onoffswitch-switch"></span>
-																	</label>
-																</div>
-															</div> <!--  
-															<div class="checkbox">
-																<label class="checkbox" for="closeButton"> <input
-																	id="closeButton" type="checkbox" value="checked"
-																	class="input-mini" checked="">1
-																</label>
-															</div>
-															-->
-														</td>
-														<td>
-															<div class="form-group">
-																<input type="text" id="order_id" name="order_id"
-																	value="" placeholder="物料简述" class="form-control">
-															</div>
-														</td>
-														<td>
-															<div class="checkbox">
-																<label class="checkbox" for="closeButton"> <input
-																	id="closeButton" type="checkbox" value="checked"
-																	class="input-mini" checked="">
-																</label>
-															</div>
-														</td>
-														<td>
-															<div class="form-group">
-																<input type="text" id="order_id" name="order_id"
-																	value="" placeholder="物料数量" class="form-control">
-															</div>
-														</td>
-														<td>
-															<div class="form-group">
-																<input type="text" id="order_id" name="order_id"
-																	value="" placeholder="存储位置" class="form-control">
-															</div>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<div class="checkbox">
-																<label class="checkbox" for="closeButton"> <input
-																	id="closeButton" type="checkbox" value="checked"
-																	class="input-mini" checked="">2
-																</label>
-															</div>
-														</td>
-														<td>
-															<div class="form-group">
-																<input type="text" id="order_id" name="order_id"
-																	value="" placeholder="物料简述" class="form-control">
-															</div>
-														</td>
-														<td>
-															<div class="checkbox">
-																<label class="checkbox" for="closeButton"> <input
-																	id="closeButton" type="checkbox" value="checked"
-																	class="input-mini" checked="">
-																</label>
-															</div>
-														</td>
-														<td>
-															<div class="form-group">
-																<input type="text" id="order_id" name="order_id"
-																	value="" placeholder="物料数量" class="form-control">
-															</div>
-														</td>
-														<td>
-															<div class="form-group">
-																<input type="text" id="order_id" name="order_id"
-																	value="" placeholder="存储位置" class="form-control">
-															</div>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<div class="checkbox">
-																<label class="checkbox" for="closeButton"> <input
-																	id="closeButton" type="checkbox" value="checked"
-																	class="input-mini" checked="">3
-																</label>
-															</div>
-														</td>
-														<td>
-															<div class="form-group">
-																<input type="text" id="order_id" name="order_id"
-																	value="" placeholder="物料简述" class="form-control">
-															</div>
-														</td>
-														<td>
-															<div class="checkbox">
-																<label class="checkbox" for="closeButton"> <input
-																	id="closeButton" type="checkbox" value="checked"
-																	class="input-mini" checked="">
-																</label>
-															</div>
-														</td>
-														<td>
-															<div class="form-group">
-																<input type="text" id="order_id" name="order_id"
-																	value="" placeholder="物料数量" class="form-control">
-															</div>
-														</td>
-														<td>
-															<div class="form-group">
-																<input type="text" id="order_id" name="order_id"
-																	value="" placeholder="存储位置" class="form-control">
-															</div>
-														</td>
-													</tr>
-
-												</tbody>
-											</table>
-
-
+									<div class="ibox-title">
+										<h5>运输数据</h5>
+										<div class="ibox-tools">
+											<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+											</a> <a class="close-link"> <i class="fa fa-times"></i>
+											</a>
 										</div>
 									</div>
+									<div class="ibox-content m-b-sm border-bottom">
+										<!-- 前后的灰色线 -->
+
+										<div class="table-b">
+											<div class="wrapper wrapper-content animated fadeIn">
+												<div align="center">
+													<table id="oTable" style="background-color: #f3f3f4;"
+														bordercolor="#e7eaec" border="2" cellpadding="50"
+														cellpadding="50" width="100%" height="200%" align="center">
+
+														<thead>
+
+															<tr>
+
+																<th>
+																	<div align="center">条目</div>
+																</th>
+
+																<!--  这些是表头，可以自己改列数和内容-->
+																<th>
+																	<div align="center">物料编号</div>
+																</th>
+																<th>
+																	<div align="center">OK</div>
+																</th>
+																<th>
+																	<div align="center">物料数量</div>
+																</th>
+																<th>
+																	<div align="center">存储位置</div>
+																</th>
+
+															</tr>
+
+														</thead>
+
+														<tbody>
+
+															<tr>
+
+															</tr>
+
+														</tbody>
+
+													</table>
+												</div>
+												<input type="button" onClick="addRow();"
+													class="btn btn-white" value="+" />
+												<!-- 原先的设计<input type="button" onClick="addRow();"
+													style="font-size: 16px;" value="+" /> -->
+											</div>
+										</div>
+									</div>
+
+
+
 								</div>
 							</div>
 						</div>
+
+						
 					</div>
-				</div>
-				<div class="footer">
-					<div class="row">
-						<div class="col-lg-12">
+					<div class="footer">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="pull-right">
+									<button type="submit" class="btn btn-primary" id="showtoast">打印</button>
+									<button type="button" class="btn btn-white" id="cleartoasts">取消</button>
+								</div>
+							</div>
+						</div>
+						<div class="row m-t-lg">
 							<div class="pull-right">
-								<button type="submit" class="btn btn-primary" id="showtoast">打印</button>
-								<button type="button" class="btn btn-white" id="cleartoasts">取消</button>
+								10GB of <strong>250GB</strong> Free.
+							</div>
+							<div>
+								<strong>Copyright</strong> 版权所有 &copy; 2019-2020
 							</div>
 						</div>
 					</div>
-					<div class="row m-t-lg">
-						<div class="pull-right">
-							10GB of <strong>250GB</strong> Free.
-						</div>
-						<div>
-							<strong>Copyright</strong> 版权所有 &copy; 2019-2020
-						</div>
-					</div>
-				</div>
 			</form>
 		</div>
 
