@@ -7,7 +7,7 @@
 <script type="text/javascript">
 	var itemNo = 1;
 </script>
-
+<%int row_num = 1;%>
 <script>
 	function addRow() {
 		var oTable = document.getElementById("oTable");
@@ -18,24 +18,24 @@
 		td_1.innerHTML = itemNo;
 		itemNo += 1;
 		var td_2 = tr.insertCell(1);
-		td_2.innerHTML = '<input id="vname" type="text" class="form-control" placeholder="输入物料编号..." />';
+		td_2.innerHTML = '<input id="m_text" name="td_2" class="form-control" placeholder="输入物料编号..." />';
 		var td_3 = tr.insertCell(2);
-		td_3.innerHTML = '<input id="closeButton" type="checkbox" value="checked" class="input-mini" checked="">';
+		td_3.innerHTML = '<input id="closeButton" name="td_3" type="checkbox" value="checked" class="input-mini" checked="">';
 		var td_4 = tr.insertCell(3);
-		td_4.innerHTML = '<input class="form-control" id="vaddress" type="text" class="form-control" placeholder="输入物料数量 ..."></input>';
+		td_4.innerHTML = '<input class="form-control" id="vaddress" name="td_4" type="text" class="form-control" placeholder="输入物料数量 ..."></input>';
 		var td_5 = tr.insertCell(4);
-		td_5.innerHTML = '<input id="showEasing" type="text" placeholder="输入存储位置..." class="form-control" />';
+		td_5.innerHTML = '<input id="showEasing" name="td_5" type="text" placeholder="输入存储位置..." class="form-control" />';
 
 	}
 </script>
 <style type="text/css">
 .table-b table td {
-	border: 2px solid #808080
+	border: 2px solid #e7eaec
 }
 </style>
 <style type="text/css">
 .table-b table td {
-	border: 2px solid #808080
+	border: 2px solid #e7eaec
 }
 </style>
 <meta charset="utf-8">
@@ -268,78 +268,28 @@
 															value="" placeholder="采购单号" class="form-control">
 													</div>
 												</div>
-
-												<!--失败的提示弹窗
-														<div class="ibox-content">
-														<div class="text-center">
-															<button type="button" class="btn btn-primary"
-																data-toggle="modal" data-target="#myModal">
-																Launch demo modal</button>
-														</div>
-														<div class="modal inmodal show" id="myModal" tabindex="-1"
-															role="dialog"
-															style="display: block; padding-right: 16px;">
-															<div class="modal-dialog">
-																<div class="modal-content animated bounceInRight">
-																	<div class="modal-header">
-																		<button type="button" class="close"
-																			data-dismiss="modal">
-																			<span aria-hidden="true">×</span><span
-																				class="sr-only">Close</span>
-																		</button>
-																		<i class="fa fa-laptop modal-icon"></i>
-																		<h4 class="modal-title">Modal title</h4>
-																		<small class="font-bold">Lorem Ipsum is simply
-																			dummy text of the printing and typesetting industry.</small>
-																	</div>
-																	<div class="modal-body">
-																		<p>
-																			<strong>Lorem Ipsum is simply dummy</strong> text of
-																			the printing and typesetting industry. Lorem Ipsum
-																			has been the industry's standard dummy text ever
-																			since the 1500s, when an unknown printer took a
-																			galley of type and scrambled it to make a type
-																			specimen book. It has survived not only five
-																			centuries, but also the leap into electronic
-																			typesetting, remaining essentially unchanged.
-																		</p>
-																		<div class="form-group">
-																			<label>Sample Input</label> <input type="email"
-																				placeholder="Enter your email" class="form-control">
-																		</div>
-																	</div>
-																	<div class="modal-footer">
-																		<button type="button" class="btn btn-white"
-																			data-dismiss="modal">Close</button>
-																		<button type="button" class="btn btn-primary">Save
-																			changes</button>
-																	</div>
-																</div>
-															</div>
-														</div></div>
-														-->
-
-
 											</div>
 										</div>
 										<!-- 两个日期 需返回  -->
 										<div class="row">
 											<div class="col-sm-4">
-												<div class="form-group" id="posting_date">
+												<div class="form-group">
 													<label class="font-normal">文件日期</label>
 													<div class="input-group date">
 														<span class="input-group-addon"><i
-															class="fa fa-calendar"></i></span><input type="text"
+															class="fa fa-calendar"></i></span> <input type="text"
+															id="posting_date" name="posting_date"
 															class="form-control" value="08/01/2020">
 													</div>
 												</div>
 											</div>
 											<div class="col-sm-4">
-												<div class="form-group" id="document_date">
+												<div class="form-group">
 													<label class="font-normal">文件打印日期</label>
 													<div class="input-group date">
 														<span class="input-group-addon"><i
-															class="fa fa-calendar"></i></span><input type="text"
+															class="fa fa-calendar"></i></span> <input type="text"
+															id="document_date" name="document_date"
 															class="form-control" value="08/01/2020">
 													</div>
 												</div>
@@ -352,15 +302,15 @@
 													<select name="DataTables_Table_0_length"
 														aria-controls="DataTables_Table_0"
 														class="form-control form-control-sm">
-														<option value="10">单独放置</option>
-														<option value="25">共同放置</option>
-														<option value="50">单独放置（带备注）</option>
+														<option value="1">单独放置</option>
+														<option value="2">共同放置</option>
+														<option value="3">单独放置（带备注）</option>
 													</select>
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group">
-													<input type="text" id="order_id" name="delivery_note"
+													<input type="text" id="delivery_note" name="delivery_note"
 														value="" placeholder="运输备注" class="form-control">
 												</div>
 											</div>
@@ -391,15 +341,11 @@
 													<table id="oTable" style="background-color: #f3f3f4;"
 														bordercolor="#e7eaec" border="2" cellpadding="50"
 														cellpadding="50" width="100%" height="200%" align="center">
-
 														<thead>
-
 															<tr>
-
 																<th>
 																	<div align="center">条目</div>
 																</th>
-
 																<!--  这些是表头，可以自己改列数和内容-->
 																<th>
 																	<div align="center">物料编号</div>
@@ -413,23 +359,17 @@
 																<th>
 																	<div align="center">存储位置</div>
 																</th>
-
 															</tr>
-
 														</thead>
-
 														<tbody>
-
 															<tr>
-
 															</tr>
-
 														</tbody>
-
 													</table>
 												</div>
-												<input type="button" onClick="addRow();"
+												<input type="button" onClick="addRow();" <%row_num++;%>
 													class="btn btn-white" value="+" />
+
 												<!-- 原先的设计<input type="button" onClick="addRow();"
 													style="font-size: 16px;" value="+" /> -->
 											</div>
@@ -442,7 +382,7 @@
 							</div>
 						</div>
 
-						
+
 					</div>
 					<div class="footer">
 						<div class="row">
