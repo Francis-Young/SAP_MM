@@ -1,14 +1,15 @@
 package mm.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Date;
 
 public class Quotation_item implements Serializable {
 
 	private int quotation_item_num;
 	private int quotation_num;
-	private String material;
-	private double price;
+	private String material_num;
+	private BigDecimal price;
 	private int quantity;
 	private Date delivery_date;
 	private String currency_unit;
@@ -27,16 +28,11 @@ public class Quotation_item implements Serializable {
 	public void setQuotation_num(int quotation_num) {
 		this.quotation_num = quotation_num;
 	}
-	public String getMaterial() {
-		return material;
-	}
-	public void setMaterial(String material) {
-		this.material = material;
-	}
-	public double getPrice() {
+
+	public BigDecimal getPrice() {
 		return price;
 	}
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 	public int getQuantity() {
@@ -62,6 +58,12 @@ public class Quotation_item implements Serializable {
 	}
 	public void setQuotation_status(int quotation_status) {
 		this.quotation_status = quotation_status;
+	}
+	public String getMaterial_num() {
+		return material_num;
+	}
+	public void setMaterial_num(String material_num) {
+		this.material_num = material_num;
 	}
 	
 	
