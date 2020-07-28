@@ -1,13 +1,14 @@
 package mm.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Date;
 
 public class Order_item implements Serializable {
-
+	private int order_item_num;
 	private int order_num;
 	private int purchase_requisition_num;
-	private double price;
+	private BigDecimal price;
 	private int quantity;
 	private Date delivery_date;
 	private Date stat_delivery_date;
@@ -26,10 +27,10 @@ public class Order_item implements Serializable {
 	public void setPurchase_requisition_num(int purchase_requisition_num) {
 		this.purchase_requisition_num = purchase_requisition_num;
 	}
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
-	public void setPrice(double price) {
+	public void setPrice( BigDecimal price) {
 		this.price = price;
 	}
 	public int getQuantity() {
@@ -61,6 +62,12 @@ public class Order_item implements Serializable {
 	}
 	public void setMaterial_num(String material_num) {
 		this.material_num = material_num;
+	}
+	public int getOrder_item_num() {
+		return order_item_num;
+	}
+	public void setOrder_item_num(int order_item_num) {
+		this.order_item_num = order_item_num;
 	}
 	
 	

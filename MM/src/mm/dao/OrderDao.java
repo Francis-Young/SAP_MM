@@ -34,7 +34,7 @@ public class OrderDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 		
-			String sql=""+"select * from Order where Order_num = ?";
+			String sql=""+"select * from Order where order_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
 			//÷¥––≤È—Ø”Ôæ‰
