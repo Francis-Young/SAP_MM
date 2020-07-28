@@ -9,4 +9,24 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>payprinttable</display-name>
+    <servlet-name>payprinttable</servlet-name>
+    <servlet-class>mm.controller.payprinttable</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>payprinttable</servlet-name>
+    <url-pattern>/payprinttable</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PaymentTableController</display-name>
+    <servlet-name>PaymentTableController</servlet-name>
+    <servlet-class>mm.controller.PaymentTableController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PaymentTableController</servlet-name>
+    <url-pattern>/PaymentTable</url-pattern>
+  </servlet-mapping>
 </web-app>

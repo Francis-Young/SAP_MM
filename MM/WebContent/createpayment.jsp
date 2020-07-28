@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+	pageEncoding="UTF-8"%><!DOCTYPE html>
+<%@ page import="java.sql.*"%>
+<%@ page import="mm.utils.DBUtil"%>
 <html>
 
 <head>
@@ -400,8 +401,8 @@
                 <div class="col-lg-12">
                     <div class="tabs-container">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">产品信息</a></li>
-                                <li class=""><a data-toggle="tab" href="#tab-2">产品状态</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">基本信息</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2" onclick="test()">订单详情</a></li>
 
                             </ul>
 					<form action="CreatePay" method="post" onsubmit="return validate();">
@@ -411,15 +412,21 @@
                                     <div class="panel-body">
 
                                         <fieldset class="form-horizontal">
-                                            <div class="form-group"><label class="col-sm-2 control-label">订单编号:<a href="http://www.baidu.com"> 前往查询 </a> </label>
+                                         <div class="form-group"><label class="col-sm-2 control-label">支付日期:<a href="http://www.baidu.com"> 前往查询 </a> </label>
+                                           <div class="input-group date">
+                                         		 <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="07/01/2014" id="p_time" name="p_time">
+                                          </div>
+                                          </div>
+                                         
+                                            <div class="form-group"><label class="col-sm-2 control-label">订单编号：<a href="http://www.baidu.com"> 前往查询 </a> </label>
                                                 <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入订单编号，如100000" id="o_num" name="o_num"></div>
                                             </div>
-                                            <div class="form-group"><label class="col-sm-2 control-label">价格（元）:<a href="http://www.baidu.com">前往查询 </a></label>
+                                            <div class="form-group"><label class="col-sm-2 control-label">价格（元）：<a href="http://www.baidu.com">前往查询 </a></label>
                                                 <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入两位小数，如160.00" id="o_price" name="o_price"></div>
                                             </div>
-                                            <div class="form-group"><label class="col-sm-2 control-label">供应商编号:<a href="http://www.baidu.com">前往查询 </a></label>
-                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入供应商编号，如100000" id="o_vendor" name="o_vendor"></div>
-                                            </div>                                            
+											<div class="form-group"><label class="col-sm-2 control-label">发票名称：</label>
+                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入发票名称，如100000" id="o_text" name="o_text"></div>
+                                            </div>                                         
 
                                         </fieldset>
                                     </div>
@@ -428,15 +435,23 @@
                                     <div class="panel-body">
 
                                         <fieldset class="form-horizontal">
-                                       
-                                            <div class="form-group"><label class="col-sm-2 control-label">订单状态</label>
-                                                <div class="col-sm-10" >
-                                                    <select class="form-control" id="p_status" name="p_status" >
-                                                        <option value="0">未支付</option>
-                                                        <option value="1">已支付</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+
+					 <div style="position: fixed;left: 50%;top: 50%;z-index: 1000;"id="showResult" ></div>  
+                         <label class="col-sm-2 control-label"  id="v_table">供应商</label>            
+                            <table class="table table-hover" id="myTable">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Data</th>
+                                    <th>User</th>
+                                </tr>
+                                </thead>
+
+</table>
+						 <label> <input type="checkbox" class="i-checks" id="p_check" name="o_check">已确认账单信息</label>
+<br>
+                             <button class="btn btn-primary" onclick="invoice()" type="button"> 查看模拟发票</button>                  
+					
                            <button class="btn btn-primary pull-right"> 确认</button>                  
                                    
                                 </fieldset>
@@ -501,10 +516,13 @@
 <script type="text/javascript">  
      function validate(){  
        var reg = new RegExp("^[0-9]*$"); 
-       var reg2= new RegExp("^[0-9]+\.[0-9]{2}$");  
+       var reg2= new RegExp("^[0-9]+\.[0-9]{0,2}$");  
        var obj1 = document.getElementById("o_num");  
        var obj2 = document.getElementById("o_price");  
        var obj3 = document.getElementById("o_vendor");  
+       var obj4 = document.getElementById("p_check");
+       var obj5 = document.getElementById("myTable") ;
+       alert(obj5.rows.length-1);
     if(!reg.test(obj1.value)){  
         alert("订单编号未输入数字！"); 
         return false;
@@ -513,13 +531,123 @@
         alert("价格必须输入两位数字！");  
         return false;
     }      
-    if(!reg.test(obj3.value)){  
-        alert("供应商编号未输入数字！");  
-    }  
+    else if(!reg.test(obj3.value)){  
+        alert("供应商编号未输入数字！");
+        return false;
+    }
+    else if(!obj4.checked){
+    	alert("请在确认订单后提交!");
+    	return false;
+    }
+    else if(obj5.rows.length-1==0){
+    	alert("无相关订单，请重新输入订单号!");
+    	return false;
+    }
     else{
     	return true;
     }
   }  
+     function test_true(){  
+
+    	var utext = document.getElementById("o_num");
+    	var text = utext.value;
+        var reg = new RegExp("^[0-9]*$"); 
+    	if (reg.test(text)&&text!=""){     	
+    		var results = '';
+    	 var html="<tbody>"
+      		
+      		$("#showResult").html("<img src=\"css/plugins/blueimp/img/loading.gif\" />");
+      	var defer = $.Deferred(results);
+      	 $.ajax({
+      	            
+      	                type : 'POST',
+      	                url : 'PaymentTable',
+      	               data:{
+      	                  id:text,
+      	               },
+      	               dataType : 'json',
+      	                success : function(result,backData) {
+      	                	results=result;
+      	                   defer.resolve(result)
+
+      	                },
+      	                error : function(result) {
+      	                    alert("无此订单");
+      	       			$("#showResult").html("");
+      	   			$("#myTable").html("");
+
+
+      	            }
+      	            });}
+    	else{
+    		alert("订单号不规范，请重新输入");
+    	}
+
+
+      	return defer.promise();
+
+     	}
+  function test(){
+        $.when(test_true()).done(function(result,backData){
+        	var count = "";
+			var info = JSON.stringify(result);
+			var data = eval('(' + info + ')');
+			if(data.length==0){
+				alert("无此订单");
+    			$("#showResult").html("");
+    			var html0=" <thead> <tr><th>#</th>  <th>Data</th><th>User</th></tr></thead><tbody>;"
+ 	   			$("#myTable").html(html0);
+
+				
+			}
+			else{
+			var html0=" <thead> <tr><th>#</th>  <th>Data</th><th>User</th></tr></thead><tbody>;"
+			var v=result[0].Vendor_id;
+
+			for(var i=0;i<data.length;i++){
+			var id=result[i].Pay_id;
+			var amount=result[i].Amount;
+			var user=result[i].Pay_User;
+
+ 			var html1="<tr><td>啊1</td><td>啊2</td><td>啊3</td></tr>"
+        	
+        	html1=html1.replace(/啊1/,id);
+        	html1=html1.replace(/啊2/,amount);
+        	html1=html1.replace(/啊3/,user);
+			html0+=html1;
+
+			}
+        	html0+="</tbody>";
+			$("#myTable").html(html0);
+			$("#showResult").html("");
+			var v1="供应商："+v;
+			document.getElementById('v_table').innerHTML = v1;
+			}
+         });                   
+}
+
+</script>
+<script type="text/javascript">
+	function invoice()
+	{ 
+    var obj1 = document.getElementById("o_num").value;  
+    var obj2 = document.getElementById("o_price").value;  
+    var obj4 = document.getElementById("o_text").value;  
+    var date = document.getElementById("p_time").value;
+	url="invoice.jsp?id=订单&text=文本&amount=金额&date=日期";
+	var s1=date.substring(0,2);//M
+	var s2=date.substring(3,5);//D
+	var s3=date.substring(6,10);//Y
+
+	date=s3+"-"+s1+"-"+s2;
+
+	url=url.replace(/日期/,date);
+	url=url.replace(/订单/,obj1);
+	url=url.replace(/金额/,obj2);
+	url=url.replace(/文本/,obj4);
+	url=encodeURI(encodeURI(url));
+	window.open (url);
+	}
 </script>
 </body>
 
