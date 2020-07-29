@@ -9,6 +9,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>创建请购单</title>
+<!--
+
+    <link href="css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+-->
+    <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -27,33 +34,86 @@
 
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+
+<!-- Mainly scripts 日期-->
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="js/inspinia.js"></script>
+<script src="js/plugins/pace/pace.min.js"></script>
+
+<!-- SUMMERNOTE -->
+<script src="js/plugins/summernote/summernote.min.js"></script>
+
+<!-- Data picker -->
+<script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+<script>
+function initDatePicker(ele){
+	ele.datepicker({
+	autoSize:true,
+	autoclose: true,
+	language: "zh-CN",
+	viewDate:new Date()
+	})
+}
+    $(document).ready(function(){
+
+       // $('.summernote').summernote();
+
+   //     $('.input-group.date').datepicker({
+    //        todayBtn: "linked",
+   //         keyboardNavigation: false,
+   //         forceParse: false,
+   //         calendarWeeks: true,
+   //         autoclose: true
+   //     });
+		initDatePicker($(".input-group.date"));
+   });
+    
+
+    
+</script>
+
 <script type="text/javascript">
-var itemNo = 10;
+var itemNo = 0;//---添加行
 </script>
 <script>
-function addRow(){
+function addRow(){		
+	itemNo+=10;
+	document.getElementById('num').value=itemNo;
     var oTable = document.getElementById("oTable");
     var tBodies = oTable.tBodies;
     var tbody = tBodies[0];
     var tr = tbody.insertRow(tbody.rows.length);
     var td_1 = tr.insertCell(0);
     td_1.innerHTML = itemNo;
-    itemNo+=10;
+    
     var td_2 = tr.insertCell(1);
-    td_2.innerHTML = '<input id="vname" type="text" class="form-control" placeholder="输入材料编号..." />';
+    td_2.innerHTML = '<input name="material'+itemNo+'" id="vname" type="text" class="form-control" placeholder="输入材料编号..." />';
     var td_3 = tr.insertCell(2);
-    td_3.innerHTML = '<input class="form-control" id="vaddress" type="text" class="form-control" placeholder="输入请购数量 ..."></input>';
+    td_3.innerHTML = '<input class="form-control" name="quantity'+itemNo+'" id="vaddress" type="text" class="form-control" placeholder="输入请购数量 ..."></input>';
     var td_4 = tr.insertCell(3);
-    td_4.innerHTML =  '<input class="form-control" id="vaddress" type="text" class="form-control" placeholder="输入运送时间 ..."></input>';
+    td_4.innerHTML = 	'<div id="'+itemNo+'" class="input-group date"> <span class="input-group-addon">'+
+'<i class="fa fa-calendar"></i></span><input name="deliverydate'+itemNo+'" type="text" class="form-control" readonly="readonly">'+
+'</div>';
     var td_5 = tr.insertCell(4);
-    td_5.innerHTML = '<input id="showEasing" type="text" placeholder="输入运送工厂..." class="form-control" />';
+    td_5.innerHTML = '<input name="plant'+itemNo+'" id="showEasing" type="text" placeholder="输入运送工厂..." class="form-control" />';
     var td_6 = tr.insertCell(5);
-    td_6.innerHTML = '<input id="showEasing" type="text" placeholder="输入仓库地点..." class="form-control" />';
+    td_6.innerHTML = '<input name="storloc'+itemNo+'" id="showEasing" type="text" placeholder="输入仓库地点..." class="form-control" />';
     var td_7 = tr.insertCell(6);
-    td_7.innerHTML = '<input id="showMethod" type="text" placeholder="输入请购组织" class="form-control" />';
+    td_7.innerHTML = '<input name="organ'+itemNo+'" id="showMethod" type="text" placeholder="输入请购组织" class="form-control" />';
+    initDatePicker($('#'+itemNo));
+    
     }
 
 </script>
+
+
+
 
 <style type="text/css">
 .table-b table td{border:2px solid #808080}
@@ -204,7 +264,6 @@ function addRow(){
 				</nav>
 			</div>
 
-
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
@@ -218,8 +277,10 @@ function addRow(){
 				<div class="col-lg-2"></div>
 			</div>
 
-
-
+	<form class="m-t" role="form" action="${pageContext.request.contextPath}/requisition" method="post">
+						       <input type='text' value='creat' name='action' hidden='true'>	<!-- 控制表单名 -->					
+							<input type='text' id='num' value='0' name='num' hidden='true'>    <!-- 条目数量 -->	
+							
 			<div class="wrapper wrapper-content animated fadeIn">
 				<div class="row">
 					<div class="col-lg-12">
@@ -242,20 +303,21 @@ function addRow(){
 							</div>
 
 							<div class="ibox-content">
-								<form class="m-t" role="form" action="creat_requisition" method="post">
+							
+												
 									<div class="row">
 
 										<div class="form-group">
 											<label class="col-sm-2 control-label">头部注明</label>
 											<div class="col-sm-10">
-												<textarea name="a" style="width:700px;height:100px;" class="form-control"> 
+												<textarea name="head_requisition" style="width:700px;height:100px;" class="form-control"> 
 												</textarea >
 												<span class="help-block m-b-none">文本内容可能延伸超出一行</span>
 											</div>
 										</div>
 										
 <div class="table-b">
-<table id="oTable" style="background-color:#eeeeee;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="100%">
+<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="100%">
 <thead>
 <tr>
 <th>条目</th>
@@ -280,6 +342,7 @@ function addRow(){
 <script type="text/javascript">addRow();</script>
 
 
+
 									</div>
 
 									<div class="row">
@@ -290,7 +353,7 @@ function addRow(){
 												id="clearlasttoast">清除</button>
 										</div>
 									</div>
-								</form>
+								
 
 							</div>
 						</div>
@@ -301,28 +364,20 @@ function addRow(){
 			<div class="footer">
 				<div class="pull-right">
 					<div class="text-right">
-						<button type="submit" class="btn btn-success btn-sm demo2" id="showtoast">保存</button>
+						<input type="submit"  value="保存" class="btn btn-success btn-sm demo2" id="showtoast">
 						<button type="button" class="btn btn-white" id="cleartoasts"><a href="Home.jsp">返回</a></button>
 					</div>
 				</div>
+				</form>
 				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2014-2015
+					<strong>Copyright</strong> 版权所有 &copy; 2020-2021
 				</div>
 			</div>
 
 		</div>
 	</div>
+</form>
 
-
-	<!-- Mainly scripts -->
-	<script src="js/jquery-2.1.1.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-	<!-- Custom and plugin javascript -->
-	<script src="js/inspinia.js"></script>
-	<script src="js/plugins/pace/pace.min.js"></script>
 
 	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
@@ -461,14 +516,12 @@ function addRow(){
 				toastr.clear();
 			});
 		});
-		 
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+		</script> 
+   
+  
 
     <!-- Custom and plugin javascript -->
-    <script src="js/inspinia.js"></script>
+    <script src="js/inspinia.js">
     <script src="js/plugins/pace/pace.min.js"></script>
 
     <!-- Sweet alert -->
