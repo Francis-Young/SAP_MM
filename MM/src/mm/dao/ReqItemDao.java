@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class ReqItemDao {
 	//插入一条请购条目
-	public static void addRequisition( Requisition_item ri) {
+	public static void addRequisitionItem( Requisition_item ri) {
 		//建立与数据库的连接
 		Connection conn=DBUtil.getConnection();
 		try {
 			
-			String sql=""+ "insert into Requisition_item" +" (req_item_num,requisition_num,material_num,requisition_quantity,requisition_deliverydate,requisition_plant,requisition_storageloc) "+"values(defalut,?,?,?,?,?,?)";
+			String sql=""+ "insert into Requisition_item" +" (req_item_num,requisition_num,material_num,requisition_quantity,requisition_deliverydate,requisition_plant,requisition_storageloc) "+"values(default,?,?,?,?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, ri.getRequisition_num());
 			psmt.setString(2, ri.getMaterial_num());
