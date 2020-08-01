@@ -556,7 +556,8 @@ function test(){
 			var v1="供应商："+v;
 			document.getElementById('v_table').innerHTML = v1;
 			}
-       });                   
+       });       
+      
 }
 function getQueryVariable(variable)
 {

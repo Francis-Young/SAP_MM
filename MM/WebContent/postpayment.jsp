@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>创建支付</title>
+    <title>付款</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -380,7 +380,7 @@
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>创建支付</h2>
+                <h2>付款</h2>
                 <ol class="breadcrumb">
                     <li>
                         <a href="index.html">首页</a>
@@ -389,81 +389,78 @@
                         <a>电子商务</a>
                     </li>
                     <li class="active">
-                        <strong>产品-编辑</strong>
+                        <strong>付款</strong>
                     </li>
                 </ol>
             </div>
         </div>
+										<form action="PostPayment" method="post" onsubmit="return validate();">
 
         <div class="wrapper wrapper-content animated fadeInRight ecommerce">
+			<div style="position: fixed;left: 50%;top: 50%;z-index: 1000;"id="showResult" ></div>  
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="tabs-container">
+  											<div class="form-group"><label class="col-sm-2 control-label">订单编号：<a href="http://www.baidu.com"> 前往查询 </a> </label>
+                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入订单编号，如100000" id="o_num_new" name="o_num_new"></div>
+                                            </div>
+                    <br>     
+                             <button class="btn btn-primary pull-right" onclick="getit()" type="button"> 查询</button>                  
+					
+                    <div class="tabs-container" id="p_detail" name="p_detail" style="display:none">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">基本信息</a></li>
-                                <li class=""><a data-toggle="tab" href="#tab-2" onclick="test()">订单详情</a></li>
-
+                                <li class="active"><a data-toggle="tab" href="#tab-1">支付信息</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2"> 付款</a></li>
                             </ul>
-					<form action="CreatePay" method="post" onsubmit="return validate();">
-                            
-                            <div class="tab-content">
+                            <div class="tab-content" >
                                 <div id="tab-1" class="tab-pane active">
                                     <div class="panel-body">
 
                                         <fieldset class="form-horizontal">
-                                         <div class="form-group"><label class="col-sm-2 control-label">支付日期:<a href="http://www.baidu.com"> 前往查询 </a> </label>
+                                          <div class="form-group"><label class="col-sm-2 control-label">支付账户：</label>
+                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入发票名称，如100000" id="o_account" name="o_account"></div>
+                                            </div>           
+                                          <div class="form-group"><label class="col-sm-2 control-label">支付日期:<a href="http://www.baidu.com"> 前往查询 </a> </label>
                                            <div class="input-group date">
-                                         		 <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="07/01/2014" id="p_time" name="p_time">
+                                         		 <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="07/01/2014" id="p_time_new" name="p_time_new">
                                           </div>
                                           </div>
-                                         
-                                            <div class="form-group"><label class="col-sm-2 control-label">订单编号：<a href="http://www.baidu.com"> 前往查询 </a> </label>
-                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入订单编号，如100000" id="o_num" name="o_num"></div>
-                                            </div>
                                             <div class="form-group"><label class="col-sm-2 control-label">价格（元）：<a href="http://www.baidu.com">前往查询 </a></label>
-                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入两位小数，如160.00" id="o_price" name="o_price"></div>
+                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入两位小数，如160.00" id="o_price_new" name="o_price_new"></div>
                                             </div>
 											<div class="form-group"><label class="col-sm-2 control-label">发票名称：</label>
-                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入发票名称，如100000" id="o_text" name="o_text"></div>
-                                            </div>                                         
+                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入发票名称，如100000" id="o_text_new" name="o_text_new"></div>
+                                            </div>             
+                                                                 
 
                                         </fieldset>
+
                                     </div>
                                 </div>
+                         
                                 <div id="tab-2" class="tab-pane">
                                     <div class="panel-body">
 
-                                        <fieldset class="form-horizontal">
+                                        <div class="table-responsive" >
+                                        <div class="form-group"><label class="col-sm-2 control-label">未分配数额：</label>
+                                                <div class="col-sm-10"><input type="text" class="form-control" readonly="readonly" placeholder="请输入发票名称，如100000" id="o_sum" name="o_sum"></div>
+                                            </div> 
+                                            <br><br><br>
+                                            <table class="table table-stripped table-bordered" id="myTable" name="myTable" >
 
-					 <div style="position: fixed;left: 50%;top: 50%;z-index: 1000;"id="showResult" ></div>  
-                         <label class="col-sm-2 control-label"  id="v_table">供应商</label>            
-                            <table class="table table-hover" id="myTable">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Data</th>
-                                    <th>User</th>
-                                </tr>
-                                </thead>
-
-</table>
-						 <label> <input type="checkbox" class="i-checks" id="p_check" name="p_check">已确认账单信息</label>
-<br>
-                             <button class="btn btn-primary" onclick="invoice()" type="button"> 查看模拟发票</button>                  
-					
-                           <button class="btn btn-primary pull-right"> 确认</button>                  
-                                   
-                                </fieldset>
-
+                                          
+                                            </table>
+                                        </div>
 
                                     </div>
                                 </div>
-         
 
                             </div>
-                            </form>
+                                                       <button class="btn btn-primary pull-right"> 确认</button>                  
+                            
                     </div>
+                    </form>
+                   
                 </div>
             </div>
 
@@ -499,6 +496,41 @@
 <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
 
 <script>
+function validate(){  
+    var reg = new RegExp("^[0-9]*$"); 
+    var reg2= new RegExp("^[0-9]+\.[0-9]{0,2}$");  
+    var obj4 = document.getElementById("o_num_new");  
+    var obj8 = document.getElementById("o_sum");  
+    var obj1 = document.getElementById("o_account"); 
+    var obj2 = document.getElementById("o_price_new");  
+ if(!reg.test(obj4.value)){  
+     alert("订单编号未输入数字！"); 
+     return false;
+ }  
+ else if(obj8.value!=0){
+     alert("分配未完成"); 
+     return false;
+ }
+ else if(!reg2.test(obj2.value)){  
+     alert("价格必须输入两位数字！");  
+     return false;
+ }      
+
+ else if(!reg.test(obj1.value)){  
+     alert("付款账号未输入数字！");
+     return false;
+ }
+
+ else if(obj1.value==""){  
+     alert("付款账号未输入数字！");
+     return false;
+ }
+
+ 
+ else{
+ 	return true;
+ }
+}  
     $(document).ready(function(){
 
         $('.summernote').summernote();
@@ -512,40 +544,9 @@
         });
 
     });
-</script>
-<script type="text/javascript">  
-     function validate(){  
-       var reg = new RegExp("^[0-9]*$"); 
-       var reg2= new RegExp("^[0-9]+\.[0-9]{0,2}$");  
-       var obj1 = document.getElementById("o_num");  
-       var obj2 = document.getElementById("o_price");  
-       var obj4 = document.getElementById("p_check");
-       alert(obj4.checked);
-       var obj5 = document.getElementById("myTable") ;
-    if(!reg.test(obj1.value)){  
-        alert("订单编号未输入数字！"); 
-        return false;
-    }  
-    else if(!reg2.test(obj2.value)){  
-        alert("价格必须输入两位数字！");  
-        return false;
-    }      
+    function test_true(){  
 
-    else if(obj4.checked==false){
-    	alert("请在确认订单后提交!");
-    	return false;
-    }
-    else if(obj5.rows.length-1==0){
-    	alert("无相关订单，请重新输入订单号!");
-    	return false;
-    }
-    else{
-    	return true;
-    }
-  }  
-     function test_true(){  
-
-    	var utext = document.getElementById("o_num");
+    	var utext = document.getElementById("o_num_new");
     	var text = utext.value;
         var reg = new RegExp("^[0-9]*$"); 
     	if (reg.test(text)&&text!=""){     	
@@ -557,7 +558,7 @@
       	 $.ajax({
       	            
       	                type : 'POST',
-      	                url : 'PaymentTable',
+      	                url : 'UpdatePayment',
       	               data:{
       	                  id:text,
       	               },
@@ -583,7 +584,7 @@
       	return defer.promise();
 
      	}
-  function test(){
+  function getit(){
         $.when(test_true()).done(function(result,backData){
         	var count = "";
 			var info = JSON.stringify(result);
@@ -591,60 +592,72 @@
 			if(data.length==0){
 				alert("无此订单");
     			$("#showResult").html("");
-    			var html0=" <thead> <tr><th>#</th>  <th>Data</th><th>User</th></tr></thead><tbody>;"
+    			var html0=" <thead> <tr><th>#</th>  <th>Data</th><th>User</th><th>分配</th></tr></thead><tbody>;"
  	   			$("#myTable").html(html0);
 
 				
 			}
 			else{
-			var html0=" <thead> <tr><th>#</th>  <th>Data</th><th>User</th></tr></thead><tbody>;"
-			var v=result[0].Vendor_id;
-
+			var html0=" <thead> <tr><th>#</th>  <th>Data</th><th>User</th><th>分配</th></tr></thead><tbody>;"
+			var v1=result[0].Amount;
+			var v2=result[0].Invoice_Text;
+			var v3=result[0].Pay_Time;
 			for(var i=0;i<data.length;i++){
 			var id=result[i].Pay_id;
 			var amount=result[i].Amount;
 			var user=result[i].Pay_User;
 
- 			var html1="<tr><td>啊1</td><td>啊2</td><td>啊3</td></tr>"
+ 			var html1="<tr><td>啊1</td><td>啊2</td><td>啊3</td><td><a href=\"javascript:assign(index)\">分配</a></td></tr>"
         	
         	html1=html1.replace(/啊1/,id);
         	html1=html1.replace(/啊2/,amount);
         	html1=html1.replace(/啊3/,user);
+        	html1=html1.replace(/啊3/,user);
+        	html1=html1.replace(/index/,i+1);
+
 			html0+=html1;
 
 			}
         	html0+="</tbody>";
 			$("#myTable").html(html0);
 			$("#showResult").html("");
-			var v1="供应商："+v;
-			document.getElementById('v_table').innerHTML = v1;
+			document.getElementById('o_price_new').value = v1;
+			document.getElementById('o_text_new').value = v2;
+			document.getElementById('p_time_new').value = v3;
+			document.getElementById('o_sum').value = v1;
+
 			}
-         });                   
+         });  
+        document.getElementById('p_detail').style.display = "";
 }
+function assign(a){
 
+    var mytable = document.getElementById("myTable").rows[a].cells[1].innerHTML;
+	var t=document.getElementById('o_sum').value;
+	var c=t-mytable;
+	var html="<a href=\"javascript:noassign(index)\">撤销分配</a>";
+	html=html.replace(/index/,a);
+  	document.getElementById("myTable").rows[a].cells[3].innerHTML=html;
+
+	document.getElementById('o_sum').value=c;
+
+}
+   
+function noassign(a){
+
+    var mytable = document.getElementById("myTable").rows[a].cells[1].innerHTML;
+	var t=document.getElementById('o_sum').value;
+	var c=(t+mytable)*1.00;
+	var html="<a href=\"javascript:assign(index)\">分配</a>";
+	html=html.replace(/index/,a);
+  	document.getElementById("myTable").rows[a].cells[3].innerHTML=html;
+
+	document.getElementById('o_sum').value=c;
+
+}
+   
 </script>
-<script type="text/javascript">
-	function invoice()
-	{ 
-    var obj1 = document.getElementById("o_num").value;  
-    var obj2 = document.getElementById("o_price").value;  
-    var obj4 = document.getElementById("o_text").value;  
-    var date = document.getElementById("p_time").value;
-	url="invoice.jsp?id=订单&text=文本&amount=金额&date=日期";
-	var s1=date.substring(0,2);//M
-	var s2=date.substring(3,5);//D
-	var s3=date.substring(6,10);//Y
 
-	date=s3+"-"+s1+"-"+s2;
-
-	url=url.replace(/日期/,date);
-	url=url.replace(/订单/,obj1);
-	url=url.replace(/金额/,obj2);
-	url=url.replace(/文本/,obj4);
-	url=encodeURI(encodeURI(url));
-	window.open (url);
-	}
-</script>
 </body>
 
 </html>

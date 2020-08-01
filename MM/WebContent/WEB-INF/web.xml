@@ -29,4 +29,34 @@
     <servlet-name>PaymentTableController</servlet-name>
     <url-pattern>/PaymentTable</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdatePayTable</display-name>
+    <servlet-name>UpdatePayTable</servlet-name>
+    <servlet-class>mm.controller.UpdatePayTable</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdatePayTable</servlet-name>
+    <url-pattern>/UpdatePayTable</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdatePaymentController</display-name>
+    <servlet-name>UpdatePaymentController</servlet-name>
+    <servlet-class>mm.controller.UpdatePaymentController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdatePaymentController</servlet-name>
+    <url-pattern>/UpdatePayment</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PostPaymentController</display-name>
+    <servlet-name>PostPaymentController</servlet-name>
+    <servlet-class>mm.controller.PostPaymentController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PostPaymentController</servlet-name>
+    <url-pattern>/PostPayment</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -31,6 +31,32 @@ public class PayDao {
 		return 0;
 
 	}
+	public int updatePay(float amount,int id,int status,String time,int user,String text) {
+		Connection connection = DBUtil.getConnection();
+        PreparedStatement pstmt =null;
+		try {
+	            String sql = "Update Payment Set Amount=?,Paid_Status=?,Pay_Time=?,Pay_user=?,Invoice_Text=? where Pay_id=?"; 
+				pstmt=connection.prepareStatement(sql);
+				pstmt.setFloat(1, amount);
+				pstmt.setFloat(2, status);
+				pstmt.setString(3, time);
+				pstmt.setInt(4, user);
+				pstmt.setString(5, text);
+				pstmt.setInt(6, id);
+	            int row = pstmt.executeUpdate();
+	            if (row>0) {
+	            }else {
+	                System.out.println("Êý¾ÝÌí¼ÓÊ§°Ü£¡");
+	            }
+	           return 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DBUtil.closeConnection(connection);
+		return 0;
+
+	}
+
 
     public String resultSetToJson(ResultSet rs) throws Exception 
     {  
@@ -75,5 +101,24 @@ public class PayDao {
 		return s;
 
 	}
+	public String Searchitbyid(String id) throws Exception {
+		Connection connection = DBUtil.getConnection();
+        PreparedStatement pstmt =null;
+        String s="";
+		try {
+			String ownid=id;
+			Connection connectionnew = DBUtil.getConnection();
+	        String sql="select * from Payment where Pay_id="+ownid+""; 
+	        Statement stmt = connectionnew.createStatement();
+	        ResultSet rs = stmt.executeQuery(sql);     
+	        s=resultSetToJson(rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DBUtil.closeConnection(connection);
+		return s;
+
+	}
+
 
 }
