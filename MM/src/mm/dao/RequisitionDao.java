@@ -1,8 +1,10 @@
 package mm.dao;
 
+import mm.bean.Quotation;
 import mm.bean.Requisition;
 import mm.utils.DBUtil;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class RequisitionDao {
 	//插入一张请购单,返回最新插入单子的num
@@ -74,7 +76,42 @@ public class RequisitionDao {
 		
 		return rq;
 	}
-	
+	//根据任意条件查询
+	public static ArrayList<Requisition> findRequisitionByAnything(Requisition rq) {
+		ArrayList<Requisition> rqlist=new ArrayList<Requisition>();
+		Requisition rq1=new Requisition();
+		//建立数据库连接
+		Connection conn=DBUtil.getConnection();
+		try {
+		
+			String sql=""+"select * from Requisition ";
+			if (!rq.getRequisition_discription().equals("xx"))
+				sql+="where requisition_discription ="+'"'+rq.getRequisition_discription()+'"'+",";
+			if (!rq.getRequisition_purchasegroup().equals("xx"))
+				sql+="where requisition_purchasegroup ="+'"'+rq.getRequisition_purchasegroup()+'"';
+			sql = sql.substring(0, sql.length() - 1);
+			System.out.println(sql);
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			
+			//执行查询语句
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+			
+				rq1.setRequisition_num(rs.getInt("requisition_num"));
+				rq1.setRequisition_discription(rs.getString("requisition_discription"));
+				rq1.setRequisition_purchasegroup(rs.getString("requisition_purchasegroup"));
+				rqlist.add(rq1);
+			}
+		}catch(SQLException e) {
+            e.printStackTrace();
+        }catch(NullPointerException f){
+            f.printStackTrace();
+        }finally {
+            DBUtil.closeConnection(conn);
+        }
+		
+		return rqlist;
+	}
 	//根据group查询
 	public static Requisition findRequisitionBygroup(String purgro) {
 		
