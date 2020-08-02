@@ -5,24 +5,44 @@ import mm.utils.DBUtil;
 import java.sql.*;
 
 public class RequisitionDao {
-	//插入一张请购单
-	public static void addRequisition( Requisition rq) {
+	//插入一张请购单,返回最新插入单子的num
+	public static int addRequisition( Requisition rq) {
 		//建立与数据库的连接
+		int num=0;
 		Connection conn=DBUtil.getConnection();
 		try {
 			
 			String sql=""+ "insert into Requisition" +" (requisition_num,requisition_discription,requisition_purchasegroup) "+"values(default,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 		
-			psmt.setString(1, rq.getRequisition_discription());
+			psmt.setString(1, "狗"+rq.getRequisition_discription());
 			psmt.setString(2, rq.getRequisition_purchasegroup());
-	
+			
 			psmt.execute();
+			
+			sql="SELECT LAST_INSERT_ID()";
+			psmt = conn.prepareStatement(sql);
+			ResultSet rs = psmt.executeQuery();
+			//----遍历打印
+			/*ResultSetMetaData rsmd = rs.getMetaData();
+			int columnsNumber = rsmd.getColumnCount();
+			while (rs.next()) {
+			    for (int i = 1; i <= columnsNumber; i++) {
+			        if (i > 1) System.out.print(",  ");
+			        String columnValue = rs.getString(i);
+			        System.out.print(columnValue + " " + rsmd.getColumnName(i));
+			    }
+			    System.out.println("");
+			}*/
+			if (rs.next()) {  
+				num= rs.getInt(1);
+		    }
 		}catch(SQLException e) {
             e.printStackTrace();
         }finally {
             DBUtil.closeConnection(conn);
         }
+		return num;
 	}
 	//根据编号查询
 	public static Requisition findRequisitionByNum(int num) {
@@ -54,6 +74,7 @@ public class RequisitionDao {
 		
 		return rq;
 	}
+	
 	//根据group查询
 	public static Requisition findRequisitionBygroup(String purgro) {
 		
@@ -134,5 +155,7 @@ public class RequisitionDao {
         }
 		return res;
 		
-	}	
+	}
+	//返回最新插入单子的num
+
 }
