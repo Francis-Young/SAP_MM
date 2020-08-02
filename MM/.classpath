@@ -6,10 +6,5 @@
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="E:/gitest/SAP_MM/MM/lib/servlet-api.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="https://docs.oracle.com/javaee/7/api/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="output" path="bin"/>
+
 </classpath>
