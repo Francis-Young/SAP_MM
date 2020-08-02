@@ -1,24 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*"%>
+<%@ page import="mm.utils.DBUtil"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
 <head>
 <script type="text/javascript">
 	var itemNo = 1;
+	var p_m_text;
+	var m_textArray = new Array();
 </script>
-<%int row_num = 1;%>
+
 <script>
 	function addRow() {
 		var oTable = document.getElementById("oTable");
 		var tBodies = oTable.tBodies;
 		var tbody = tBodies[0];
 		var tr = tbody.insertRow(tbody.rows.length);
+
 		var td_1 = tr.insertCell(0); //td_1,td_2。。。这些是每一行的单元格内要显示的元素,可以自己改内容和根据列数改数量
 		td_1.innerHTML = itemNo;
 		itemNo += 1;
+
 		var td_2 = tr.insertCell(1);
-		td_2.innerHTML = '<input id="m_text" name="td_2" class="form-control" placeholder="输入物料编号..." />';
+		td_2.innerHTML = '<input id="m_text" name="m_text" class="form-control" placeholder="输入物料编号..." />';
 		var td_3 = tr.insertCell(2);
 		td_3.innerHTML = '<input id="closeButton" name="td_3" type="checkbox" value="checked" class="input-mini" checked="">';
 		var td_4 = tr.insertCell(3);
@@ -26,8 +32,13 @@
 		var td_5 = tr.insertCell(4);
 		td_5.innerHTML = '<input id="showEasing" name="td_5" type="text" placeholder="输入存储位置..." class="form-control" />';
 
+		p_m_text = document.getElementsByName("m_text");
+		m_textArray.push(p_m_text);
+		$("#m_textArray").val(m_textArray);
+		System.out.println(p_m_text);
 	}
 </script>
+
 <style type="text/css">
 .table-b table td {
 	border: 2px solid #e7eaec
@@ -334,7 +345,8 @@
 									</div>
 									<div class="ibox-content m-b-sm border-bottom">
 										<!-- 前后的灰色线 -->
-
+										<input type="hidden" name="m_textArray" value=""
+											id="m_textArray">
 										<div class="table-b">
 											<div class="wrapper wrapper-content animated fadeIn">
 												<div align="center">
@@ -367,13 +379,16 @@
 														</tbody>
 													</table>
 												</div>
-												<input type="button" onClick="addRow();" <%row_num++;%>
+												<input type="button" onClick="addRow();"
 													class="btn btn-white" value="+" />
 
 												<!-- 原先的设计<input type="button" onClick="addRow();"
 													style="font-size: 16px;" value="+" /> -->
 											</div>
 										</div>
+										<script type="text/javascript">
+											addRow();
+										</script>
 									</div>
 
 
@@ -409,6 +424,9 @@
 
 
 	<!-- Mainly scripts -->
+
+
+
 	<script src="js/jquery-2.1.1.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
