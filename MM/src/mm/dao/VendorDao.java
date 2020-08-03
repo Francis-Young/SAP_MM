@@ -99,8 +99,9 @@ public class VendorDao {
 		DBUtil.closeConnection(conn);
 	}
 
-	public void addMaterial(Material m) throws SQLException {
+	public boolean addMaterial(Material m) throws SQLException {
 		Connection conn = DBUtil.getConnection();
+		boolean flag = false;
 		try {
 			PreparedStatement stat = conn.prepareStatement(
 					"insert into Material(material_num,material_discr,material_baseunit,material_industrysec,material_salesorg,material_distrchannel,material_group,material_division,material_unitprice,material_availabilitycheck,material_purchasinggroup,material_MRPtype,material_MRPcontroller,material_lotsizingprocedure,material_minimumlotsize,material_planneddelivtime,material_shorttext) VALUE(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -122,30 +123,35 @@ public class VendorDao {
 			stat.setString(16, m.getMaterial_planneddelivtime());
 			stat.setString(17, m.getMaterial_shorttext());
 			stat.executeUpdate();
+			PreparedStatement stat2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+			ResultSet rs = stat2.executeQuery();
+			if (rs.next()) {
+				flag = true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		DBUtil.closeConnection(conn);
+		return flag;
 	}
 
 	public void findAllVendor(ArrayList<Vendor> v) {
 		Connection conn = DBUtil.getConnection();
-
 		try {
 			PreparedStatement stat = conn
 					.prepareStatement("select vendor_num,vendor_name,vendor_type,vendor_city from Vendor");
 			ResultSet rs = stat.executeQuery();
-
 			while (rs.next()) {
 				Vendor vi = new Vendor();
 				vi.setVnum(rs.getString(1));
 				vi.setVname(rs.getString(2));
 				String vtype = new String();
-				if (rs.getString(3) == "person")
+				String vtypeindb = rs.getString(3);
+				if (vtypeindb.equals("person"))
 					vtype = "个人";
-				else if (rs.getString(3) == "group")
+				else if (vtypeindb.equals("group"))
 					vtype = "团体";
-				else
+				else if (vtypeindb.equals("organization"))
 					vtype = "组织";
 				vi.setVtype(vtype);
 				vi.setVcity(rs.getString(4));

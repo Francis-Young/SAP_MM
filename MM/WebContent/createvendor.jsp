@@ -222,18 +222,15 @@
 										</div>
 										<div class="col-md-3">
 											<div class="form-group">
-												<label for="title">使用货币类型</label>
-												<div class="input-group">
-													<select class="select2_demo_1 form-control"
-														style="width: 350px;" name="vcurrency">
-														<c:forEach items="${currency}" var="currency" begin="0"
-															end="${currency.size()}" step="1">
-															<option value="${currency }"
-																<c:if test="${currency=='RMB'}"> selected="selected" </c:if>><c:out
-																	value="${currency}"></c:out></option>
-														</c:forEach>
-													</select>
-												</div>
+												<label for="title">使用货币类型</label> <select
+													class="select2_demo_1 form-control" name="vcurrency">
+													<c:forEach items="${currency}" var="currency" begin="0"
+														end="${currency.size()}" step="1">
+														<option value="${currency }"
+															<c:if test="${currency=='RMB'}"> selected="selected" </c:if>><c:out
+																value="${currency}"></c:out></option>
+													</c:forEach>
+												</select>
 											</div>
 											<div class="form-group">
 												<label for="title">税号</label> <input name="vtax" type="text"
@@ -281,14 +278,16 @@
 						<button type="submit" class="btn btn-primary" id="showtoast">创建</button>
 						<button type="reset" class="btn btn-white" id="clearlasttoast">清除</button>
 					</div>
-					<div>
+					<div style="padding-top: 2px;">
 						<%
 							String notice = (String) request.getAttribute("notice");
 							if (notice != null && !"".equals(notice)) {
 						%>
-						成功创建供应商<strong><%=notice%></strong>
+						<p>
+							<font size="3" color=<%=request.getAttribute("color")%>><%=notice%></font>
+						</p>
 						<%
-							request.setAttribute("success", "");
+							request.setAttribute("notice", "");
 							}
 						%>
 					</div>

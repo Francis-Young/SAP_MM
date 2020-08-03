@@ -59,7 +59,25 @@ public class MaintainVendorController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		String notice = "保存失败，请检查输入的信息";
+		String color="#ed5565";
+		if (v.getVname() != null && !"".equals(v.getVname())) {
+			VendorDao vdao = new VendorDao();
+			String vnum = "";
+			try {
+				vnum = vdao.addVendor(v);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (vnum != null && !"".equals(vnum)) {
+				notice = "成功保存供应商" + vnum;
+				color="#1ab394";
+			} 
+		} 
+		request.setAttribute("notice", notice);
+		request.setAttribute("color", color);
+		doGet(request, response);
 		return;
 	}
 

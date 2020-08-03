@@ -8,7 +8,7 @@
 	ArrayList<String> paymentterms = (ArrayList<String>) request.getAttribute("paymentterms");
 	ArrayList<String> currency = (ArrayList<String>) request.getAttribute("currency");
 	ArrayList<String> language = (ArrayList<String>) request.getAttribute("language");
-	Vendor v=(Vendor)request.getAttribute("vendor");
+	Vendor v = (Vendor) request.getAttribute("vendor");
 %>
 <!DOCTYPE html>
 <html>
@@ -129,7 +129,7 @@
 				</div>
 				<div class="col-lg-2"></div>
 			</div>
-			<form class="m-t" role="form" action="CreateVendor" method="post">
+			<form class="m-t" role="form" action="MaintainVendor" method="post">
 				<div class="wrapper wrapper-content animated fadeIn">
 					<div class="row">
 						<div class="col-lg-12">
@@ -156,17 +156,21 @@
 												<label>供应商类型</label>
 												<div class="radio">
 													<label> <input type="radio" name="vtype"
+														<%if ("person".equals(v.getVtype())) {%> checked <%}%>
 														value="person" />个人
 													</label>
 												</div>
 												<div class="radio">
 													<label class="radio"> <input type="radio"
-														name="vtype" value="organization" checked />组织
+														name="vtype"
+														<%if ("organization".equals(v.getVtype())) {%> checked
+														<%}%> value="organization" />组织
 													</label>
 												</div>
 												<div class="radio">
 													<label class="radio"> <input type="radio"
-														name="vtype" value="group" />团体
+														name="vtype" <%if ("group".equals(v.getVtype())) {%>
+														checked <%}%> value="group" />团体
 													</label>
 												</div>
 											</div>
@@ -175,37 +179,38 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<label for="title">供应商名称</label> <input name="vname"
-													type="text" class="form-control" value="<%=v.getVname() %>" />
+													type="text" class="form-control" value="<%=v.getVname()%>"
+													readonly="readonly" />
 											</div>
 											<div class="form-group">
 												<label for="message">供应商公司号</label> <input
 													class="form-control" name="vcompanycode" type="text"
-													class="form-control" value="<%=v.getVcompanycode() %>"></input>
+													class="form-control" value="<%=v.getVcompanycode()%>"></input>
 											</div>
 											<div class="form-group">
 												<label for="message">供应商国家</label> <input
 													class="form-control" name="vcountry" type="text"
-													class="form-control"value="<%=v.getVcountry() %>"></input>
+													class="form-control" value="<%=v.getVcountry()%>"></input>
 											</div>
 											<div class="form-group">
 												<label for="message">供应商城市</label> <input
 													class="form-control" name="vcity" type="text"
-													class="form-control" value="<%=v.getVcity() %>"></input>
+													class="form-control" value="<%=v.getVcity()%>"></input>
 											</div>
 											<div class="form-group">
 												<label for="message">供应商地区</label> <input
 													class="form-control" name="vregion" type="text"
-													class="form-control" value="<%=v.getVregion() %>"></input>
+													class="form-control" value="<%=v.getVregion()%>"></input>
 											</div>
 											<div class="form-group">
 												<label for="message">供应商街道</label> <input
 													class="form-control" name="vstreet" type="text"
-													class="form-control" value="<%=v.getVstreet() %>"></input>
+													class="form-control" value="<%=v.getVstreet()%>"></input>
 											</div>
 											<div class="form-group">
 												<label for="message">供应商邮政编码</label> <input
 													class="form-control" name="vpostalcode" type="text"
-													class="form-control" value="<%=v.getVpostalcode() %>"></input>
+													class="form-control" value="<%=v.getVpostalcode()%>"></input>
 											</div>
 											<div class="form-group">
 												<label for="message">供应商语言</label>
@@ -239,7 +244,7 @@
 											</div>
 											<div class="form-group">
 												<label for="title">税号</label> <input name="vtax" type="text"
-													class="form-control" value="<%=v.getVtaxnum() %>" />
+													class="form-control" value="<%=v.getVtaxnum()%>" />
 											</div>
 											<div class="form-group">
 												<label for="title">支付模式</label> <select
@@ -268,8 +273,7 @@
 											</div>
 											<div class="form-group">
 												<label for="title">联系员工</label> <input name="vclerk"
-													type="text" class="form-control"
-													value="<%=v.getVclerk() %>" />
+													type="text" class="form-control" value="<%=v.getVclerk()%>" />
 											</div>
 										</div>
 									</div>
@@ -280,17 +284,19 @@
 				</div>
 				<div class="footer">
 					<div class="pull-right">
-						<button type="submit" class="btn btn-primary" id="showtoast">创建</button>
+						<button type="submit" class="btn btn-primary" id="showtoast">保存</button>
 						<button type="reset" class="btn btn-white" id="clearlasttoast">清除</button>
 					</div>
-					<div>
+					<div style="padding-top: 2px;">
 						<%
 							String notice = (String) request.getAttribute("notice");
 							if (notice != null && !"".equals(notice)) {
 						%>
-						成功保存供应商<strong><%=notice%></strong>
+						<p>
+							<font size="3" color=<%=request.getAttribute("color")%>><%=notice%></font>
+						</p>
 						<%
-							request.setAttribute("success", "");
+							request.setAttribute("notice", "");
 							}
 						%>
 					</div>

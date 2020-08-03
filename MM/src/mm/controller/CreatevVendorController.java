@@ -42,7 +42,7 @@ public class CreatevVendorController extends HttpServlet {
 		ArrayList<String> paymentterms = new ArrayList<String>();
 		ArrayList<String> language = new ArrayList<String>();
 		ArrayList<String> currency = new ArrayList<String>();
-		vdao.initCreateTable(reconacct,paymentterms,currency,language);
+		vdao.initCreateTable(reconacct, paymentterms, currency, language);
 		request.setAttribute("reconacct", reconacct);
 		request.setAttribute("paymentterms", paymentterms);
 		request.setAttribute("currency", currency);
@@ -74,21 +74,25 @@ public class CreatevVendorController extends HttpServlet {
 		v.setVregion(request.getParameter("vregion"));
 		v.setVlanguage(request.getParameter("vlanguage"));
 		v.setVclerk(request.getParameter("vclerk"));
-
-		VendorDao vdao = new VendorDao();
-		String vnum = "";
-		try {
-			vnum = vdao.addVendor(v);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (vnum != null && !"".equals(vnum)) {
-			request.setAttribute("notice", vnum);
-		}
-		
+		String notice = "创建失败，请检查输入的信息";
+		String color="#ed5565";
+		if (v.getVname() != null && !"".equals(v.getVname())) {
+			VendorDao vdao = new VendorDao();
+			String vnum = "";
+			try {
+				vnum = vdao.addVendor(v);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (vnum != null && !"".equals(vnum)) {
+				notice = "成功创建供应商" + vnum;
+				color="#1ab394";
+			} 
+		} 
+		request.setAttribute("notice", notice);
+		request.setAttribute("color", color);
 		doGet(request, response);
 		return;
 	}
-
 }
