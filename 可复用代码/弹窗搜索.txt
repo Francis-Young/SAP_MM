@@ -1,0 +1,197 @@
+-------------------使用以下代码过程中注意各处id请根据自己的需要修改-------------------------
+<script>
+function selectline(ele)  //单击后赋值的函数
+{
+     var clickContent = ele;         
+    //获取要赋值的input的元素
+    var inputElement =  document.getElementById("reqnum");
+    //给input框赋值
+    inputElement.value = clickContent.cells[1].innerHTML;//.innerText;
+ 
+    openwin3(0);           //关掉两个弹窗
+    openwin2(0);
+	}
+
+</script>
+
+<script type="text/javascript">
+function search()     //异步搜索的函数
+{    
+	var key = $("#key1").val()+","+ $("#key2").val()  //这一段是你要向后台传的数据
+	var url="${pageContext.request.contextPath}/searchServlet?key="+key
+
+	function gettext(text)   //正则解码函数
+	{
+		var subt = text.match(/mark.(\S*?)mark./);
+		return subt[1];
+	}
+
+     $.ajax({
+              type:"post",
+              url:"${pageContext.request.contextPath}/searchServlet",     //后台的地址
+              async:true, //默认-异步（true） 同步-false
+              dataType:"text",
+              
+              data:{"key":key},
+              beforeSend: function (){
+              },
+              success:function (dataArray) {      //dataArray就是后台传来的数据
+            	  //我从后台传回来的数据有3项，所以这里定义了3组变量
+            	  var subnum = dataArray.match(/mark0(\S*?)mark1/g);
+            	  var subdes = dataArray.match(/mark1(\S*?)mark2/g);
+            	  var subgup = dataArray.match(/mark2(\S*?)mark3/g);
+
+            	  $("tbody#tableBody").remove();//删除已有表格	
+                  //下面写一个表格，是我要插入到弹窗里的
+	var tableBody = "<tbody id='tableBody'>";
+ 				  
+                  for (var i = 0; i < subnum.length; i++) {
+ 					
+                      tableBody += '<tr onclick="selectline(this)">';
+ 
+                      tableBody += '<td><input type="checkbox" checked="" class="i-checks" name="input[]"></td>';
+                      tableBody += "<td>"+gettext(decodeURI(subnum[i]))+"</td>";
+                      tableBody += "<td>"+gettext(decodeURI(subdes[i]))+"</td>";
+                      tableBody += "<td>"+gettext(decodeURI(subgup[i]))+"</td>";
+                      tableBody += "</tr>";
+                  }
+ 
+                  tableBody += "</tBody>";
+ 
+                  $("#tableHead").after(tableBody);  //这个表格将位于id是tableHead的表头后面
+ 
+              },
+              error:function (e,textStatus,request) {
+
+                  alert("错误！"+e.status);
+                  var json=JSON.parse(request.responseText);  
+                  alert(json.city); 
+                  alert(request.responseText)
+                  alert(" parser error"+textStatus); // parser error;
+              },
+              complete:function () {
+
+                 
+                  //表格隔行显色，鼠标悬浮高亮显示
+                  var oTab = document.getElementById('tbl');
+                  var oldColor = '';//用于保存原来一行的颜色
+ 
+                  for(var i = 0; oTab.tBodies[0].rows.length; i++){
+ 
+                      //当鼠标移上去，改变字体色-背景色
+                      oTab.tBodies[0].rows[i].onmouseover = function () {
+                          oldColor = this.style.background;
+                          this.style.background = "#009B63";
+                          this.style.color = "#ffffff";
+                      };
+ 
+                      //当鼠标移开，恢复原来的颜色
+                      oTab.tBodies[0].rows[i].onmouseout = function () {
+                          this.style.background = oldColor;
+                          this.style.color = "#000000";
+                      };
+ 
+                      //隔行显色
+                      if(i%2){
+                          oTab.tBodies[0].rows[i].style.background = "#EAF2D3";
+                      }
+                      else{
+                          oTab.tBodies[0].rows[i].style.background = "";
+                      }
+                  }
+              }
+          });
+    
+}
+</script>
+<script>
+function open_and_search()  //点击搜索按钮后会触发的弹窗和搜索事件
+{
+	openwin3(1);
+	search();
+}
+</script>
+<style> //对正常页面和弹出框分层，后面的层唤出时将会覆盖在前面的层上
+#wrapper //正常页面层
+{
+     z-index: 99;
+   position: absolute;
+}
+//第一个弹出框
+.opbox1{  
+    z-index: 100;
+    width:50%; margin-top:10%; margin:auto; padding:28px;
+    top:25%; left:25%;
+    height:350px; border:1px #111 solid;
+    display:none;            /* 默认对话框隐藏 */
+
+position: absolute;
+background:white;
+}
+.opbox1.show{display:block;} 
+.opbox1 .x{ font-size:18px; text-align:right; display:block;}
+//第2个弹出框
+.opbox2{ 
+    z-index: 101;
+    width:40%; margin-top:10%; margin:auto; padding:28px;
+    top:5%; left:30%;
+    height:650px; border:1px #111 solid;
+    display:none;            /* 默认对话框隐藏 */
+
+position: absolute;
+background:white;
+}
+.opbox2.show{display:block;} 
+.opbox2 .x{ font-size:18px; text-align:right; display:block;}
+//第3个弹出框
+.opbox3{
+    z-index: 101;
+    width:40%; margin-top:10%; margin:auto; padding:28px;
+    top:5%; left:30%;
+    height:650px; border:1px #111 solid;
+    display:none;            /* 默认对话框隐藏 */
+
+position: absolute;
+background:white;
+}
+.opbox3.show{display:block;} 
+.opbox3 .x{ font-size:18px; text-align:right; display:block;}
+
+</style>
+----------------------------以上的内容放在head里---------------------------
+<!-- Mainly scripts for pop windows-->
+ <script>  
+        function openwin1(n){
+            document.getElementById('inputbox').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
+        }
+     </script>  
+     <script>  
+        function openwin2(n){
+            document.getElementById('inputbox2').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
+        }
+     </script>  
+          <script>  
+        function openwin3(n){
+            document.getElementById('inputbox3').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
+        }
+ </script>  
+//写第1个弹窗的内容
+     <div id='inputbox' class="opbox1">  //第2，3个弹窗就改class为opbox2,3
+        <a class='x' href=''; onclick="openwin1(0); return false;">关闭</a>  //第2，3个弹窗就改成openwin2 openwin3
+   
+     ************************** //你要放在第一个弹窗里的东西
+  </div>
+*****************//写第2，3个弹窗的内容。。。
+------------------------以上的内容放在正常页面之后------------------------
+后台servlet的写法：和一般controller没有区别，只是
+获取前台传来的数据key：
+req.setCharacterEncoding("utf-8");
+resp.setContentType("text;charset=utf-8");
+resp.setCharacterEncoding("UTF-8");
+resp.setHeader("Cache-Control", "no-cache"); 
+String key= req.getParameter("key");
+
+最后向前台传值时这样写：
+resp.getWriter().print(URLEncoder.encode(s,"utf-8"));
+s是要传回去的字符串
+
