@@ -1,2 +1,7 @@
+<<<<<<< py_branch
+eclipse.preferences.version=1
+encoding/<project>=UTF-8
+=======
 eclipse.preferences.version=1
 encoding//WebContent/account.jsp=UTF-8
+>>>>>>> master
