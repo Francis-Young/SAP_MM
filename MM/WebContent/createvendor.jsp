@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="java.util.ArrayList"%>
+<%
+	ArrayList<String> reconacct = (ArrayList<String>) request.getAttribute("reconacct");
+	ArrayList<String> paymentterms = (ArrayList<String>) request.getAttribute("paymentterms");
+	ArrayList<String> currency = (ArrayList<String>) request.getAttribute("currency");
+	ArrayList<String> language = (ArrayList<String>) request.getAttribute("language");
+%>
 <!DOCTYPE html>
 <html>
 
@@ -9,18 +17,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>创建供应商</title>
-
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
-<!-- Toastr style -->
-<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
-
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
-
-
-
+<link href="css/plugins/chosen/chosen.css" rel="stylesheet">
 </head>
 
 <body>
@@ -32,11 +33,11 @@
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element">
-							<span> <img alt="image" class="img-circle"
-								src="img/profile_small.jpg" />
+							<span> <img height="48px" width="48px" alt="image"
+								class="img-circle" src="<%=session.getAttribute("uportrait")%>" />
 							</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<span class="clear"> <span class="block m-t-xs"> <strong
-										class="font-bold">王昆</strong>
+										class="font-bold"><%=session.getAttribute("uid")%></strong>
 								</span> <span class="text-muted text-xs block">管理员 <b
 										class="caret"></b></span>
 							</span>
@@ -46,12 +47,12 @@
 								<li><a href="contacts.html">联系方式</a></li>
 								<li><a href="mailbox.html">邮箱</a></li>
 								<li class="divider"></li>
-								<li><a href="login.html">退出登录</a></li>
+								<li><a href="Login">退出登录</a></li>
 							</ul>
 						</div>
 						<div class="logo-element">IN+</div>
 					</li>
-					<li><a href="layouts.html"><i class="fa fa-home"></i> <span
+					<li><a href="Home"><i class="fa fa-home"></i> <span
 							class="nav-label">主页</span></a></li>
 					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
 							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
@@ -109,290 +110,190 @@
 						<li class="dropdown"><a class="dropdown-toggle count-info"
 							data-toggle="dropdown" href="#"> <i class="fa fa-envelope"></i>
 								<span class="label label-warning">16</span>
-						</a>
-							<ul class="dropdown-menu dropdown-messages">
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/a7.jpg">
-										</a>
-										<div class="media-body">
-											<small class="pull-right">46小时前</small> <strong>李文俊</strong>
-											关注了 <strong>刘海洋</strong>. <br> <small class="text-muted">3
-												天 前- 10.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/a4.jpg">
-										</a>
-										<div class="media-body ">
-											<small class="pull-right text-navy">5小时前</small> <strong>王昆</strong>
-											关注了 <strong>李文俊</strong>. <br> <small class="text-muted">昨天下午1:21
-												- 11.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/profile.jpg">
-										</a>
-										<div class="media-body ">
-											<small class="pull-right">23小时前</small> <strong>张三</strong>
-											赞了 <strong>李四</strong>. <br> <small class="text-muted">2天前
-												- 11.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="text-center link-block">
-										<a href="mailbox.html"> <i class="fa fa-envelope"></i> <strong>查看更多消息</strong>
-										</a>
-									</div>
-								</li>
-							</ul></li>
-
-						<li><a href="login.html"> <i class="fa fa-sign-out"></i>
-								退出登录
+						</a></li>
+						<li><a href="Login"> <i class="fa fa-sign-out"></i> 退出登录
 						</a></li>
 					</ul>
-
 				</nav>
 			</div>
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
 					<h2>创建供应商</h2>
 					<ol class="breadcrumb">
-						<li><a href="index.html">主页</a></li>
+						<li><a href="Home">主页</a></li>
 						<li>供应商管理</li>
 						<li class="active"><strong>创建供应商</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
 			</div>
-			<div class="wrapper wrapper-content animated fadeIn">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="ibox float-e-margins">
-							<div class="ibox-title">
-								<h5>创建供应商</h5>
-								<div class="ibox-tools">
-									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
-									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-										<i class="fa fa-wrench"></i>
-									</a>
-									<ul class="dropdown-menu dropdown-user">
-										<li><a href="#">配置 1</a></li>
-										<li><a href="#">配置 2</a></li>
-									</ul>
-									<a class="close-link"> <i class="fa fa-times"></i>
-									</a>
+			<form class="m-t" role="form" action="CreateVendor" method="post">
+				<div class="wrapper wrapper-content animated fadeIn">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="ibox float-e-margins">
+								<div class="ibox-title">
+									<h5>创建供应商</h5>
+									<div class="ibox-tools">
+										<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+										</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+											<i class="fa fa-wrench"></i>
+										</a>
+										<ul class="dropdown-menu dropdown-user">
+											<li><a href="#">配置 1</a></li>
+											<li><a href="#">配置 2</a></li>
+										</ul>
+										<a class="close-link"> <i class="fa fa-times"></i>
+										</a>
+									</div>
 								</div>
-							</div>
-							<div class="ibox-content">
-								<form class="m-t" role="form" action="CreateVendor"
-									method="post">
+								<div class="ibox-content">
 									<div class="row">
+										<div class="col-md-2">
+											<div class="form-group" id="toastTypeGroup">
+												<label>供应商类型</label>
+												<div class="radio">
+													<label> <input type="radio" name="vtype"
+														value="person" />个人
+													</label>
+												</div>
+												<div class="radio">
+													<label class="radio"> <input type="radio"
+														name="vtype" value="organization" checked />组织
+													</label>
+												</div>
+												<div class="radio">
+													<label class="radio"> <input type="radio"
+														name="vtype" value="group" />团体
+													</label>
+												</div>
+											</div>
+										</div>
 
 										<div class="col-md-4">
 											<div class="form-group">
 												<label for="title">供应商名称</label> <input name="vname"
-													type="text" class="form-control" placeholder="输入标题..." />
+													type="text" class="form-control" placeholder="输入供应商名称..." />
 											</div>
 											<div class="form-group">
-												<label for="message">供应商地址</label> <input
-													class="form-control" id="vaddress" type="text"
-													class="form-control" placeholder="输入消息 ..."></input>
+												<label for="message">供应商公司号</label> <input
+													class="form-control" name="vcompanycode" type="text"
+													class="form-control" placeholder="输入公司号 ，如TJ00..."></input>
 											</div>
-											<div class="checkbox">
-												<label class="checkbox" for="closeButton"> <input
-													id="closeButton" type="checkbox" value="checked"
-													class="input-mini" checked />关闭按钮
-												</label>
+											<div class="form-group">
+												<label for="message">供应商国家</label> <input
+													class="form-control" name="vcountry" type="text"
+													class="form-control" placeholder="输入供应商所属国家，如中国 ..."></input>
 											</div>
-											<div class="checkbox">
-												<label class="checkbox" for="addBehaviorOnToastClick">
-													<input id="addBehaviorOnToastClick" type="checkbox"
-													value="checked" class="input-mini" />在小方块上点击
-												</label>
+											<div class="form-group">
+												<label for="message">供应商城市</label> <input
+													class="form-control" name="vcity" type="text"
+													class="form-control" placeholder="输入供应商所在城市，如上海 ..."></input>
 											</div>
-											<div class="checkbox">
-												<label class="checkbox" for="debugInfo"> <input
-													id="debugInfo" type="checkbox" value="checked"
-													class="input-mini" />Debug
-												</label>
+											<div class="form-group">
+												<label for="message">供应商地区</label> <input
+													class="form-control" name="vregion" type="text"
+													class="form-control" placeholder="输入供应商所在区，如杨浦区..."></input>
 											</div>
-											<div class="checkbox">
-												<label class="checkbox" for="progressBar"> <input
-													id="progressBar" type="checkbox" value="checked"
-													class="input-mini" checked />进度条
-												</label>
+											<div class="form-group">
+												<label for="message">供应商街道</label> <input
+													class="form-control" name="vstreet" type="text"
+													class="form-control" placeholder="输入供应商所在街道，如四平路 1239号..."></input>
 											</div>
-											<div class="checkbox">
-												<label class="checkbox" for="preventDuplicates"> <input
-													id="preventDuplicates" type="checkbox" value="checked"
-													class="input-mini" />防止重复
-												</label>
+											<div class="form-group">
+												<label for="message">供应商邮政编码</label> <input
+													class="form-control" name="vpostalcode" type="text"
+													class="form-control" placeholder="输入供应商邮政编码，如200092..."></input>
 											</div>
-										</div>
-
-										<div class="col-md-2">
-											<div class="form-group" id="toastTypeGroup">
-												<label>类型</label>
-												<div class="radio">
-													<label> <input type="radio" name="toasts"
-														value="success" checked />成功
-													</label>
-												</div>
-												<div class="radio">
-													<label class="radio"> <input type="radio"
-														name="toasts" value="info" />信息
-													</label>
-												</div>
-												<div class="radio">
-													<label class="radio"> <input type="radio"
-														name="toasts" value="warning" />警告
-													</label>
-												</div>
-												<div class="radio">
-													<label class="radio"> <input type="radio"
-														name="toasts" value="error" />错误
-													</label>
-												</div>
-											</div>
-											<div class="form-group" id="positionGroup">
-												<label>位置</label>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-top-right" checked />右上角
-													</label>
-												</div>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-bottom-right" />右下角
-													</label>
-												</div>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-bottom-left" />左下角
-													</label>
-												</div>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-top-left" />左上角
-													</label>
-												</div>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-top-full-width" />顶全宽
-													</label>
-												</div>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-bottom-full-width" />底全宽
-													</label>
-												</div>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-top-center" />顶中心
-													</label>
-												</div>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-bottom-center" />低中心
-													</label>
+											<div class="form-group">
+												<label for="message">供应商语言</label>
+												<div>
+													<select class="select2_demo_1 form-control"
+														name="vlanguage">
+														<c:forEach items="${language}" var="language" begin="0"
+															end="${language.size()}" step="1">
+															<option value="${language }"
+																<c:if test="${language=='ZH-CN'}"> selected="selected" </c:if>><c:out
+																	value="${language}"></c:out></option>
+														</c:forEach>
+													</select>
 												</div>
 											</div>
 										</div>
-
-										<div class="col-md-2">
-											<div class="form-group">
-												<label for="showEasing">缓慢显示</label> <input id="showEasing"
-													type="text" placeholder="swing, linear"
-													class="form-control" value="swing" />
-											</div>
-											<div class="form-group">
-
-												<label for="hideEasing">缓慢隐藏</label> <input id="hideEasing"
-													type="text" placeholder="swing, linear"
-													class="form-control" value="linear" />
-											</div>
-											<div class="form-group">
-
-												<label for="showMethod">显示方式</label> <input id="showMethod"
-													type="text" placeholder="show, fadeIn, slideDown"
-													class="form-control" value="fadeIn" />
-											</div>
-											<div class="form-group">
-
-												<label for="hideMethod">隐藏方式</label> <input id="hideMethod"
-													type="text" placeholder="hide, fadeOut, slideUp"
-													class="form-control" value="fadeOut" />
-											</div>
-										</div>
-
 										<div class="col-md-3">
 											<div class="form-group">
-												<label for="showDuration">显示持续时间</label> <input
-													id="showDuration" type="text" placeholder="ms"
-													class="form-control" value="400" />
+												<label for="title">使用货币类型</label>
+												<div class="input-group">
+													<select class="select2_demo_1 form-control"
+														style="width: 350px;" name="vcurrency">
+														<c:forEach items="${currency}" var="currency" begin="0"
+															end="${currency.size()}" step="1">
+															<option value="${currency }"
+																<c:if test="${currency=='RMB'}"> selected="selected" </c:if>><c:out
+																	value="${currency}"></c:out></option>
+														</c:forEach>
+													</select>
+												</div>
 											</div>
 											<div class="form-group">
-												<label for="hideDuration">隐藏持续时间</label> <input
-													id="hideDuration" type="text" placeholder="ms"
-													class="form-control" value="1000" />
+												<label for="title">税号</label> <input name="vtax" type="text"
+													class="form-control" placeholder="输入该供应商的税号..." />
 											</div>
 											<div class="form-group">
-												<label for="timeOut">超时</label> <input id="timeOut"
-													type="text" placeholder="ms" class="form-control"
-													value="7000" />
+												<label for="title">支付模式</label> <select
+													class="select2_demo_1 form-control" name="vpaymentterms">
+													<c:forEach items="${paymentterms}" var="paymentterms"
+														begin="0" end="${paymentterms.size()}" step="1">
+														<option value="${paymentterms }"
+															<c:if test="${paymentterms=='0001'}"> selected="selected" </c:if>><c:out
+																value="${paymentterms}"></c:out></option>
+													</c:forEach>
+												</select>
 											</div>
 											<div class="form-group">
-												<label for="extendedTimeOut">延长时间</label> <input
-													id="extendedTimeOut" type="text" placeholder="ms"
-													class="form-control" value="1000" />
+												<label for="title">统驭科目</label>
+												<div>
+													<select class="select2_demo_1 form-control"
+														name="vreconacct">
+														<c:forEach items="${reconacct}" var="reconacct" begin="0"
+															end="${reconacct.size()}" step="1">
+															<option value="${reconacct }"
+																<c:if test="${reconacct=='300000'}"> selected="selected" </c:if>><c:out
+																	value="${reconacct}"></c:out></option>
+														</c:forEach>
+													</select>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="title">联系员工</label> <input name="vclerk"
+													type="text" class="form-control"
+													placeholder="输入与该供应商对接的员工..." />
 											</div>
 										</div>
-
-									</div>
-
-									<div class="row">
-										<div class="col-lg-12">
-											<button type="submit" class="btn btn-primary" id="showtoast">显示</button>
-											<button type="button" class="btn btn-white" id="cleartoasts">隐藏</button>
-											<button type="button" class="btn btn-white"
-												id="clearlasttoast">清除</button>
-											<button type="button" class="btn btn-white" id="showsimple">显示简单的选项</button>
-										</div>
-									</div>
-								</form>
-								<div class="row m-t-lg">
-									<div class="col-lg-12">
-										<small>JSON选项</small>
-										<pre id="toastrOptions" class="p-m"></pre>
 									</div>
 								</div>
-
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="footer">
-				<div class="pull-right">
-					10GB of <strong>250GB</strong> Free.
+				<div class="footer">
+					<div class="pull-right">
+						<button type="submit" class="btn btn-primary" id="showtoast">创建</button>
+						<button type="reset" class="btn btn-white" id="clearlasttoast">清除</button>
+					</div>
+					<div>
+						<%
+							String notice = (String) request.getAttribute("notice");
+							if (notice != null && !"".equals(notice)) {
+						%>
+						成功创建供应商<strong><%=notice%></strong>
+						<%
+							request.setAttribute("success", "");
+							}
+						%>
+					</div>
 				</div>
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2014-2015
-				</div>
-			</div>
-
+			</form>
 		</div>
 	</div>
 
@@ -410,140 +311,377 @@
 	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
 
-	<script type="text/javascript">
-		$(function() {
-			var i = -1;
-			var toastCount = 0;
-			var $toastlast;
-			var getMessage = function() {
-				var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
-				return msg;
-			};
+	<!-- Chosen -->
+	<script src="js/plugins/chosen/chosen.jquery.js"></script>
 
-			$('#showsimple').click(function() {
-				// Display a success toast, with a title
-				toastr.success('Without any options', 'Simple notification!')
-			});
-			$('#showtoast')
-					.click(
-							function() {
-								var shortCutFunction = $(
-										"#toastTypeGroup input:radio:checked")
-										.val();
-								var msg = $('#message').val();
-								var title = $('#title').val() || '';
-								var $showDuration = $('#showDuration');
-								var $hideDuration = $('#hideDuration');
-								var $timeOut = $('#timeOut');
-								var $extendedTimeOut = $('#extendedTimeOut');
-								var $showEasing = $('#showEasing');
-								var $hideEasing = $('#hideEasing');
-								var $showMethod = $('#showMethod');
-								var $hideMethod = $('#hideMethod');
-								var toastIndex = toastCount++;
-								toastr.options = {
-									closeButton : $('#closeButton').prop(
-											'checked'),
-									debug : $('#debugInfo').prop('checked'),
-									progressBar : $('#progressBar').prop(
-											'checked'),
-									preventDuplicates : $('#preventDuplicates')
-											.prop('checked'),
-									positionClass : $(
-											'#positionGroup input:radio:checked')
-											.val()
-											|| 'toast-top-right',
-									onclick : null
-								};
-								if ($('#addBehaviorOnToastClick').prop(
-										'checked')) {
-									toastr.options.onclick = function() {
-										alert('You can perform some custom action after a toast goes away');
-									};
-								}
-								if ($showDuration.val().length) {
-									toastr.options.showDuration = $showDuration
-											.val();
-								}
-								if ($hideDuration.val().length) {
-									toastr.options.hideDuration = $hideDuration
-											.val();
-								}
-								if ($timeOut.val().length) {
-									toastr.options.timeOut = $timeOut.val();
-								}
-								if ($extendedTimeOut.val().length) {
-									toastr.options.extendedTimeOut = $extendedTimeOut
-											.val();
-								}
-								if ($showEasing.val().length) {
-									toastr.options.showEasing = $showEasing
-											.val();
-								}
-								if ($hideEasing.val().length) {
-									toastr.options.hideEasing = $hideEasing
-											.val();
-								}
-								if ($showMethod.val().length) {
-									toastr.options.showMethod = $showMethod
-											.val();
-								}
-								if ($hideMethod.val().length) {
-									toastr.options.hideMethod = $hideMethod
-											.val();
-								}
-								if (!msg) {
-									msg = getMessage();
-								}
-								$("#toastrOptions").text(
-										"Command: toastr["
-												+ shortCutFunction
-												+ "](\""
-												+ msg
-												+ (title ? "\", \"" + title
-														: '')
-												+ "\")\n\ntoastr.options = "
-												+ JSON
-														.stringify(
-																toastr.options,
-																null, 2));
-								var $toast = toastr[shortCutFunction](msg,
-										title); // Wire up an event handler to a button in the toast, if it exists
-								$toastlast = $toast;
-								if ($toast.find('#okBtn').length) {
-									$toast
-											.delegate(
-													'#okBtn',
-													'click',
-													function() {
-														alert('you clicked me. i was toast #'
-																+ toastIndex
-																+ '. goodbye!');
-														$toast.remove();
-													});
-								}
-								if ($toast.find('#surpriseBtn').length) {
-									$toast
-											.delegate(
-													'#surpriseBtn',
-													'click',
-													function() {
-														alert('Surprise! you clicked me. i was toast #'
-																+ toastIndex
-																+ '. You could perform an action here.');
-													});
+	<script>
+		$(document)
+				.ready(
+						function() {
+
+							var $image = $(".image-crop > img")
+							$($image).cropper({
+								aspectRatio : 1.618,
+								preview : ".img-preview",
+								done : function(data) {
+									// Output the result data for cropping image.
 								}
 							});
-			function getLastToast() {
-				return $toastlast;
+
+							var $inputImage = $("#inputImage");
+							if (window.FileReader) {
+								$inputImage
+										.change(function() {
+											var fileReader = new FileReader(), files = this.files, file;
+
+											if (!files.length) {
+												return;
+											}
+
+											file = files[0];
+
+											if (/^image\/\w+$/.test(file.type)) {
+												fileReader.readAsDataURL(file);
+												fileReader.onload = function() {
+													$inputImage.val("");
+													$image.cropper("reset",
+															true).cropper(
+															"replace",
+															this.result);
+												};
+											} else {
+												showMessage("Please choose an image file.");
+											}
+										});
+							} else {
+								$inputImage.addClass("hide");
+							}
+
+							$("#download").click(function() {
+								window.open($image.cropper("getDataURL"));
+							});
+
+							$("#zoomIn").click(function() {
+								$image.cropper("zoom", 0.1);
+							});
+
+							$("#zoomOut").click(function() {
+								$image.cropper("zoom", -0.1);
+							});
+
+							$("#rotateLeft").click(function() {
+								$image.cropper("rotate", 45);
+							});
+
+							$("#rotateRight").click(function() {
+								$image.cropper("rotate", -45);
+							});
+
+							$("#setDrag").click(function() {
+								$image.cropper("setDragMode", "crop");
+							});
+
+							$('#data_1 .input-group.date').datepicker({
+								todayBtn : "linked",
+								keyboardNavigation : false,
+								forceParse : false,
+								calendarWeeks : true,
+								autoclose : true
+							});
+
+							$('#data_2 .input-group.date').datepicker({
+								startView : 1,
+								todayBtn : "linked",
+								keyboardNavigation : false,
+								forceParse : false,
+								autoclose : true,
+								format : "dd/mm/yyyy"
+							});
+
+							$('#data_3 .input-group.date').datepicker({
+								startView : 2,
+								todayBtn : "linked",
+								keyboardNavigation : false,
+								forceParse : false,
+								autoclose : true
+							});
+
+							$('#data_4 .input-group.date').datepicker({
+								minViewMode : 1,
+								keyboardNavigation : false,
+								forceParse : false,
+								autoclose : true,
+								todayHighlight : true
+							});
+
+							$('#data_5 .input-daterange').datepicker({
+								keyboardNavigation : false,
+								forceParse : false,
+								autoclose : true
+							});
+
+							var elem = document.querySelector('.js-switch');
+							var switchery = new Switchery(elem, {
+								color : '#1AB394'
+							});
+
+							var elem_2 = document.querySelector('.js-switch_2');
+							var switchery_2 = new Switchery(elem_2, {
+								color : '#ED5565'
+							});
+
+							var elem_3 = document.querySelector('.js-switch_3');
+							var switchery_3 = new Switchery(elem_3, {
+								color : '#1AB394'
+							});
+
+							$('.i-checks').iCheck({
+								checkboxClass : 'icheckbox_square-green',
+								radioClass : 'iradio_square-green'
+							});
+
+							$('.demo1').colorpicker();
+
+							var divStyle = $('.back-change')[0].style;
+							$('#demo_apidemo').colorpicker({
+								color : divStyle.backgroundColor
+							}).on('changeColor', function(ev) {
+								divStyle.backgroundColor = ev.color.toHex();
+							});
+
+							$('.clockpicker').clockpicker();
+
+							$('input[name="daterange"]').daterangepicker();
+
+							$('#reportrange span').html(
+									moment().subtract(29, 'days').format(
+											'MMMM D, YYYY')
+											+ ' - '
+											+ moment().format('MMMM D, YYYY'));
+
+							$('#reportrange')
+									.daterangepicker(
+											{
+												format : 'MM/DD/YYYY',
+												startDate : moment().subtract(
+														29, 'days'),
+												endDate : moment(),
+												minDate : '01/01/2012',
+												maxDate : '12/31/2015',
+												dateLimit : {
+													days : 60
+												},
+												showDropdowns : true,
+												showWeekNumbers : true,
+												timePicker : false,
+												timePickerIncrement : 1,
+												timePicker12Hour : true,
+												ranges : {
+													'Today' : [ moment(),
+															moment() ],
+													'Yesterday' : [
+															moment().subtract(
+																	1, 'days'),
+															moment().subtract(
+																	1, 'days') ],
+													'Last 7 Days' : [
+															moment().subtract(
+																	6, 'days'),
+															moment() ],
+													'Last 30 Days' : [
+															moment().subtract(
+																	29, 'days'),
+															moment() ],
+													'This Month' : [
+															moment().startOf(
+																	'month'),
+															moment().endOf(
+																	'month') ],
+													'Last Month' : [
+															moment()
+																	.subtract(
+																			1,
+																			'month')
+																	.startOf(
+																			'month'),
+															moment()
+																	.subtract(
+																			1,
+																			'month')
+																	.endOf(
+																			'month') ]
+												},
+												opens : 'right',
+												drops : 'down',
+												buttonClasses : [ 'btn',
+														'btn-sm' ],
+												applyClass : 'btn-primary',
+												cancelClass : 'btn-default',
+												separator : ' to ',
+												locale : {
+													applyLabel : 'Submit',
+													cancelLabel : 'Cancel',
+													fromLabel : 'From',
+													toLabel : 'To',
+													customRangeLabel : 'Custom',
+													daysOfWeek : [ 'Su', 'Mo',
+															'Tu', 'We', 'Th',
+															'Fr', 'Sa' ],
+													monthNames : [ 'January',
+															'February',
+															'March', 'April',
+															'May', 'June',
+															'July', 'August',
+															'September',
+															'October',
+															'November',
+															'December' ],
+													firstDay : 1
+												}
+											},
+											function(start, end, label) {
+												console.log(
+														start.toISOString(),
+														end.toISOString(),
+														label);
+												$('#reportrange span')
+														.html(
+																start
+																		.format('MMMM D, YYYY')
+																		+ ' - '
+																		+ end
+																				.format('MMMM D, YYYY'));
+											});
+
+							$(".select2_demo_1").select2();
+							$(".select2_demo_2").select2();
+							$(".select2_demo_3").select2({
+								placeholder : "Select a state",
+								allowClear : true
+							});
+
+							$(".touchspin1").TouchSpin({
+								buttondown_class : 'btn btn-white',
+								buttonup_class : 'btn btn-white'
+							});
+
+							$(".touchspin2").TouchSpin({
+								min : 0,
+								max : 100,
+								step : 0.1,
+								decimals : 2,
+								boostat : 5,
+								maxboostedstep : 10,
+								postfix : '%',
+								buttondown_class : 'btn btn-white',
+								buttonup_class : 'btn btn-white'
+							});
+
+							$(".touchspin3").TouchSpin({
+								verticalbuttons : true,
+								buttondown_class : 'btn btn-white',
+								buttonup_class : 'btn btn-white'
+							});
+
+						});
+		var config = {
+			'.chosen-select' : {},
+			'.chosen-select-deselect' : {
+				allow_single_deselect : true
+			},
+			'.chosen-select-no-single' : {
+				disable_search_threshold : 10
+			},
+			'.chosen-select-no-results' : {
+				no_results_text : 'Oops, nothing found!'
+			},
+			'.chosen-select-width' : {
+				width : "95%"
 			}
-			$('#clearlasttoast').click(function() {
-				toastr.clear(getLastToast());
-			});
-			$('#cleartoasts').click(function() {
-				toastr.clear();
-			});
-		})
+		}
+		for ( var selector in config) {
+			$(selector).chosen(config[selector]);
+		}
+
+		$("#ionrange_1").ionRangeSlider({
+			min : 0,
+			max : 5000,
+			type : 'double',
+			prefix : "$",
+			maxPostfix : "+",
+			prettify : false,
+			hasGrid : true
+		});
+
+		$("#ionrange_2").ionRangeSlider({
+			min : 0,
+			max : 10,
+			type : 'single',
+			step : 0.1,
+			postfix : " carats",
+			prettify : false,
+			hasGrid : true
+		});
+
+		$("#ionrange_3").ionRangeSlider({
+			min : -50,
+			max : 50,
+			from : 0,
+			postfix : "°",
+			prettify : false,
+			hasGrid : true
+		});
+
+		$("#ionrange_4").ionRangeSlider(
+				{
+					values : [ "January", "February", "March", "April", "May",
+							"June", "July", "August", "September", "October",
+							"November", "December" ],
+					type : 'single',
+					hasGrid : true
+				});
+
+		$("#ionrange_5").ionRangeSlider({
+			min : 10000,
+			max : 100000,
+			step : 100,
+			postfix : " km",
+			from : 55000,
+			hideMinMax : true,
+			hideFromTo : false
+		});
+
+		$(".dial").knob();
+
+		$("#basic_slider").noUiSlider({
+			start : 40,
+			behaviour : 'tap',
+			connect : 'upper',
+			range : {
+				'min' : 20,
+				'max' : 80
+			}
+		});
+
+		$("#range_slider").noUiSlider({
+			start : [ 40, 60 ],
+			behaviour : 'drag',
+			connect : true,
+			range : {
+				'min' : 20,
+				'max' : 80
+			}
+		});
+
+		$("#drag-fixed").noUiSlider({
+			start : [ 40, 60 ],
+			behaviour : 'drag-fixed',
+			connect : true,
+			range : {
+				'min' : 20,
+				'max' : 80
+			}
+		});
 	</script>
 </body>
 
