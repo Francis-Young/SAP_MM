@@ -24,19 +24,17 @@
 </head>
 
 <body>
-
 	<div id="wrapper">
-
 		<nav class="navbar-default navbar-static-side" role="navigation">
 			<div class="sidebar-collapse">
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element">
-							<span> <img alt="image" class="img-circle"
-								src="img/profile_small.jpg" />
+							<span> <img height="48px" width="48px" alt="image"
+								class="img-circle" src="<%=session.getAttribute("uportrait")%>" />
 							</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<span class="clear"> <span class="block m-t-xs"> <strong
-										class="font-bold">王昆</strong>
+										class="font-bold"><%=session.getAttribute("uid")%></strong>
 								</span> <span class="text-muted text-xs block">管理员 <b
 										class="caret"></b></span>
 							</span>
@@ -46,17 +44,17 @@
 								<li><a href="contacts.html">联系方式</a></li>
 								<li><a href="mailbox.html">邮箱</a></li>
 								<li class="divider"></li>
-								<li><a href="login.html">退出登录</a></li>
+								<li><a href="Login">退出登录</a></li>
 							</ul>
 						</div>
 						<div class="logo-element">IN+</div>
 					</li>
-					<li><a href="layouts.html"><i class="fa fa-home"></i> <span
+					<li><a href="Home"><i class="fa fa-home"></i> <span
 							class="nav-label">主页</span></a></li>
 					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
 							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="graph_flot.html">创建供应商</a></li>
+							<li><a href="CreateVendor">创建供应商</a></li>
 							<li><a href="graph_morris.html">维护供应商</a></li>
 						</ul></li>
 					<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
@@ -89,7 +87,7 @@
 			</div>
 		</nav>
 
-		<div id="page-wrapper" class="gray-bg">
+		<div id="page-wrapper" class="gray-bg dashbard-1">
 			<div class="row border-bottom">
 				<nav class="navbar navbar-static-top" role="navigation"
 					style="margin-bottom: 0">
@@ -105,7 +103,10 @@
 						</form>
 					</div>
 					<ul class="nav navbar-top-links navbar-right">
-						<li><span class="m-r-sm text-muted welcome-message">欢迎回来！</span></li>
+						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uid")%></span>
+						</li>
+						<li><a href="CreateMaterial">创建物料</a></li>
+						<li><a href="SelectVendor">维护供应商</a></li>
 						<li class="dropdown"><a class="dropdown-toggle count-info"
 							data-toggle="dropdown" href="#"> <i class="fa fa-envelope"></i>
 								<span class="label label-warning">16</span>
@@ -157,244 +158,131 @@
 									</div>
 								</li>
 							</ul></li>
+						<li class="dropdown"><a class="dropdown-toggle count-info"
+							data-toggle="dropdown" href="#"> <i class="fa fa-bell"></i> <span
+								class="label label-primary">8</span>
+						</a>
+							<ul class="dropdown-menu dropdown-alerts">
+								<li><a href="mailbox.html">
+										<div>
+											<i class="fa fa-envelope fa-fw"></i> 您有 16 条未读通知 <span
+												class="pull-right text-muted small">4 分钟 前</span>
+										</div>
+								</a></li>
+								<li class="divider"></li>
+								<li><a href="profile.html">
+										<div>
+											<i class="fa fa-twitter fa-fw"></i> 3 个新粉丝 <span
+												class="pull-right text-muted small">12 分钟 前</span>
+										</div>
+								</a></li>
+								<li class="divider"></li>
+								<li><a href="grid_options.html">
+										<div>
+											<i class="fa fa-upload fa-fw"></i> 服务器重启 <span
+												class="pull-right text-muted small">4 分钟 前</span>
+										</div>
+								</a></li>
+								<li class="divider"></li>
+								<li>
+									<div class="text-center link-block">
+										<a href="notifications.html"> <strong>查看更多通知</strong> <i
+											class="fa fa-angle-right"></i>
+										</a>
+									</div>
+								</li>
+							</ul></li>
 
-						<li><a href="login.html"> <i class="fa fa-sign-out"></i>
-								退出登录
+
+						<li><a href="Login"> <i class="fa fa-sign-out"></i> 退出登录
 						</a></li>
 					</ul>
 
 				</nav>
 			</div>
-			<div class="row wrapper border-bottom white-bg page-heading">
-				<div class="col-lg-10">
-					<h2>创建供应商</h2>
-					<ol class="breadcrumb">
-						<li><a href="index.html">主页</a></li>
-						<li>供应商管理</li>
-						<li class="active"><strong>创建供应商</strong></li>
-					</ol>
+			<div class="row  border-bottom white-bg dashboard-header">
+				<div class="col-sm-8">
+					<img
+						src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1595769688168&di=4f30d376c3e795bca8fea83a24a58343&imgtype=0&src=http%3A%2F%2Fwww.cniteyes.com%2Fdata%2Fuploads%2F2016%2F10%2FSAP-Logo.svg_.png"
+						class="img-responsive">
+
 				</div>
-				<div class="col-lg-2"></div>
-			</div>
-			<div class="wrapper wrapper-content animated fadeIn">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="ibox float-e-margins">
-							<div class="ibox-title">
-								<h5>创建供应商</h5>
-								<div class="ibox-tools">
-									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
-									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-										<i class="fa fa-wrench"></i>
-									</a>
-									<ul class="dropdown-menu dropdown-user">
-										<li><a href="#">配置 1</a></li>
-										<li><a href="#">配置 2</a></li>
-									</ul>
-									<a class="close-link"> <i class="fa fa-times"></i>
-									</a>
-								</div>
+				<div class="col-sm-4">
+					<div class="wrapper wrapper-content">
+						<div class="row">
+							<h2>备忘录</h2>
+							<div class="ibox-content ibox-heading">
+								<h3>您有新的会议!</h3>
+								<small><i class="fa fa-map-marker"></i>会议在10:00召开，请安排好您的时间.</small>
 							</div>
-							<div class="ibox-content">
-								<form class="m-t" role="form" action="Login" method="post">
+							<div class="ibox-content inspinia-timeline">
+
+								<div class="timeline-item">
 									<div class="row">
-
-										<div class="col-md-4">
-											<div class="form-group">
-												<label for="title">供应商名称</label> <input id="vname"
-													type="text" class="form-control" placeholder="输入标题..." />
-											</div>
-											<div class="form-group">
-												<label for="message">供应商地址</label>
-												<input class="form-control" id="vaddress" 
-													type="text"  class="form-control" placeholder="输入消息 ..."></input>
-											</div>
-											<div class="checkbox">
-												<label class="checkbox" for="closeButton"> <input
-													id="closeButton" type="checkbox" value="checked"
-													class="input-mini" checked />关闭按钮
-												</label>
-											</div>
-											<div class="checkbox">
-												<label class="checkbox" for="addBehaviorOnToastClick">
-													<input id="addBehaviorOnToastClick" type="checkbox"
-													value="checked" class="input-mini" />在小方块上点击
-												</label>
-											</div>
-											<div class="checkbox">
-												<label class="checkbox" for="debugInfo"> <input
-													id="debugInfo" type="checkbox" value="checked"
-													class="input-mini" />Debug
-												</label>
-											</div>
-											<div class="checkbox">
-												<label class="checkbox" for="progressBar"> <input
-													id="progressBar" type="checkbox" value="checked"
-													class="input-mini" checked />进度条
-												</label>
-											</div>
-											<div class="checkbox">
-												<label class="checkbox" for="preventDuplicates"> <input
-													id="preventDuplicates" type="checkbox" value="checked"
-													class="input-mini" />防止重复
-												</label>
-											</div>
+										<div class="col-xs-3 date">
+											<i class="fa fa-briefcase"></i> 10:00 am <br /> <small
+												class="text-navy">2小时前</small>
 										</div>
+										<div class="col-xs-7 content no-top-border">
+											<p class="m-b-xs">
+												<strong>会议</strong>
+											</p>
 
-										<div class="col-md-2">
-											<div class="form-group" id="toastTypeGroup">
-												<label>类型</label>
-												<div class="radio">
-													<label> <input type="radio" name="toasts"
-														value="success" checked />成功
-													</label>
-												</div>
-												<div class="radio">
-													<label class="radio"> <input type="radio"
-														name="toasts" value="info" />信息
-													</label>
-												</div>
-												<div class="radio">
-													<label class="radio"> <input type="radio"
-														name="toasts" value="warning" />警告
-													</label>
-												</div>
-												<div class="radio">
-													<label class="radio"> <input type="radio"
-														name="toasts" value="error" />错误
-													</label>
-												</div>
-											</div>
-											<div class="form-group" id="positionGroup">
-												<label>位置</label>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-top-right" checked />右上角
-													</label>
-												</div>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-bottom-right" />右下角
-													</label>
-												</div>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-bottom-left" />左下角
-													</label>
-												</div>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-top-left" />左上角
-													</label>
-												</div>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-top-full-width" />顶全宽
-													</label>
-												</div>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-bottom-full-width" />底全宽
-													</label>
-												</div>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-top-center" />顶中心
-													</label>
-												</div>
-												<div class="radio">
-													<label> <input type="radio" name="positions"
-														value="toast-bottom-center" />低中心
-													</label>
-												</div>
-											</div>
+											<p>技术会议，将要讨论一下这个跨机房的oracle数据库怎么部署的问题.</p>
+
+											<p>
+												<span data-diameter="40" class="updating-chart">5,3,9,6,5,9,7,3,5,2,5,3,9,6,5,9,4,7,3,2,9,8,7,4,5,1,2,9,5,4,7,2,7,7,3,5,2</span>
+											</p>
 										</div>
-
-										<div class="col-md-2">
-											<div class="form-group">
-												<label for="showEasing">缓慢显示</label> <input id="showEasing"
-													type="text" placeholder="swing, linear"
-													class="form-control" value="swing" />
-											</div>
-											<div class="form-group">
-
-												<label for="hideEasing">缓慢隐藏</label> <input id="hideEasing"
-													type="text" placeholder="swing, linear"
-													class="form-control" value="linear" />
-											</div>
-											<div class="form-group">
-
-												<label for="showMethod">显示方式</label> <input id="showMethod"
-													type="text" placeholder="show, fadeIn, slideDown"
-													class="form-control" value="fadeIn" />
-											</div>
-											<div class="form-group">
-
-												<label for="hideMethod">隐藏方式</label> <input id="hideMethod"
-													type="text" placeholder="hide, fadeOut, slideUp"
-													class="form-control" value="fadeOut" />
-											</div>
-										</div>
-
-										<div class="col-md-3">
-											<div class="form-group">
-												<label for="showDuration">显示持续时间</label> <input
-													id="showDuration" type="text" placeholder="ms"
-													class="form-control" value="400" />
-											</div>
-											<div class="form-group">
-												<label for="hideDuration">隐藏持续时间</label> <input
-													id="hideDuration" type="text" placeholder="ms"
-													class="form-control" value="1000" />
-											</div>
-											<div class="form-group">
-												<label for="timeOut">超时</label> <input id="timeOut"
-													type="text" placeholder="ms" class="form-control"
-													value="7000" />
-											</div>
-											<div class="form-group">
-												<label for="extendedTimeOut">延长时间</label> <input
-													id="extendedTimeOut" type="text" placeholder="ms"
-													class="form-control" value="1000" />
-											</div>
-										</div>
-
-									</div>
-
-									<div class="row">
-										<div class="col-lg-12">
-											<button type="submit" class="btn btn-primary" id="showtoast">显示</button>
-											<button type="button" class="btn btn-white" id="cleartoasts">隐藏</button>
-											<button type="button" class="btn btn-white"
-												id="clearlasttoast">清除</button>
-											<button type="button" class="btn btn-white" id="showsimple">显示简单的选项</button>
-										</div>
-									</div>
-								</form>
-								<div class="row m-t-lg">
-									<div class="col-lg-12">
-										<small>JSON选项</small>
-										<pre id="toastrOptions" class="p-m"></pre>
 									</div>
 								</div>
-
+								<div class="timeline-item">
+									<div class="row">
+										<div class="col-xs-3 date">
+											<i class="fa fa-file-text"></i> 2:00 pm <br /> <small
+												class="text-navy">3小时前</small>
+										</div>
+										<div class="col-xs-7 content">
+											<p class="m-b-xs">
+												<strong>交发票</strong>
+											</p>
+											<p>去财务部交出差的发票</p>
+										</div>
+									</div>
+								</div>
+								<div class="timeline-item">
+									<div class="row">
+										<div class="col-xs-3 date">
+											<i class="fa fa-comments"></i> 17:30 pm <br /> <small
+												class="text-navy">48小时前</small>
+										</div>
+										<div class="col-xs-7 content">
+											<p class="m-b-xs">
+												<strong>跟海洋聊聊天</strong>
+											</p>
+											<p>海洋说网站的前端代码不会写，一起吃个饭顺便指点一下他.</p>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+
 			</div>
+
+
 			<div class="footer">
 				<div class="pull-right">
 					10GB of <strong>250GB</strong> Free.
 				</div>
 				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2014-2015
+					<strong>Copyright</strong> Example Company &copy; 2014-2015
 				</div>
 			</div>
 
 		</div>
 	</div>
-
 
 	<!-- Mainly scripts -->
 	<script src="js/jquery-2.1.1.js"></script>
@@ -402,147 +290,56 @@
 	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
 	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
+	<!-- Flot -->
+	<script src="js/plugins/flot/jquery.flot.js"></script>
+	<script src="js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+	<script src="js/plugins/flot/jquery.flot.spline.js"></script>
+	<script src="js/plugins/flot/jquery.flot.resize.js"></script>
+	<script src="js/plugins/flot/jquery.flot.pie.js"></script>
+
+	<!-- Peity -->
+	<script src="js/plugins/peity/jquery.peity.min.js"></script>
+	<script src="js/demo/peity-demo.js"></script>
+
 	<!-- Custom and plugin javascript -->
 	<script src="js/inspinia.js"></script>
 	<script src="js/plugins/pace/pace.min.js"></script>
 
-	<!-- Toastr script -->
+	<!-- jQuery UI -->
+	<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+	<!-- GITTER -->
+	<script src="js/plugins/gritter/jquery.gritter.min.js"></script>
+
+	<!-- Sparkline -->
+	<script src="js/plugins/sparkline/jquery.sparkline.min.js"></script>
+
+	<!-- Sparkline demo data  -->
+	<script src="js/demo/sparkline-demo.js"></script>
+
+	<!-- ChartJS-->
+	<script src="js/plugins/chartJs/Chart.min.js"></script>
+
+	<!-- Toastr -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
 
-	<script type="text/javascript">
-		$(function() {
-			var i = -1;
-			var toastCount = 0;
-			var $toastlast;
-			var getMessage = function() {
-				var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
-				return msg;
-			};
 
-			$('#showsimple').click(function() {
-				// Display a success toast, with a title
-				toastr.success('Without any options', 'Simple notification!')
-			});
-			$('#showtoast')
-					.click(
-							function() {
-								var shortCutFunction = $(
-										"#toastTypeGroup input:radio:checked")
-										.val();
-								var msg = $('#message').val();
-								var title = $('#title').val() || '';
-								var $showDuration = $('#showDuration');
-								var $hideDuration = $('#hideDuration');
-								var $timeOut = $('#timeOut');
-								var $extendedTimeOut = $('#extendedTimeOut');
-								var $showEasing = $('#showEasing');
-								var $hideEasing = $('#hideEasing');
-								var $showMethod = $('#showMethod');
-								var $hideMethod = $('#hideMethod');
-								var toastIndex = toastCount++;
-								toastr.options = {
-									closeButton : $('#closeButton').prop(
-											'checked'),
-									debug : $('#debugInfo').prop('checked'),
-									progressBar : $('#progressBar').prop(
-											'checked'),
-									preventDuplicates : $('#preventDuplicates')
-											.prop('checked'),
-									positionClass : $(
-											'#positionGroup input:radio:checked')
-											.val()
-											|| 'toast-top-right',
-									onclick : null
-								};
-								if ($('#addBehaviorOnToastClick').prop(
-										'checked')) {
-									toastr.options.onclick = function() {
-										alert('You can perform some custom action after a toast goes away');
-									};
-								}
-								if ($showDuration.val().length) {
-									toastr.options.showDuration = $showDuration
-											.val();
-								}
-								if ($hideDuration.val().length) {
-									toastr.options.hideDuration = $hideDuration
-											.val();
-								}
-								if ($timeOut.val().length) {
-									toastr.options.timeOut = $timeOut.val();
-								}
-								if ($extendedTimeOut.val().length) {
-									toastr.options.extendedTimeOut = $extendedTimeOut
-											.val();
-								}
-								if ($showEasing.val().length) {
-									toastr.options.showEasing = $showEasing
-											.val();
-								}
-								if ($hideEasing.val().length) {
-									toastr.options.hideEasing = $hideEasing
-											.val();
-								}
-								if ($showMethod.val().length) {
-									toastr.options.showMethod = $showMethod
-											.val();
-								}
-								if ($hideMethod.val().length) {
-									toastr.options.hideMethod = $hideMethod
-											.val();
-								}
-								if (!msg) {
-									msg = getMessage();
-								}
-								$("#toastrOptions").text(
-										"Command: toastr["
-												+ shortCutFunction
-												+ "](\""
-												+ msg
-												+ (title ? "\", \"" + title
-														: '')
-												+ "\")\n\ntoastr.options = "
-												+ JSON
-														.stringify(
-																toastr.options,
-																null, 2));
-								var $toast = toastr[shortCutFunction](msg,
-										title); // Wire up an event handler to a button in the toast, if it exists
-								$toastlast = $toast;
-								if ($toast.find('#okBtn').length) {
-									$toast
-											.delegate(
-													'#okBtn',
-													'click',
-													function() {
-														alert('you clicked me. i was toast #'
-																+ toastIndex
-																+ '. goodbye!');
-														$toast.remove();
-													});
-								}
-								if ($toast.find('#surpriseBtn').length) {
-									$toast
-											.delegate(
-													'#surpriseBtn',
-													'click',
-													function() {
-														alert('Surprise! you clicked me. i was toast #'
-																+ toastIndex
-																+ '. You could perform an action here.');
-													});
-								}
-							});
-			function getLastToast() {
-				return $toastlast;
-			}
-			$('#clearlasttoast').click(function() {
-				toastr.clear(getLastToast());
-			});
-			$('#cleartoasts').click(function() {
-				toastr.clear();
-			});
-		})
+	
+	<script>
+		(function(i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function() {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script',
+				'//www.google-analytics.com/analytics.js', 'ga');
+
+		ga('create', 'UA-4625583-2', 'webapplayers.com');
+		ga('send', 'pageview');
 	</script>
 </body>
 

@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 eclipse.preferences.version=1
 encoding/<project>=UTF-8
+=======
+eclipse.preferences.version=1
+encoding//WebContent/account.jsp=UTF-8
+>>>>>>> 21c61395cb0feb1e4bb8d92e2014978285aeecae
