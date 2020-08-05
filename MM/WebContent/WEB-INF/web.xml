@@ -108,4 +108,14 @@
     <servlet-name>SelectVendorController</servlet-name>
     <url-pattern>/SelectVendor</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TestController</display-name>
+    <servlet-name>TestController</servlet-name>
+    <servlet-class>mm.controller.TestController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TestController</servlet-name>
+    <url-pattern>/Test</url-pattern>
+  </servlet-mapping>
 </web-app>

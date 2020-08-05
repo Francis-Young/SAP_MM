@@ -173,6 +173,7 @@ public class VendorDao {
 			stat.setInt(1, vnum);
 			ResultSet rs = stat.executeQuery();
 			if (rs.next()) {
+				v.setVnum(vnums);
 				v.setVtype(rs.getString("vendor_type"));
 				v.setVname(rs.getString("vendor_name"));
 				v.setVtaxnum(rs.getString("vendor_taxnum"));
@@ -188,6 +189,34 @@ public class VendorDao {
 				v.setVlanguage(rs.getString("vendor_language"));
 				v.setVclerk(rs.getString("vendor_clerk"));
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DBUtil.closeConnection(conn);
+	}
+
+	public void updateVendor(String vnums, Vendor v) {
+		Connection conn = DBUtil.getConnection();
+		int vnum = Integer.parseInt(vnums);
+		try {
+			PreparedStatement stat = conn.prepareStatement(
+					"update Vendor set vendor_name=?,vendor_type=?,vendor_taxnum=?,vendor_companycode=?,vendor_reconacct=?,vendor_paymentterms=?,vendor_currency=?,vendor_street=?,vendor_postalcode=?,vendor_city=?,vendor_country=?,vendor_region=?,vendor_language=?,vendor_code=?,vendor_clerk=? WHERE vendor_num = ?");
+			stat.setString(1, v.getVname());
+			stat.setString(2, v.getVtype());
+			stat.setString(3, v.getVtaxnum());
+			stat.setString(4, v.getVcompanycode());
+			stat.setString(5, v.getVreconacct());
+			stat.setString(6, v.getVpaymentterms());
+			stat.setString(7, v.getVcurrency());
+			stat.setString(8, v.getVstreet());
+			stat.setString(9, v.getVpostalcode());
+			stat.setString(10, v.getVcity());
+			stat.setString(11, v.getVcountry());
+			stat.setString(12, v.getVregion());
+			stat.setString(13, v.getVclerk());
+			stat.setString(14, v.getVlanguage());
+			stat.setInt(15,vnum);
+			stat.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
