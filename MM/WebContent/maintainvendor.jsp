@@ -2,11 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="mm.bean.Vendor"%>
 <%
 	ArrayList<String> reconacct = (ArrayList<String>) request.getAttribute("reconacct");
 	ArrayList<String> paymentterms = (ArrayList<String>) request.getAttribute("paymentterms");
 	ArrayList<String> currency = (ArrayList<String>) request.getAttribute("currency");
 	ArrayList<String> language = (ArrayList<String>) request.getAttribute("language");
+	Vendor v=(Vendor)request.getAttribute("vendor");
 %>
 <!DOCTYPE html>
 <html>
@@ -16,7 +18,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>创建供应商</title>
+<title>维护供应商</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 <link href="css/animate.css" rel="stylesheet">
@@ -118,11 +120,11 @@
 			</div>
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>创建供应商</h2>
+					<h2>维护供应商</h2>
 					<ol class="breadcrumb">
 						<li><a href="Home">主页</a></li>
 						<li>供应商管理</li>
-						<li class="active"><strong>创建供应商</strong></li>
+						<li class="active"><strong>维护供应商</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -133,7 +135,7 @@
 						<div class="col-lg-12">
 							<div class="ibox float-e-margins">
 								<div class="ibox-title">
-									<h5>创建供应商</h5>
+									<h5>维护供应商</h5>
 									<div class="ibox-tools">
 										<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 										</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -173,37 +175,37 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<label for="title">供应商名称</label> <input name="vname"
-													type="text" class="form-control" placeholder="输入供应商名称..." />
+													type="text" class="form-control" value="<%=v.getVname() %>" />
 											</div>
 											<div class="form-group">
 												<label for="message">供应商公司号</label> <input
 													class="form-control" name="vcompanycode" type="text"
-													class="form-control" placeholder="输入公司号 ，如TJ00..."></input>
+													class="form-control" value="<%=v.getVcompanycode() %>"></input>
 											</div>
 											<div class="form-group">
 												<label for="message">供应商国家</label> <input
 													class="form-control" name="vcountry" type="text"
-													class="form-control" placeholder="输入供应商所属国家，如中国 ..."></input>
+													class="form-control"value="<%=v.getVcountry() %>"></input>
 											</div>
 											<div class="form-group">
 												<label for="message">供应商城市</label> <input
 													class="form-control" name="vcity" type="text"
-													class="form-control" placeholder="输入供应商所在城市，如上海 ..."></input>
+													class="form-control" value="<%=v.getVcity() %>"></input>
 											</div>
 											<div class="form-group">
 												<label for="message">供应商地区</label> <input
 													class="form-control" name="vregion" type="text"
-													class="form-control" placeholder="输入供应商所在区，如杨浦区..."></input>
+													class="form-control" value="<%=v.getVregion() %>"></input>
 											</div>
 											<div class="form-group">
 												<label for="message">供应商街道</label> <input
 													class="form-control" name="vstreet" type="text"
-													class="form-control" placeholder="输入供应商所在街道，如四平路 1239号..."></input>
+													class="form-control" value="<%=v.getVstreet() %>"></input>
 											</div>
 											<div class="form-group">
 												<label for="message">供应商邮政编码</label> <input
 													class="form-control" name="vpostalcode" type="text"
-													class="form-control" placeholder="输入供应商邮政编码，如200092..."></input>
+													class="form-control" value="<%=v.getVpostalcode() %>"></input>
 											</div>
 											<div class="form-group">
 												<label for="message">供应商语言</label>
@@ -213,7 +215,7 @@
 														<c:forEach items="${language}" var="language" begin="0"
 															end="${language.size()}" step="1">
 															<option value="${language }"
-																<c:if test="${language=='ZH-CN'}"> selected="selected" </c:if>><c:out
+																<c:if test="${language==v.getVlanguage()}"> selected="selected" </c:if>><c:out
 																	value="${language}"></c:out></option>
 														</c:forEach>
 													</select>
@@ -229,7 +231,7 @@
 														<c:forEach items="${currency}" var="currency" begin="0"
 															end="${currency.size()}" step="1">
 															<option value="${currency }"
-																<c:if test="${currency=='RMB'}"> selected="selected" </c:if>><c:out
+																<c:if test="${currency==v.getVcurrency()}"> selected="selected" </c:if>><c:out
 																	value="${currency}"></c:out></option>
 														</c:forEach>
 													</select>
@@ -237,7 +239,7 @@
 											</div>
 											<div class="form-group">
 												<label for="title">税号</label> <input name="vtax" type="text"
-													class="form-control" placeholder="输入该供应商的税号..." />
+													class="form-control" value="<%=v.getVtaxnum() %>" />
 											</div>
 											<div class="form-group">
 												<label for="title">支付模式</label> <select
@@ -245,7 +247,7 @@
 													<c:forEach items="${paymentterms}" var="paymentterms"
 														begin="0" end="${paymentterms.size()}" step="1">
 														<option value="${paymentterms }"
-															<c:if test="${paymentterms=='0001'}"> selected="selected" </c:if>><c:out
+															<c:if test="${paymentterms==v.getVpaymentterms()}"> selected="selected" </c:if>><c:out
 																value="${paymentterms}"></c:out></option>
 													</c:forEach>
 												</select>
@@ -258,7 +260,7 @@
 														<c:forEach items="${reconacct}" var="reconacct" begin="0"
 															end="${reconacct.size()}" step="1">
 															<option value="${reconacct }"
-																<c:if test="${reconacct=='300000'}"> selected="selected" </c:if>><c:out
+																<c:if test="${reconacct==v.getVreconacct()}"> selected="selected" </c:if>><c:out
 																	value="${reconacct}"></c:out></option>
 														</c:forEach>
 													</select>
@@ -267,7 +269,7 @@
 											<div class="form-group">
 												<label for="title">联系员工</label> <input name="vclerk"
 													type="text" class="form-control"
-													placeholder="输入与该供应商对接的员工..." />
+													value="<%=v.getVclerk() %>" />
 											</div>
 										</div>
 									</div>
@@ -286,7 +288,7 @@
 							String notice = (String) request.getAttribute("notice");
 							if (notice != null && !"".equals(notice)) {
 						%>
-						成功创建供应商<strong><%=notice%></strong>
+						成功保存供应商<strong><%=notice%></strong>
 						<%
 							request.setAttribute("success", "");
 							}

@@ -19,12 +19,194 @@
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 
+<!-- Sweet Alert -->
+<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
+<script>
+function selectline(ele)
+{
+	var clickContent = ele;         
+    //获取要赋值的input的元素
+    var inputElement =  document.getElementById("reqnum");
+    //给input框赋值
+    inputElement.value = clickContent.cells[1].innerHTML;//.innerText;
+    //选中input框的内容
+   // inputElement.select();
+     // 执行浏览器复制命令
+   // document.execCommand("Copy");
+    openwin3(0);
+    openwin2(0);
+	}
+
+
+</script>
+
+<script type="text/javascript">
+
+
+
+function search()
+{    
+	var key = $("#key1").val()+","+ $("#key2").val()
+	var url="${pageContext.request.contextPath}/searchServlet?key="+key
+	
+	function gettext(text)
+	{
+		var subt = text.match(/mark.(\S*?)mark./);
+		return subt[1];
+	}
+	function getdate(text)
+	{
+		var subt = text.match(/mark.(\S*?)mark./);
+		return subt[1];
+	}
+
+    
+
+     $.ajax({
+              type:"post",
+              url:"${pageContext.request.contextPath}/searchServlet",
+              async:true, //默认-异步（true） 同步-false
+              dataType:"text",
+              
+              data:{"key":key},
+              beforeSend: function (){
+                  //ajax刷新前加载load动画
+                  //showLoad();
+              },
+              success:function (dataArray) {
+            	  
+            	  var subnum = dataArray.match(/mark0(\S*?)mark1/g);
+            	  var subdes = dataArray.match(/mark1(\S*?)mark2/g);
+            	  var subgup = dataArray.match(/mark2(\S*?)mark3/g);
+            	 // alert(subtext[1]);
+            	 // alert(decodeURI(subtext[1]))
+            	 // alert(decodeURI(subdate))
+            	  //decodeURI方法返回一个字符数组，所以如果要知道字符串的数量就要分组decode，否则组的每位只有一个字符
+            	  $("tbody#tableBody").remove();//删除已有表格	
+                  var tableBody = "<tbody id='tableBody'>";
+ 				  //alert(subnum.length);
+                  for (var i = 0; i < subnum.length; i++) {
+ 					
+                      tableBody += '<tr onclick="selectline(this)">';
+ 
+                      tableBody += '<td><input type="checkbox" checked="" class="i-checks" name="input[]"></td>';
+                      tableBody += "<td>"+gettext(decodeURI(subnum[i]))+"</td>";
+                      tableBody += "<td>"+gettext(decodeURI(subdes[i]))+"</td>";
+                      tableBody += "<td>"+gettext(decodeURI(subgup[i]))+"</td>";
+                      tableBody += "</tr>";
+                  }
+ 
+                  tableBody += "</tBody>";
+ 
+                  
+                  $("#tableHead").after(tableBody);
+ 
+              },
+              error:function (e,textStatus,request) {
+                  //隐藏load动画
+                  hiddenLoad();
+                  alert("错误！"+e.status);
+                  var json=JSON.parse(request.responseText);  
+                  alert(json.city); 
+                  alert(request.responseText)
+                  alert(" parser error"+textStatus); // parser error;
+              },
+              complete:function () {
+
+                 
+                  //表格隔行显色，鼠标悬浮高亮显示
+                  var oTab = document.getElementById('tbl');
+                  var oldColor = '';//用于保存原来一行的颜色
+ 
+                  for(var i = 0; oTab.tBodies[0].rows.length; i++){
+ 
+                      //当鼠标移上去，改变字体色-背景色
+                      oTab.tBodies[0].rows[i].onmouseover = function () {
+                          oldColor = this.style.background;
+                          this.style.background = "#009B63";
+                          this.style.color = "#ffffff";
+                      };
+ 
+                      //当鼠标移开，恢复原来的颜色
+                      oTab.tBodies[0].rows[i].onmouseout = function () {
+                          this.style.background = oldColor;
+                          this.style.color = "#000000";
+                      };
+ 
+                      //隔行显色
+                      if(i%2){
+                          oTab.tBodies[0].rows[i].style.background = "#EAF2D3";
+                      }
+                      else{
+                          oTab.tBodies[0].rows[i].style.background = "";
+                      }
+                  }
+              }
+          });
+    
+}
+</script>
+<script>
+function open_and_search()
+{
+	openwin3(1);
+	search();
+	}
+</script>
+<style>
+#wrapper
+{
+     z-index: 99;
+   position: absolute;
+}
+
+.opbox1{
+    z-index: 100;
+    width:50%; margin-top:10%; margin:auto; padding:28px;
+    top:25%; left:25%;
+    height:350px; border:1px #111 solid;
+    display:none;            /* 默认对话框隐藏 */
+
+position: absolute;
+background:white;
+}
+.opbox1.show{display:block;} 
+.opbox1 .x{ font-size:18px; text-align:right; display:block;}
+
+.opbox2{
+    z-index: 101;
+    width:40%; margin-top:10%; margin:auto; padding:28px;
+    top:5%; left:30%;
+    height:650px; border:1px #111 solid;
+    display:none;            /* 默认对话框隐藏 */
+
+position: absolute;
+background:white;
+}
+.opbox2.show{display:block;} 
+.opbox2 .x{ font-size:18px; text-align:right; display:block;}
+
+.opbox3{
+    z-index: 101;
+    width:40%; margin-top:10%; margin:auto; padding:28px;
+    top:5%; left:30%;
+    height:650px; border:1px #111 solid;
+    display:none;            /* 默认对话框隐藏 */
+
+position: absolute;
+background:white;
+}
+.opbox3.show{display:block;} 
+.opbox3 .x{ font-size:18px; text-align:right; display:block;}
+
+</style>
 
 
 </head>
 
 <body>
-
+<form class="m-t" role="form" action="Login" method="post">
 	<div id="wrapper">
 
 		<nav class="navbar-default navbar-static-side" role="navigation">
@@ -198,13 +380,13 @@
 										<li><a href="#">配置 1</a></li>
 										<li><a href="#">配置 2</a></li>
 									</ul>
-									<a class="close-link"> <i class="fa fa-times"></i>
+									
 									</a>
 								</div>
 							</div>
 
 							<div class="ibox-content">
-								<form class="m-t" role="form" action="Login" method="post">
+								
 									<div class="row">
 
 										<div class="col-md-4">
@@ -236,10 +418,10 @@
 
 										<div class="col-md-2"></div>
 
-
-										<div class="col-md-2">
-
-											<strong></strong> ---组织数据---
+										<div class="col-md-2" style="width:25%;">
+							
+											<strong></strong> 组织数据
+											<hr style="margin:0px 0px 5px 0px; border:0.1px black solid; "/>
 											<div class="form-group">
 												<label for="showMethod">采购组织</label> <input id="showMethod"
 													type="text" placeholder="输入采购组织" class="form-control" />
@@ -249,7 +431,8 @@
 													type="text" placeholder="输入采购小组" class="form-control" />
 											</div>
 											
-											<strong></strong> ---商品默认数据---
+											<strong></strong> 商品默认数据
+											<hr style="margin:0px 0px 5px 0px; border:0.1px black solid; "/>
 											<div class="form-group">
 												<label for="showEasing">运送工厂</label> <input
 													id="showEasing" type="text" placeholder="输入运送工厂..."
@@ -261,11 +444,13 @@
 
 									<div class="row">
 										<div class="col-lg-12">
-											<button type="button" class="btn btn-primary" id="showsimple"><a href="rfq2.jsp">参考请购单</a></button>
+											 <button type="button" class="btn btn-primary " onclick=openwin(1)>参考请购单</button>
 											<button type="button" class="btn btn-white" id="clearlasttoast">直接创建</button>
 										</div>
 									</div>
-								</form>
+								
+
+</div>
 
 							</div>
 						</div>
@@ -281,10 +466,130 @@
 			</div>
 
 		</div>
-	</div>
+	
 
 
-	<!-- Mainly scripts -->
+	<!-- Mainly scripts for pop windows-->
+	   <script>  
+        function openwin(n){
+            document.getElementById('inputbox').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
+        }
+     </script>  
+     <script>  
+        function openwin2(n){
+            document.getElementById('inputbox2').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
+        }
+     </script>  
+          <script>  
+        function openwin3(n){
+            document.getElementById('inputbox3').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
+        }
+     </script>  
+     
+     <!-- 第一层弹窗 -->
+     <div id='inputbox' class="opbox1">
+     
+        <a class='x' href=''; onclick="openwin(0); return false;">关闭</a>
+        	
+				<div class="ibox-content"> 					
+                
+					<div class="form-group">
+					
+						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >请购单</label>
+						<div class="col-sm-10" style="width:87%;padding:1px;">
+							<input id="reqnum" type="text" class="form-control" style="width:80%">
+							<div class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a></div>
+						</div>
+						
+						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >工厂</label>
+						<div class="col-sm-10" style="width:87%;padding:1px;">
+							<input type="text" class="form-control" style="width:80%">
+							<div class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="#"><i class="fa fa-search-plus"></i></a></div>
+						</div>
+						
+		<button type="button" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" onclick=>取消</button>
+        <button type="button" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" onclick=>继续</button>
+					</div>
+        
+        <input type="button" value="确定">
+        
+        </div>
+     </div>
+     </form>
+     
+   <!-- 第二层弹窗 -->  
+   <div id="inputbox2" class="opbox2">
+   
+   <a class='x' href=''; onclick="openwin2(0); return false;">关闭</a>
+   <p> 查找请购单：   输入任意已知信息</p>
+     <div class="ibox-content" style="padding:5px 5px 5px 5px;">
+														<div >
+															<div >
+																	<!--请购单具体信息 -->
+																	<div class="form-group">
+																		<label for="title">请购单种类</label> <input id="vname" type="text" class="form-control" placeholder="输入请购单种类...">
+																	</div>
+
+																	<div class="form-group">
+																		<label for="message">使用语言</label> <input class="form-control" id="vaddress" type="text" placeholder="输入使用语言...">
+																	</div>
+
+																	<div class="form-group">
+																		<label for="message">请购单日期</label> <input class="form-control" id="vaddress" type="text" placeholder="输入请购单日期 ...">
+																	</div>
+
+																	<div class="form-group">
+																		<label for="message">请购描述</label> <input class="form-control" id="key2" type="text" placeholder="输入请购描述...">
+																	</div>
+
+
+																	<div class="form-group">
+																		<label for="showMethod">请购组织</label> <input id="xxkey1" type="text" placeholder="输入请购组织" class="form-control">
+																	</div>
+																	
+																	<div class="form-group">
+																		<label for="showMethod">请购小组</label> <input id="key1" type="text" placeholder="输入请购小组" class="form-control">
+																	</div>
+
+
+																	<div class="form-group">
+																		<label for="showEasing">请购运送工厂</label> <input id="showEasing" type="text" placeholder="输入请购运送工厂..." class="form-control">
+																	</div>
+
+																</div><div class="row">
+																	<div class="col-lg-12">
+																		<button type="button" class="btn btn-primary" id="showsimple" onclick=open_and_search()>搜索</button>
+																	</div>
+												
+														</div>
+
+													</div>
+     
+     </div>
+     </div>
+     <!-- 第三层弹窗 -->
+   <div id="inputbox3" class="opbox3">
+   
+   <a class='x' href=''; onclick="openwin3(0); return false;">关闭</a>
+   <table id="tbl" class="table table-striped">
+
+									<thead id="tableHead">
+										<tr>
+											<th></th>
+											<th>请购单编号</th>
+											<th>请购日期</th>
+											<th>请购组织</th>
+										</tr>
+									</thead>
+
+
+									<tbody id="tableBody">
+									
+
+									</tbody>
+								</table>  
+     </div>
+     
 	<script src="js/jquery-2.1.1.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
@@ -296,7 +601,9 @@
 
 	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
-
+    <!-- Sweet alert -->
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    
 	<script type="text/javascript">
 		$(function() {
 			var i = -1;
@@ -429,6 +736,9 @@
 			});
 		})
 	</script>
+	<!-- float window -->
+
+	
 </body>
 
 </html>

@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>操作员主页</title>
+<title>创建物料</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -19,12 +19,12 @@
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 
-
-
 </head>
 
 <body>
+
 	<div id="wrapper">
+
 		<nav class="navbar-default navbar-static-side" role="navigation">
 			<div class="sidebar-collapse">
 				<ul class="nav metismenu" id="side-menu">
@@ -87,7 +87,7 @@
 			</div>
 		</nav>
 
-		<div id="page-wrapper" class="gray-bg dashbard-1">
+		<div id="page-wrapper" class="gray-bg">
 			<div class="row border-bottom">
 				<nav class="navbar navbar-static-top" role="navigation"
 					style="margin-bottom: 0">
@@ -103,10 +103,7 @@
 						</form>
 					</div>
 					<ul class="nav navbar-top-links navbar-right">
-						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uid")%></span>
-						</li>
-						<li><a href="CreateMaterial">创建物料</a></li>
-						<li><a href="SelectVendor">维护供应商</a></li>
+						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uid")%></span></li>
 						<li class="dropdown"><a class="dropdown-toggle count-info"
 							data-toggle="dropdown" href="#"> <i class="fa fa-envelope"></i>
 								<span class="label label-warning">16</span>
@@ -158,41 +155,6 @@
 									</div>
 								</li>
 							</ul></li>
-						<li class="dropdown"><a class="dropdown-toggle count-info"
-							data-toggle="dropdown" href="#"> <i class="fa fa-bell"></i> <span
-								class="label label-primary">8</span>
-						</a>
-							<ul class="dropdown-menu dropdown-alerts">
-								<li><a href="mailbox.html">
-										<div>
-											<i class="fa fa-envelope fa-fw"></i> 您有 16 条未读通知 <span
-												class="pull-right text-muted small">4 分钟 前</span>
-										</div>
-								</a></li>
-								<li class="divider"></li>
-								<li><a href="profile.html">
-										<div>
-											<i class="fa fa-twitter fa-fw"></i> 3 个新粉丝 <span
-												class="pull-right text-muted small">12 分钟 前</span>
-										</div>
-								</a></li>
-								<li class="divider"></li>
-								<li><a href="grid_options.html">
-										<div>
-											<i class="fa fa-upload fa-fw"></i> 服务器重启 <span
-												class="pull-right text-muted small">4 分钟 前</span>
-										</div>
-								</a></li>
-								<li class="divider"></li>
-								<li>
-									<div class="text-center link-block">
-										<a href="notifications.html"> <strong>查看更多通知</strong> <i
-											class="fa fa-angle-right"></i>
-										</a>
-									</div>
-								</li>
-							</ul></li>
-
 
 						<li><a href="Login"> <i class="fa fa-sign-out"></i> 退出登录
 						</a></li>
@@ -200,67 +162,119 @@
 
 				</nav>
 			</div>
-			<div class="row  border-bottom white-bg dashboard-header">
-				<div class="col-sm-8">
-					<img
-						src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1595769688168&di=4f30d376c3e795bca8fea83a24a58343&imgtype=0&src=http%3A%2F%2Fwww.cniteyes.com%2Fdata%2Fuploads%2F2016%2F10%2FSAP-Logo.svg_.png"
-						class="img-responsive">
-
+			<div class="row wrapper border-bottom white-bg page-heading">
+				<div class="col-lg-10">
+					<h2>创建物料</h2>
+					<ol class="breadcrumb">
+						<li><a href="Home">主页</a></li>
+						<li>物料管理</li>
+						<li class="active"><strong>创建物料</strong></li>
+					</ol>
 				</div>
-				<div class="col-sm-4">
-					<div class="wrapper wrapper-content">
-						<div class="row">
-							<h2>备忘录</h2>
-							<div class="ibox-content ibox-heading">
-								<h3>您有新的会议!</h3>
-								<small><i class="fa fa-map-marker"></i>会议在10:00召开，请安排好您的时间.</small>
-							</div>
-							<div class="ibox-content inspinia-timeline">
-
-								<div class="timeline-item">
-									<div class="row">
-										<div class="col-xs-3 date">
-											<i class="fa fa-briefcase"></i> 10:00 am <br /> <small
-												class="text-navy">2小时前</small>
-										</div>
-										<div class="col-xs-7 content no-top-border">
-											<p class="m-b-xs">
-												<strong>会议</strong>
-											</p>
-
-											<p>技术会议，将要讨论一下这个跨机房的oracle数据库怎么部署的问题.</p>
-
-											<p>
-												<span data-diameter="40" class="updating-chart">5,3,9,6,5,9,7,3,5,2,5,3,9,6,5,9,4,7,3,2,9,8,7,4,5,1,2,9,5,4,7,2,7,7,3,5,2</span>
-											</p>
-										</div>
+				<div class="col-lg-2"></div>
+			</div>
+			<form class="m-t" role="form" action="CreateMaterial" method="post">
+				<div class="wrapper wrapper-content animated fadeIn">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="ibox float-e-margins">
+								<div class="ibox-title">
+									<h5>创建供应商</h5>
+									<div class="ibox-tools">
+										<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+										</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+											<i class="fa fa-wrench"></i>
+										</a>
+										<ul class="dropdown-menu dropdown-user">
+											<li><a href="#">配置 1</a></li>
+											<li><a href="#">配置 2</a></li>
+										</ul>
+										<a class="close-link"> <i class="fa fa-times"></i>
+										</a>
 									</div>
 								</div>
-								<div class="timeline-item">
+								<div class="ibox-content">
 									<div class="row">
-										<div class="col-xs-3 date">
-											<i class="fa fa-file-text"></i> 2:00 pm <br /> <small
-												class="text-navy">3小时前</small>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label for="title">材料编号</label> <input name="mnum"
+													type="text" class="form-control" placeholder="输入材料编号..." />
+											</div>
+											<div class="form-group">
+												<label for="title">材料描述</label> <input name="mdiscr"
+													type="text" class="form-control" placeholder="输入材料描述..." />
+											</div>
+											<div class="form-group">
+												<label for="title">基本单位</label> <input name="mbaseunit"
+													type="text" class="form-control" placeholder="输入基本单位..." />
+											</div>
+											<div class="form-group">
+												<label for="title">工业部门</label> <input name="mindustrysec"
+													type="text" class="form-control" placeholder="输入工业部门..." />
+											</div>
+											<div class="form-group">
+												<label for="title">销售组织</label> <input name="msalesorg"
+													type="text" class="form-control" placeholder="输入销售组织..." />
+											</div>
+											<div class="form-group">
+												<label for="title">分销渠道</label> <input name="mdistrchannel"
+													type="text" class="form-control" placeholder="输入分销渠道..." />
+											</div>
 										</div>
-										<div class="col-xs-7 content">
-											<p class="m-b-xs">
-												<strong>交发票</strong>
-											</p>
-											<p>去财务部交出差的发票</p>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label for="title">材料组别</label> <input name="mgroup"
+													type="text" class="form-control" placeholder="输入材料组别..." />
+											</div>
+											<div class="form-group">
+												<label for="title">材料种类</label> <input name="mdivision"
+													type="text" class="form-control" placeholder="输入材料种类..." />
+											</div>
+											<div class="form-group">
+												<label for="title">材料单位</label> <input name="munitprice"
+													type="text" class="form-control" placeholder="输入材料单位..." />
+											</div>
+											<div class="form-group">
+												<label for="title">材料可得性检查</label> <input
+													name="mavailabilitycheck" type="text" class="form-control"
+													placeholder="输入材料可得性检查..." />
+											</div>
+											<div class="form-group">
+												<label for="title">材料采购组织</label> <input
+													name="mpurchasinggroup" type="text" class="form-control"
+													placeholder="输入材料采购组织..." />
+											</div>
+											<div class="form-group">
+												<label for="title">材料MRP种类</label> <input name="mMRPtype"
+													type="text" class="form-control" placeholder="输入材料MRP种类..." />
+											</div>
+											<div class="form-group">
+												<label for="title">材料MRP控制器</label> <input
+													name="mMRPcontroller" type="text" class="form-control"
+													placeholder="输入材料MRP控制器..." />
+											</div>
 										</div>
-									</div>
-								</div>
-								<div class="timeline-item">
-									<div class="row">
-										<div class="col-xs-3 date">
-											<i class="fa fa-comments"></i> 17:30 pm <br /> <small
-												class="text-navy">48小时前</small>
-										</div>
-										<div class="col-xs-7 content">
-											<p class="m-b-xs">
-												<strong>跟海洋聊聊天</strong>
-											</p>
-											<p>海洋说网站的前端代码不会写，一起吃个饭顺便指点一下他.</p>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label for="title">材料装运过程</label> <input
+													name="mlotsizingprocedure" type="text" class="form-control"
+													placeholder="输入材料装运过程..." />
+											</div>
+											<div class="form-group">
+												<label for="title">材料最小装运单位</label> <input
+													name="mminimumlotsize" type="text" class="form-control"
+													placeholder="输入材料最小装运单位..." />
+											</div>
+											<div class="form-group">
+												<label for="title">材料预计到达周期</label> <input
+													name="mplanneddelivtime" type="text" class="form-control"
+													placeholder="输入材料预计到达周期..." />
+											</div>
+											<div class="form-group">
+												<label for="title">用于在Delivery表中展示</label> <input
+													name="mshorttext" type="text" class="form-control"
+													placeholder="输入用于在Delivery表中展示..." />
+											</div>
 										</div>
 									</div>
 								</div>
@@ -268,21 +282,27 @@
 						</div>
 					</div>
 				</div>
-
-			</div>
-
-
-			<div class="footer">
-				<div class="pull-right">
-					10GB of <strong>250GB</strong> Free.
+				<div class="footer">
+					<div class="pull-right">
+						<button type="submit" class="btn btn-primary" >创建</button>
+						<button type="reset" class="btn btn-white" >清除</button>
+					</div>
+					<div>
+						<%
+							String notice = (String) request.getAttribute("notice");
+							if (notice != null && !"".equals(notice)) {
+						%>
+						成功创建物料<strong><%=notice%></strong>
+						<%
+							request.setAttribute("success", "");
+							}
+						%>
+					</div>
 				</div>
-				<div>
-					<strong>Copyright</strong> Example Company &copy; 2014-2015
-				</div>
-			</div>
-
+			</form>
 		</div>
 	</div>
+
 
 	<!-- Mainly scripts -->
 	<script src="js/jquery-2.1.1.js"></script>
@@ -290,57 +310,14 @@
 	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
 	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-	<!-- Flot -->
-	<script src="js/plugins/flot/jquery.flot.js"></script>
-	<script src="js/plugins/flot/jquery.flot.tooltip.min.js"></script>
-	<script src="js/plugins/flot/jquery.flot.spline.js"></script>
-	<script src="js/plugins/flot/jquery.flot.resize.js"></script>
-	<script src="js/plugins/flot/jquery.flot.pie.js"></script>
-
-	<!-- Peity -->
-	<script src="js/plugins/peity/jquery.peity.min.js"></script>
-	<script src="js/demo/peity-demo.js"></script>
-
 	<!-- Custom and plugin javascript -->
 	<script src="js/inspinia.js"></script>
 	<script src="js/plugins/pace/pace.min.js"></script>
 
-	<!-- jQuery UI -->
-	<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
-
-	<!-- GITTER -->
-	<script src="js/plugins/gritter/jquery.gritter.min.js"></script>
-
-	<!-- Sparkline -->
-	<script src="js/plugins/sparkline/jquery.sparkline.min.js"></script>
-
-	<!-- Sparkline demo data  -->
-	<script src="js/demo/sparkline-demo.js"></script>
-
-	<!-- ChartJS-->
-	<script src="js/plugins/chartJs/Chart.min.js"></script>
-
-	<!-- Toastr -->
+	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
 
-
 	
-	<script>
-		(function(i, s, o, g, r, a, m) {
-			i['GoogleAnalyticsObject'] = r;
-			i[r] = i[r] || function() {
-				(i[r].q = i[r].q || []).push(arguments)
-			}, i[r].l = 1 * new Date();
-			a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-			a.async = 1;
-			a.src = g;
-			m.parentNode.insertBefore(a, m)
-		})(window, document, 'script',
-				'//www.google-analytics.com/analytics.js', 'ga');
-
-		ga('create', 'UA-4625583-2', 'webapplayers.com');
-		ga('send', 'pageview');
-	</script>
 </body>
 
 </html>

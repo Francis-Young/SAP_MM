@@ -1,24 +1,27 @@
 package mm.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import mm.bean.Vendor;
+import mm.dao.VendorDao;
 
 /**
- * Servlet implementation class HomeController
+ * Servlet implementation class MaintainVendorController
  */
-
-public class HomeController extends HttpServlet {
+public class SelectVendorController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public HomeController() {
+	public SelectVendorController() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -30,9 +33,11 @@ public class HomeController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		
-		request.getRequestDispatcher("/home.jsp").forward(request, response);
+		ArrayList<Vendor> v=new ArrayList<Vendor>();
+		VendorDao vd=new VendorDao();
+		vd.findAllVendor(v);
+		request.setAttribute("vendor", v);
+		request.getRequestDispatcher("/selectvendor.jsp").forward(request, response);
 	}
 
 	/**
@@ -42,7 +47,11 @@ public class HomeController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("utf-8");
+		String v=request.getParameter("v");
+		response.sendRedirect("MaintainVendor?v="+v);
+
+		return;
 	}
 
 }
