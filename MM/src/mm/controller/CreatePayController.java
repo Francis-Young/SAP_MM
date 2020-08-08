@@ -47,25 +47,25 @@ public class CreatePayController extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			int order = Integer.parseInt(request.getParameter("o_num").trim());
-			int vendor = 100000;//后续查sql订正
 			float amount = Float.parseFloat(request.getParameter("o_price".trim()));
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			java.util.Date addtime=df.parse(changedate(request.getParameter("p_time".trim())));
 			String time=df.format(addtime);
-			int status = 0;//在update中才能更新
-			int user=100000;//等待传值
+			int status = 0;//
+			String user=request.getSession().getAttribute("uid").toString().trim();//
 			String text=request.getParameter("o_text").trim();
+			user=new String(user.getBytes("iso8859-1"),"UTF-8");
 			text=new String(text.getBytes("iso8859-1"),"UTF-8");
-			PayDao vdao=new PayDao();//实例化后端类
-			int x=vdao.addPay(order,amount,vendor,status,time,user,text);//调用函数
+			PayDao vdao=new PayDao();
+			int x=vdao.addPay(order,amount,status,time,user,text);
 			PrintWriter out = response.getWriter();
 			response.setContentType("text/html;charset=UTF-8");
 			if(x==1) {
-			out.print("<script language=\"javascript\">alert('创建成功！');window.location.href='/MM/createpayment.jsp'</script>");
+			out.print("<script language=\"javascript\">alert('鍒涘缓鎴愬姛');window.location.href='/MM/createpayment.jsp'</script>");
 			}
 			else
 			{
-				out.print("<script language=\"javascript\">alert('创建失败！请重试');window.location.href='/MM/createpayment.jsp'</script>");
+				out.print("<script language=\"javascript\">alert('鍒涘缓澶辫触锛岃閲嶈瘯');window.location.href='/MM/createpayment.jsp'</script>");
 
 			}
 		} catch (Exception e) {
@@ -74,7 +74,7 @@ public class CreatePayController extends HttpServlet {
 
 			PrintWriter out = response.getWriter();
 
-			out.print("<script language=\"javascript\">alert('创建失败！请重试');window.location.href='/MM/createpayment.jsp'</script>");
+			out.print("<script language=\"javascript\">alert('锟斤拷锟斤拷失锟杰ｏ拷锟斤拷锟斤拷锟斤拷');window.location.href='/MM/createpayment.jsp'</script>");
 
 		}
 		response.setContentType("text/html;charset=UTF-8");

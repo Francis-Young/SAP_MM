@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%><!DOCTYPE html>
 <%@ page import="java.sql.*"%>
 <%@ page import="mm.utils.DBUtil"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="java.util.ArrayList"%>
 <html>
 
 <head>
@@ -14,6 +16,14 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 
+
+    <link href="css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+
+    <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <!-- FooTable -->
     <link href="css/plugins/footable/footable.core.css" rel="stylesheet">
 
@@ -24,7 +34,7 @@
 
 </head>
 
-<body>
+<body onload=makeit()>
 
     <div id="wrapper">
 
@@ -399,45 +409,84 @@
         <div class="wrapper wrapper-content animated fadeInRight ecommerce">
 
 
-            <div class="ibox-content m-b-sm border-bottom">
+            <div class="ibox-content m-b-sm border-bottom" style="height:250px">
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
-                            <label class="control-label" for="product_name">订单号</label>
-                            <input type="text" value="" placeholder="Product Name" class="form-control" id="a_num" name="a_num">
+                            <label class="control-label" for="price">供应商编号</label>
+                            <input type="text"  value="" placeholder="具体编号" class="form-control" id="v_nu" name="v_nu">
                         </div>
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
-                            <label class="control-label" for="price">价格</label>
-                            <input type="text" id="price" name="price" value="" placeholder="Price" class="form-control">
+                            <label class="control-label" for="price">供应商名称</label>
+                            <input type="text"  value="" placeholder="可模糊查询" class="form-control" id="v_na" name="v_na">
                         </div>
                     </div>
                     <div class="col-sm-2">
                         <div class="form-group">
-                            <label class="control-label" for="quantity">量</label>
-                            <input type="text" id="quantity" name="quantity" value="" placeholder="Quantity" class="form-control">
+                            <label class="control-label" for="quantity">支付用户</label>
+                            <input type="text" value="" placeholder="可模糊查询" class="form-control" id="usr" name="usr">
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label class="control-label" for="status">现状</label>
+                        <label class="control-label">到货日期: </label>
+                                           <div class="input-group date" style="width:250px">
+                                         		 <span class="input-group-addon" ><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="" id="dd" name="dd">
+                                          </div>
+                    </div>
+                                    </div>
+                                           <div class="form-group" style="display:inline-block">
+                            <label class="control-label" for="status">账户</label>
                             <select name="status" id="status" class="form-control">
-                                <option value="1" selected>Enabled</option>
-                                <option value="0">Disabled</option>
+                              
                             </select>
                         </div>
+                                    </div>
+                                      <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label" for="price">支付编号</label>
+                            <input type="text"  value="" placeholder="具体支付编号" class="form-control" id="pid" name="pid">
+                        </div>
                     </div>
-   				 <button class="btn btn-primary pull-right" onclick="takeit()" type="button"> 查询</button>                  
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label" for="price">材料</label>
+                            <input type="text" value="" placeholder="请用,隔开各材料" class="form-control" id="mtr" name="mtr">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label" for="quantity">发票名称</label>
+                            <input type="text" value="" placeholder="可模糊查询" class="form-control" id="text2" name="text2">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                        <label class="control-label">支付日期: </label>
+                                           <div class="input-group date" style="width:250px">
+                                         		 <span class="input-group-addon" ><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="" id="pt" name="pt">
+                                          </div>
+                    </div>
+                        </div>
+                               
+                        
+                     <div class="col-sm-11" >
+                              <div>     <button class="btn btn-primary pull-right" onclick="takeit()" type="button"> 查询</button>  </div>  
+                   
+                    </div>
                     
-                </div>
+                                    </div>
+                    
 
             </div>
 					 <div style="position: fixed;left: 50%;top: 50%;z-index: 1000;"id="showResult" ></div>  
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="ibox">
+                    <div class="ibox-content m-b-sm border-bottom" id="whitebox" style="display:none">
 
                             <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15" id="myTable" name="myTable">
 
@@ -480,12 +529,20 @@
 
     <!-- FooTable -->
     <script src="js/plugins/footable/footable.all.min.js"></script>
+<script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
 
     <!-- Page-Level Scripts -->
     <script>
         $(document).ready(function() {
 
             $('.footable').footable();
+            $('.input-group.date').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true
+            });
 
         });
         function excel(){
@@ -496,10 +553,18 @@
         }
         function test_true(){  
 
-        	var utext = document.getElementById("a_num");
-        	var text = utext.value;
-            var reg = new RegExp("^[0-9]*$"); 
-        	if (reg.test(text)&&text!=""){     	
+        	var time = document.getElementById("dd").value;
+        	var num = document.getElementById("v_nu").value;
+        	var name = document.getElementById("v_na").value;
+        	var text = document.getElementById("mtr").value;
+        	var time1 = document.getElementById("pt").value;
+        	var text1 = document.getElementById("usr").value;
+        	var text2 = document.getElementById("text2").value;
+        	var pid = document.getElementById("pid").value;
+        	var acc = document.getElementById("status").value;
+
+
+        	if (1){     	
         		var results = '';
         	 var html="<tbody>"
           		
@@ -508,10 +573,18 @@
           	 $.ajax({
           	            
           	                type : 'POST',
-          	                url : 'UpdatePayment',
+          	                url : 'SearchPayment',
           	               data:{
-          	                  id:text,
-          	               },
+          	            	 time:time,
+         	            	  num:num,
+         	            	  name:name,
+         	                  text:text,
+         	                  time1:time1,
+         	                  text1:text1,
+         	                  text2:text2,
+         	                  pid:pid,
+         	                  acc:acc,
+         	                  },
           	               dataType : 'json',
           	                success : function(result,backData) {
           	                	results=result;
@@ -527,7 +600,7 @@
           	            }
           	            });}
         	else{
-        		alert("订单号不规范，请重新输入");
+        		alert("编号只能输入数字，请重新输入");
         	}
 
 
@@ -536,39 +609,53 @@
          	}
       function takeit(){
             $.when(test_true()).done(function(result,backData){
+            	$("#myTable").bootstrapTable('destroy');
             	var count = "";
     			var info = JSON.stringify(result);
     			var data = eval('(' + info + ')');
     			if(data.length==0){
     				alert("无此订单");
         			$("#showResult").html("");
-        			var html0=" <thead> <tr><th>#</th>  <th>Data</th><th>User</th></tr></thead><tbody>;"
+        			var html0=" <thead> <tr><th>支付号</th><th>支付日期</th><th>供应商</th><th>支付者</th><th>发票名</th><th>材料</th><th>价格</th><th>数量</th></tr></thead><tbody>;"
      	   			$("#myTable").html(html0);
 
         		
     			}
     			else{
-    			var html0=" <thead> <tr><th>#</th>  <th>Data</th><th>User</th><th>分配</th></tr></thead><tbody>;"
+    			var html0=" <thead> <tr><th>支付号</th><th>支付日期</th><th>供应商</th><th>支付者</th><th>发票名</th><th>材料</th><th>价格</th><th>数量</th></tr></thead><tbody>;"
     			var v1=result[0].Amount;
     			var v2=result[0].Invoice_Text;
     			var v3=result[0].Pay_Time;
     			for(var i=0;i<data.length;i++){
-    			var id=result[i].Pay_id;
-    			var amount=result[i].Amount;
-    			var user=result[i].Pay_User;
+    				var id=result[i].Pay_id;
+    				var amount=result[i].Pay_Time;
+    				var user=result[i].vendor_name;
+    				var usr=result[i].Pay_User;
+    				var inv=result[i].Invoice_Text;
+    				var mar=result[i].material_num;
+    				var pr=result[i].price;
+    				var qr=result[i].quantity;
 
-     			var html1="<tr><td>啊1</td><td>啊2</td><td>啊3</td></tr>"
+
      			var forexcel="<a href=javascript:excel()>导出excel</a>";
             	
-            	html1=html1.replace(/啊1/,id);
-            	html1=html1.replace(/啊2/,amount);
-            	html1=html1.replace(/啊3/,user);
-            	html1=html1.replace(/啊3/,user);
-            	html1=html1.replace(/index/,i+1);
+     			var html1="<tr><td>啊1</td><td>啊2</td><td>啊3</td><td>啊4</td><td>啊5</td><td>啊6</td><td>啊7</td><td>啊8</td></tr>"
+     		    	
+     		    	html1=html1.replace(/啊1/,id);
+     		    	html1=html1.replace(/啊2/,amount);
+     		    	html1=html1.replace(/啊3/,user);
+     		    	html1=html1.replace(/啊4/,usr);
+     		    	html1=html1.replace(/啊5/,inv);
+     		    	html1=html1.replace(/啊6/,mar);
+     		    	html1=html1.replace(/啊7/,pr);
+     		    	html1=html1.replace(/啊8/,qr);
+
 
     			html0+=html1;
 
     			}
+    		    document.getElementById('whitebox').style.display='';  
+
             	html0+="</tbody>";
     			$("#myTable").html(html0);
     			$("#showResult").html("");
@@ -586,6 +673,74 @@
              });  
             
     }
+      function test_true1(){  
+
+      
+      	if (1){     	
+      		var results = '';
+      	 var html="<tbody>"
+        		
+        		$("#showResult").html("<img src=\"css/plugins/blueimp/img/loading.gif\" />");
+        	var defer = $.Deferred(results);
+        	 $.ajax({
+        	            
+        	                type : 'GET',
+        	                url : 'SearchPayment',
+        	               dataType : 'json',
+        	                success : function(result,backData) {
+        	                	results=result;
+        	                   defer.resolve(result)
+
+        	                },
+        	                error : function(result) {
+        	       			$("#showResult").html("");
+        	   			$("#myTable").html("");
+
+
+        	            }
+        	            });}
+      	else{
+      	}
+
+
+        	return defer.promise();
+
+       	}
+    function makeit(){
+          $.when(test_true1()).done(function(result,backData){
+          	var count = "";
+  			var info = JSON.stringify(result);
+  			var data = eval('(' + info + ')');
+  			if(data.length==0){
+      			$("#showResult").html("");
+       			var html0="";
+   	   			$("#status").html(html0);
+
+      		alert("目前无支付记录");
+  			}
+  			else{
+  	   		var html0="<option value=\'all\'>不限账户</option>";
+
+  			for(var i=0;i<data.length;i++){
+  			var id=result[i].Pay_Account;
+
+   			var html1="<option value=\"啊1\">啊2</option>";
+
+          	
+          	html1=html1.replace(/啊1/,id);
+          	html1=html1.replace(/啊2/,id);
+          	
+
+  			html0+=html1;
+
+  			}
+  			$("#status").html(html0);
+  			$("#showResult").html("");
+
+  			}
+           });  
+          
+  }
     </script>
 
 </body>

@@ -37,7 +37,29 @@ public class PaymentTableController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=UTF-8");
+		String data="";
+		try {
+			
+			String o1=request.getParameter("time");
+			String o2=request.getParameter("name");
+			String o3=request.getParameter("num");
+
+			String o4=request.getParameter("text");
+			o2=new String(o2.getBytes("iso8859-1"),"UTF-8");
+
+			PayDao vdao=new PayDao();//
+			data=vdao.Fororder(o1,o2,o3,o4);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+        out.print(data);
+		return;
+	
 	}
 
 	/**
@@ -49,9 +71,8 @@ public class PaymentTableController extends HttpServlet {
 		try {
 			
 			String o=request.getParameter("id");
-			PayDao vdao=new PayDao();//实例化后端类
+			PayDao vdao=new PayDao();//
 			data=vdao.Searchit(o);
-			//调用函数
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
