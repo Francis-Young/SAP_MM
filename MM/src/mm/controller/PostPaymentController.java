@@ -45,28 +45,28 @@ public class PostPaymentController extends HttpServlet {
 			
 			
 			int id = Integer.parseInt(request.getParameter("o_num_new").trim());
+			int account = Integer.parseInt(request.getParameter("o_account").trim());
 
 			float amount = Float.parseFloat(request.getParameter("o_price_new".trim()));
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//锟斤拷锟斤拷锟斤拷锟节革拷式
 			java.util.Date addtime=df.parse(changedate(request.getParameter("p_time_new".trim())));
 			
 			String time=df.format(addtime);
-			int status = 1;//确认支付
-			int user=100000;//等待传值
+			int status = 1;
 			String text=request.getParameter("o_text_new").trim();
 			text=new String(text.getBytes("iso8859-1"),"UTF-8");
 
-			PayDao vdao=new PayDao();//实例化后端类
-			int x=vdao.updatePay(amount,id,status,time,user,text);//调用函数
+			PayDao vdao=new PayDao();
+			int x=vdao.updatePay(amount,id,status,time,text,account);
 			PrintWriter out = response.getWriter();
 
 			response.setContentType("text/html;charset=UTF-8");
 			if(x==1) {
-			out.print("<script language=\"javascript\">alert('支付成功！');window.location.href='/MM/postpayment.jsp'</script>");
+			out.print("<script language=\"javascript\">alert('浠樻鎴愬姛');window.location.href='/MM/postpayment.jsp'</script>");
 			}
 			else
 			{
-				out.print("<script language=\"javascript\">alert('支付失败！请重试');window.location.href='/MM/postpayment.jsp'</script>");
+				out.print("<script language=\"javascript\">alert('浠樻澶辫触锛岃閲嶈瘯');window.location.href='/MM/postpayment.jsp'</script>");
 
 			}
 		} catch (Exception e) {
@@ -75,7 +75,7 @@ public class PostPaymentController extends HttpServlet {
 
 			PrintWriter out = response.getWriter();
 
-			out.print("<script language=\"javascript\">alert('支付失败！请重试');window.location.href='/MM/postpayment.jsp'</script>");
+			out.print("<script language=\"javascript\">alert('浠樻澶辫触锛岃閲嶈瘯');window.location.href='/MM/postpayment.jsp'</script>");
 
 		}
 		response.setContentType("text/html;charset=UTF-8");
