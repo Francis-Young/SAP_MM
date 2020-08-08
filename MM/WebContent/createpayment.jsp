@@ -21,7 +21,50 @@
 
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+<style> //对正常页面和弹出框分层，后面的层唤出时将会覆盖在前面的层上
+#wrapper //正常页面层
+{
+     z-index: 98;
+   position: absolute;
+}
+.opbox1{  
+    z-index: 105;
+    width:70%; margin-top:5%; margin:auto; padding:28px;
+    top:5%; left:15%;
+    height:400px; border:1px #111 solid;
+    display:none;          
 
+position: absolute;
+background:white;
+}
+.opbox1.show{display:block;} 
+.opbox1 .x{ font-size:18px; text-align:right; display:block;}
+.opbox2{ 
+    z-index: 106;
+    width:40%; margin-top:5%; margin:auto; padding:28px;
+    top:5%; left:30%;
+    height:650px; border:1px #111 solid;
+    display:none;            /* 默认对话框隐藏 */
+
+position: absolute;
+background:white;
+}
+.opbox2.show{display:block;} 
+.opbox2 .x{ font-size:18px; text-align:right; display:block;}
+.opbox3{
+    z-index: 110;
+    width:40%; margin-top:5%; margin:auto; padding:28px;
+    top:5%; left:30%;
+    height:650px; border:1px #111 solid;
+    display:none;            /* 默认对话框隐藏 */
+
+position: absolute;
+background:white;
+}
+.opbox3.show{display:block;} 
+.opbox3 .x{ font-size:18px; text-align:right; display:block;}
+
+</style>
 
 
 </head>
@@ -394,6 +437,39 @@
                 </ol>
             </div>
         </div>
+    <div style="position: fixed;left: 50%;top:10%;z-index:1000;"id="showResult" ></div>  
+        
+        <div id='inputbox' class="opbox1"> 
+        <a class='x' href=''onclick="openwin1_id(0); return false;">关闭</a> 
+     <fieldset class="form-horizontal">
+                                         <div class="form-group"><label class="col-sm-2 control-label">到货日期:</label>
+                                           <div class="input-group date">
+                                         		 <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="" id="w_time" name="w_time">
+                                          </div>
+                                          </div>
+                                         
+                                            <div class="form-group"><label class="col-sm-2 control-label">供应商编号： </label>
+                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入供应商编号 ，如100000" id="w_num" name="w_num"></div>
+                                            </div>
+                                            <div class="form-group"><label class="col-sm-2 control-label">供应商名称：</label>
+                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入供应商名称，支持模糊查询" id="w_name" name="w_name"></div>
+                                            </div>
+											<div class="form-group"><label class="col-sm-2 control-label">材料编号：</label>
+                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入物料编号" id="w_text" name="w_text"></div>
+                                            </div>                                         
+                                                                         <button class="btn btn-primary" onclick="test_forwindow()" type="button">查询</button>                  
+
+                                        </fieldset>
+      			 
+                                            
+				
+        </div>
+                <div id='inputbox2' class="opbox2"> 
+        <a class='x' href=''onclick="openwin2_id(0); return false;">关闭</a> 
+                                <table class="table table-hover" id="tb1"></table>
+    
+				
+        </div>
 
         <div class="wrapper wrapper-content animated fadeInRight ecommerce">
 
@@ -412,16 +488,16 @@
                                     <div class="panel-body">
 
                                         <fieldset class="form-horizontal">
-                                         <div class="form-group"><label class="col-sm-2 control-label">支付日期:<a href="http://www.baidu.com"> 前往查询 </a> </label>
+                                         <div class="form-group"><label class="col-sm-2 control-label">支付日期:</label>
                                            <div class="input-group date">
-                                         		 <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="07/01/2014" id="p_time" name="p_time">
+                                         		 <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="08/01/2020" id="p_time" name="p_time">
                                           </div>
                                           </div>
                                          
-                                            <div class="form-group"><label class="col-sm-2 control-label">订单编号：<a href="http://www.baidu.com"> 前往查询 </a> </label>
+                                            <div class="form-group"><label class="col-sm-2 control-label">订单编号：<a href="javascript:openwin1_id(1)"> 前往查询 </a>  </label>
                                                 <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入订单编号，如100000" id="o_num" name="o_num"></div>
                                             </div>
-                                            <div class="form-group"><label class="col-sm-2 control-label">价格（元）：<a href="http://www.baidu.com">前往查询 </a></label>
+                                            <div class="form-group"><label class="col-sm-2 control-label">价格：</label>
                                                 <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入两位小数，如160.00" id="o_price" name="o_price"></div>
                                             </div>
 											<div class="form-group"><label class="col-sm-2 control-label">发票名称：</label>
@@ -436,16 +512,18 @@
 
                                         <fieldset class="form-horizontal">
 
-					 <div style="position: fixed;left: 50%;top: 50%;z-index: 1000;"id="showResult" ></div>  
-                         <label class="col-sm-2 control-label"  id="v_table">供应商</label>            
+                         <label class="col-sm-2"  id="v_table" style="width:80%">供应商</label>            
                             <table class="table table-hover" id="myTable">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Data</th>
-                                    <th>User</th>
-                                </tr>
-                                </thead>
+                               
+                               <thead> 
+                               <tr>
+                               <th>物料编号</th>  
+                               <th>数量</th>
+                               <th>价格</th>
+                               <th>到达时间</th>
+                               </tr>
+                               </thead>
+                               
 
 </table>
 						 <label> <input type="checkbox" class="i-checks" id="p_check" name="p_check">已确认账单信息</label>
@@ -520,7 +598,6 @@
        var obj1 = document.getElementById("o_num");  
        var obj2 = document.getElementById("o_price");  
        var obj4 = document.getElementById("p_check");
-       alert(obj4.checked);
        var obj5 = document.getElementById("myTable") ;
     if(!reg.test(obj1.value)){  
         alert("订单编号未输入数字！"); 
@@ -591,26 +668,29 @@
 			if(data.length==0){
 				alert("无此订单");
     			$("#showResult").html("");
-    			var html0=" <thead> <tr><th>#</th>  <th>Data</th><th>User</th></tr></thead><tbody>;"
+    			var html0=" <thead> <tr><th>物料编号</th>  <th>数量</th><th>价格</th><th>到达时间</th></tr></thead><tbody>;"
  	   			$("#myTable").html(html0);
 
 				
 			}
 			else{
-			var html0=" <thead> <tr><th>#</th>  <th>Data</th><th>User</th></tr></thead><tbody>;"
-			var v=result[0].Vendor_id;
+				var html0="  <thead> <tr><th>物料编号</th>  <th>数量</th><th>价格</th><th>到达时间</th></tr></thead><tbody>;"
+					var v=result[0].vendor_name;
 
-			for(var i=0;i<data.length;i++){
-			var id=result[i].Pay_id;
-			var amount=result[i].Amount;
-			var user=result[i].Pay_User;
+					for(var i=0;i<data.length;i++){
+					var id=result[i].material_num;
+					var amount=result[i].quantity;
+					var price=result[i].price;
+					var date=result[i].delivery_date;
 
- 			var html1="<tr><td>啊1</td><td>啊2</td><td>啊3</td></tr>"
-        	
-        	html1=html1.replace(/啊1/,id);
-        	html1=html1.replace(/啊2/,amount);
-        	html1=html1.replace(/啊3/,user);
-			html0+=html1;
+		 			var html1="<tr><td>啊1</td><td>啊2</td><td>啊3</td><td>啊4</td></tr>"
+		        	
+		        	html1=html1.replace(/啊1/,id);
+		        	html1=html1.replace(/啊2/,amount);
+		        	html1=html1.replace(/啊3/,price);
+		        	html1=html1.replace(/啊4/,date);
+
+					html0+=html1;
 
 			}
         	html0+="</tbody>";
@@ -644,7 +724,146 @@
 	url=encodeURI(encodeURI(url));
 	window.open (url);
 	}
-</script>
+    function openwin1_id(n){
+        document.getElementById('inputbox').style.display=n?'block':'none';  
+    }
+    function openwin2_id(n){
+        document.getElementById('inputbox2').style.display=n?'block':'none';  
+    }
+    function test_true_window(){  
+
+    	var time = document.getElementById("w_time").value;
+    	var num = document.getElementById("w_num").value;
+    	var name = document.getElementById("w_name").value;
+    	var text = document.getElementById("w_text").value;
+
+        var reg = new RegExp("^[0-9]*$"); 
+    	if (1){     	
+    		var results = '';
+    	 var html="<tbody>"
+
+  			$("#tb1").html("");
+	
+    	 $("#showResult").html("<img src=\"css/plugins/blueimp/img/loading.gif\" />");
+      	var defer = $.Deferred(results);
+      	 $.ajax({
+      	            
+      	                type : 'GET',
+      	                url : 'PaymentTable',
+      	               data:{
+      	            	  time:time,
+      	            	  num:num,
+      	            	  name:name,
+      	                  text:text,
+      	               },
+      	               dataType : 'json',
+      	                success : function(result,backData) {
+      	                	results=result;
+      	                   defer.resolve(result)
+
+      	                },
+      	                error : function(result) {
+      	                    alert("无此订单");
+      	       			$("#showResult").html("");
+      	   			$("#tb1").html("");
+
+
+      	            }
+      	            });}
+    	else{
+    		alert("订单号不规范，请重新输入");
+    	}
+
+
+      	return defer.promise();
+
+     	}
+  function test_forwindow(){
+	  openwin2_id(1);
+        $.when(test_true_window()).done(function(result,backData){
+        	var count = "";
+			var info = JSON.stringify(result);
+			var data = eval('(' + info + ')');
+			if(data.length==0){
+				alert("无此订单");
+    			$("#showResult").html("");
+    			var html0=" <thead> <tr><th>订单号</th><th>到达日期</th><th>供应商</th><th>材料</th></tr></thead><tbody>;"
+ 	   			$("#tb1").html(html0);
+
+				
+			}
+			else{
+			var html0=" <thead> <tr><th>订单号</th>  <th>到达日期</th><th>供应商</th><th>材料</th></tr></thead><tbody>;"
+			var v=result[0].Vendor_id;
+
+			for(var i=0;i<data.length;i++){
+			var id=result[i].order_num;
+			var amount=result[i].delivery_date;
+			var user=result[i].vendor_name;
+			var mar=result[i].material_num;
+
+ 			var html1="<tr onclick=\"selectline(this)\"><td>啊1</td><td>啊2</td><td>啊3</td><td>啊4</td></tr>"
+        	
+        	html1=html1.replace(/啊1/,id);
+        	html1=html1.replace(/啊2/,amount);
+        	html1=html1.replace(/啊3/,user);
+        	html1=html1.replace(/啊4/,mar);
+
+			html0+=html1;
+
+			}
+        	html0+="</tbody>";
+        	
+			$("#tb1").html(html0);
+     		$("#showResult").html("");
+
+		     var oTab = document.getElementById('tb1');
+             var oldColor = '';//用于保存原来一行的颜色
+             for(var i = 0; i<oTab.tBodies[0].rows.length; i++){
+                 //当鼠标移上去，改变字体色-背景色
+               oTab.tBodies[0].rows[i].onmouseover = function () {
+                     oldColor = this.style.background;
+                     this.style.background = "#009B63";
+                     this.style.color = "#ffffff";
+                 };
+
+                 //当鼠标移开，恢复原来的颜色
+                 oTab.tBodies[0].rows[i].onmouseout = function () {
+                     this.style.background = oldColor;
+                     this.style.color = "#000000";
+                 };
+                 //隔行显色
+                 if(i%2){
+                     oTab.tBodies[0].rows[i].style.background = "#EAF2D3";
+                 }
+                 else{
+                     oTab.tBodies[0].rows[i].style.background = "";
+                 }
+                
+
+             }
+         
+         }
+			
+			
+     });
+   
+			}
+  function selectline(ele)  //单击后赋值的函数
+  {
+       var clickContent = ele;         
+      //获取要赋值的input的元素
+      var inputElement =  document.getElementById("o_num");
+      //给input框赋值
+      inputElement.value = clickContent.cells[0].innerHTML;//.innerText;
+   
+      openwin2_id(0);           //关掉两个弹窗
+      openwin1_id(0);
+  	}
+
+  </script>
+
+    
 </body>
 
 </html>

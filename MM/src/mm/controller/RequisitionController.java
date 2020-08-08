@@ -22,10 +22,10 @@ public class RequisitionController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
-		//»ñÈ¡ÇëÇóµÄÐÐÎª
+		//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª
 		String action = req.getParameter("action");
 		System.out.println(action);
-		//¸ù¾Ý²»Í¬µÄactionÇëÇó£¬½øÈë²»Í¬µÄ·½·¨
+		//ï¿½ï¿½ï¿½Ý²ï¿½Í¬ï¿½ï¿½actionï¿½ï¿½ï¿½ó£¬½ï¿½ï¿½ë²»Í¬ï¿½Ä·ï¿½ï¿½ï¿½
 		
 		switch (action)
 		{
@@ -54,11 +54,11 @@ public class RequisitionController extends HttpServlet{
 		
 		String group = req.getParameter("organ10");
 		String head = req.getParameter("head_requisition");
-		//---´´½¨Çë¹ºµ¥-----
+		//---ï¿½ï¿½ï¿½ï¿½ï¿½ë¹ºï¿½ï¿½-----
 		Requisition rqi = new Requisition();
 		rqi.setRequisition_purchasegroup(group);
-		head = new String(head.getBytes("ISO-8859-1"),"UTF-8"); //ÖÐÎÄ½âÂë×ª»»;
-		head="²âÊÔºº×Ö";
+		head = new String(head.getBytes("ISO-8859-1"),"UTF-8"); //ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½×ªï¿½ï¿½;
+		head="ï¿½ï¿½ï¿½Ôºï¿½ï¿½ï¿½";
 		rqi.setRequisition_discription(head);
 		int requisition_num=RequisitionDao.addRequisition(rqi);
 		
@@ -67,7 +67,7 @@ public class RequisitionController extends HttpServlet{
 		String paraName=(String)enu.nextElement();
 		System.out.println(paraName+": "+req.getParameter(paraName));	
 		} 
-		//------ÖðÒ»Ìí¼Óitem--
+		//------ï¿½ï¿½Ò»ï¿½ï¿½ï¿½item--
 		for (int i=10;i<=num;i+=10)
 		{
 			Requisition_item ri = new Requisition_item();
@@ -121,11 +121,11 @@ public class RequisitionController extends HttpServlet{
 	{
 		// TODO Auto-generated method stub
 
-		System.out.println("½øÈëÑ¡ÌâÒµÎñ£¡");
-		String username = req.getParameter("user_name");//controller²ãÕâÑù»ñÈ¡ÓÃ»§Ãû
-		System.out.println(username+"½øÈëÖ÷¶¯Ñ¡ÌâÒµÎñ£¡");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Òµï¿½ï¿½");
+		String username = req.getParameter("user_name");//controllerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½ï¿½
+		System.out.println(username+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Òµï¿½ï¿½");
 		int selection=Integer.parseInt(req.getParameter("action"));
-		//½âÎöÇ°¶Ë´«»Ø×Ö·û´®µÄº¬Òå
+		//ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Ë´ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½
 		int a = selection/100;
 		int b = (selection-100*a)/10;
 		int c = selection%10;
@@ -136,13 +136,13 @@ public class RequisitionController extends HttpServlet{
 	}
 
 
-	private String packQuestion(Object ticontent,String type,int tiindex) //ÌâµÄÄÚÈÝ£¬ÌâÐÍ£¬ÏÔÊ¾±àºÅ
+	private String packQuestion(Object ticontent,String type,int tiindex) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½
 	{
 		String stiindex=String.valueOf(tiindex+1);
 		String pack="";
 		switch (type)
 		{
-			case "Ñ¡ÔñÌâ":
+			case "Ñ¡ï¿½ï¿½ï¿½ï¿½":
 				
 				pack=ticontent+
 				"      <div>\r\n" + 
@@ -166,11 +166,11 @@ public class RequisitionController extends HttpServlet{
 				"        <span style=\"margin-left: 10px\">D</span>\r\n" + 
 				"      </div>   ";
 				break;
-			case "Ìî¿ÕÌâ":
+			case "ï¿½ï¿½ï¿½ï¿½ï¿½":
 				pack=ticontent+"<input type=\"text\" name=\"myan"+stiindex+"\" >";
 				break;
-			case "¼ÆËãÌâ":
-				pack=ticontent+"<input class=\"form-control form-control-lg mb-3\" type=\"text\" name=\"myan"+stiindex+"\"  placeholder=\"ÔÚÕâÀïÊäÈë×îÖÕ¼ÆËã½á¹û\">";
+			case "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½":
+				pack=ticontent+"<input class=\"form-control form-control-lg mb-3\" type=\"text\" name=\"myan"+stiindex+"\"  placeholder=\"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½\">";
 				break;
 			default:
 				break;
@@ -185,7 +185,7 @@ public class RequisitionController extends HttpServlet{
 	{
 
 
-		String username = req.getParameter("user_name");//controller²ãÕâÑù»ñÈ¡ÓÃ»§Ãû
+		String username = req.getParameter("user_name");//controllerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½ï¿½
 	    
 		@SuppressWarnings("rawtypes")
 		int selection=Integer.parseInt(req.getParameter("select").toString());
@@ -196,12 +196,12 @@ public class RequisitionController extends HttpServlet{
 		String titype;
 		String tilevel;
 	
-        //---------------------ÏÂÃæ½«ÀúÊ·¼ÇÂ¼Ð´ÈëÊý¾Ý¿â
+        //---------------------ï¿½ï¿½ï¿½æ½«ï¿½ï¿½Ê·ï¿½ï¿½Â¼Ð´ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½
       
-        System.out.println(req.getParameter("user_name")+"³É¹¦Ð´ÈëÁËÀúÊ·¼ÇÂ¼");
+        System.out.println(req.getParameter("user_name")+"ï¿½É¹ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê·ï¿½ï¿½Â¼");
         
 	
-		req.getRequestDispatcher("consequence_se.jsp").forward(req,resp);//ÇëÇó×ª·¢
+		req.getRequestDispatcher("consequence_se.jsp").forward(req,resp);//ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½
 		
 		
 	}

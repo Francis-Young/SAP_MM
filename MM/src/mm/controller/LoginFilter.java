@@ -10,10 +10,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.annotation.WebFilter;
 
 /**
  * Servlet Filter implementation class LoginFilter
  */
+
+@WebFilter("/*") 
 public class LoginFilter implements Filter {
 
 	/**
@@ -42,13 +45,13 @@ public class LoginFilter implements Filter {
 		String uid = (String) session.getAttribute("uid");//
 		String url = request.getRequestURI();
 		if (uid == null || uid.equals("")) {
-			// ÅÐ¶Ï»ñÈ¡µÄÂ·¾¶²»Îª¿ÕÇÒ²»ÊÇ·ÃÎÊµÇÂ¼Ò³Ãæ»òÖ´ÐÐµÇÂ¼²Ù×÷Ê±Ìø×ª
+			// ï¿½Ð¶Ï»ï¿½È¡ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Ò²ï¿½ï¿½Ç·ï¿½ï¿½Êµï¿½Â¼Ò³ï¿½ï¿½ï¿½Ö´ï¿½Ðµï¿½Â¼ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½×ª
 			if (url != null && !url.equals("") && (url.indexOf("Login") < 0 && url.indexOf("login") < 0)) {
 				response.sendRedirect("Login");
 				return;
 			}
 		}
-		// ÒÑÍ¨¹ýÑéÖ¤£¬ÓÃ»§·ÃÎÊ¼ÌÐø
+		// ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½
 		arg2.doFilter(arg0, arg1);
 	}
 
