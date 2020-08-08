@@ -1,30 +1,26 @@
 package mm.dao;
 
 import mm.bean.RFQ;
+import mm.bean.RFQ_item;
 import mm.bean.Requisition;
 import mm.utils.DBUtil;
 import java.sql.*;
 
 public class RFQItemDao {
-	//≤Â»Î“ª’≈RFQ
-	public static void addRFQ( RFQ rf) {
-		//Ω®¡¢”Î ˝æ›ø‚µƒ¡¨Ω”
+	//ÊèíÂÖ•‰∏ÄÂº†RFQ
+	public static void addRFQItem( RFQ_item ri) {
+		//Âª∫Á´ã‰∏éÊï∞ÊçÆÂ∫ìÁöÑËøûÊé•
 		Connection conn=DBUtil.getConnection();
 		try {
 			
-			String sql=""+ "insert into RFQ_item" +" (rfq_num,material_num) "+"values(default,?,?)";
+			String sql=""+ "insert into RFQ_item" +" (rfqItem_num,rfq_num,material_num,requisition_quantity,requisition_deliverydate,requisition_plant) "+"values(default,?,?,?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
-		
-			psmt.setString(1, rf.getRfq_type());
-			psmt.setString(2, rf.getRfq_language());
-			psmt.setDate(3, rf.getRfq_date());
-			psmt.setDate(4, rf.getRfq_deadline());
-			psmt.setString(5, rf.getRfq_purchasing_org());
-			psmt.setString(6, rf.getRfq_purchasing_group());
-			psmt.setString(7, rf.getRfq_plant());
-			psmt.setInt(8, rf.getRequisition_num());
-			psmt.setString(9, rf.getVendor_code());
-			psmt.setString(10, rf.getRfq_coll());
+			
+			psmt.setInt(1, ri.getRfq_num());
+			psmt.setString(2, ri.getMaterial_num());
+			psmt.setInt(3, ri.getRequisition_quantity());
+			psmt.setDate(4, ri.getRequisition_deliverydate());
+			psmt.setString(5, ri.getRequisition_plant());
 
 			psmt.execute();
 		}catch(SQLException e) {
@@ -33,9 +29,9 @@ public class RFQItemDao {
             DBUtil.closeConnection(conn);
         }
 	}
-	//∏¸–¬RFQ
+	//Êõ¥Êñ∞RFQ
 	public static void updateRFQ( RFQ rf) {
-		//Ω®¡¢”Î ˝æ›ø‚µƒ¡¨Ω”
+		//Âª∫Á´ã‰∏éÊï∞ÊçÆÂ∫ìÁöÑËøûÊé•
 		Connection conn=DBUtil.getConnection();
 		try {
 			
@@ -60,282 +56,17 @@ public class RFQItemDao {
             DBUtil.closeConnection(conn);
         }
 	}
-	//∏˘æ›RFQ±‡∫≈≤È—Ø
-	public static RFQ findRFQbyNum(int num) {
-		
-		RFQ rf=new RFQ();
-		//Ω®¡¢ ˝æ›ø‚¡¨Ω”
-		Connection conn=DBUtil.getConnection();
-		try {
-		
-			String sql=""+"select * from RFQ where rfq_num = ?";
-			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, num);
-			//÷¥––≤È—Ø”Ôæ‰
-			ResultSet rs = psmt.executeQuery();
-			if (rs.next()) {
-			
-				rf.setRequisition_num(rs.getInt("requisition_num"));
-				rf.setRfq_coll(rs.getString("rfq_coll"));
-				rf.setRfq_type(rs.getString("rfq_type"));
-				rf.setRfq_language(rs.getString("rfq_language"));
-				rf.setRfq_date(rs.getDate("rfq_date"));
-				rf.setRfq_deadline(rs.getDate("rfq_deadline"));
-				rf.setRfq_purchasing_org(rs.getString("rfq_purchasing_org"));
-				rf.setRfq_purchasing_group(rs.getString("rfq_purchasing_group"));
-				rf.setVendor_code(rs.getString("vendor_code"));
-				rf.setRfq_coll(rs.getString("rfq_coll"));
-				rf.setRfq_num(rs.getInt("rfq_num"));
-			}
-		}catch(SQLException e) {
-            e.printStackTrace();
-        }catch(NullPointerException f){
-            f.printStackTrace();
-        }finally {
-            DBUtil.closeConnection(conn);
-        }
-		
-		return rf;
-	}
-	//∏˘æ›«Îπ∫µ•∫≈≤È—Ø
-	public static RFQ findRFQbyrequiNum(int num) {
-		
-		RFQ rf=new RFQ();
-		//Ω®¡¢ ˝æ›ø‚¡¨Ω”
-		Connection conn=DBUtil.getConnection();
-		try {
-		
-			String sql=""+"select * from RFQ where requisition_num = ?";
-			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, num);
-			//÷¥––≤È—Ø”Ôæ‰
-			ResultSet rs = psmt.executeQuery();
-			if (rs.next()) {
-			
-				rf.setRequisition_num(rs.getInt("requisition_num"));
-				rf.setRfq_coll(rs.getString("rfq_coll"));
-				rf.setRfq_type(rs.getString("rfq_type"));
-				rf.setRfq_language(rs.getString("rfq_language"));
-				rf.setRfq_date(rs.getDate("rfq_date"));
-				rf.setRfq_deadline(rs.getDate("rfq_deadline"));
-				rf.setRfq_purchasing_org(rs.getString("rfq_purchasing_org"));
-				rf.setRfq_purchasing_group(rs.getString("rfq_purchasing_group"));
-				rf.setVendor_code(rs.getString("vendor_code"));
-				rf.setRfq_coll(rs.getString("rfq_coll"));
-				rf.setRfq_num(rs.getInt("rfq_num"));
-			}
-		}catch(SQLException e) {
-            e.printStackTrace();
-        }catch(NullPointerException f){
-            f.printStackTrace();
-        }finally {
-            DBUtil.closeConnection(conn);
-        }
-		
-		return rf;
-	}
-	//∏˘æ›purchasing_org≤È—Ø
-	public static RFQ findRFQbyPurcha_org(String org) {
-		
-		RFQ rf=new RFQ();
-		//Ω®¡¢ ˝æ›ø‚¡¨Ω”
-		Connection conn=DBUtil.getConnection();
-		try {
-		
-			String sql=""+"select * from RFQ where rfq_purchasing_org = ?";
-			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setString(1, org);
-			//÷¥––≤È—Ø”Ôæ‰
-			ResultSet rs = psmt.executeQuery();
-			if (rs.next()) {
-			
-				rf.setRequisition_num(rs.getInt("requisition_num"));
-				rf.setRfq_coll(rs.getString("rfq_coll"));
-				rf.setRfq_type(rs.getString("rfq_type"));
-				rf.setRfq_language(rs.getString("rfq_language"));
-				rf.setRfq_date(rs.getDate("rfq_date"));
-				rf.setRfq_deadline(rs.getDate("rfq_deadline"));
-				rf.setRfq_purchasing_org(rs.getString("rfq_purchasing_org"));
-				rf.setRfq_purchasing_group(rs.getString("rfq_purchasing_group"));
-				rf.setVendor_code(rs.getString("vendor_code"));
-				rf.setRfq_coll(rs.getString("rfq_coll"));
-				rf.setRfq_num(rs.getInt("rfq_num"));
-			}
-		}catch(SQLException e) {
-            e.printStackTrace();
-        }catch(NullPointerException f){
-            f.printStackTrace();
-        }finally {
-            DBUtil.closeConnection(conn);
-        }
-		
-		return rf;
-	}
-	//∏˘æ›purchasing_group≤È—Ø
-	public static RFQ findRFQbyPurcha_group(String gro) {
-		
-		RFQ rf=new RFQ();
-		//Ω®¡¢ ˝æ›ø‚¡¨Ω”
-		Connection conn=DBUtil.getConnection();
-		try {
-		
-			String sql=""+"select * from RFQ where rfq_purchasing_group = ?";
-			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setString(1, gro);
-			//÷¥––≤È—Ø”Ôæ‰
-			ResultSet rs = psmt.executeQuery();
-			if (rs.next()) {
-			
-				rf.setRequisition_num(rs.getInt("requisition_num"));
-				rf.setRfq_coll(rs.getString("rfq_coll"));
-				rf.setRfq_type(rs.getString("rfq_type"));
-				rf.setRfq_language(rs.getString("rfq_language"));
-				rf.setRfq_date(rs.getDate("rfq_date"));
-				rf.setRfq_deadline(rs.getDate("rfq_deadline"));
-				rf.setRfq_purchasing_org(rs.getString("rfq_purchasing_org"));
-				rf.setRfq_purchasing_group(rs.getString("rfq_purchasing_group"));
-				rf.setVendor_code(rs.getString("vendor_code"));
-				rf.setRfq_coll(rs.getString("rfq_coll"));
-				rf.setRfq_num(rs.getInt("rfq_num"));
-			}
-		}catch(SQLException e) {
-            e.printStackTrace();
-        }catch(NullPointerException f){
-            f.printStackTrace();
-        }finally {
-            DBUtil.closeConnection(conn);
-        }
-		
-		return rf;
-	}
-	//∏˘æ›π§≥ß≤È—Ø
-	public static RFQ findRFQbyPlant(String plant) {
-		
-		RFQ rf=new RFQ();
-		//Ω®¡¢ ˝æ›ø‚¡¨Ω”
-		Connection conn=DBUtil.getConnection();
-		try {
-		
-			String sql=""+"select * from RFQ where rfq_plant = ?";
-			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setString(1, plant);
-			//÷¥––≤È—Ø”Ôæ‰
-			ResultSet rs = psmt.executeQuery();
-			if (rs.next()) {
-			
-				rf.setRequisition_num(rs.getInt("requisition_num"));
-				rf.setRfq_coll(rs.getString("rfq_coll"));
-				rf.setRfq_type(rs.getString("rfq_type"));
-				rf.setRfq_language(rs.getString("rfq_language"));
-				rf.setRfq_date(rs.getDate("rfq_date"));
-				rf.setRfq_deadline(rs.getDate("rfq_deadline"));
-				rf.setRfq_purchasing_org(rs.getString("rfq_purchasing_org"));
-				rf.setRfq_purchasing_group(rs.getString("rfq_purchasing_group"));
-				rf.setVendor_code(rs.getString("vendor_code"));
-				rf.setRfq_coll(rs.getString("rfq_coll"));
-				rf.setRfq_num(rs.getInt("rfq_num"));
-			}
-		}catch(SQLException e) {
-            e.printStackTrace();
-        }catch(NullPointerException f){
-            f.printStackTrace();
-        }finally {
-            DBUtil.closeConnection(conn);
-        }
-		
-		return rf;
-	}
-	//∏˘æ›RFQ¿‡–Õ≤È—Ø
-	public static RFQ findRFQbyType(String ty) {
-		
-		RFQ rf=new RFQ();
-		//Ω®¡¢ ˝æ›ø‚¡¨Ω”
-		Connection conn=DBUtil.getConnection();
-		try {
-		
-			String sql=""+"select * from RFQ where rfq_type = ?";
-			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setString(1,ty);
-			//÷¥––≤È—Ø”Ôæ‰
-			ResultSet rs = psmt.executeQuery();
-			if (rs.next()) {
-			
-				rf.setRequisition_num(rs.getInt("requisition_num"));
-				rf.setRfq_coll(rs.getString("rfq_coll"));
-				rf.setRfq_type(rs.getString("rfq_type"));
-				rf.setRfq_language(rs.getString("rfq_language"));
-				rf.setRfq_date(rs.getDate("rfq_date"));
-				rf.setRfq_deadline(rs.getDate("rfq_deadline"));
-				rf.setRfq_purchasing_org(rs.getString("rfq_purchasing_org"));
-				rf.setRfq_purchasing_group(rs.getString("rfq_purchasing_group"));
-				rf.setVendor_code(rs.getString("vendor_code"));
-				rf.setRfq_coll(rs.getString("rfq_coll"));
-				rf.setRfq_num(rs.getInt("rfq_num"));
-			}
-		}catch(SQLException e) {
-            e.printStackTrace();
-        }catch(NullPointerException f){
-            f.printStackTrace();
-        }finally {
-            DBUtil.closeConnection(conn);
-        }
-		
-		return rf;
-	}
-	//∏˘æ›π©”¶…Ã±‡¬Î≤È—Ø
-	public static RFQ findRFQbyVenderCode(String code) {
-		
-		RFQ rf=new RFQ();
-		//Ω®¡¢ ˝æ›ø‚¡¨Ω”
-		Connection conn=DBUtil.getConnection();
-		try {
-		
-			String sql=""+"select * from RFQ where vendor_code = ?";
-			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setString(1, code);
-			//÷¥––≤È—Ø”Ôæ‰
-			ResultSet rs = psmt.executeQuery();
-			if (rs.next()) {
-			
-				rf.setRequisition_num(rs.getInt("requisition_num"));
-				rf.setRfq_coll(rs.getString("rfq_coll"));
-				rf.setRfq_type(rs.getString("rfq_type"));
-				rf.setRfq_language(rs.getString("rfq_language"));
-				rf.setRfq_date(rs.getDate("rfq_date"));
-				rf.setRfq_deadline(rs.getDate("rfq_deadline"));
-				rf.setRfq_purchasing_org(rs.getString("rfq_purchasing_org"));
-				rf.setRfq_purchasing_group(rs.getString("rfq_purchasing_group"));
-				rf.setVendor_code(rs.getString("vendor_code"));
-				rf.setRfq_coll(rs.getString("rfq_coll"));
-				rf.setRfq_num(rs.getInt("rfq_num"));
-			}
-		}catch(SQLException e) {
-            e.printStackTrace();
-        }catch(NullPointerException f){
-            f.printStackTrace();
-        }finally {
-            DBUtil.closeConnection(conn);
-        }
-		
-		return rf;
-	}
-	
-	
-	
-	
-	
-	
 
-	//≈–∂œƒ≥RFQ∫≈ «∑Ò¥Ê‘⁄£¨»Ù¥Ê‘⁄‘Ú∑µªÿtrue£¨»Ù≤ª¥Ê‘⁄∑µªÿfalse
+	//Âà§Êñ≠ÊüêRFQÂè∑ÊòØÂê¶Â≠òÂú®ÔºåËã•Â≠òÂú®ÂàôËøîÂõûtrueÔºåËã•‰∏çÂ≠òÂú®ËøîÂõûfalse
 	public static boolean isRfqNumExist(int num) {
-		//Ω®¡¢ ˝æ›ø‚¡¨Ω”
+		//Âª∫Á´ãÊï∞ÊçÆÂ∫ìËøûÊé•
 		Connection conn=DBUtil.getConnection();
 		try {
-			//≤È—Ø”Ôæ‰£¨∏˘æ›—ß∫≈≤È—Ø
+			//Êü•ËØ¢ËØ≠Âè•ÔºåÊ†πÊçÆÂ≠¶Âè∑Êü•ËØ¢
 			String sql=""+"select * from RFQ where rfq_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//÷¥––≤È—Ø”Ôæ‰
+			//ÊâßË°åÊü•ËØ¢ËØ≠Âè•
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 				return true;
