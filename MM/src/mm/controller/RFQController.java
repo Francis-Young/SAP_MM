@@ -9,8 +9,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import mm.bean.RFQ;
+import mm.bean.RFQ_item;
 import mm.bean.Requisition;
 import mm.bean.Requisition_item;
+import mm.dao.RFQDao;
+import mm.dao.RFQItemDao;
 import mm.dao.ReqItemDao;
 import mm.dao.RequisitionDao;
 import java.sql.Date;
@@ -22,20 +28,23 @@ public class RFQController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
 	{
-		//»ñÈ¡ÇëÇóµÄĞĞÎª
+		//è·å–è¯·æ±‚çš„è¡Œä¸º
 		String action = req.getParameter("action");
 		System.out.println(action);
-		//¸ù¾İ²»Í¬µÄactionÇëÇó£¬½øÈë²»Í¬µÄ·½·¨
+		//æ ¹æ®ä¸åŒçš„actionè¯·æ±‚ï¼Œè¿›å…¥ä¸åŒçš„æ–¹æ³•
 		
 		switch (action)
 		{
-			case "creat":
-				creat(req,resp);
+			case "save":
+				save(req,resp);
 				break;
-			case "search_requisition":
-				search_requi(req,resp);
+			case "bounce_to_select":
+				select(req,resp);
 				break;
-			default:select_question(req,resp);
+			case "bounce_to_edit":
+				edit(req,resp);
+				break;	
+			default:
 				break;
 		}
 		
@@ -45,12 +54,103 @@ public class RFQController extends HttpServlet{
 
 
 
-	private void search_requi(HttpServletRequest req, HttpServletResponse resp) {
+
+
+	private void save(HttpServletRequest req, HttpServletResponse resp) {
 		// TODO Auto-generated method stub
-		//ÏÈĞ´Ò»¸ö°´num²éÑ¯µÄ
-		int requisition_num = 22;
-		Requisition rq =RequisitionDao.findRequisitionByNum(requisition_num);
+		HttpSession session= req.getSession();
+		
+		RFQ rfq= (RFQ)session.getAttribute("passdata");
+		String rfq_coll=req.getParameter("coll");
+		String vendor_code=req.getParameter("vendor");
+		rfq.setRfq_coll(rfq_coll);
+		rfq.setVendor_code(vendor_code);
+		int rfq_num =RFQDao.addRFQ(rfq);
+		
+		String [] itemture=(String[]) session.getAttribute("itemture");
+		int requisition_num=rfq.getRequisition_num();
+		ArrayList<Requisition_item> rilist=ReqItemDao.findRequItemByReqnum(requisition_num);
+	
+		for(int i=0;i<itemture.length;i++ )
+		{
+			if(itemture[i].equals("true"))
+			{
+				Requisition_item ri = rilist.get(i);
+				RFQ_item rf = new RFQ_item();
+				String material_num=ri.getMaterial_num();
+				rf.setMaterial_num(material_num);
+				rf.setRfq_num(rfq_num);
+				rf.setRequisition_deliverydate(ri.getRequisition_deliverydate());
+				rf.setRequisition_plant(ri.getRequisition_plant());
+				rf.setRequisition_quantity(ri.getRequisition_quantity());
+				rf.setRequisition_storageloc(ri.getRequisition_storageloc());
+				RFQItemDao.addRFQItem(rf);
+			}
+		}
+		
+		
 	}
+
+
+
+
+
+
+
+	private void edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		HttpSession session= req.getSession();
+		String [] itemture=req.getParameterValues("checkname");
+		session.setAttribute("itemture", itemture);
+		req.getRequestDispatcher("rfq6.jsp").forward(req,resp);//è¯·æ±‚è½¬å‘
+
+
+	
+
+		
+	}
+
+
+
+
+
+
+
+	private void select(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String rfq_type=req.getParameter("type");
+		String rfq_language=req.getParameter("language");
+		String date = req.getParameter("date");
+		java.sql.Date rfq_date=strToDate(date);
+		String deadline = req.getParameter("deadline");
+		java.sql.Date rfq_deadline=strToDate(deadline);
+		String rfq_purchasing_org = req.getParameter("org");
+		String rfq_purchasing_group = req.getParameter("group");
+		String rfq_plant = req.getParameter("plant");
+		int requisition_num=Integer.parseInt(req.getParameter("reqnum"));
+		String vendor_code=req.getParameter("vendorcode");
+		RFQ rfq = new RFQ();
+		rfq.setRequisition_num(requisition_num);
+		
+		rfq.setRfq_date(rfq_date);
+		rfq.setRfq_deadline(rfq_deadline);
+		rfq.setRfq_language(rfq_language);
+
+		rfq.setRfq_plant(rfq_plant);
+		rfq.setRfq_purchasing_group(rfq_purchasing_group);
+		rfq.setRfq_purchasing_org(rfq_purchasing_org);
+		rfq.setRfq_type(rfq_type);
+		rfq.setVendor_code(vendor_code);
+		
+		HttpSession session= req.getSession();
+		session.setAttribute("passdata",rfq);
+		
+		//Requisition resquisition = RequisitionDao.findRequisitionByNum(requisition_num);
+		req.getRequestDispatcher("rfq5.jsp").forward(req,resp);//è¯·æ±‚è½¬å‘
+		
+	}
+
+
 
 
 
@@ -61,28 +161,47 @@ public class RFQController extends HttpServlet{
 	{
 		doGet(req, resp);
 	}
-	private void creat(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
+	private void create(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
 		// TODO Auto-generated method stub
-		req.setCharacterEncoding("utf-8");
-		int num=Integer.parseInt(req.getParameter("num"));
 		
-		String group = req.getParameter("organ10");
-		String head = req.getParameter("head_requisition");
-		//---´´½¨Çë¹ºµ¥-----
-		Requisition rqi = new Requisition();
-		rqi.setRequisition_purchasegroup(group);
-		head = new String(head.getBytes("ISO-8859-1"),"UTF-8"); //ÖĞÎÄ½âÂë×ª»»;
-		head="²âÊÔºº×Ö";
-		rqi.setRequisition_discription(head);
-		int requisition_num=RequisitionDao.addRequisition(rqi);
+		req.setCharacterEncoding("utf-8");
+		//---åˆ›å»ºrfq-----
+		
+		String rfq_type=req.getParameter("type");
+		String rfq_language=req.getParameter("language");
+		String date = req.getParameter("date");
+		java.sql.Date rfq_date=strToDate(date);
+		String deadline = req.getParameter("deadline");
+		java.sql.Date rfq_deadline=strToDate(deadline);
+		String rfq_purchasing_org = req.getParameter("org");
+		String rfq_purchasing_group = req.getParameter("group");
+		String rfq_plant = req.getParameter("plant");
+		int requisition_num=Integer.parseInt(req.getParameter("reqnum"));
+		String vendor_code=req.getParameter("vendorcode");
+		String rfq_coll=req.getParameter("coll");
+		RFQ rfq = new RFQ();
+		rfq.setRequisition_num(requisition_num);
+		rfq.setRfq_coll(rfq_coll);
+		rfq.setRfq_date(rfq_date);
+		rfq.setRfq_deadline(rfq_deadline);
+		rfq.setRfq_language(rfq_language);
+
+		rfq.setRfq_plant(rfq_plant);
+		rfq.setRfq_purchasing_group(rfq_purchasing_group);
+		rfq.setRfq_purchasing_org(rfq_purchasing_org);
+		rfq.setRfq_type(rfq_type);
+		rfq.setVendor_code(vendor_code);
+		
+		int rfq_num=RFQDao.addRFQ(rfq);
 		
 		Enumeration<String> enu=req.getParameterNames();
 		while(enu.hasMoreElements()){
 		String paraName=(String)enu.nextElement();
 		System.out.println(paraName+": "+req.getParameter(paraName));	
 		} 
-		//------ÖğÒ»Ìí¼Óitem--
-		for (int i=10;i<=num;i+=10)
+		//------é€ä¸€æ·»åŠ item--
+		int num=Integer.parseInt(req.getParameter("num"));
+		/*for (int i=10;i<=num;i+=10)
 		{
 			Requisition_item ri = new Requisition_item();
 			ri.setMaterial_num(req.getParameter("material"+i));
@@ -99,7 +218,7 @@ public class RFQController extends HttpServlet{
 			ri.setRequisition_storageloc(req.getParameter("storloc"+i));
 			ReqItemDao.addRequisitionItem(ri);
 		}
-		
+		*/
    	
 		
 		
@@ -130,94 +249,6 @@ public class RFQController extends HttpServlet{
 	
 	
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void select_question(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException 
-	{
-		// TODO Auto-generated method stub
-
-		System.out.println("½øÈëÑ¡ÌâÒµÎñ£¡");
-		String username = req.getParameter("user_name");//controller²ãÕâÑù»ñÈ¡ÓÃ»§Ãû
-		System.out.println(username+"½øÈëÖ÷¶¯Ñ¡ÌâÒµÎñ£¡");
-		int selection=Integer.parseInt(req.getParameter("action"));
-		//½âÎöÇ°¶Ë´«»Ø×Ö·û´®µÄº¬Òå
-		int a = selection/100;
-		int b = (selection-100*a)/10;
-		int c = selection%10;
-		String chapter;
-		String titype;
-		String tilevel;
-		
-	}
 
 
-	private String packQuestion(Object ticontent,String type,int tiindex) //ÌâµÄÄÚÈİ£¬ÌâĞÍ£¬ÏÔÊ¾±àºÅ
-	{
-		String stiindex=String.valueOf(tiindex+1);
-		String pack="";
-		switch (type)
-		{
-			case "Ñ¡ÔñÌâ":
-				
-				pack=ticontent+
-				"      <div>\r\n" + 
-				"        <input id=\"item"+stiindex+"1\" type=\"radio\" name=\"myan"+stiindex+"\" value=\"A\" >\r\n" + 
-				"        <label for=\"item"+stiindex+"1\"></label>\r\n" + 
-				"        <span style=\"margin-left: 10px\">A</span>\r\n" + 
-				"      </div>\r\n" + 
-				"      <div>\r\n" + 
-				"        <input id=\"item"+stiindex+"2\" type=\"radio\" name=\"myan"+stiindex+"\" value=\"B\">\r\n" + 
-				"        <label for=\"item"+stiindex+"2\"></label>\r\n" + 
-				"        <span style=\"margin-left: 10px\">B</span>\r\n" + 
-				"      </div>\r\n" + 
-				"      <div>\r\n" + 
-				"        <input id=\"item"+stiindex+"3\" type=\"radio\" name=\"myan"+stiindex+"\" value=\"C\" >\r\n" + 
-				"        <label for=\"item"+stiindex+"3\"></label>\r\n" + 
-				"        <span style=\"margin-left: 10px\">C</span>\r\n" + 
-				"      </div>\r\n" + 
-				"      <div>\r\n" + 
-				"        <input id=\"item"+stiindex+"4\" type=\"radio\" name=\"myan"+stiindex+"\" value=\"D\">\r\n" + 
-				"        <label for=\"item"+stiindex+"4\"></label>\r\n" + 
-				"        <span style=\"margin-left: 10px\">D</span>\r\n" + 
-				"      </div>   ";
-				break;
-			case "Ìî¿ÕÌâ":
-				pack=ticontent+"<input type=\"text\" name=\"myan"+stiindex+"\" >";
-				break;
-			case "¼ÆËãÌâ":
-				pack=ticontent+"<input class=\"form-control form-control-lg mb-3\" type=\"text\" name=\"myan"+stiindex+"\"  placeholder=\"ÔÚÕâÀïÊäÈë×îÖÕ¼ÆËã½á¹û\">";
-				break;
-			default:
-				break;
-		}
-		return pack;
-	}
-
-
-
-	@SuppressWarnings("unchecked")
-	private void Hand_in(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
-	{
-
-
-		String username = req.getParameter("user_name");//controller²ãÕâÑù»ñÈ¡ÓÃ»§Ãû
-	    
-		@SuppressWarnings("rawtypes")
-		int selection=Integer.parseInt(req.getParameter("select").toString());
-		int a = selection/100;
-		int b = (selection-100*a)/10;
-		int c = selection%10;
-		String chapter;
-		String titype;
-		String tilevel;
-	
-        //---------------------ÏÂÃæ½«ÀúÊ·¼ÇÂ¼Ğ´ÈëÊı¾İ¿â
-      
-        System.out.println(req.getParameter("user_name")+"³É¹¦Ğ´ÈëÁËÀúÊ·¼ÇÂ¼");
-        
-	
-		req.getRequestDispatcher("consequence_se.jsp").forward(req,resp);//ÇëÇó×ª·¢
-		
-		
-	}
 }
-

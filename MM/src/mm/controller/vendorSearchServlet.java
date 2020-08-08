@@ -13,20 +13,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mm.bean.Requisition;
+import mm.bean.Vendor;
 import mm.dao.RequisitionDao;
+import mm.dao.VendorDao;
 
 
 /**
  * Servlet implementation class searchServlet
  */
-@WebServlet("/searchServlet")
-public class searchServlet extends HttpServlet {
+@WebServlet("/vendorSearchServlet")
+public class vendorSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public searchServlet() {
+    public vendorSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -49,9 +51,12 @@ public class searchServlet extends HttpServlet {
 	    resp.setHeader("Cache-Control", "no-cache"); 
 		String key= req.getParameter("key");
 		System.out.println(key);
-		
-		String description="xx";
-		String group="xx";
+		String vcity="xx";
+		String vcountry="xx";
+		String vcompanycode="xx";
+		String vname="xx";
+		String vtype="xx";
+		String vclerk="xx";
 		
 		String pattern1 ="(.*),";//description
 	    // 创建 Pattern 对象
@@ -60,7 +65,7 @@ public class searchServlet extends HttpServlet {
 	    Matcher m = r.matcher(key);
 	    if (m.find())
 	    {
-	    	description=m.group(1);
+	    	vname=m.group(1);
 	    }
 	    
 	    String pattern2 =",(.*)";//description
@@ -68,20 +73,40 @@ public class searchServlet extends HttpServlet {
 	    r = Pattern.compile(pattern2);
 	    // 现在创建 matcher 对象
 	    m = r.matcher(key);
-	    if (m.find())
-	    {
-	    	group=m.group(1);
-	    }
-	    System.out.println("des"+description);
-	    Requisition rq = new Requisition();
-	    rq.setRequisition_discription(description);
-	    rq.setRequisition_purchasegroup(group);
-		List<Requisition> rqlist=RequisitionDao.findRequisitionByAnything(rq);
+	    for (int i=1;i<=5;i++)
+	    	{
+	    	if(m.find())
+	    	{
+	    		if(i==1)
+	    		    vtype=m.group(1);
+	    		if(i==2)
+		    		vcompanycode=m.group(1);
+	    		if(i==3)
+		    		vcountry=m.group(1);
+	    		if(i==4)
+		    		vcity=m.group(1);
+	    		if(i==5)
+		    		vclerk=m.group(1);
+	    	
+	    	}
+	    	}
+	    
+		
+		
+		Vendor vd = new Vendor();
+		vd.setVcity(vcity);
+		vd.setVcountry(vcountry);
+		vd.setVcompanycode(vcompanycode);
+		vd.setVname(vname);
+		vd.setVtype(vtype);
+		vd.setVclerk(vclerk);
+		
+		
+		List<Vendor> vli=VendorDao.findVendorByAnything(vd);
 		
 		  
 		
-		
-		if (rqlist.isEmpty())
+		if (vli.isEmpty())
 		{
 			System.out.print("无记录？");
 			resp.getWriter().print(URLEncoder.encode("mark0*mark1没有相关记录！mark2","utf-8"));
@@ -90,9 +115,10 @@ public class searchServlet extends HttpServlet {
 		else
 		{
 			String s="";
-		for(int i=0; i<rqlist.size();i++)
+		for(int i=0; i<vli.size();i++)
 		{
-			s += "mark0"+rqlist.get(i).getRequisition_num()+"mark1"+rqlist.get(i).getRequisition_discription()+"mark2"+rqlist.get(i).getRequisition_purchasegroup()+"mark3";
+			s += "mark0"+vli.get(i).getVnum()+"mark1"+vli.get(i).getVname()+"mark2"+vli.get(i).getVtype()+"mark3"
+					+vli.get(i).getVcompanycode()+"mark4"+vli.get(i).getVcity()+"mark5";
 			
 		}
 		System.out.println(s);

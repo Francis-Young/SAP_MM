@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import mm.bean.Material;
+import mm.bean.Requisition;
 import mm.bean.Vendor;
 import mm.utils.DBUtil;
 
@@ -186,5 +188,52 @@ public class VendorDao {
 			e.printStackTrace();
 		}
 		DBUtil.closeConnection(conn);
+	}
+
+	public static ArrayList<Vendor> findVendorByAnything(Vendor vd) {
+		ArrayList<Vendor> rqlist=new ArrayList<Vendor>();
+		Vendor vd1=new Vendor();
+		//建立数据库连接
+		Connection conn=DBUtil.getConnection();
+		try {
+		
+			String sql=""+"select * from Vendor ";
+			if (!vd.getVname().equals("xx"))
+				sql+="where vendor_name ="+'"'+vd.getVname()+'"'+",";
+			if (!vd.getVtype().equals("xx"))
+				sql+="where vendor_type ="+'"'+vd.getVtype()+'"';
+			if (!vd.getVclerk().equals("xx"))
+				sql+="where vendor_clerk ="+'"'+vd.getVclerk()+'"';
+			if (!vd.getVcompanycode().equals("xx"))
+				sql+="where vendor_companycode ="+'"'+vd.getVcompanycode()+'"';
+			if (!vd.getVcountry().equals("xx"))
+				sql+="where vendor_country ="+'"'+vd.getVcountry()+'"';
+			if (!vd.getVcity().equals("xx"))
+				sql+="where vendor_city ="+'"'+vd.getVcity()+'"';
+
+			
+			sql = sql.substring(0, sql.length() - 1);
+			System.out.println(sql);
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			
+			//执行查询语句
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				vd.setVnum(rs.getString(1));
+				vd.setVtype(rs.getString("vendor_type"));
+				vd.setVname(rs.getString("vendor_name"));
+				vd.setVcompanycode(rs.getString("vendor_companycode"));
+				vd.setVcity(rs.getString("vendor_city"));
+
+			}
+		}catch(SQLException e) {
+            e.printStackTrace();
+        }catch(NullPointerException f){
+            f.printStackTrace();
+        }finally {
+            DBUtil.closeConnection(conn);
+        }
+		
+		return rqlist;
 	}
 }

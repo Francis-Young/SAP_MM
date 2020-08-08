@@ -6,9 +6,10 @@ import mm.utils.DBUtil;
 import java.sql.*;
 
 public class RFQDao {
-	//²åÈëÒ»ÕÅRFQ
-	public static void addRFQ( RFQ rf) {
-		//½¨Á¢ÓëÊı¾İ¿âµÄÁ¬½Ó
+	//æ’å…¥ä¸€å¼ RFQ
+	public static int addRFQ( RFQ rf) {
+		//å»ºç«‹ä¸æ•°æ®åº“çš„è¿æ¥
+		int num=0;
 		Connection conn=DBUtil.getConnection();
 		try {
 			
@@ -27,15 +28,23 @@ public class RFQDao {
 			psmt.setString(10, rf.getRfq_coll());
 
 			psmt.execute();
+			
+			sql="SELECT LAST_INSERT_ID()";
+			psmt = conn.prepareStatement(sql);
+			ResultSet rs = psmt.executeQuery();
+			if (rs.next()) {  
+				num= rs.getInt(1);
+		    }
 		}catch(SQLException e) {
             e.printStackTrace();
         }finally {
             DBUtil.closeConnection(conn);
         }
+		return num;
 	}
-	//¸üĞÂRFQ
+	//æ›´æ–°RFQ
 	public static void updateRFQ( RFQ rf) {
-		//½¨Á¢ÓëÊı¾İ¿âµÄÁ¬½Ó
+		//å»ºç«‹ä¸æ•°æ®åº“çš„è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 			
@@ -60,18 +69,18 @@ public class RFQDao {
             DBUtil.closeConnection(conn);
         }
 	}
-	//¸ù¾İRFQ±àºÅ²éÑ¯
+	//æ ¹æ®RFQç¼–å·æŸ¥è¯¢
 	public static RFQ findRFQbyNum(int num) {
 		
 		RFQ rf=new RFQ();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from RFQ where rfq_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
@@ -97,18 +106,18 @@ public class RFQDao {
 		
 		return rf;
 	}
-	//¸ù¾İÇë¹ºµ¥ºÅ²éÑ¯
+	//æ ¹æ®è¯·è´­å•å·æŸ¥è¯¢
 	public static RFQ findRFQbyrequiNum(int num) {
 		
 		RFQ rf=new RFQ();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from RFQ where requisition_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
@@ -134,18 +143,18 @@ public class RFQDao {
 		
 		return rf;
 	}
-	//¸ù¾İpurchasing_org²éÑ¯
+	//æ ¹æ®purchasing_orgæŸ¥è¯¢
 	public static RFQ findRFQbyPurcha_org(String org) {
 		
 		RFQ rf=new RFQ();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from RFQ where rfq_purchasing_org = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, org);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
@@ -171,18 +180,18 @@ public class RFQDao {
 		
 		return rf;
 	}
-	//¸ù¾İpurchasing_group²éÑ¯
+	//æ ¹æ®purchasing_groupæŸ¥è¯¢
 	public static RFQ findRFQbyPurcha_group(String gro) {
 		
 		RFQ rf=new RFQ();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from RFQ where rfq_purchasing_group = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, gro);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
@@ -208,18 +217,18 @@ public class RFQDao {
 		
 		return rf;
 	}
-	//¸ù¾İ¹¤³§²éÑ¯
+	//æ ¹æ®å·¥å‚æŸ¥è¯¢
 	public static RFQ findRFQbyPlant(String plant) {
 		
 		RFQ rf=new RFQ();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from RFQ where rfq_plant = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, plant);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
@@ -245,18 +254,18 @@ public class RFQDao {
 		
 		return rf;
 	}
-	//¸ù¾İRFQÀàĞÍ²éÑ¯
+	//æ ¹æ®RFQç±»å‹æŸ¥è¯¢
 	public static RFQ findRFQbyType(String ty) {
 		
 		RFQ rf=new RFQ();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from RFQ where rfq_type = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1,ty);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
@@ -282,18 +291,18 @@ public class RFQDao {
 		
 		return rf;
 	}
-	//¸ù¾İ¹©Ó¦ÉÌ±àÂë²éÑ¯
+	//æ ¹æ®ä¾›åº”å•†ç¼–ç æŸ¥è¯¢
 	public static RFQ findRFQbyVenderCode(String code) {
 		
 		RFQ rf=new RFQ();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from RFQ where vendor_code = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, code);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
@@ -326,16 +335,16 @@ public class RFQDao {
 	
 	
 
-	//ÅĞ¶ÏÄ³RFQºÅÊÇ·ñ´æÔÚ£¬Èô´æÔÚÔò·µ»Øtrue£¬Èô²»´æÔÚ·µ»Øfalse
+	//åˆ¤æ–­æŸRFQå·æ˜¯å¦å­˜åœ¨ï¼Œè‹¥å­˜åœ¨åˆ™è¿”å›trueï¼Œè‹¥ä¸å­˜åœ¨è¿”å›false
 	public static boolean isRfqNumExist(int num) {
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
-			//²éÑ¯Óï¾ä£¬¸ù¾İÑ§ºÅ²éÑ¯
+			//æŸ¥è¯¢è¯­å¥ï¼Œæ ¹æ®å­¦å·æŸ¥è¯¢
 			String sql=""+"select * from RFQ where rfq_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 				return true;
