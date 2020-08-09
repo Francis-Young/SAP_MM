@@ -7,9 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class RequisitionDao {
-	//²åÈëÒ»ÕÅÇë¹ºµ¥,·µ»Ø×îĞÂ²åÈëµ¥×ÓµÄnum
+	//æ’å…¥ä¸€å¼ è¯·è´­å•,è¿”å›æœ€æ–°æ’å…¥å•å­çš„num
 	public static int addRequisition( Requisition rq) {
-		//½¨Á¢ÓëÊı¾İ¿âµÄÁ¬½Ó
+		//å»ºç«‹ä¸æ•°æ®åº“çš„è¿æ¥
 		int num=0;
 		Connection conn=DBUtil.getConnection();
 		try {
@@ -17,7 +17,7 @@ public class RequisitionDao {
 			String sql=""+ "insert into Requisition" +" (requisition_num,requisition_discription,requisition_purchasegroup) "+"values(default,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 		
-			psmt.setString(1, "¹·"+rq.getRequisition_discription());
+			psmt.setString(1, "ç‹—"+rq.getRequisition_discription());
 			psmt.setString(2, rq.getRequisition_purchasegroup());
 			
 			psmt.execute();
@@ -25,7 +25,7 @@ public class RequisitionDao {
 			sql="SELECT LAST_INSERT_ID()";
 			psmt = conn.prepareStatement(sql);
 			ResultSet rs = psmt.executeQuery();
-			//----±éÀú´òÓ¡
+			//----éå†æ‰“å°
 			/*ResultSetMetaData rsmd = rs.getMetaData();
 			int columnsNumber = rsmd.getColumnCount();
 			while (rs.next()) {
@@ -46,18 +46,18 @@ public class RequisitionDao {
         }
 		return num;
 	}
-	//¸ù¾İ±àºÅ²éÑ¯
+	//æ ¹æ®ç¼–å·æŸ¥è¯¢
 	public static Requisition findRequisitionByNum(int num) {
 		
 		Requisition rq=new Requisition();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from Requisition where requisition_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
@@ -76,11 +76,11 @@ public class RequisitionDao {
 		
 		return rq;
 	}
-	//¸ù¾İÈÎÒâÌõ¼ş²éÑ¯
+	//æ ¹æ®ä»»æ„æ¡ä»¶æŸ¥è¯¢
 	public static ArrayList<Requisition> findRequisitionByAnything(Requisition rq) {
 		ArrayList<Requisition> rqlist=new ArrayList<Requisition>();
 		Requisition rq1=new Requisition();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
@@ -93,7 +93,7 @@ public class RequisitionDao {
 			System.out.println(sql);
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
 			
@@ -112,18 +112,18 @@ public class RequisitionDao {
 		
 		return rqlist;
 	}
-	//¸ù¾İgroup²éÑ¯
+	//æ ¹æ®groupæŸ¥è¯¢
 	public static Requisition findRequisitionBygroup(String purgro) {
 		
 		Requisition rq=new Requisition();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 			
 			String sql=""+"select * from Requisition where requisition_purchasegroup = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, purgro);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 				
@@ -143,16 +143,16 @@ public class RequisitionDao {
 		return rq;
 	}
 	
-	//ÅĞ¶ÏÄ³Çë¹ºµ¥ºÅ·ñ´æÔÚ£¬Èô´æÔÚÔò·µ»Øtrue£¬Èô²»´æÔÚ·µ»Øfalse
+	//åˆ¤æ–­æŸè¯·è´­å•å·å¦å­˜åœ¨ï¼Œè‹¥å­˜åœ¨åˆ™è¿”å›trueï¼Œè‹¥ä¸å­˜åœ¨è¿”å›false
 	public static boolean isRqNumExist(int num) {
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
-			//²éÑ¯Óï¾ä£¬¸ù¾İÑ§ºÅ²éÑ¯
+			//æŸ¥è¯¢è¯­å¥ï¼Œæ ¹æ®å­¦å·æŸ¥è¯¢
 			String sql=""+"select * from Requisition where requisition_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 				return true;
@@ -167,10 +167,10 @@ public class RequisitionDao {
         }
 		return false;
 	}
-	//ĞŞ¸ÄÇë¹ºµ¥
+	//ä¿®æ”¹è¯·è´­å•
 	public static int updateRequisitionByNum(int num,String description, String group) {
 		
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		int res=-1;
 		try {
@@ -180,7 +180,7 @@ public class RequisitionDao {
 			psmt.setString(1, description);
 			psmt.setString(2, group);
 			psmt.setInt(3, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			res= psmt.executeUpdate();
 		
 		}catch(SQLException e) {
@@ -193,6 +193,6 @@ public class RequisitionDao {
 		return res;
 		
 	}
-	//·µ»Ø×îĞÂ²åÈëµ¥×ÓµÄnum
+	//è¿”å›æœ€æ–°æ’å…¥å•å­çš„num
 
 }

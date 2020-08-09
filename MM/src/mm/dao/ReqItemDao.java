@@ -6,9 +6,9 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ReqItemDao {
-	//²åÈëÒ»ÌõÇë¹ºÌõÄ¿
+	//æ’å…¥ä¸€æ¡è¯·è´­æ¡ç›®
 	public static void addRequisitionItem( Requisition_item ri) {
-		//½¨Á¢ÓëÊı¾İ¿âµÄÁ¬½Ó
+		//å»ºç«‹ä¸æ•°æ®åº“çš„è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 			
@@ -28,17 +28,17 @@ public class ReqItemDao {
             DBUtil.closeConnection(conn);
         }
 	}
-	//¸ù¾İÇë¹ºµ¥±àºÅºÍ²ÄÁÏ±àºÅ²éÑ¯
+	//æ ¹æ®è¯·è´­æ¡ç›®ç¼–å·æŸ¥è¯¢
 	public static Requisition_item findRequItemByRequItemNum(int req_item_num ) {
 		Requisition_item ri=new Requisition_item();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from Requisition_item where req_item_num = ? ";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, req_item_num);	
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 				ri.setReq_item_num(rs.getInt("req_item_num"));
@@ -59,11 +59,11 @@ public class ReqItemDao {
 		
 		return ri;
 	}
-	//¸ù¾İÇë¹ºµ¥±àºÅºÍ²ÄÁÏ±àºÅ²éÑ¯
+	//æ ¹æ®è¯·è´­å•ç¼–å·å’Œææ–™ç¼–å·æŸ¥è¯¢
 	public static ArrayList<Requisition_item> findRequItemByReqnumAndMatnum(int reqnum ,int matnum) {
 		ArrayList<Requisition_item> rilist=new ArrayList<Requisition_item>();
 		Requisition_item ri=new Requisition_item();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
@@ -71,7 +71,43 @@ public class ReqItemDao {
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, reqnum);
 			psmt.setInt(2, matnum);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				ri.setReq_item_num(rs.getInt("req_item_num"));
+				ri.setRequisition_num(rs.getInt("requisition_num"));
+				ri.setMaterial_num(rs.getString("material_num"));
+				ri.setRequisition_deliverydate(rs.getDate("requisition_deliverydate"));
+				ri.setRequisition_plant(rs.getString("requisition_plant"));
+				ri.setRequisition_storageloc(rs.getString("requisition_storageloc"));
+				ri.setRequisition_quantity(rs.getInt("requisition_quantity"));
+			
+				rilist.add(ri);
+			}
+		}catch(SQLException e) {
+            e.printStackTrace();
+        }catch(NullPointerException f){
+            f.printStackTrace();
+        }finally {
+            DBUtil.closeConnection(conn);
+        }
+		
+		return rilist;
+	}
+	
+	//æ ¹æ®è¯·è´­å•ç¼–å·æŸ¥è¯¢
+	public static ArrayList<Requisition_item> findRequItemByReqnum(int reqnum) {
+		ArrayList<Requisition_item> rilist=new ArrayList<Requisition_item>();
+		Requisition_item ri=new Requisition_item();
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
+		Connection conn=DBUtil.getConnection();
+		try {
+		
+			String sql=""+"select * from Requisition_item where requisition_num = ?  ";
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, reqnum);
+			
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
 				ri.setReq_item_num(rs.getInt("req_item_num"));
@@ -96,12 +132,10 @@ public class ReqItemDao {
 	}
 	
 
-	
-
-	//¸üĞÂÌõÄ¿
+	//æ›´æ–°æ¡ç›®
 	public static int modifyRequisitionItemByNum(Requisition_item ri) {
 		
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		int res=-1;
 		try {
@@ -114,7 +148,7 @@ public class ReqItemDao {
 			psmt.setDate(4, ri.getRequisition_deliverydate());
 			psmt.setString(5, ri.getRequisition_plant());
 			psmt.setString(6, ri.getRequisition_storageloc());
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			res= psmt.executeUpdate();
 		
 		}catch(SQLException e) {

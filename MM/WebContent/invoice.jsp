@@ -421,11 +421,8 @@
                                     %>
                                     </h4>
                                     <span>到:</span>
-                                    <address>
-                                        <strong>Corporate, Inc.</strong><br>
-                                        112 Street Avenu, 1080<br>
-                                        Miami, CT 445611<br>
-                                        <abbr title="Phone">P:</abbr> (120) 9000-4321
+                                    <address id="v_address">
+                                       
                                     </address>
                                     <p>
                                         <span><strong>发票日期:</strong><%out.print(request.getParameter("date")); %></span><br/>
@@ -448,7 +445,8 @@
 
                                 <tr>
                                     <td><strong>总费用 :</strong></td>
-                                    <td>¥<%out.print(request.getParameter("amount")); %></td>
+                                    <td><%out.print(request.getParameter("amount")); %>
+                                    <p id="currency"></p></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -528,33 +526,50 @@ function test(){
 			if(data.length==0){
 				alert("无此订单");
   			$("#showResult").html("");
-  			var html0=" <thead> <tr><th>#</th>  <th>Data</th><th>User</th></tr></thead><tbody>;"
+			var html0="  <thead> <tr><th>物料编号</th>  <th>数量</th><th>价格</th><th>到达时间</th></tr></thead><tbody>;"
 	   			$("#myTable").html(html0);
 
 				
 			}
 			else{
-			var html0=" <thead> <tr><th>#</th>  <th>Data</th><th>User</th></tr></thead><tbody>;"
-			var v=result[0].Vendor_id;
+				var html0="  <thead> <tr><th>物料编号</th>  <th>数量</th><th>价格</th><th>到达时间</th></tr></thead><tbody>;"
+					var v_n=result[0].vendor_name;
+					var v_p=result[0].vendor_postalcode;
+					var v_c=result[0].vendor_city;
+					var v_s=result[0].vendor_street;
+					var v_cu=result[0].vendor_currency;
 
-			for(var i=0;i<data.length;i++){
-			var id=result[i].Pay_id;
-			var amount=result[i].Amount;
-			var user=result[i].Pay_User;
+					for(var i=0;i<data.length;i++){
+					var id=result[i].material_num;
+					var amount=result[i].quantity;
+					var price=result[i].price;
+					var date=result[i].delivery_date;
 
-			var html1="<tr><td>啊1</td><td>啊2</td><td>啊3</td></tr>"
-      	
-      	html1=html1.replace(/啊1/,id);
-      	html1=html1.replace(/啊2/,amount);
-      	html1=html1.replace(/啊3/,user);
-			html0+=html1;
+		 			var html1="<tr><td>啊1</td><td>啊2</td><td>啊3</td><td>啊4</td></tr>"
+		        	
+		        	html1=html1.replace(/啊1/,id);
+		        	html1=html1.replace(/啊2/,amount);
+		        	html1=html1.replace(/啊3/,price);
+		        	html1=html1.replace(/啊4/,date);
+
+					html0+=html1;
+					
+					
 
 			}
       	html0+="</tbody>";
 			$("#myTable").html(html0);
 			$("#showResult").html("");
-			var v1="供应商："+v;
-			document.getElementById('v_table').innerHTML = v1;
+			var v1="    <strong>啊1</strong><br>啊2<br>啊3,啊4<br>";
+		  	v1=v1.replace(/啊1/,v_n);
+        	v1=v1.replace(/啊2/,v_s);
+        	v1=v1.replace(/啊3/,v_c);
+        	v1=v1.replace(/啊4/,v_p);
+			
+			document.getElementById('v_address').innerHTML = v1;
+			document.getElementById('currency').innerHTML = v_cu;
+
+			
 			}
        });       
       
