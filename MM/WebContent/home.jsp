@@ -55,7 +55,8 @@
 							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
 							<li><a href="CreateVendor">创建供应商</a></li>
-							<li><a href="graph_morris.html">维护供应商</a></li>
+							<li><a href="SelectVendor?type=display">查询供应商</a></li>
+							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
 					<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
 							class="nav-label">采购</span><span class="fa arrow"></span></a>
@@ -106,7 +107,7 @@
 						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uid")%></span>
 						</li>
 						<li><a href="CreateMaterial">创建物料</a></li>
-						<li><a href="SelectVendor">维护供应商</a></li>
+						
 						<li class="dropdown"><a class="dropdown-toggle count-info"
 							data-toggle="dropdown" href="#"> <i class="fa fa-envelope"></i>
 								<span class="label label-warning">16</span>
