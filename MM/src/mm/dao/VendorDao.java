@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import mm.bean.DownList;
 import mm.bean.Material;
 import mm.bean.Vendor;
 import mm.utils.DBUtil;
@@ -45,8 +46,9 @@ public class VendorDao {
 		return vnum;
 	}
 
-	public void initCreateTable(ArrayList<String> reconacct, ArrayList<String> paymentterms, ArrayList<String> currency,
-			ArrayList<String> language) {
+	public void initCreateTable(ArrayList<DownList> reconacct, String vreconacct, ArrayList<DownList> paymentterms,
+			String vpaymentterms, ArrayList<DownList> currency, String vcurrency, ArrayList<DownList> language,
+			String vlanguage) {
 		Connection conn = DBUtil.getConnection();
 
 		try {
@@ -54,8 +56,14 @@ public class VendorDao {
 			ResultSet rs = stat.executeQuery();
 
 			while (rs.next()) {
-				reconacct.add(rs.getString("reconacct_num"));
-
+				DownList option = new DownList();
+				option.setListitemname(rs.getString("reconacct_num"));
+				if (option.getListitemname().equals(vreconacct)) {
+					option.setSelected("selected");
+				} else {
+					option.setSelected("");
+				}
+				reconacct.add(option);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -66,8 +74,14 @@ public class VendorDao {
 			ResultSet rs = stat.executeQuery();
 
 			while (rs.next()) {
-				paymentterms.add(rs.getString("paymentterms_num"));
-
+				DownList option = new DownList();
+				option.setListitemname(rs.getString("paymentterms_num"));
+				if (option.getListitemname().equals(vpaymentterms)) {
+					option.setSelected("selected");
+				} else {
+					option.setSelected("");
+				}
+				paymentterms.add(option);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -78,8 +92,14 @@ public class VendorDao {
 			ResultSet rs = stat.executeQuery();
 
 			while (rs.next()) {
-				currency.add(rs.getString("currency_name"));
-
+				DownList option = new DownList();
+				option.setListitemname(rs.getString("currency_name"));
+				if (option.getListitemname().equals(vcurrency)) {
+					option.setSelected("selected");
+				} else {
+					option.setSelected("");
+				}
+				currency.add(option);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -90,8 +110,14 @@ public class VendorDao {
 			ResultSet rs = stat.executeQuery();
 
 			while (rs.next()) {
-				language.add(rs.getString("language_name"));
-
+				DownList option = new DownList();
+				option.setListitemname(rs.getString("language_name"));
+				if (option.getListitemname().equals(vlanguage)) {
+					option.setSelected("selected");
+				} else {
+					option.setSelected("");
+				}
+				language.add(option);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -200,7 +226,7 @@ public class VendorDao {
 		int vnum = Integer.parseInt(vnums);
 		try {
 			PreparedStatement stat = conn.prepareStatement(
-					"update Vendor set vendor_name=?,vendor_type=?,vendor_taxnum=?,vendor_companycode=?,vendor_reconacct=?,vendor_paymentterms=?,vendor_currency=?,vendor_street=?,vendor_postalcode=?,vendor_city=?,vendor_country=?,vendor_region=?,vendor_language=?,vendor_code=?,vendor_clerk=? WHERE vendor_num = ?");
+					"update Vendor set vendor_name=?,vendor_type=?,vendor_taxnum=?,vendor_companycode=?,vendor_reconacct=?,vendor_paymentterms=?,vendor_currency=?,vendor_street=?,vendor_postalcode=?,vendor_city=?,vendor_country=?,vendor_region=?,vendor_language=?,vendor_clerk=? WHERE vendor_num = ?");
 			stat.setString(1, v.getVname());
 			stat.setString(2, v.getVtype());
 			stat.setString(3, v.getVtaxnum());
@@ -213,9 +239,9 @@ public class VendorDao {
 			stat.setString(10, v.getVcity());
 			stat.setString(11, v.getVcountry());
 			stat.setString(12, v.getVregion());
-			stat.setString(13, v.getVclerk());
-			stat.setString(14, v.getVlanguage());
-			stat.setInt(15,vnum);
+			stat.setString(13, v.getVlanguage());
+			stat.setString(14, v.getVclerk());
+			stat.setInt(15, vnum);
 			stat.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

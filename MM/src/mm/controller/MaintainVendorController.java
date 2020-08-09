@@ -8,7 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import mm.bean.DownList;
 import mm.bean.Vendor;
 import mm.dao.VendorDao;
 
@@ -33,26 +35,26 @@ public class MaintainVendorController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		String vnum = (String) session.getAttribute("vnum");
+
 		VendorDao vdao = new VendorDao();
-		ArrayList<String> reconacct = new ArrayList<String>();
-		ArrayList<String> paymentterms = new ArrayList<String>();
-		ArrayList<String> language = new ArrayList<String>();
-		ArrayList<String> currency = new ArrayList<String>();
-		vdao.initCreateTable(reconacct, paymentterms, currency, language);
+		Vendor v = new Vendor();
+		if (vnum != null && !"".equals(vnum)) {
+			vdao.findVendor(vnum, v);
+			request.setAttribute("vendor", v);
+		}
+
+		ArrayList<DownList> reconacct = new ArrayList<DownList>();
+		ArrayList<DownList> paymentterms = new ArrayList<DownList>();
+		ArrayList<DownList> language = new ArrayList<DownList>();
+		ArrayList<DownList> currency = new ArrayList<DownList>();
+		vdao.initCreateTable(reconacct, v.getVreconacct(), paymentterms, v.getVpaymentterms(), currency,
+				v.getVcurrency(), language, v.getVlanguage());
 		request.setAttribute("reconacct", reconacct);
 		request.setAttribute("paymentterms", paymentterms);
 		request.setAttribute("currency", currency);
 		request.setAttribute("language", language);
-
-		String vnum = request.getParameter("v");
-		if (vnum != null && !"".equals(vnum)) {
-			System.out.println(vnum);
-			VendorDao vd = new VendorDao();
-			Vendor v = new Vendor();
-			vd.findVendor(vnum, v);
-			request.setAttribute("vendor", v);
-			System.out.println(v.getVcurrency());
-		}
 		request.getRequestDispatcher("/maintainvendor.jsp").forward(request, response);
 	}
 
@@ -81,20 +83,15 @@ public class MaintainVendorController extends HttpServlet {
 		v.setVclerk(request.getParameter("vclerk"));
 		String notice = "保存失败，请检查输入的信息";
 		String color = "#ed5565";
-		System.out.println("1");
 		VendorDao vdao = new VendorDao();
-		String vnum = request.getParameter("v");
-		System.out.println("222:"+vnum);
-		System.out.println("2");
-		System.out.println("3");
-		vdao.updateVendor(vnum, v);;
+		HttpSession session = request.getSession();
+		String vnum = (String) session.getAttribute("vnum");
+		vdao.updateVendor(vnum, v);
+		;
 		if (vnum != null && !"".equals(vnum)) {
 			notice = "成功保存供应商" + vnum;
 			color = "#1ab394";
-			System.out.println("4");
 		}
-		System.out.println("5");
-
 		request.setAttribute("notice", notice);
 		request.setAttribute("color", color);
 		doGet(request, response);

@@ -2,11 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="mm.bean.DownList"%>
 <%
-	ArrayList<String> reconacct = (ArrayList<String>) request.getAttribute("reconacct");
-	ArrayList<String> paymentterms = (ArrayList<String>) request.getAttribute("paymentterms");
-	ArrayList<String> currency = (ArrayList<String>) request.getAttribute("currency");
-	ArrayList<String> language = (ArrayList<String>) request.getAttribute("language");
+	ArrayList<DownList> reconacct = (ArrayList<DownList>) request.getAttribute("reconacct");
+	ArrayList<DownList> paymentterms = (ArrayList<DownList>) request.getAttribute("paymentterms");
+	ArrayList<DownList> currency = (ArrayList<DownList>) request.getAttribute("currency");
+	ArrayList<DownList> language = (ArrayList<DownList>) request.getAttribute("language");
 %>
 <!DOCTYPE html>
 <html>
@@ -212,9 +213,8 @@
 														name="vlanguage">
 														<c:forEach items="${language}" var="language" begin="0"
 															end="${language.size()}" step="1">
-															<option value="${language }"
-																<c:if test="${language=='ZH-CN'}"> selected="selected" </c:if>><c:out
-																	value="${language}"></c:out></option>
+															<option value="${language.listitemname }"
+																${language.selected }>${language.listitemname}</option>
 														</c:forEach>
 													</select>
 												</div>
@@ -226,9 +226,8 @@
 													class="select2_demo_1 form-control" name="vcurrency">
 													<c:forEach items="${currency}" var="currency" begin="0"
 														end="${currency.size()}" step="1">
-														<option value="${currency }"
-															<c:if test="${currency=='RMB'}"> selected="selected" </c:if>><c:out
-																value="${currency}"></c:out></option>
+														<option value="${currency.listitemname }"
+															${currency.selected }>${currency.listitemname}</option>
 													</c:forEach>
 												</select>
 											</div>
@@ -241,9 +240,8 @@
 													class="select2_demo_1 form-control" name="vpaymentterms">
 													<c:forEach items="${paymentterms}" var="paymentterms"
 														begin="0" end="${paymentterms.size()}" step="1">
-														<option value="${paymentterms }"
-															<c:if test="${paymentterms=='0001'}"> selected="selected" </c:if>><c:out
-																value="${paymentterms}"></c:out></option>
+														<option value="${paymentterms.listitemname }"
+															${paymentterms.selected }>${paymentterms.listitemname}</option>
 													</c:forEach>
 												</select>
 											</div>
@@ -254,9 +252,8 @@
 														name="vreconacct">
 														<c:forEach items="${reconacct}" var="reconacct" begin="0"
 															end="${reconacct.size()}" step="1">
-															<option value="${reconacct }"
-																<c:if test="${reconacct=='300000'}"> selected="selected" </c:if>><c:out
-																	value="${reconacct}"></c:out></option>
+															<option value="${reconacct.listitemname }"
+																${reconacct.selected }>${reconacct.listitemname}</option>
 														</c:forEach>
 													</select>
 												</div>
