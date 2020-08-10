@@ -195,8 +195,8 @@
 				</div>
 				<div class="footer">
 					<div class="pull-right">
-						<button type="submit" class="btn btn-primary"id="showtoast">继续</button>
-						<button type="reset" class="btn btn-white"id="clearlasttoast">清除</button>
+						<button type="submit" class="btn btn-primary">继续</button>
+						<button type="reset" class="btn btn-white">清除</button>
 					</div>
 				</div>
 			</form>
@@ -217,7 +217,7 @@
 	<!-- Custom and plugin javascript -->
 	<script src="js/inspinia.js"></script>
 	<script src="js/plugins/pace/pace.min.js"></script>
-	
+
 	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
 

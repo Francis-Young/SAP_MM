@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,16 +15,15 @@ import mm.bean.Vendor;
 import mm.dao.VendorDao;
 
 /**
- * Servlet implementation class CreateVendorController
+ * Servlet implementation class MaintainVendorController
  */
-@WebServlet("/CreateVendor")
-public class CreatevVendorController extends HttpServlet {
+public class DisplayVendorController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public CreatevVendorController() {
+	public DisplayVendorController() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -37,18 +35,27 @@ public class CreatevVendorController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		String vnum = (String) session.getAttribute("vnum");
+
 		VendorDao vdao = new VendorDao();
+		Vendor v = new Vendor();
+		if (vnum != null && !"".equals(vnum)) {
+			vdao.findVendor(vnum, v);
+			request.setAttribute("vendor", v);
+		}
+
 		ArrayList<DownList> reconacct = new ArrayList<DownList>();
 		ArrayList<DownList> paymentterms = new ArrayList<DownList>();
 		ArrayList<DownList> language = new ArrayList<DownList>();
 		ArrayList<DownList> currency = new ArrayList<DownList>();
-		vdao.initCreateTable(reconacct, "300000", paymentterms, "0001", currency, "RMB", language, "ZH-CN");
-		request.setAttribute("reconacct", reconacct);
-		request.setAttribute("paymentterms", paymentterms);
-		request.setAttribute("currency", currency);
-		request.setAttribute("language", language);
-		request.getRequestDispatcher("/createvendor.jsp").forward(request, response);
-
+		vdao.initCreateTable(reconacct, v.getVreconacct(), paymentterms, v.getVpaymentterms(), currency,
+				v.getVcurrency(), language, v.getVlanguage());
+		request.setAttribute("reconaccts", reconacct);
+		request.setAttribute("paymenttermss", paymentterms);
+		request.setAttribute("currencys", currency);
+		request.setAttribute("languages", language);
+		request.getRequestDispatcher("/displayvendor.jsp").forward(request, response);
 	}
 
 	/**
@@ -74,25 +81,21 @@ public class CreatevVendorController extends HttpServlet {
 		v.setVregion(request.getParameter("vregion"));
 		v.setVlanguage(request.getParameter("vlanguage"));
 		v.setVclerk(request.getParameter("vclerk"));
-		String notice = "创建失败，请检查输入的信息";
+		String notice = "保存失败，请检查输入的信息";
 		String color = "#ed5565";
-		if (v.getVname() != null && !"".equals(v.getVname())) {
-			VendorDao vdao = new VendorDao();
-			String vnum = "";
-			try {
-				vnum = vdao.addVendor(v);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (vnum != null && !"".equals(vnum)) {
-				notice = "成功创建供应商" + vnum;
-				color = "#1ab394";
-			}
+		VendorDao vdao = new VendorDao();
+		HttpSession session = request.getSession();
+		String vnum = (String) session.getAttribute("vnum");
+		vdao.updateVendor(vnum, v);
+		;
+		if (vnum != null && !"".equals(vnum)) {
+			notice = "成功保存供应商" + vnum;
+			color = "#1ab394";
 		}
 		request.setAttribute("notice", notice);
 		request.setAttribute("color", color);
 		doGet(request, response);
 		return;
 	}
+
 }
