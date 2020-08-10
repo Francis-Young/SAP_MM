@@ -2,8 +2,10 @@ package mm.dao;
 
 import mm.bean.RFQ;
 import mm.bean.Requisition;
+import mm.bean.Vendor;
 import mm.utils.DBUtil;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class RFQDao {
 	//插入一张RFQ
@@ -359,6 +361,54 @@ public class RFQDao {
         }
 		return false;
 	}
-}
+	public static ArrayList<RFQ> findrfqByAnything(RFQ vd) {
+		
+		ArrayList<RFQ> rqlist=new ArrayList<RFQ>();
+		RFQ vd1=new RFQ();
+		//建立数据库连接
+		Connection conn=DBUtil.getConnection();
+		try {
+		
+			String sql=""+"select * from RFQ ";
+			if (!vd.getRfq_coll().equals("xx"))
+				sql+="where rfq_coll ="+'"'+vd.getRfq_coll()+'"'+",";
+			if (!vd.getRfq_plant().equals("xx"))
+				sql+="where rfq_plant ="+'"'+vd.getRfq_plant()+'"';
+			if (!vd.getRfq_purchasing_org().equals("xx"))
+				sql+="where rfq_purchasing_org ="+'"'+vd.getRfq_purchasing_org()+'"';
+			if (!vd.getVendor_code().equals("xx"))
+				sql+="where vendor_code ="+'"'+vd.getVendor_code()+'"';
+			if (!vd.getRfq_type().equals("xx"))
+				sql+="where vendor_type ="+'"'+vd.getRfq_type()+'"';
+			
 
+			
+			sql = sql.substring(0, sql.length() - 1);
+			System.out.println(sql);
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			
+			//执行查询语句
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				vd.setRfq_deadline(rs.getDate("rfq_deadline"));
+				vd.setRfq_plant(rs.getString("rfq_plant"));
+				vd.setVendor_code(rs.getString("vendor_code"));
+				vd.setRfq_coll(rs.getString("rfq_coll"));
+				vd.setRfq_num(rs.getInt("rfq_num"));
+			}
+		}catch(SQLException e) {
+            e.printStackTrace();
+        }catch(NullPointerException f){
+            f.printStackTrace();
+        }finally {
+            DBUtil.closeConnection(conn);
+        }
+		
+		return rqlist;
+		
+		
+		
+		
+}
+}
 
