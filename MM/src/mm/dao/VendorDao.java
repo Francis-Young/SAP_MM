@@ -250,7 +250,37 @@ public class VendorDao {
 			e.printStackTrace();
 		}
 		DBUtil.closeConnection(conn);}
-
+	public static Vendor findVendorbynum(String vnums) {
+		Connection conn = DBUtil.getConnection();
+		int vnum = Integer.parseInt(vnums);
+		Vendor v = new Vendor();
+		try {
+			PreparedStatement stat = conn.prepareStatement(
+					"select vendor_name, vendor_type,vendor_taxnum,vendor_companycode,vendor_reconacct,vendor_paymentterms,vendor_currency,vendor_street,vendor_postalcode,vendor_city,vendor_country,vendor_region,vendor_clerk,vendor_language from Vendor where vendor_num=?");
+			stat.setInt(1, vnum);
+			ResultSet rs = stat.executeQuery();
+			if (rs.next()) {
+				v.setVtype(rs.getString("vendor_type"));
+				v.setVname(rs.getString("vendor_name"));
+				v.setVtaxnum(rs.getString("vendor_taxnum"));
+				v.setVcompanycode(rs.getString("vendor_companycode"));
+				v.setVreconacct(rs.getString("vendor_reconacct"));
+				v.setVpaymentterms(rs.getString("vendor_paymentterms"));
+				v.setVcurrency(rs.getString("vendor_currency"));
+				v.setVstreet(rs.getString("vendor_street"));
+				v.setVpostalcode(rs.getString("vendor_postalcode"));
+				v.setVcity(rs.getString("vendor_city"));
+				v.setVcountry(rs.getString("vendor_country"));
+				v.setVregion(rs.getString("vendor_region"));
+				v.setVlanguage(rs.getString("vendor_language"));
+				v.setVclerk(rs.getString("vendor_clerk"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DBUtil.closeConnection(conn);
+		return v;
+	}
 	public static ArrayList<Vendor> findVendorByAnything(Vendor vd) {
 		ArrayList<Vendor> rqlist=new ArrayList<Vendor>();
 		Vendor vd1=new Vendor();
