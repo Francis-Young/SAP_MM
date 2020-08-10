@@ -3,8 +3,10 @@ package mm.dao;
 import mm.bean.RFQ;
 import mm.bean.RFQ_item;
 import mm.bean.Requisition;
+import mm.bean.Requisition_item;
 import mm.utils.DBUtil;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class RFQItemDao {
 	//插入一张RFQ
@@ -80,6 +82,41 @@ public class RFQItemDao {
             DBUtil.closeConnection(conn);
         }
 		return false;
+	}
+	//根据rfq编号查询
+	public static ArrayList<RFQ_item> findRFQItemByRfqnum(int rfqnum) {
+		ArrayList<RFQ_item> rilist=new ArrayList<RFQ_item>();
+		RFQ_item ri=new RFQ_item();
+		//建立数据库连接
+		Connection conn=DBUtil.getConnection();
+		try {
+		
+			String sql=""+"select * from RFQ_item where rfq_num = ?  ";
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, rfqnum);
+			
+			//执行查询语句
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				ri.setMaterial_num(rs.getString("material_num"));
+				ri.setRequisition_deliverydate(rs.getDate("requisition_deliverydate"));
+				ri.setRequisition_plant(rs.getString("requisition_plant"));
+				ri.setRequisition_quantity(rs.getInt("requisition_quantity"));
+				ri.setRequisition_storageloc(rs.getString("requisition_storageloc"));
+				ri.setRfq_num(rs.getInt("rfq_num"));
+				ri.setRfqItem_num(rs.getInt("rfqItem_num"));
+			
+				rilist.add(ri);
+			}
+		}catch(SQLException e) {
+            e.printStackTrace();
+        }catch(NullPointerException f){
+            f.printStackTrace();
+        }finally {
+            DBUtil.closeConnection(conn);
+        }
+		
+		return rilist;
 	}
 }
 
