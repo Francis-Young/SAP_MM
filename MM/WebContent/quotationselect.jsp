@@ -29,7 +29,8 @@ language="java" contentType="text/html; charset=UTF-8"
 
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
-
+<!-- Data picker -->
+<script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
 
 <style type="text/css">
 .table-b table td{border:2px solid #808080;padding:1%}
@@ -82,7 +83,26 @@ background:white;
 .opbox3 .x{ font-size:18px; text-align:right; display:block;}
 
 </style>
+<script>
+function vaildday()
+{
+	var selectContent = document.getElementsByName("checkname");       
+    //获取要赋值的input的元素
+    openwin(0);
+  //  var inputElement =  document.getElementById("reqnum");
+    //给input框赋值
+  //  inputElement.value = clickContent.cells[1].innerHTML;//.innerText;
+    //选中input框的内容
+   // inputElement.select();
+     // 执行浏览器复制命令
+   // document.execCommand("Copy");
 
+	}
+
+
+
+
+</script>
 
 </head>
 
@@ -310,7 +330,9 @@ background:white;
 
 
 
-<input type="submit" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" value="接受条目">							
+<input type="submit" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" value="接受条目">	
+<button type="button" class="btn btn-white" id="cleartoasts" onclick=>有效期设置</button>
+			
 <div class="table-b">
 <table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="100%">
 <thead>
@@ -392,7 +414,7 @@ out.print("<td>"+ri.getRequisition_plant()+"</td>");
 					</div>
 				</div>
 				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2014-2015
+					<strong>Copyright</strong> yf版权所有 &copy; 2020-2025
 				</div>
 			</div>
 
@@ -424,17 +446,22 @@ out.print("<td>"+ri.getRequisition_plant()+"</td>");
                 
 					<div class="form-group">
 					
-						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >请购单</label>
-						<div class="col-sm-10" style="width:87%;padding:1px;">
-							<input name="requisition_num" id="reqnum" type="text" class="form-control" style="width:80%">
-							<div  class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a></div>
+						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >生效时间</label>
+						
+						
+						<div  class="input-group date"> <span class="input-group-addon">
+				<i class="fa fa-calendar"></i></span>
+			<input name="deliverydate" type="text" class="form-control" readonly="readonly">
+						</div>
+							
 						</div>
 						
-						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >工厂</label>
-						<div class="col-sm-10" style="width:87%;padding:1px;">
-							<input name="plant2" type="text" class="form-control" style="width:80%">
-							<div class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="#"><i class="fa fa-search-plus"></i></a></div>
-						</div>
+						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >失效时间</label>
+									<div  class="input-group date"> <span class="input-group-addon">
+					<i class="fa fa-calendar"></i></span>
+						<input name="deliverydate" type="text" class="form-control" readonly="readonly">
+								</div>
+				</div>
 						
 		<button type="button" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" onclick="openwin(0); return false;">取消</button>
         <input type="submit" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" value="继续">
