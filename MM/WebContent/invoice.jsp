@@ -18,7 +18,12 @@
 
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-
+<style media="print">
+    @page {
+      size: auto;  /* auto is the initial value */
+      margin: 0mm; /* this affects the margin in the printer settings */
+    }
+</style>
 </head>
 
 <body onload="test()">
@@ -376,27 +381,16 @@
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-8">
                     <h2>发票</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="index.html">主页</a>
-                        </li>
-                        <li>
-                            其他
-                        </li>
-                        <li class="active">
-                            <strong>发票</strong>
-                        </li>
-                    </ol>
+            
                 </div>
                 <div class="col-lg-4">
                     <div class="title-action">
-                        <a href="#" class="btn btn-white"><i class="fa fa-pencil"></i> 编辑 </a>
-                        <a href="#" class="btn btn-white"><i class="fa fa-check "></i> 保存 </a>
-                        <a href="invoice_print.html" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> 打印发票 </a>
+                      
+                        <a href=javascript:printpage()  class="btn btn-primary"><i class="fa fa-print"></i> 打印发票 </a>
                     </div>
                 </div>
             </div>
-        <div class="row">
+        <div class="row" id="real_invoice">
             <div class="col-lg-12">
                 <div class="wrapper wrapper-content animated fadeInRight">
                     <div class="ibox-content p-xl">
@@ -584,6 +578,14 @@ function getQueryVariable(variable)
     }
     return(false);
 }
+
+function printpage()
+{	var saveit=window.document.body.innerHTML;
+	var printData = document.getElementById("real_invoice").innerHTML;
+	window.document.body.innerHTML = printData; 
+    window.print();
+    window.document.body.innerHTML=saveit;
+    }
 
 </script>
 

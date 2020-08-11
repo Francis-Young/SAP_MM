@@ -3,7 +3,9 @@ import java.sql.*;
 public class DBUtil {
 	public static Connection getConnection() {
 		String driverName="com.mysql.jdbc.Driver";
-		String dbURL="jdbc:mysql://49.235.199.30:3306/MM?zeroDateTimeBehavior=convertToNull&characterEncoding=UTF8";
+		//String dbURL="jdbc:mysql://49.235.199.30:3306/MM?zeroDateTimeBehavior=convertToNull&characterEncoding=UTF8";
+		String dbURL="jdbc:mysql://121.199.56.87:3306/MM?zeroDateTimeBehavior=convertToNull&characterEncoding=UTF8";
+
 		String userName="root";
 		String userPwd="2020";
 		Connection dbConn=null;

@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>产品-列表</title>
+    <title>查询应付账款</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -388,7 +388,7 @@
         </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>账户查询</h2>
+                    <h2>查询应付账款</h2>
                     <ol class="breadcrumb">
                         <li>
                             <a href="index.html">首页</a>
