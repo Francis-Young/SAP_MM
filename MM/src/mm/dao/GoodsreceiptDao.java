@@ -10,26 +10,21 @@ import mm.utils.DBUtil;
 
 public class GoodsreceiptDao {
 	public int addgoodsreceipt(int order_num, String posting_date,
-			String document_date, String delivery_note, String p_m_text,
-			String td_3, String td_4, String td_5) {
+			String document_date, String delivery_note) {
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement stat = null;
 		try {
-			String sql = "INSERT INTO Delivery (purchase_order_num,posting_date,document_date,delivery_note,delivery_material_num,OK,quantity_in_une,storage_location) VALUES (?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO Delivery (purchase_order_num,posting_date,document_date,delivery_note) VALUES (?,?,?,?)";
 			stat = conn.prepareStatement(sql);
 			stat.setInt(1, order_num);
 			stat.setString(2, posting_date);
 			stat.setString(3, document_date);
 			stat.setString(4, delivery_note);
-			stat.setString(5, p_m_text);
-			stat.setString(6, td_3);
-			stat.setString(7, td_4);
-			stat.setString(8, td_5);
 
 			int row = stat.executeUpdate();
 			if (row > 0) {
 			} else {
-				System.out.println("Êı¾İÌí¼ÓÊ§°Ü£¡");
+				System.out.println("è¾“å…¥å¤±è´¥");
 			}
 			return 1;
 
