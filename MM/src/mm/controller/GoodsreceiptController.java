@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mm.bean.GoodsReceipt;
 import mm.dao.GoodsreceiptDao;
+import mm.dao.GoodsreceiptItemDao;
+
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -54,7 +57,7 @@ public class GoodsreceiptController extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 
-			// 基本数据部分
+		
 			int order = Integer.parseInt(request.getParameter("order_num")
 					.trim());
 			System.out.println(order);
@@ -71,36 +74,39 @@ public class GoodsreceiptController extends HttpServlet {
 			delivery_note = request.getParameter("delivery_note");
 			System.out.println(delivery_note);
 
-			// 运输数据部分
-			// int itemNo = Integer.parseInt(request.getParameter("itemNo"));
-			// System.out.println(itemNo);
-			String p_m_text = request.getParameter("p_m_text");
-			System.out.println(p_m_text);
-
-			String m_textArray = request.getParameter("m_textArray");
-			System.out.println(m_textArray);
-			String[] f_m_textArray = m_textArray.split(",");
-			for (int i = 0; i < f_m_textArray.length; i++) {
-				System.out.println("f_m_textArray[" + i + "]="
-						+ f_m_textArray[i]);
-			}
-
-			String td_3 = request.getParameter("td_3");
-			System.out.println(td_3);
-			String td_4 = request.getParameter("td_4");
-			System.out.println(td_4);
-			String td_5 = request.getParameter("td_5");
-			System.out.println(td_5);
-
 			GoodsreceiptDao grdao = new GoodsreceiptDao();
 			int x = grdao.addgoodsreceipt(order, posting_date, document_date,
-					delivery_note, p_m_text, td_3, td_4, td_5);
+					delivery_note);
+			
+			int itemNo = Integer.parseInt(request.getParameter("itemNo"));
+			System.out.println(itemNo);
+			
+			for(int i=1;i<=itemNo;i++)
+			{
+				GoodsReceipt gr = new GoodsReceipt();
+				
+				int m_text_i=Integer.parseInt(request.getParameter("m_text"+i));
+				gr.setM_text(m_text_i);
+				
+				String check_i=request.getParameter("check"+i);
+				gr.setCheck(check_i);
+				
+				int m_num_i=Integer.parseInt(request.getParameter("m_num"+i));
+				gr.setM_num(m_num_i);
+				
+				String sloc_i=request.getParameter("sloc"+i);
+				gr.setSloc(sloc_i);
+				
+				GoodsreceiptItemDao gridao = new GoodsreceiptItemDao();
+				int y = gridao.addgoodsreceiptitem(m_text_i, check_i, m_num_i, sloc_i);
+			}
+			
 			PrintWriter out = response.getWriter();
 			response.setContentType("text/html;charset=UTF-8");
 			if (x == 1) {
-				out.print("<script language=\"javascript\">alert('创建成功！');window.location.href='/MM/goodsreceipt.jsp'</script>");
+				out.print("<script language=\"javascript\">alert('褰曞叆鎴愬姛');window.location.href='/MM/goodsreceipt.jsp'</script>");
 			} else {
-				out.print("<script language=\"javascript\">alert('创建失败！请重试');window.location.href='/MM/goodsreceipt.jsp'</script>");
+				out.print("<script language=\"javascript\">alert('褰曞叆澶辫触锛岃閲嶈瘯');window.location.href='/MM/goodsreceipt.jsp'</script>");
 			}
 
 		} catch (Exception e) {
@@ -109,7 +115,7 @@ public class GoodsreceiptController extends HttpServlet {
 
 			PrintWriter out = response.getWriter();
 
-			out.print("<script language=\"javascript\">alert('创建失败！请重试');window.location.href='/MM/goodsreceipt.jsp'</script>");
+			out.print("<script language=\"javascript\">alert('褰曞叆澶辫触锛岃閲嶈瘯');window.location.href='/MM/goodsreceipt.jsp'</script>");
 
 		}
 	}
