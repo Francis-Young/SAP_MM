@@ -8,18 +8,18 @@ import org.json.*;
 
 import mm.utils.DBUtil;
 
-public class GoodsreceiptDao {
-	public int addgoodsreceipt(int order_num, String posting_date,
-			String document_date, String delivery_note) {
+public class GoodsreceiptItemDao {
+	public int addgoodsreceiptitem(int m_text, String check,
+			int m_num, String sloc) {
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement stat = null;
 		try {
-			String sql = "INSERT INTO Delivery (purchase_order_num,posting_date,document_date,delivery_note) VALUES (?,?,?,?)";
+			String sql = "INSERT INTO Delivery_item (material_num,OK,material_amount,storage_location) VALUES (?,?,?,?)";
 			stat = conn.prepareStatement(sql);
-			stat.setInt(1, order_num);
-			stat.setString(2, posting_date);
-			stat.setString(3, document_date);
-			stat.setString(4, delivery_note);
+			stat.setInt(1, m_text);
+			stat.setString(2, check);
+			stat.setInt(3, m_num);
+			stat.setString(4, sloc);
 
 			int row = stat.executeUpdate();
 			if (row > 0) {
