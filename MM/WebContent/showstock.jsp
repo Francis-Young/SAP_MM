@@ -24,18 +24,18 @@
 		itemNo += 1;
 
 		var td_2 = tr.insertCell(1);
-		td_2.innerHTML = '<input id="m_text" name="m_text'+itemNo'" class="form-control" placeholder="输入物料编号..." />';
+		td_2.innerHTML = '<input id="m_text" name="m_text" class="form-control" placeholder="输入物料编号..." />';
 		var td_3 = tr.insertCell(2);
-		td_3.innerHTML = '<input id="closeButton" name="check'+itemNo'" type="checkbox" value="checked" class="input-mini" checked="">';
+		td_3.innerHTML = '<input id="closeButton" name="td_3" type="checkbox" value="checked" class="input-mini" checked="">';
 		var td_4 = tr.insertCell(3);
-		td_4.innerHTML = '<input class="form-control" id="vaddress" name="m_num'+itemNo'" type="text" class="form-control" placeholder="输入物料数量 ..."></input>';
+		td_4.innerHTML = '<input class="form-control" id="vaddress" name="td_4" type="text" class="form-control" placeholder="输入物料数量 ..."></input>';
 		var td_5 = tr.insertCell(4);
-		td_5.innerHTML = '<input id="showEasing" name="sloc'+itemNo'" type="text" placeholder="输入存储位置..." class="form-control" />';
+		td_5.innerHTML = '<input id="showEasing" name="td_5" type="text" placeholder="输入存储位置..." class="form-control" />';
 
-		//p_m_text = document.getElementsByName("m_text");
-		//m_textArray.push(p_m_text);
-		//$("#m_textArray").val(m_textArray);
-		//System.out.println(p_m_text);
+		p_m_text = document.getElementsByName("m_text");
+		m_textArray.push(p_m_text);
+		$("#m_textArray").val(m_textArray);
+		System.out.println(p_m_text);
 	}
 </script>
 
@@ -52,7 +52,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>创建收货单</title>
+<title>展示收货单</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -216,7 +216,7 @@
 						<ol class="breadcrumb">
 							<li><a href="index.html">主页</a></li>
 							<li>收货管理</li>
-							<li class="active"><strong>创建收货单</strong></li>
+							<li class="active"><strong>查看库存</strong></li>
 						</ol>
 					</div>
 
@@ -243,6 +243,7 @@
 												<!-- 两个暂无选择意义的下拉框 -->
 												<div class="col-sm-4">
 													<div class="form-group">
+
 														<select name="DataTables_Table_0_length"
 															aria-controls="DataTables_Table_0"
 															class="form-control form-control-sm">
@@ -253,6 +254,7 @@
 															<option value="5">重新运输</option>
 															<option value="6">接连运输</option>
 														</select>
+
 													</div>
 												</div>
 												<div class="col-sm-4">

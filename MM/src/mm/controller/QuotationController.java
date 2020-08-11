@@ -26,7 +26,7 @@ import mm.dao.VendorDao;
 import java.sql.Date;
 import java.util.*;
 
-@WebServlet(urlPatterns="/rfq")
+@WebServlet(urlPatterns="/quotation")
 public class QuotationController extends HttpServlet{
 	
 	@Override
