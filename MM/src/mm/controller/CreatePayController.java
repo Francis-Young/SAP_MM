@@ -63,6 +63,9 @@ public class CreatePayController extends HttpServlet {
 			if(x==1) {
 			out.print("<script language=\"javascript\">alert('创建成功');window.location.href='/MM/createpayment.jsp'</script>");
 			}
+			else if(x==2) {
+			out.print("<script language=\"javascript\">alert('系统中已存在重复发票');window.location.href='/MM/createpayment.jsp'</script>");
+			}
 			else
 			{
 				out.print("<script language=\"javascript\">alert('创建失败，请重试');window.location.href='/MM/createpayment.jsp'</script>");
@@ -74,14 +77,13 @@ public class CreatePayController extends HttpServlet {
 
 			PrintWriter out = response.getWriter();
 
-			out.print("<script language=\"javascript\">alert('����ʧ�ܣ�������');window.location.href='/MM/createpayment.jsp'</script>");
+			out.print("<script language=\"javascript\">alert('连接失败');window.location.href='/MM/createpayment.jsp'</script>");
 
 		}
 		response.setContentType("text/html;charset=UTF-8");
 		return;
 	}
 	public String changedate(String date){
-		System.out.println(date);
 		String s1=date.substring(0,2);//M
 		String s2=date.substring(3,5);//D
 		String s3=date.substring(6,10);//Y

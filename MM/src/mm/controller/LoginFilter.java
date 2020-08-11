@@ -44,6 +44,11 @@ public class LoginFilter implements Filter {
 		HttpSession session = request.getSession(true);
 		String uid = (String) session.getAttribute("uid");//
 		String url = request.getRequestURI();
+		if(url.endsWith(".css") || url.endsWith(".js") || url.endsWith(".png")|| url.endsWith(".jpg")){
+            //如果发现是css或者js文件，直接放行
+			arg2.doFilter(arg0, arg1);
+		    return;
+            }
 		if (uid == null || uid.equals("")) {
 			// �жϻ�ȡ��·����Ϊ���Ҳ��Ƿ��ʵ�¼ҳ���ִ�е�¼����ʱ��ת
 			if (url != null && !url.equals("") && (url.indexOf("Login") < 0 && url.indexOf("login") < 0)) {
@@ -53,6 +58,7 @@ public class LoginFilter implements Filter {
 		}
 		// ��ͨ����֤���û����ʼ���
 		arg2.doFilter(arg0, arg1);
+	    return;
 	}
 
 	/**

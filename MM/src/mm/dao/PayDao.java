@@ -17,12 +17,28 @@ public class PayDao {
 				pstmt.setString(4, time);
 				pstmt.setString(5, user);
 				pstmt.setString(6, text);
-	            int row = pstmt.executeUpdate();
-	            if (row>0) {
+	            String sql_check = "SELECT Pay_Id FROM Payment WHERE Order_num="+order; 
+
+				 Statement stmt = connection.createStatement();
+			     ResultSet rs = stmt.executeQuery(sql_check);  
+			     rs.last(); 
+		        int row_check =  rs.getRow();
+	            if (row_check==0) {
+		            int row = pstmt.executeUpdate();
+
+	            	if(row>0)
+	            	{
+	     	           return 1;
+
+	            	}
+	            	else {
+	     	          return 0;
+
+	            	}
+	            	
 	            }else {
-	                System.out.println("录入失败");
+	            	 return 2;
 	            }
-	           return 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -42,13 +58,20 @@ public class PayDao {
 				pstmt.setString(4, text);
 				pstmt.setInt(5, account);
 				pstmt.setInt(6, id);
-
 	            int row = pstmt.executeUpdate();
+		        		 
+		   
+
 	            if (row>0) {
+	            	
+	            
+	            		return 1;
+	            	
+	            	
 	            }else {
 	                System.out.println("录入失败");
 	            }
-	           return 1;
+	           
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
