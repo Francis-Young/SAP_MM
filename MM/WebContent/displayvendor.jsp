@@ -19,7 +19,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>维护供应商</title>
+<title>查询供应商</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 <link href="css/animate.css" rel="stylesheet">
@@ -122,11 +122,11 @@
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
 					<h2>
-						维护供应商-<%=v.getVnum()%></h2>
+						查询供应商-<%=v.getVnum()%></h2>
 					<ol class="breadcrumb">
 						<li><a href="Home">主页</a></li>
 						<li>供应商管理</li>
-						<li class="active"><strong>维护供应商</strong></li>
+						<li class="active"><strong>查询供应商</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -137,7 +137,7 @@
 						<div class="col-lg-12">
 							<div class="ibox float-e-margins">
 								<div class="ibox-title">
-									<h5>维护供应商</h5>
+									<h5>查询供应商</h5>
 									<div class="ibox-tools">
 										<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 										</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -158,21 +158,23 @@
 												<label>供应商类型</label>
 												<div class="radio">
 													<label> <input type="radio" name="vtype"
-														<%if ("person".equals(v.getVtype())) {%> checked <%}%>
-														value="person" />个人
+														<%if ("person".equals(v.getVtype())) {%> checked
+														<%} else {%> disabled="disabled" <%}%> value="person" />个人
 													</label>
 												</div>
 												<div class="radio">
 													<label class="radio"> <input type="radio"
 														name="vtype"
 														<%if ("organization".equals(v.getVtype())) {%> checked
-														<%}%> value="organization" />组织
+														<%} else {%> disabled="disabled" <%}%>
+														value="organization" />组织
 													</label>
 												</div>
 												<div class="radio">
 													<label class="radio"> <input type="radio"
 														name="vtype" <%if ("group".equals(v.getVtype())) {%>
-														checked <%}%> value="group" />团体
+														checked <%} else {%> disabled="disabled" <%}%>
+														value="group" />团体
 													</label>
 												</div>
 											</div>
@@ -181,7 +183,8 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<label for="title">供应商名称</label> <input name="vname"
-													type="text" class="form-control" value="<%=v.getVname()%>" />
+													type="text" class="form-control" value="<%=v.getVname()%>"
+													readonly="readonly" />
 											</div>
 											<div class="form-group">
 												<label for="message">供应商公司号</label> <input
@@ -192,83 +195,76 @@
 											<div class="form-group">
 												<label for="message">供应商国家</label> <input
 													class="form-control" name="vcountry" type="text"
-													class="form-control" value="<%=v.getVcountry()%>"></input>
+													class="form-control" value="<%=v.getVcountry()%>"
+													readonly="readonly" />
 											</div>
 											<div class="form-group">
 												<label for="message">供应商城市</label> <input
 													class="form-control" name="vcity" type="text"
-													class="form-control" value="<%=v.getVcity()%>"></input>
+													class="form-control" value="<%=v.getVcity()%>"
+													readonly="readonly" />
 											</div>
 											<div class="form-group">
 												<label for="message">供应商地区</label> <input
 													class="form-control" name="vregion" type="text"
-													class="form-control" value="<%=v.getVregion()%>"></input>
+													class="form-control" value="<%=v.getVregion()%>"
+													readonly="readonly" />
 											</div>
 											<div class="form-group">
 												<label for="message">供应商街道</label> <input
 													class="form-control" name="vstreet" type="text"
-													class="form-control" value="<%=v.getVstreet()%>"></input>
+													class="form-control" value="<%=v.getVstreet()%>"
+													readonly="readonly"></input>
 											</div>
 											<div class="form-group">
 												<label for="message">供应商邮政编码</label> <input
 													class="form-control" name="vpostalcode" type="text"
-													class="form-control" value="<%=v.getVpostalcode()%>"></input>
+													class="form-control" value="<%=v.getVpostalcode()%>"
+													readonly="readonly"></input>
 											</div>
 											<div class="form-group">
 												<label for="message">供应商语言</label>
 												<div>
-													<select class="select2_demo_1 form-control"
-														name="vlanguage">
-														<c:forEach items="${language}" var="language" begin="0"
-															end="${language.size()}" step="1">
-															<option value="${language.listitemname }"
-																${language.selected }>${language.listitemname}</option>
-														</c:forEach>
-													</select>
+													<input class="form-control" name="vpostalcode" type="text"
+														class="form-control" value="<%=v.getVlanguage()%>"
+														readonly="readonly"></input>
 												</div>
 											</div>
 										</div>
 										<div class="col-md-3">
 											<div class="form-group">
-												<label for="title">使用货币类型</label> <select
-													class="select2_demo_1 form-control" name="vcurrency">
-													<c:forEach items="${currency}" var="currency" begin="0"
-														end="${currency.size()}" step="1">
-														<option value="${currency.listitemname }"
-																${currency.selected }>${currency.listitemname}</option>
-													</c:forEach>
-												</select>
+												<label for="title">使用货币类型</label>
+												<div>
+													<input class="form-control" name="vpostalcode" type="text"
+														class="form-control" value="<%=v.getVcurrency()%>"
+														readonly="readonly"></input>
+												</div>
 											</div>
 											<div class="form-group">
 												<label for="title">税号</label> <input name="vtax" type="text"
-													class="form-control" value="<%=v.getVtaxnum()%>" />
+													class="form-control" value="<%=v.getVtaxnum()%>"
+													readonly="readonly" />
 											</div>
 											<div class="form-group">
-												<label for="title">支付模式</label> <select
-													class="select2_demo_1 form-control" name="vpaymentterms">
-													<c:forEach items="${paymentterms}" var="paymentterms"
-														begin="0" end="${paymentterms.size()}" step="1">
-														<option value="${paymentterms.listitemname }"
-																${paymentterms.selected }>${paymentterms.listitemname}</option>
-													</c:forEach>
-												</select>
+												<label for="title">支付模式</label>
+												<div>
+													<input class="form-control" name="vpostalcode" type="text"
+														class="form-control" value="<%=v.getVpaymentterms()%>"
+														readonly="readonly"></input>
+												</div>
 											</div>
 											<div class="form-group">
 												<label for="title">统驭科目</label>
 												<div>
-													<select class="select2_demo_1 form-control"
-														name="vreconacct">
-														<c:forEach items="${reconacct}" var="reconacct"
-															begin="0" end="${reconacct.size()}" step="1">
-															<option value="${reconacct.listitemname }"
-																${reconacct.selected }>${reconacct.listitemname}</option>
-														</c:forEach>
-													</select>
+													<input class="form-control" name="vpostalcode" type="text"
+														class="form-control" value="<%=v.getVreconacct()%>"
+														readonly="readonly"></input>
 												</div>
 											</div>
 											<div class="form-group">
 												<label for="title">联系员工</label> <input name="vclerk"
-													type="text" class="form-control" value="<%=v.getVclerk()%>" />
+													type="text" class="form-control" value="<%=v.getVclerk()%>"
+													readonly="readonly" />
 											</div>
 										</div>
 									</div>
@@ -278,10 +274,7 @@
 					</div>
 				</div>
 				<div class="footer">
-					<div class="pull-right">
-						<button type="submit" class="btn btn-primary" id="showtoast">保存</button>
-						<button type="reset" class="btn btn-white" id="clearlasttoast">清除</button>
-					</div>
+					<div class="pull-right"></div>
 					<div style="padding-top: 2px;">
 						<%
 							String notice = (String) request.getAttribute("notice");

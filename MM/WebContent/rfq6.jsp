@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" import="java.util.List,mm.bean.*,mm.dao.*,java.util.ArrayList;"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -27,7 +27,7 @@ function selectline(ele)
 {
 	var clickContent = ele;         
     //获取要赋值的input的元素
-    var inputElement =  document.getElementById("reqnum");
+    var inputElement =  document.getElementById("vendor");
     //给input框赋值
     inputElement.value = clickContent.cells[1].innerHTML;//.innerText;
     //选中input框的内容
@@ -47,8 +47,9 @@ function selectline(ele)
 
 function search()
 {    
-	var key = $("#key1").val()+","+ $("#key2").val()
-	var url="${pageContext.request.contextPath}/searchServlet?key="+key
+	var key = $("#key1").val()+","+ $("#key2").val()+$("#key3").val()+","+$("#key4").val()+","
+	+$("#key5").val()+","+$("#key6").val()
+	var url="${pageContext.request.contextPath}/vendorSearchServlet?key="+key
 	
 	function gettext(text)
 	{
@@ -77,8 +78,10 @@ function search()
               success:function (dataArray) {
             	  
             	  var subnum = dataArray.match(/mark0(\S*?)mark1/g);
-            	  var subdes = dataArray.match(/mark1(\S*?)mark2/g);
-            	  var subgup = dataArray.match(/mark2(\S*?)mark3/g);
+            	  var subnam = dataArray.match(/mark1(\S*?)mark2/g);
+            	  var subtyp = dataArray.match(/mark2(\S*?)mark3/g);
+            	  var subcod = dataArray.match(/mark3(\S*?)mark4/g);
+            	  var subciy = dataArray.match(/mark4(\S*?)mark5/g);
             	 // alert(subtext[1]);
             	 // alert(decodeURI(subtext[1]))
             	 // alert(decodeURI(subdate))
@@ -92,8 +95,10 @@ function search()
  
                       tableBody += '<td><input type="checkbox" checked="" class="i-checks" name="input[]"></td>';
                       tableBody += "<td>"+gettext(decodeURI(subnum[i]))+"</td>";
-                      tableBody += "<td>"+gettext(decodeURI(subdes[i]))+"</td>";
-                      tableBody += "<td>"+gettext(decodeURI(subgup[i]))+"</td>";
+                      tableBody += "<td>"+gettext(decodeURI(subnam[i]))+"</td>";
+                      tableBody += "<td>"+gettext(decodeURI(subtyp[i]))+"</td>";
+                      tableBody += "<td>"+gettext(decodeURI(subcod[i]))+"</td>";
+                      tableBody += "<td>"+gettext(decodeURI(subciy[i]))+"</td>";
                       tableBody += "</tr>";
                   }
  
@@ -207,7 +212,7 @@ background:white;
 
 <body>
 <form class="m-t" role="form" action="/RFQController" method="post">
-<input type='text' value='bounce_to_select' name='action' hidden='true'>
+<input type='text' value='save' name='action' hidden='true'>
 	<div id="wrapper">
 
 		<nav class="navbar-default navbar-static-side" role="navigation">
@@ -385,7 +390,14 @@ background:white;
 									</a>
 								</div>
 							</div>
-
+<%
+RFQ rfq= (RFQ)session.getAttribute("passdata");
+String type=rfq.getRfq_type();
+String group = rfq.getRfq_purchasing_group();
+String org = rfq.getRfq_purchasing_org();
+String rfqdate = rfq.getRfq_date().toString();
+String lan = rfq.getRfq_language();
+%>
 							<div class="ibox-content">
 								
 									<div class="row">
@@ -393,28 +405,27 @@ background:white;
 										<div class="col-md-4">
 											<!--RFQ具体信息 -->
 											<div class="form-group">
-												<label for="title">RFQ种类</label> <input id="vname" name="rfq_type"
-													type="text" class="form-control" placeholder="输入RFQ种类..." />
+												<label for="title">RFQ种类</label> <input id="vname" name="rfq_type" readonly="readonly"
+													type="text" class="form-control" value=<%=type %>> 
 											</div>
 
 											<div class="form-group">
-												<label for="message">使用语言</label> <input
-													class="form-control" id="vaddress" type="text" name="language"
-													class="form-control" placeholder="输入使用语言..."></input>
+												<label for="message">使用语言</label> <input readonly="readonly"
+													class="form-control" id="vaddress" type="text" name="language" value=<%=lan %>
+												></input>
 											</div>
 
 											<div class="form-group">
-												<label for="message">RFQ日期</label> <input
-													class="form-control" id="vaddress" type="text" name="date"
-													class="form-control" placeholder="输入RFQ日期 ..."></input>
+												<label for="message">RFQ日期</label> <input readonly="readonly"
+													class="form-control" id="vaddress" type="text" name="date" value=<%=rfqdate %>
+												></input>
 											</div>
-
-											<div class="form-group">
-												<label for="message">RFQ截止日期</label> <input
-													class="form-control" id="vaddress" type="text" name="deadline"
-													class="form-control" placeholder="输入RFQ截止日期 ..."></input>
+                                       <div class="form-group">
+												<label for="message">报价截止日期</label> <input 
+													class="form-control" id="vaddress" type="text" name="quoddin" value=<%=rfqdate %>
+												></input>
 											</div>
-
+										
 										</div>
 
 										<div class="col-md-2"></div>
@@ -425,28 +436,45 @@ background:white;
 											<hr style="margin:0px 0px 5px 0px; border:0.1px black solid; "/>
 											<div class="form-group">
 												<label for="showMethod">采购组织</label> <input id="showMethod"
-										name="org"	type="text" placeholder="输入采购组织" class="form-control" />
+										name="org"	type="text" value=<%=org %> readonly="readonly" class="form-control" />
 											</div>
+											
+											
+											
 											<div class="form-group">
 												<label for="showMethod">采购小组</label> <input id="showMethod"
-										name="group" type="text" placeholder="输入采购小组" class="form-control" />
+										name="group" type="text" value=<%=group %> class="form-control" />
 											</div>
 											
 											<strong></strong> 商品默认数据
 											<hr style="margin:0px 0px 5px 0px; border:0.1px black solid; "/>
+											
+											
+											
 											<div class="form-group">
 												<label for="showEasing">运送工厂</label> <input
 										name="plant"		id="showEasing" type="text" placeholder="输入运送工厂..."
 													class="form-control" />
 											</div>
-
+											
+									<div class="form-group">
+												<label for="showEasing">供应商</label> 
+							<input	name="vendor"	id="vendor" type="text" class="form-control" />
+								<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
+											</div>
+									<div class="form-group">
+									
+												<label for="showEasing">RFQ集合号</label> 
+							<input	name="coll" type="text" class="form-control" />
+							
+											</div>										
 										</div>
 									</div>
 
 									<div class="row">
 										<div class="col-lg-12">
-											 <button type="button" class="btn btn-primary " onclick=openwin(1)>参考请购单</button>
-											<button type="button" class="btn btn-white" id="clearlasttoast">直接创建</button>
+											
+											<button type="submit" class="btn btn-white" id="clearlasttoast">保存</button>
 										</div>
 									</div>
 								
@@ -523,40 +551,36 @@ background:white;
    <div id="inputbox2" class="opbox2">
    
    <a class='x' href=''; onclick="openwin2(0); return false;">关闭</a>
-   <p> 查找请购单：   输入任意已知信息</p>
+   <p> 查找供应商：   输入任意已知信息</p>
      <div class="ibox-content" style="padding:5px 5px 5px 5px;">
 														<div >
 															<div >
 																	<!--请购单具体信息 -->
 																	<div class="form-group">
-																		<label for="title">请购单种类</label> <input id="vname" type="text" class="form-control" placeholder="输入请购单种类...">
+																		<label for="title">供应商名称</label> <input id="key1" type="text" class="form-control" placeholder="输入请购单种类...">
 																	</div>
 
 																	<div class="form-group">
-																		<label for="message">使用语言</label> <input class="form-control" id="vaddress" type="text" placeholder="输入使用语言...">
+																		<label for="message">类型</label> <input id="key2" class="form-control" id="vaddress" type="text" placeholder="输入使用语言...">
 																	</div>
 
 																	<div class="form-group">
-																		<label for="message">请购单日期</label> <input class="form-control" id="vaddress" type="text" placeholder="输入请购单日期 ...">
+																		<label for="message">公司代码</label> <input id="key3" class="form-control" id="vaddress" type="text" placeholder="输入请购单日期 ...">
 																	</div>
 
 																	<div class="form-group">
-																		<label for="message">请购描述</label> <input class="form-control" id="key2" type="text" placeholder="输入请购描述...">
+																		<label for="message">国家</label> <input id="key4" class="form-control" id="key2" type="text" placeholder="输入请购描述...">
 																	</div>
 
 
 																	<div class="form-group">
-																		<label for="showMethod">请购组织</label> <input id="xxkey1" type="text" placeholder="输入请购组织" class="form-control">
+																		<label for="showMethod">城市</label> <input id="key5" type="text" placeholder="输入请购组织" class="form-control">
 																	</div>
 																	
 																	<div class="form-group">
-																		<label for="showMethod">请购小组</label> <input id="key1" type="text" placeholder="输入请购小组" class="form-control">
+																		<label for="showMethod">联络员</label> <input id="key6" type="text" placeholder="输入请购小组" class="form-control">
 																	</div>
 
-
-																	<div class="form-group">
-																		<label for="showEasing">请购运送工厂</label> <input id="showEasing" type="text" placeholder="输入请购运送工厂..." class="form-control">
-																	</div>
 
 																</div><div class="row">
 																	<div class="col-lg-12">
@@ -578,9 +602,11 @@ background:white;
 									<thead id="tableHead">
 										<tr>
 											<th></th>
-											<th>请购单编号</th>
-											<th>请购日期</th>
-											<th>请购组织</th>
+											<th>供应商代码</th>
+											<th>名称</th>
+											<th>类型</th>
+											<th>公司代码</th>
+											<th>城市</th>
 										</tr>
 									</thead>
 

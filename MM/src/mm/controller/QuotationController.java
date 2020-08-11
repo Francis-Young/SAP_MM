@@ -11,19 +11,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mm.bean.Quotation;
 import mm.bean.RFQ;
 import mm.bean.RFQ_item;
 import mm.bean.Requisition;
 import mm.bean.Requisition_item;
+import mm.bean.Vendor;
 import mm.dao.RFQDao;
 import mm.dao.RFQItemDao;
 import mm.dao.ReqItemDao;
 import mm.dao.RequisitionDao;
+import mm.dao.VendorDao;
+
 import java.sql.Date;
 import java.util.*;
 
 @WebServlet(urlPatterns="/rfq")
-public class RFQController extends HttpServlet{
+public class QuotationController extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
@@ -89,6 +93,7 @@ public class RFQController extends HttpServlet{
 		}
 		
 		
+		
 	}
 
 
@@ -118,35 +123,25 @@ public class RFQController extends HttpServlet{
 
 	private void select(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String rfq_type=req.getParameter("type");
-		String rfq_language=req.getParameter("language");
-		String date = req.getParameter("date");
-		java.sql.Date rfq_date=strToDate(date);
-		String deadline = req.getParameter("deadline");
-		java.sql.Date rfq_deadline=strToDate(deadline);
-		String rfq_purchasing_org = req.getParameter("org");
-		String rfq_purchasing_group = req.getParameter("group");
-		String rfq_plant = req.getParameter("plant");
-		int requisition_num=Integer.parseInt(req.getParameter("reqnum"));
-		String vendor_code=req.getParameter("vendorcode");
-		RFQ rfq = new RFQ();
-		rfq.setRequisition_num(requisition_num);
 		
-		rfq.setRfq_date(rfq_date);
-		rfq.setRfq_deadline(rfq_deadline);
-		rfq.setRfq_language(rfq_language);
-
-		rfq.setRfq_plant(rfq_plant);
-		rfq.setRfq_purchasing_group(rfq_purchasing_group);
-		rfq.setRfq_purchasing_org(rfq_purchasing_org);
-		rfq.setRfq_type(rfq_type);
-		rfq.setVendor_code(vendor_code);
+		int rfqnum=Integer.parseInt(req.getParameter("rfqnum"));
+		RFQ rfq = RFQDao.findRFQbyNum(rfqnum);
 		
+		Quotation quo = new Quotation();
+		quo.setQuotation_num(rfqnum);
+		String vnums=rfq.getVendor_code();
+		Vendor vd = VendorDao.findVendorbynum(vnums);
 		HttpSession session= req.getSession();
-		session.setAttribute("passdata",rfq);
-		
+		session.setAttribute("passrfq",rfq);
+		session.setAttribute("passquo",quo);
+		req.setAttribute("rfqnum",rfq.getRfq_num());
+		req.setAttribute("rfqtype",rfq.getRfq_type());
+		req.setAttribute("rfqdate",rfq.getRfq_date().toString());
+		req.setAttribute("ddldate",rfq.getRfq_deadline().toString());
+		req.setAttribute("vendor", rfq.getVendor_code());
+		req.setAttribute("vendorname", vd.getVname());
 		//Requisition resquisition = RequisitionDao.findRequisitionByNum(requisition_num);
-		req.getRequestDispatcher("rfq5.jsp").forward(req,resp);//请求转发
+		req.getRequestDispatcher("quotationselect.jsp").forward(req,resp);//请求转发
 		
 	}
 

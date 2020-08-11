@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 import mm.bean.User;
 import mm.dao.LoginDao;
 
@@ -58,8 +57,8 @@ public class LoginController extends HttpServlet {
 		if (valid) {
 			HttpSession session = request.getSession();
 			session.setAttribute("uid", uid);
-			session.setMaxInactiveInterval(60 * 10);
-			
+			session.setMaxInactiveInterval(2 * 60 * 10);
+
 			User user = new User();
 			loginDao.initUser(user, uid);
 			session.setAttribute("uportrait", user.getUser_portrait());

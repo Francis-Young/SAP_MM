@@ -47,9 +47,9 @@ public class CreateMaterialController extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
-		
+
 		Material m = new Material();
-		String mnum=request.getParameter("mnum");
+		String mnum = request.getParameter("mnum");
 		m.setMaterial_num(request.getParameter("mnum"));
 		m.setMaterial_discr(request.getParameter("mdiscr"));
 		m.setMaterial_baseunit(request.getParameter("mbaseunit"));
@@ -67,17 +67,24 @@ public class CreateMaterialController extends HttpServlet {
 		m.setMaterial_minimumlotsize(request.getParameter("mminimumlotsize"));
 		m.setMaterial_planneddelivtime(request.getParameter("mplanneddelivtime"));
 		m.setMaterial_shorttext(request.getParameter("mshorttext"));
-
-		VendorDao mdao = new VendorDao();
-		try {
-			mdao.addMaterial(m);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String notice = "创建失败，请检查输入的信息";
+		String color = "#ed5565";
+		if (m.getMaterial_num() != null && !"".equals(m.getMaterial_num())) {
+			VendorDao mdao = new VendorDao();
+			boolean flag = false;
+			try {
+				flag = mdao.addMaterial(m);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (flag == true && mnum != null && !"".equals(mnum)) {
+				notice = "成功创建物料" + mnum + "主数据";
+				color = "#1ab394";
+			}
 		}
-		if (mnum != null && !"".equals(mnum)) {
-			request.setAttribute("notice", mnum);
-		}
+		request.setAttribute("notice", notice);
+		request.setAttribute("color", color);
 		doGet(request, response);
 
 		return;

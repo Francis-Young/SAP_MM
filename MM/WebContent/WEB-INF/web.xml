@@ -19,15 +19,6 @@
     <servlet-name>HomeController</servlet-name>
     <url-pattern>/Home</url-pattern>
   </servlet-mapping>
-  <filter>
-    <display-name>LoginFilter</display-name>
-    <filter-name>LoginFilter</filter-name>
-    <filter-class>mm.controller.LoginFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>LoginFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
   <servlet>
     <description></description>
     <display-name>payprinttable</display-name>
@@ -108,4 +99,35 @@
     <servlet-name>SelectVendorController</servlet-name>
     <url-pattern>/SelectVendor</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SearchPaymentController</display-name>
+    <servlet-name>SearchPaymentController</servlet-name>
+    <servlet-class>mm.controller.SearchPaymentController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchPaymentController</servlet-name>
+    <url-pattern>/SearchPayment</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>TestController</display-name>
+    <servlet-name>TestController</servlet-name>
+    <servlet-class>mm.controller.TestController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TestController</servlet-name>
+    <url-pattern>/Test</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DisplayVendorController</display-name>
+    <servlet-name>DisplayVendorController</servlet-name>
+    <servlet-class>mm.controller.DisplayVendorController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayVendorController</servlet-name>
+    <url-pattern>/DisplayVendor</url-pattern>
+  </servlet-mapping>
+
 </web-app>

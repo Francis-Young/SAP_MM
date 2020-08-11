@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>创建物料</title>
+<title>创建物料主数据</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -164,11 +164,11 @@
 			</div>
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>创建物料</h2>
+					<h2>创建物料主数据</h2>
 					<ol class="breadcrumb">
 						<li><a href="Home">主页</a></li>
 						<li>物料管理</li>
-						<li class="active"><strong>创建物料</strong></li>
+						<li class="active"><strong>创建物料主数据</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -179,7 +179,7 @@
 						<div class="col-lg-12">
 							<div class="ibox float-e-margins">
 								<div class="ibox-title">
-									<h5>创建供应商</h5>
+									<h5>创建物料主数据</h5>
 									<div class="ibox-tools">
 										<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 										</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -284,17 +284,19 @@
 				</div>
 				<div class="footer">
 					<div class="pull-right">
-						<button type="submit" class="btn btn-primary" >创建</button>
-						<button type="reset" class="btn btn-white" >清除</button>
+						<button type="submit" class="btn btn-primary">创建</button>
+						<button type="reset" class="btn btn-white">清除</button>
 					</div>
-					<div>
+					<div style="padding-top: 2px;">
 						<%
 							String notice = (String) request.getAttribute("notice");
 							if (notice != null && !"".equals(notice)) {
 						%>
-						成功创建物料<strong><%=notice%></strong>
+						<p>
+							<font size="3" color=<%=request.getAttribute("color")%>><%=notice%></font>
+						</p>
 						<%
-							request.setAttribute("success", "");
+							request.setAttribute("notice", "");
 							}
 						%>
 					</div>
@@ -317,7 +319,7 @@
 	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
 
-	
+
 </body>
 
 </html>

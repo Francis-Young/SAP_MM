@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page import="java.util.List,mm.bean.*,mm.dao.*,java.util.ArrayList;"
+language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -8,7 +9,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>创建报价单-选择可参考的RFQ</title>
+<title>维护报价单</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -18,6 +19,7 @@
 
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -29,12 +31,63 @@
 <link href="css/style.css" rel="stylesheet">
 
 
+<style type="text/css">
+.table-b table td{border:2px solid #808080;padding:1%}
+.table-b table th{padding:1%}
+</style>
+<style>
+#wrapper
+{
+     z-index: 99;
+   position: absolute;
+}
+
+.opbox1{
+    z-index: 100;
+    width:50%; margin-top:10%; margin:auto; padding:28px;
+    top:25%; left:25%;
+    height:350px; border:1px #111 solid;
+    display:none;            /* 默认对话框隐藏 */
+
+position: absolute;
+background:white;
+}
+.opbox1.show{display:block;} 
+.opbox1 .x{ font-size:18px; text-align:right; display:block;}
+
+.opbox2{
+    z-index: 101;
+    width:40%; margin-top:10%; margin:auto; padding:28px;
+    top:5%; left:30%;
+    height:550px; border:1px #111 solid;
+    display:none;            /* 默认对话框隐藏 */
+
+position: absolute;
+background:white;
+}
+.opbox2.show{display:block;} 
+.opbox2 .x{ font-size:18px; text-align:right; display:block;}
+
+.opbox3{
+    z-index: 101;
+    width:40%; margin-top:10%; margin:auto; padding:28px;
+    top:5%; left:30%;
+    height:650px; border:1px #111 solid;
+    display:none;            /* 默认对话框隐藏 */
+
+position: absolute;
+background:white;
+}
+.opbox3.show{display:block;} 
+.opbox3 .x{ font-size:18px; text-align:right; display:block;}
+
+</style>
 
 
 </head>
 
 <body>
-
+<form class="m-t" role="form" action="/RFQController" method="post">
 	<div id="wrapper">
 
 		<nav class="navbar-default navbar-static-side" role="navigation">
@@ -70,7 +123,7 @@
 							<li><a href="graph_morris.html">维护供应商</a></li>
 						</ul></li>
 					<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
-							class="nav-label">请购</span><span class="fa arrow"></span></a>
+							class="nav-label">RFQ</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
 							<li><a href="form_basic.html"></a></li>
 							<li><a href="form_advanced.html">创建RFQ</a></li>
@@ -106,13 +159,7 @@
 					<div class="navbar-header">
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
 							href="#"><i class="fa fa-bars"></i> </a>
-						<form role="search" class="navbar-form-custom"
-							action="search_results.html">
-							<div class="form-group">
-								<input type="text" placeholder="Search for something..."
-									class="form-control" name="top-search" id="top-search">
-							</div>
-						</form>
+						
 					</div>
 					<ul class="nav navbar-top-links navbar-right">
 						<li><span class="m-r-sm text-muted welcome-message">欢迎回来！</span></li>
@@ -180,11 +227,11 @@
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>创建报价单</h2>
+					<h2>创建RFQ</h2>
 					<ol class="breadcrumb">
 						<li><a href="index.html">主页</a></li>
 						<li>请购管理</li>
-						<li class="active"><strong>创建报价单</strong></li>
+						<li class="active"><strong>创建RFQ</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -198,7 +245,7 @@
 						<div class="ibox float-e-margins">
 
 							<div class="ibox-title">
-								<h5>创建报价单-查找RFQ</h5>
+								<h5>创建RFQ</h5>
 								<div class="ibox-tools">
 									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -208,35 +255,130 @@
 										<li><a href="#">配置 1</a></li>
 										<li><a href="#">配置 2</a></li>
 									</ul>
-							
-								
+									<a class="close-link"> <i class="fa fa-times"></i>
+									</a>
 								</div>
 							</div>
 
 							<div class="ibox-content">
-								<form class="m-t" role="form" action="Login" method="post">
-									
+<input type="text" value="bounce_to_edit" name="action" hidden="true">
 
-										<div class="form-group">
-											<label class="col-sm-2 control-label">RFQ编号</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control"> 
+<div class="ibox-content">
+								
+									<div class="row">
+
+										<div class="col-md-4">
+											<!--RFQ具体信息 -->
+											<div class="form-group">
+												<label for="title">RFQ:</label> <input id="vname" name="rfq_type"
+													type="text" class="form-control" readonly="readonly" value= ${ rfqnum} />
 											</div>
+                                       <div class="form-group">
+												<label for="message">RFQ类型：</label> <input
+													readonly="readonly" value= ${ rfqtype}  type="text" 
+													class="form-control" ></input>
+													${ vendorname}
+											</div>
+											<div class="form-group">
+												<label for="message">供应商：</label> <input
+													readonly="readonly" value= ${ vendor}  type="text" 
+													class="form-control" ></input>
+													${ vendorname}
+											</div>
+
+					
+
 										</div>
 
+										<div class="col-md-2"></div>
 
-
-
-
-										<div class="row">
-											<div class="col-lg-12">
-										
+										<div class="col-md-2" style="width:25%;">
+							
+											<div class="form-group">
+												<label for="showMethod">RFQ日期</label> <input id="showMethod"
+										readonly="readonly" value= ${ rfqdate} class="form-control" />
 											</div>
-
+											<div class="form-group">
+												<label for="showMethod">截止日期</label> <input id="showMethod"
+										readonly="readonly" value= ${ ddldate} class="form-control" />
+											</div>
+											
 										</div>
-								</form>
+									</div>
 
-							</div>
+
+
+
+
+<input type="submit" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" value="接受条目">							
+<div class="table-b">
+<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="100%">
+<thead>
+<tr>
+<th></th>
+<th>条目</th>
+<th>材料编号</th>
+<th>数量</th>
+<th>运送日期</th>
+<th>价格</th>
+<th>工厂</th>
+
+
+</tr>
+</thead>
+<tbody>
+
+<tr>
+<td><input type="checkbox" checked class="i-checks" name="input[]"></td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+</tr>
+<%
+//取出请购单的条目
+
+RFQ rfq= (RFQ)session.getAttribute("passrfq");
+
+ArrayList<RFQ_item> rilist=RFQItemDao.findRFQItemByRfqnum(rfq.getRfq_num());
+for(int i=0;i<rilist.size();i++)
+{
+RFQ_item ri = rilist.get(i);
+
+out.print("<tr>");
+out.print("<td><input type='checkbox' checked='' class='i-checks' name='checkname'></td>");
+out.print("<td>"+(i+10)*10+"</td>");
+out.print("<td>"+ri.getMaterial_num()+"</td>");
+out.print("<td>"+ri.getRequisition_quantity()+"</td>");
+out.print("<td>"+ri.getRequisition_deliverydate()+"</td>");
+out.print("<td><input name='price'  type='text' class='form-control'></td>");
+out.print("<td>"+ri.getRequisition_plant()+"</td>");
+
+}
+
+%>
+
+
+
+
+
+
+
+
+
+
+
+</tbody>
+</table>
+</div>
+						
+						
+						
+						
+								</div>
 						</div>
 					</div>
 				</div>
@@ -245,9 +387,7 @@
 			<div class="footer">
 				<div class="pull-right">
 					<div class="text-right">
-						<button type="submit" class="btn btn-primary" id="showtoast">
-							<a href="quotation2.jsp">继续</a>
-						</button>
+						<button type="submit" class="btn btn-success btn-sm demo2" id="showtoast">保存</button>
 						<button type="button" class="btn btn-white" id="cleartoasts">取消</button>
 					</div>
 				</div>
@@ -258,7 +398,54 @@
 
 		</div>
 	</div>
-
+	<!-- Mainly scripts for pop windows-->
+	   <script>  
+        function openwin(n){
+            document.getElementById('inputbox').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
+        }
+     </script>  
+     <script>  
+        function openwin2(n){
+            document.getElementById('inputbox2').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
+        }
+     </script>  
+          <script>  
+        function openwin3(n){
+            document.getElementById('inputbox3').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
+        }
+     </script>  
+     
+     <!-- 第一层弹窗 -->
+     <div id='inputbox' class="opbox1">
+     
+        <a class='x' href=''; onclick="openwin(0); return false;">关闭</a>
+        	
+				<div class="ibox-content"> 					
+                
+					<div class="form-group">
+					
+						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >请购单</label>
+						<div class="col-sm-10" style="width:87%;padding:1px;">
+							<input name="requisition_num" id="reqnum" type="text" class="form-control" style="width:80%">
+							<div  class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a></div>
+						</div>
+						
+						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >工厂</label>
+						<div class="col-sm-10" style="width:87%;padding:1px;">
+							<input name="plant2" type="text" class="form-control" style="width:80%">
+							<div class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="#"><i class="fa fa-search-plus"></i></a></div>
+						</div>
+						
+		<button type="button" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" onclick="openwin(0); return false;">取消</button>
+        <input type="submit" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" value="继续">
+					
+					</div>
+        
+        <input type="button" value="确定">
+        
+        </div>
+     </div>
+     </form>
 
 	<!-- Mainly scripts -->
 	<script src="js/jquery-2.1.1.js"></script>
@@ -285,7 +472,7 @@
 
 			$('#showsimple').click(function() {
 				// Display a success toast, with a title
-				toastr.success('可以添加新的请购材料', '提示!')
+				toastr.success('可以添加新的RFQ材料', '提示!')
 			});
 			$('#showtoast')
 					.click(
@@ -407,6 +594,95 @@
 				toastr.clear();
 			});
 		})
+	</script>
+
+	<!-- Mainly scripts -->
+	<script src="js/jquery-2.1.1.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+	<!-- Custom and plugin javascript -->
+	<script src="js/inspinia.js"></script>
+	<script src="js/plugins/pace/pace.min.js"></script>
+
+	<!-- Sweet alert -->
+	<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
+	<script>
+		$(document)
+				.ready(
+						function() {
+
+							$('.demo1')
+									.click(
+											function() {
+												swal({
+													title : "Welcome in Alerts",
+													text : "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+												});
+											});
+
+							$('.demo2').click(function() {
+								swal({
+									title : "Good job!",
+									text : "You clicked the button!",
+									type : "success"
+								});
+							});
+
+							$('.demo3')
+									.click(
+											function() {
+												swal(
+														{
+															title : "Are you sure?",
+															text : "You will not be able to recover this imaginary file!",
+															type : "warning",
+															showCancelButton : true,
+															confirmButtonColor : "#DD6B55",
+															confirmButtonText : "Yes, delete it!",
+															closeOnConfirm : false
+														},
+														function() {
+															swal(
+																	"Deleted!",
+																	"Your imaginary file has been deleted.",
+																	"success");
+														});
+											});
+
+							$('.demo4')
+									.click(
+											function() {
+												swal(
+														{
+															title : "Are you sure?",
+															text : "Your will not be able to recover this imaginary file!",
+															type : "warning",
+															showCancelButton : true,
+															confirmButtonColor : "#DD6B55",
+															confirmButtonText : "Yes, delete it!",
+															cancelButtonText : "No, cancel plx!",
+															closeOnConfirm : false,
+															closeOnCancel : false
+														},
+														function(isConfirm) {
+															if (isConfirm) {
+																swal(
+																		"Deleted!",
+																		"Your imaginary file has been deleted.",
+																		"success");
+															} else {
+																swal(
+																		"Cancelled",
+																		"Your imaginary file is safe :)",
+																		"error");
+															}
+														});
+											});
+
+						});
 	</script>
 </body>
 
