@@ -7,37 +7,47 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class QuotationDao {
-	//²åÈëÒ»ÕÅÇë¹ºµ¥
-	public static void addQuotation(Quotation qo) {
-		//½¨Á¢ÓëÊı¾İ¿âµÄÁ¬½Ó
+	//æ’å…¥ä¸€å¼ è¯·è´­å•
+	public static int addQuotation(Quotation qo) {
+		//å»ºç«‹ä¸æ•°æ®åº“çš„è¿æ¥
+		int num=0;
 		Connection conn=DBUtil.getConnection();
 		try {
 			
-			String sql=""+ "insert into Quotation" +" (quotation_num,rfq_num,vendor_num) "+"values(default,?,?)";
+			String sql=""+ "insert into Quotation" +" (quotation_num,rfq_num,vendor_num) "+"values(?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
-		
 			psmt.setInt(1, qo.getRfq_num());
-			psmt.setInt(2, qo.getVendor_num());
+			psmt.setInt(2, qo.getRfq_num());
+			psmt.setInt(3, qo.getVendor_num());
 	
 			psmt.execute();
+			
+			sql="SELECT LAST_INSERT_ID()";
+			psmt = conn.prepareStatement(sql);
+			ResultSet rs = psmt.executeQuery();
+			if (rs.next()) {  
+				num= rs.getInt(1);
+		    }
+			
 		}catch(SQLException e) {
             e.printStackTrace();
         }finally {
             DBUtil.closeConnection(conn);
         }
+		return num;
 	}
-	//¸ù¾İ±àºÅ²éÑ¯
+	//æ ¹æ®ç¼–å·æŸ¥è¯¢
 	public static Quotation findQuotationByNum(int num) {
 		
 		Quotation rq=new Quotation();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from Quotation where quotation_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
@@ -56,18 +66,18 @@ public class QuotationDao {
 		
 		return rq;
 	}
-	//¸ù¾İrfq±àºÅ²éÑ¯
+	//æ ¹æ®rfqç¼–å·æŸ¥è¯¢
 	public static Quotation findQuotationByRFQNum(int num) {
 		
 		Quotation rq=new Quotation();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from Quotation where rfq_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
@@ -86,19 +96,19 @@ public class QuotationDao {
 		
 		return rq;
 	}
-	//¶ÔÍ¬Ò»¸örfqÄÜÓĞ¶à¸ö±¨¼Ûµ¥Âğ£¿
-	//¸ù¾İ¹©Ó¦ÉÌ±àºÅ²éÑ¯ 
+	//å¯¹åŒä¸€ä¸ªrfqèƒ½æœ‰å¤šä¸ªæŠ¥ä»·å•å—ï¼Ÿ
+	//æ ¹æ®ä¾›åº”å•†ç¼–å·æŸ¥è¯¢ 
 	public static ArrayList<Quotation> findQuotationByVendorNum(int num) {
 		ArrayList<Quotation> qolist=new ArrayList<Quotation>();
 		Quotation qo=new Quotation();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from Quotation where vendor_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
 			
@@ -118,16 +128,16 @@ public class QuotationDao {
 		return qolist;
 	}
 	
-	//ÅĞ¶ÏÄ³±¨¼Ûµ¥ºÅ·ñ´æÔÚ£¬Èô´æÔÚÔò·µ»Øtrue£¬Èô²»´æÔÚ·µ»Øfalse
+	//åˆ¤æ–­æŸæŠ¥ä»·å•å·å¦å­˜åœ¨ï¼Œè‹¥å­˜åœ¨åˆ™è¿”å›trueï¼Œè‹¥ä¸å­˜åœ¨è¿”å›false
 	public static boolean isqoNumExist(int num) {
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
-			//²éÑ¯Óï¾ä£¬¸ù¾İÑ§ºÅ²éÑ¯
+			//æŸ¥è¯¢è¯­å¥ï¼Œæ ¹æ®å­¦å·æŸ¥è¯¢
 			String sql=""+"select * from Quotation where quotation_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 				return true;
@@ -145,20 +155,20 @@ public class QuotationDao {
 	
 	
 	
-	//ĞŞ¸Ä±¨¼Ûµ¥
+	//ä¿®æ”¹æŠ¥ä»·å•
 	public static int modifyQuotationByNum(Quotation qo) {
 		
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		int res=-1;
 		try {
 		
-			String sql=""+"update Quotation set rfq_num = ?, vendor_num = ? where quotation_num = ?";
+			String sql=""+"update Quotation set rfq_num = ?, vendor_num = ? value=? where quotation_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, qo.getRfq_num());
 			psmt.setInt(2, qo.getVendor_num());
-			
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			psmt.setBigDecimal(3, qo.getValue());
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			res= psmt.executeUpdate();
 		
 		}catch(SQLException e) {
@@ -169,6 +179,5 @@ public class QuotationDao {
             DBUtil.closeConnection(conn);
         }
 		return res;
-		
 	}	
 }

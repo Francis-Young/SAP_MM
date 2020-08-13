@@ -32,9 +32,9 @@ public class QuotationItemDao {
         }
 	}
 	//根据编号查询
-	public static Quotation_item findQuotationItemByQiNum(int num) {
+	public static ArrayList<Quotation_item> findQuotationItemByQiNum(int num) {
+		ArrayList<Quotation_item> qilist = new ArrayList<Quotation_item>();
 		
-		Quotation_item qi=new Quotation_item();
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		try {
@@ -45,6 +45,7 @@ public class QuotationItemDao {
 			//执行查询语句
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
+				Quotation_item qi=new Quotation_item();
 				qi.setQuotation_item_num(rs.getInt("quotation_item_num"));
 				qi.setQuotation_num(rs.getInt("quotation_num"));
 				qi.setPrice(rs.getBigDecimal("price"));
@@ -53,7 +54,7 @@ public class QuotationItemDao {
 				qi.setCurrency_unit(rs.getString("currency_unit"));
 				qi.setDelivery_date(rs.getDate("delivery_date"));
 				qi.setMaterial_num(rs.getString("material_num"));
-				
+				qilist.add(qi);
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -63,7 +64,7 @@ public class QuotationItemDao {
             DBUtil.closeConnection(conn);
         }
 		
-		return qi;
+		return qilist;
 	}
 
 	
