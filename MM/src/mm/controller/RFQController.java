@@ -67,7 +67,7 @@ public class RFQController extends HttpServlet{
 		rfq.setVendor_code(vendor_code);
 		int rfq_num =RFQDao.addRFQ(rfq);
 		
-		String [] itemture=(String[]) session.getAttribute("itemture");
+		String [] itemture=(String[]) session.getAttribute("itemture");//不确定这么写对不对
 		int requisition_num=rfq.getRequisition_num();
 		ArrayList<Requisition_item> rilist=ReqItemDao.findRequItemByReqnum(requisition_num);
 	

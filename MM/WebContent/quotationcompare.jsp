@@ -1,5 +1,4 @@
-<%@ page import="java.util.List,mm.bean.*,mm.dao.*,java.util.ArrayList"
-language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,22 +19,147 @@ language="java" contentType="text/html; charset=UTF-8"
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 
-
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
 <!-- Sweet Alert -->
 <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
-<link href="css/animate.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<!-- Data picker -->
-<script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script>
+function selectline(ele)
+{
+	var clickContent = ele;         
+    //获取要赋值的input的元素
+    var inputElement =  document.getElementById("rfqid");
+    //给input框赋值
+    inputElement.value = clickContent.cells[1].innerHTML;//.innerText;
+    //选中input框的内容
+   // inputElement.select();
+     // 执行浏览器复制命令
+   // document.execCommand("Copy");
+    openwin3(0);
+    openwin2(0);
+	}
 
+
+</script>
 <style type="text/css">
-.table-b table td{border:2px solid #808080;padding:1%}
-.table-b table th{padding:1%}
+.table-b table td{border:2px solid #808080}
 </style>
+<script type="text/javascript">
+
+
+
+function search()
+{    
+	var key = $("#key1").val()+","+ $("#key2").val()+","+ $("#key3").val()+","+ $("#key4").val()+","+ $("#key5").val()
+	var url="${pageContext.request.contextPath}/rfqsearchServlet?key="+key
+	
+	function gettext(text)
+	{
+		var subt = text.match(/mark.(\S*?)mark./);
+		return subt[1];
+	}
+	function getdate(text)
+	{
+		var subt = text.match(/mark.(\S*?)mark./);
+		return subt[1];
+	}
+
+    
+
+     $.ajax({
+              type:"post",
+              url:"${pageContext.request.contextPath}/searchServlet",
+              async:true, //默认-异步（true） 同步-false
+              dataType:"text",
+              
+              data:{"key":key},
+              beforeSend: function (){
+                  //ajax刷新前加载load动画
+                  //showLoad();
+              },
+              success:function (dataArray) {
+            	  
+            	  var subnum = dataArray.match(/mark0(\S*?)mark1/g);
+            	  var subpla = dataArray.match(/mark1(\S*?)mark2/g);
+            	  var subcol = dataArray.match(/mark2(\S*?)mark3/g);
+            	  var subvdr = dataArray.match(/mark3(\S*?)mark4/g);
+            	  var subddl = dataArray.match(/mark4(\S*?)mark5/g);
+            	 // alert(subtext[1]);
+            	 // alert(decodeURI(subtext[1]))
+            	 // alert(decodeURI(subdate))
+            	  //decodeURI方法返回一个字符数组，所以如果要知道字符串的数量就要分组decode，否则组的每位只有一个字符
+            	  $("tbody#tableBody").remove();//删除已有表格	
+                  var tableBody = "<tbody id='tableBody'>";
+ 				  //alert(subnum.length);
+                  for (var i = 0; i < subnum.length; i++) {
+ 					
+                      tableBody += '<tr onclick="selectline(this)">';
+ 
+                      tableBody += "<td>"+gettext(decodeURI(subnum[i]))+"</td>";
+                      tableBody += "<td>"+gettext(decodeURI(subpla[i]))+"</td>";
+                      tableBody += "<td>"+gettext(decodeURI(subcol[i]))+"</td>";
+                      tableBody += "<td>"+gettext(decodeURI(subvdr[i]))+"</td>";
+                      tableBody += "<td>"+gettext(decodeURI(subddl[i]))+"</td>";
+
+                      tableBody += "</tr>";
+                  }
+ 
+                  tableBody += "</tBody>";
+ 
+                  
+                  $("#tableHead").after(tableBody);
+ 
+              },
+              error:function (e,textStatus,request) {
+                  //隐藏load动画
+                  hiddenLoad();
+                  alert("错误！"+e.status);
+                  var json=JSON.parse(request.responseText);  
+                  alert(json.city); 
+                  alert(request.responseText)
+                  alert(" parser error"+textStatus); // parser error;
+              },
+              complete:function () {
+
+                 
+                  //表格隔行显色，鼠标悬浮高亮显示
+                  var oTab = document.getElementById('tbl');
+                  var oldColor = '';//用于保存原来一行的颜色
+ 
+                  for(var i = 0; oTab.tBodies[0].rows.length; i++){
+ 
+                      //当鼠标移上去，改变字体色-背景色
+                      oTab.tBodies[0].rows[i].onmouseover = function () {
+                          oldColor = this.style.background;
+                          this.style.background = "#009B63";
+                          this.style.color = "#ffffff";
+                      };
+ 
+                      //当鼠标移开，恢复原来的颜色
+                      oTab.tBodies[0].rows[i].onmouseout = function () {
+                          this.style.background = oldColor;
+                          this.style.color = "#000000";
+                      };
+ 
+                      //隔行显色
+                      if(i%2){
+                          oTab.tBodies[0].rows[i].style.background = "#EAF2D3";
+                      }
+                      else{
+                          oTab.tBodies[0].rows[i].style.background = "";
+                      }
+                  }
+              }
+          });
+    
+}
+</script>
+<script>
+function open_and_search()
+{
+	openwin3(1);
+	search();
+	}
+</script>
 <style>
 #wrapper
 {
@@ -83,31 +207,13 @@ background:white;
 .opbox3 .x{ font-size:18px; text-align:right; display:block;}
 
 </style>
-<script>
-function vaildday()
-{
-	var selectContent = document.getElementsByName("checkname");       
-    //获取要赋值的input的元素
-    openwin(0);
-  //  var inputElement =  document.getElementById("reqnum");
-    //给input框赋值
-  //  inputElement.value = clickContent.cells[1].innerHTML;//.innerText;
-    //选中input框的内容
-   // inputElement.select();
-     // 执行浏览器复制命令
-   // document.execCommand("Copy");
 
-	}
-
-
-
-
-</script>
 
 </head>
 
 <body>
-<form class="m-t" role="form" action="/QuotationController" method="post">
+<form class="m-t" role="form" action="/QoatationController" method="post">
+<input type='text' value='bounce_to_compare' name='action' hidden='true'>
 	<div id="wrapper">
 
 		<nav class="navbar-default navbar-static-side" role="navigation">
@@ -179,7 +285,13 @@ function vaildday()
 					<div class="navbar-header">
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
 							href="#"><i class="fa fa-bars"></i> </a>
-						
+						<form role="search" class="navbar-form-custom"
+							action="search_results.html">
+							<div class="form-group">
+								<input type="text" placeholder="Search for something..."
+									class="form-control" name="top-search" id="top-search">
+							</div>
+						</form>
 					</div>
 					<ul class="nav navbar-top-links navbar-right">
 						<li><span class="m-r-sm text-muted welcome-message">欢迎回来！</span></li>
@@ -247,11 +359,11 @@ function vaildday()
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>创建RFQ</h2>
+					<h2>报价单比较</h2>
 					<ol class="breadcrumb">
 						<li><a href="index.html">主页</a></li>
-						<li>请购管理</li>
-						<li class="active"><strong>创建RFQ</strong></li>
+						<li>报价单管理</li>
+						<li class="active"><strong>报价单比较</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -275,152 +387,81 @@ function vaildday()
 										<li><a href="#">配置 1</a></li>
 										<li><a href="#">配置 2</a></li>
 									</ul>
-									<a class="close-link"> <i class="fa fa-times"></i>
-									</a>
+									
 								</div>
 							</div>
 
 							<div class="ibox-content">
-<input type="text" value="save" name="action" hidden="true">
-
-<div class="ibox-content">
 								
 									<div class="row">
 
-										<div class="col-md-4">
 											<!--RFQ具体信息 -->
-											<div class="form-group">
-												<label for="title">RFQ:</label> <input id="vname" name="rfq_type"
-													type="text" class="form-control" readonly="readonly" value= ${ rfqnum} />
-											</div>
-                                       <div class="form-group">
-												<label for="message">RFQ类型：</label> <input
-													readonly="readonly" value= ${ rfqtype}  type="text" 
-													class="form-control" ></input>
-													${ vendorname}
-											</div>
-											<div class="form-group">
-												<label for="message">供应商：</label> <input
-													readonly="readonly" value= ${ vendor}  type="text" 
-													class="form-control" ></input>
-													${ vendorname}
-											</div>
-
-					
-
-										</div>
-
-										<div class="col-md-2"></div>
-
-										<div class="col-md-2" style="width:25%;">
-							
-											<div class="form-group">
-												<label for="showMethod">RFQ日期</label> <input id="showMethod"
-										readonly="readonly" value= ${ rfqdate} class="form-control" />
-											</div>
-											<div class="form-group">
-												<label for="showMethod">截止日期</label> <input id="showMethod"
-										readonly="readonly" value= ${ ddldate} class="form-control" />
+																				<div class="form-group">
+											<label style="padding:0em;" class="col-sm-2 control-label">采购组织</label>
+											<div class="col-sm-10">
+												<input name="org" id="rfqid" style="width:200px;" type="text" class="form-control"> 
+							&emsp;&emsp;&emsp;	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+								<a onclick="openwin(1)"><i class="fa fa-search-plus"></i></a>
 											</div>
 											
+											<label style="padding:0em;" class="col-sm-2 control-label">RFQ集合号</label>
+											<div class="col-sm-10">
+												<input name="coll" id="rfqid" style="width:200px;" type="text" class="form-control"> 
+							&emsp;&emsp;&emsp;	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+								<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
+											</div>
+											
+								<label style="padding:0em;" class="col-sm-2 control-label">有效价格</label>
+											<div class="col-sm-10">
+											<input type='checkbox' checked='' class='i-checks' name='checkname2'></td>
+											</div>			
+										
+											
+											<div class="row">
+										<div class="col-lg-12">
+											<hr>
+											<label style="padding:0em;" class="col-sm-2 control-label">均价比较</label>
+											<div class="col-sm-10">
+											<input type='checkbox' checked='' class='i-checks' name='checkname1'></td>
+											</div>
+											
+											
+										<br>
+										<br>
+								<button style="float:right" type="submit" class="btn btn-white" id="clearlasttoast">执行比较</button>
+										</div>
+									</div>		
+											
+											
+											
+										</div>
+											
+
 										</div>
 									</div>
 
+							
+								
 
-
-
-
-<input type="submit" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" value="接受条目">	
-<button type="button" class="btn btn-white" id="cleartoasts" onclick=>有效期设置</button>
-			
-<div class="table-b">
-<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="100%">
-<thead>
-<tr>
-<th></th>
-<th>条目</th>
-<th>材料编号</th>
-<th>数量</th>
-<th>运送日期</th>
-<th>价格</th>
-<th>工厂</th>
-
-
-</tr>
-</thead>
-<tbody>
-
-<tr>
-<td><input type="checkbox" checked class="i-checks" name="input[]"></td>
-<td>10</td>
-<td>10</td>
-<td>10</td>
-<td>10</td>
-<td>10</td>
-<td>10</td>
-<td>10</td>
-</tr>
-<%
-//取出请购单的条目
-
-RFQ rfq= (RFQ)session.getAttribute("passrfq");
-
-ArrayList<RFQ_item> rilist=RFQItemDao.findRFQItemByRfqnum(rfq.getRfq_num());
-for(int i=0;i<rilist.size();i++)
-{
-RFQ_item ri = rilist.get(i);
-
-out.print("<tr>");
-out.print("<td><input type='checkbox' checked='' class='i-checks' name='checkname'></td>");
-out.print("<td>"+(i+10)*10+"</td>");
-out.print("<td>"+ri.getMaterial_num()+"</td>");
-out.print("<td>"+ri.getRequisition_quantity()+"</td>");
-out.print("<td>"+ri.getRequisition_deliverydate()+"</td>");
-out.print("<td><input name='price'  type='text' class='form-control'></td>");
-out.print("<td>"+ri.getRequisition_plant()+"</td>");
-
-}
-
-%>
-
-
-
-
-
-
-
-
-
-
-
-</tbody>
-</table>
 </div>
-						
-						
-						
-						
-								</div>
+
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<div class="footer">
-				<div class="pull-right">
-					<div class="text-right">
-						<button type="submit" class="btn btn-success btn-sm demo2" id="showtoast">保存</button>
-						<button type="button" class="btn btn-white" id="cleartoasts">取消</button>
-					</div>
-				</div>
+				
 				<div>
-					<strong>Copyright</strong> yf版权所有 &copy; 2020-2025
+					<strong>Copyright</strong> 版权所有 &copy; 2014-2015
 				</div>
 			</div>
 
 		</div>
-	</div>
-	</div>
+	
+
+
 	<!-- Mainly scripts for pop windows-->
 	   <script>  
         function openwin(n){
@@ -447,22 +488,17 @@ out.print("<td>"+ri.getRequisition_plant()+"</td>");
                 
 					<div class="form-group">
 					
-						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >生效时间</label>
-						
-						
-						<div  class="input-group date"> <span class="input-group-addon">
-				<i class="fa fa-calendar"></i></span>
-			<input name="deliverydate" type="text" class="form-control" readonly="readonly">
-						</div>
-							
+						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >请购单</label>
+						<div class="col-sm-10" style="width:87%;padding:1px;">
+							<input name="requisition_num" id="reqnum" type="text" class="form-control" style="width:80%">
+							<div  class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a></div>
 						</div>
 						
-						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >失效时间</label>
-									<div  class="input-group date"> <span class="input-group-addon">
-					<i class="fa fa-calendar"></i></span>
-						<input name="deliverydate" type="text" class="form-control" readonly="readonly">
-								</div>
-				</div>
+						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >工厂</label>
+						<div class="col-sm-10" style="width:87%;padding:1px;">
+							<input name="plant2" type="text" class="form-control" style="width:80%">
+							<div class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="#"><i class="fa fa-search-plus"></i></a></div>
+						</div>
 						
 		<button type="button" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" onclick="openwin(0); return false;">取消</button>
         <input type="submit" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" value="继续">
@@ -471,27 +507,79 @@ out.print("<td>"+ri.getRequisition_plant()+"</td>");
         
         <input type="button" value="确定">
         
-        
-     
+        </div>
+     </div>
      </form>
-     <!-- 日期框 -->
-	<script>
-	function initDatePicker(ele){
-		ele.datepicker({
-		autoSize:true,
-		autoclose: true,
-		language: "zh-CN",
-		viewDate:new Date()
-		})
-	}
-	    $(document).ready(function(){
+     
+   <!-- 第二层弹窗 -->  
+   <div id="inputbox2" class="opbox2">
+   
+   <a class='x' href=''; onclick="openwin2(0); return false;">关闭</a>
+   <p> 查找RFQ：   输入任意已知信息</p>
+     <div class="ibox-content" style="padding:5px 5px 5px 5px;">
+														<div >
+															<div >
+																	<!--RFQ具体信息 -->
+																	<div class="form-group">
+																		<label for="title">RFQ种类</label> <input id="key1" type="text" class="form-control" >
+																	</div>
 
-			initDatePicker($(".input-group.date"));
-	   });
-	
-	
-	</script>
-	<!-- Mainly scripts -->
+																	<div class="form-group">
+																		<label for="message">请购组织</label> <input class="form-control" id="key2" type="text" >
+																	</div>
+
+																	<div class="form-group">
+																		<label for="message">RFQ集合号</label> <input class="form-control" id="key3" type="text" >
+																	</div>
+
+																	<div class="form-group">
+																		<label for="message">工厂</label> <input class="form-control" id="key4" type="text" >
+																	</div>
+
+
+																	<div class="form-group">
+																		<label for="showMethod">供应商</label> <input id="xxkey1" type="key5" class="form-control">
+																	</div>
+																	
+						
+
+																</div><div class="row">
+																	<div class="col-lg-12">
+																		<button type="button" class="btn btn-primary" id="showsimple" onclick=open_and_search()>搜索</button>
+																	</div>
+												
+														</div>
+
+													</div>
+     
+     </div>
+     </div>
+     <!-- 第三层弹窗 -->
+   <div id="inputbox3" class="opbox3">
+   
+   <a class='x' href=''; onclick="openwin3(0); return false;">关闭</a>
+   <table id="tbl" class="table table-striped">
+
+									<thead id="tableHead">
+										<tr>
+											<th>RFQ编号</th>
+											<th>工厂</th>
+											<th>RFQ集合号</th>
+		
+											
+											<th>供应商</th>
+											<th>截止日期</th>
+										</tr>
+									</thead>
+
+
+									<tbody id="tableBody">
+									
+
+									</tbody>
+								</table>  
+     </div>
+     
 	<script src="js/jquery-2.1.1.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
@@ -503,7 +591,9 @@ out.print("<td>"+ri.getRequisition_plant()+"</td>");
 
 	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
-
+    <!-- Sweet alert -->
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    
 	<script type="text/javascript">
 		$(function() {
 			var i = -1;
@@ -514,10 +604,7 @@ out.print("<td>"+ri.getRequisition_plant()+"</td>");
 				return msg;
 			};
 
-			$('#showsimple').click(function() {
-				// Display a success toast, with a title
-				toastr.success('可以添加新的RFQ材料', '提示!')
-			});
+			
 			$('#showtoast')
 					.click(
 							function() {
@@ -639,95 +726,9 @@ out.print("<td>"+ri.getRequisition_plant()+"</td>");
 			});
 		})
 	</script>
+	<!-- float window -->
 
-	<!-- Mainly scripts -->
-	<script src="js/jquery-2.1.1.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-	<!-- Custom and plugin javascript -->
-	<script src="js/inspinia.js"></script>
-	<script src="js/plugins/pace/pace.min.js"></script>
-
-	<!-- Sweet alert -->
-	<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
-
-	<script>
-		$(document)
-				.ready(
-						function() {
-
-							$('.demo1')
-									.click(
-											function() {
-												swal({
-													title : "Welcome in Alerts",
-													text : "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-												});
-											});
-
-							$('.demo2').click(function() {
-								swal({
-									title : "Good job!",
-									text : "You clicked the button!",
-									type : "success"
-								});
-							});
-
-							$('.demo3')
-									.click(
-											function() {
-												swal(
-														{
-															title : "Are you sure?",
-															text : "You will not be able to recover this imaginary file!",
-															type : "warning",
-															showCancelButton : true,
-															confirmButtonColor : "#DD6B55",
-															confirmButtonText : "Yes, delete it!",
-															closeOnConfirm : false
-														},
-														function() {
-															swal(
-																	"Deleted!",
-																	"Your imaginary file has been deleted.",
-																	"success");
-														});
-											});
-
-							$('.demo4')
-									.click(
-											function() {
-												swal(
-														{
-															title : "Are you sure?",
-															text : "Your will not be able to recover this imaginary file!",
-															type : "warning",
-															showCancelButton : true,
-															confirmButtonColor : "#DD6B55",
-															confirmButtonText : "Yes, delete it!",
-															cancelButtonText : "No, cancel plx!",
-															closeOnConfirm : false,
-															closeOnCancel : false
-														},
-														function(isConfirm) {
-															if (isConfirm) {
-																swal(
-																		"Deleted!",
-																		"Your imaginary file has been deleted.",
-																		"success");
-															} else {
-																swal(
-																		"Cancelled",
-																		"Your imaginary file is safe :)",
-																		"error");
-															}
-														});
-											});
-
-						});
-	</script>
+	
 </body>
 
 </html>

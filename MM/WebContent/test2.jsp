@@ -1,0 +1,46 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
+
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<body>
+
+<h4>带有普通的边框：</h4>  
+<table border="1">
+<tr>
+  <td>First</td>
+  <td>Row</td>
+</tr>   
+<tr>
+  <td>Second</td>
+  <td>Row</td>
+</tr>
+</table>
+
+<h4>带有粗的边框：</h4>  
+<table border="8">
+<tr>
+  <td>First</td>
+  <td>Row</td>
+</tr>   
+<tr>
+  <td>Second</td>
+  <td>Row</td>
+</tr>
+</table>
+
+<h4>带有很粗的边框：</h4>  
+<table border="15">
+<tr>
+  <td>First</td>
+  <td>Row</td>
+</tr>   
+<tr>
+  <td>Second</td>
+  <td>Row</td>
+</tr>
+</table>
+
+</body>
+
+</html>

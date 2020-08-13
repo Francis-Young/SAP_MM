@@ -1,6 +1,7 @@
 package mm.controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -11,19 +12,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mm.bean.Material;
 import mm.bean.Quotation;
+import mm.bean.Quotation_item;
 import mm.bean.RFQ;
 import mm.bean.RFQ_item;
-import mm.bean.Requisition;
 import mm.bean.Requisition_item;
 import mm.bean.Vendor;
+import mm.dao.MaterialDao;
+import mm.dao.QuotationDao;
+import mm.dao.QuotationItemDao;
 import mm.dao.RFQDao;
 import mm.dao.RFQItemDao;
 import mm.dao.ReqItemDao;
-import mm.dao.RequisitionDao;
 import mm.dao.VendorDao;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.*;
 
 @WebServlet(urlPatterns="/quotation")
@@ -45,9 +50,9 @@ public class QuotationController extends HttpServlet{
 			case "bounce_to_select":
 				select(req,resp);
 				break;
-			case "bounce_to_edit":
-				edit(req,resp);
-				break;	
+			case "bounce_to_compare":
+				compare(req,resp);
+				break;
 			default:
 				break;
 		}
@@ -60,40 +65,112 @@ public class QuotationController extends HttpServlet{
 
 
 
+	private void compare(HttpServletRequest req, HttpServletResponse resp)  {
+		// TODO Auto-generated method stub
+		
+		String coll = req.getParameter("coll");
+		RFQ rfq = new RFQ();
+		rfq.setRfq_coll(coll);
+		ArrayList<RFQ> rfqlist = RFQDao.findrfqByAnything(rfq);
+		ArrayList<Quotation> quolist = new ArrayList<Quotation>();
+
+		for(int i=0;i<rfqlist.size();i++)
+		{
+			int num = rfqlist.get(i).getRfq_num();
+			if(QuotationDao.isqoNumExist(num))
+			{
+				Quotation quo = QuotationDao.findQuotationByNum(num);
+				quolist.add(quo);
+			}
+			
+		}
+		ArrayList<String> matlist = new ArrayList<String>();//所有材料
+		
+		for(int i=0;i<quolist.size();i++)
+		{
+			int num = quolist.get(i).getQuotation_num();
+			ArrayList<Quotation_item> qilist=QuotationItemDao.findQuotationItemByQiNum(num);
+			for (int j=0;j<qilist.size();j++)
+			{
+				matlist.add(qilist.get(i).getMaterial_num());
+			}
+		}
+		@SuppressWarnings("unchecked")
+		ArrayList<String> matli = (ArrayList<String>) removeDuplicateWithOrder(matlist);
+		ArrayList<Material> matoblist = new ArrayList<Material>();//所有材料
+		for(int i=0;i<matlist.size();i++)
+		{
+			String num = matlist.get(i);
+			Material ma = MaterialDao.findMaterialbyNum(num);
+			matoblist.add(ma);
+		}
+		HttpSession session= req.getSession();
+		session.setAttribute("coll",coll);
+		session.setAttribute("matli",matoblist);
+		req.getRequestDispatcher("Quotationcompare2.jsp");
+	
+	}
+
+	// 删除ArrayList中重复元素，保持顺序     
+	 @SuppressWarnings("unchecked")
+	public static ArrayList<?> removeDuplicateWithOrder(@SuppressWarnings("rawtypes") ArrayList list) {    
+	    @SuppressWarnings("rawtypes")
+		Set set = new HashSet();    
+	     @SuppressWarnings("rawtypes")
+	     ArrayList newList = new ArrayList();    
+	   for (@SuppressWarnings("rawtypes")
+	Iterator iter = list.iterator(); iter.hasNext();) {    
+	         Object element = iter.next();    
+	         if (set.add(element))    
+	            newList.add(element);    
+	      }     
+	     list.clear();    
+	     list.addAll(newList);    
+	    return list;    
+	 }
+
+
+
+
+
 	private void save(HttpServletRequest req, HttpServletResponse resp) {
 		// TODO Auto-generated method stub
 		HttpSession session= req.getSession();
 		
-		RFQ rfq= (RFQ)session.getAttribute("passdata");
-		String rfq_coll=req.getParameter("coll");
-		String vendor_code=req.getParameter("vendor");
-		rfq.setRfq_coll(rfq_coll);
-		rfq.setVendor_code(vendor_code);
-		int rfq_num =RFQDao.addRFQ(rfq);
+		RFQ rfq= (RFQ)session.getAttribute("passrfq");
+		Quotation quo=(Quotation)session.getAttribute("passquo");
+		quo.setRfq_num(rfq.getRfq_num());		
+		quo.setVendor_num(Integer.parseInt(rfq.getVendor_code()));
 		
-		String [] itemture=(String[]) session.getAttribute("itemture");
-		int requisition_num=rfq.getRequisition_num();
-		ArrayList<Requisition_item> rilist=ReqItemDao.findRequItemByReqnum(requisition_num);
-	
+		int quo_num =QuotationDao.addQuotation(quo);
+		quo.setQuotation_num(quo_num);
+		String [] itemture=(String[]) session.getAttribute("checkname");//被选中的item
+		//不确定这么写对不对
+		int rfqnum=rfq.getRfq_num();
+		ArrayList<RFQ_item> rilist=RFQItemDao.findRFQItemByRfqnum(rfqnum);
+	    BigDecimal value= new BigDecimal("0");
 		for(int i=0;i<itemture.length;i++ )
 		{
+			Quotation_item qi = new Quotation_item();
 			if(itemture[i].equals("true"))
 			{
-				Requisition_item ri = rilist.get(i);
-				RFQ_item rf = new RFQ_item();
-				String material_num=ri.getMaterial_num();
-				rf.setMaterial_num(material_num);
-				rf.setRfq_num(rfq_num);
-				rf.setRequisition_deliverydate(ri.getRequisition_deliverydate());
-				rf.setRequisition_plant(ri.getRequisition_plant());
-				rf.setRequisition_quantity(ri.getRequisition_quantity());
-				rf.setRequisition_storageloc(ri.getRequisition_storageloc());
-				RFQItemDao.addRFQItem(rf);
+				RFQ_item ri= rilist.get(i);
+				String price = "cc";//要改
+				String quantity="ff";//要改
+				BigDecimal deprice=new BigDecimal(price);
+				qi.setMaterial_num(ri.getMaterial_num());
+				qi.setDelivery_date(ri.getRequisition_deliverydate());
+				qi.setPrice(deprice);
+				qi.setQuantity(Integer.parseInt(quantity));
+				qi.setQuotation_num(quo_num);
+				qi.setQuotation_status(0);//还没定。。
+				qi.setCurrency_unit("RMB");
+				QuotationItemDao.addQuotationItem(qi);
+				value.add(deprice.multiply(new BigDecimal(quantity)));
 			}
 		}
-		
-		
-		
+		quo.setValue(value);
+		QuotationDao.modifyQuotationByNum(quo);
 	}
 
 
@@ -156,75 +233,7 @@ public class QuotationController extends HttpServlet{
 	{
 		doGet(req, resp);
 	}
-	private void create(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
-		// TODO Auto-generated method stub
-		
-		req.setCharacterEncoding("utf-8");
-		//---创建rfq-----
-		
-		String rfq_type=req.getParameter("type");
-		String rfq_language=req.getParameter("language");
-		String date = req.getParameter("date");
-		java.sql.Date rfq_date=strToDate(date);
-		String deadline = req.getParameter("deadline");
-		java.sql.Date rfq_deadline=strToDate(deadline);
-		String rfq_purchasing_org = req.getParameter("org");
-		String rfq_purchasing_group = req.getParameter("group");
-		String rfq_plant = req.getParameter("plant");
-		int requisition_num=Integer.parseInt(req.getParameter("reqnum"));
-		String vendor_code=req.getParameter("vendorcode");
-		String rfq_coll=req.getParameter("coll");
-		RFQ rfq = new RFQ();
-		rfq.setRequisition_num(requisition_num);
-		rfq.setRfq_coll(rfq_coll);
-		rfq.setRfq_date(rfq_date);
-		rfq.setRfq_deadline(rfq_deadline);
-		rfq.setRfq_language(rfq_language);
-
-		rfq.setRfq_plant(rfq_plant);
-		rfq.setRfq_purchasing_group(rfq_purchasing_group);
-		rfq.setRfq_purchasing_org(rfq_purchasing_org);
-		rfq.setRfq_type(rfq_type);
-		rfq.setVendor_code(vendor_code);
-		
-		int rfq_num=RFQDao.addRFQ(rfq);
-		
-		Enumeration<String> enu=req.getParameterNames();
-		while(enu.hasMoreElements()){
-		String paraName=(String)enu.nextElement();
-		System.out.println(paraName+": "+req.getParameter(paraName));	
-		} 
-		//------逐一添加item--
-		int num=Integer.parseInt(req.getParameter("num"));
-		/*for (int i=10;i<=num;i+=10)
-		{
-			Requisition_item ri = new Requisition_item();
-			ri.setMaterial_num(req.getParameter("material"+i));
-			
-			String datestr=req.getParameter("deliverydate"+i);
-			
-			java.sql.Date date=strToDate(datestr);
-				
-			ri.setRequisition_deliverydate(date);
-			ri.setRequisition_num(requisition_num);
-			ri.setRequisition_plant(req.getParameter("plant"+i));
-			int quantity= Integer.parseInt(req.getParameter("quantity"+i));
-			ri.setRequisition_quantity(quantity);
-			ri.setRequisition_storageloc(req.getParameter("storloc"+i));
-			ReqItemDao.addRequisitionItem(ri);
-		}
-		*/
-   	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	}
+	
 	 private java.sql.Date strToDate(String strDate) {  
 	        String str = strDate;  
 	        
