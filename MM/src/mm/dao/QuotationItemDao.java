@@ -103,6 +103,41 @@ public class QuotationItemDao {
 		
 		return qilist;
 	}
+	//根据物料查询 
+	public static ArrayList<Quotation_item> findQuotationByMatNum(String num) {
+		ArrayList<Quotation_item> qilist=new ArrayList<Quotation_item>();
+		Quotation_item qi=new Quotation_item();
+		//建立数据库连接
+		Connection conn=DBUtil.getConnection();
+		try {
+		
+			String sql=""+"select * from Quotation_item where material_num = ?";
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setString(1, num);
+			//执行查询语句
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+			
+				qi.setQuotation_item_num(rs.getInt("quotation_item_num"));
+				qi.setQuotation_num(rs.getInt("quotation_num"));
+				qi.setPrice(rs.getBigDecimal("price"));
+				qi.setQuotation_status(rs.getInt("quotation_status"));
+				qi.setQuantity(rs.getInt("quantity"));
+				qi.setCurrency_unit(rs.getString("currency_unit"));
+				qi.setDelivery_date(rs.getDate("delivery_date"));
+				qi.setMaterial_num(rs.getString("material_num"));
+				qilist.add(qi);
+			}
+		}catch(SQLException e) {
+            e.printStackTrace();
+        }catch(NullPointerException f){
+            f.printStackTrace();
+        }finally {
+            DBUtil.closeConnection(conn);
+        }
+		
+		return qilist;
+	}
 	
 	//判断某订单条目号否存在，若存在则返回true，若不存在返回false
 	public static boolean isOiNumExist(int num) {

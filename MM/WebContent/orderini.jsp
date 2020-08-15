@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" 
-import="java.util.List,mm.bean.*,mm.dao.*,java.util.ArrayList,java.math.BigDecimal,java.text.DecimalFormat"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -41,10 +40,7 @@ function selectline(ele)
 
 
 </script>
-<style type="text/css">
-.table-b table td{border:2px solid #808080}
-.table-b p{margin:5px}
-</style>
+
 <script type="text/javascript">
 
 
@@ -186,7 +182,7 @@ background:white;
     z-index: 101;
     width:40%; margin-top:10%; margin:auto; padding:28px;
     top:5%; left:30%;
-    height:550px; border:1px #111 solid;
+     border:1px #111 solid;
     display:none;            /* 默认对话框隐藏 */
 
 position: absolute;
@@ -214,8 +210,9 @@ background:white;
 </head>
 
 <body>
-<form class="m-t" role="form" action="/QoatationController" method="post">
-<input type='text' value='bounce_to_compare' name='action' hidden='true'>
+<form class="m-t" role="form" action="${pageContext.request.contextPath}/order" method="post">
+
+<input type='text' value='get_quotation' name='action' hidden='true'>
 	<div id="wrapper">
 
 		<nav class="navbar-default navbar-static-side" role="navigation">
@@ -287,13 +284,7 @@ background:white;
 					<div class="navbar-header">
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
 							href="#"><i class="fa fa-bars"></i> </a>
-						<form role="search" class="navbar-form-custom"
-							action="search_results.html">
-							<div class="form-group">
-								<input type="text" placeholder="Search for something..."
-									class="form-control" name="top-search" id="top-search">
-							</div>
-						</form>
+
 					</div>
 					<ul class="nav navbar-top-links navbar-right">
 						<li><span class="m-r-sm text-muted welcome-message">欢迎回来！</span></li>
@@ -361,11 +352,11 @@ background:white;
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>报价单比较</h2>
+					<h2>创建订单</h2>
 					<ol class="breadcrumb">
 						<li><a href="index.html">主页</a></li>
-						<li>报价单管理</li>
-						<li class="active"><strong>报价单比较</strong></li>
+						<li>订单管理</li>
+						<li class="active"><strong>创建订单</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -379,7 +370,7 @@ background:white;
 						<div class="ibox float-e-margins">
 
 							<div class="ibox-title">
-								<h5>创建RFQ</h5>
+								<h5>创建订单</h5>
 								<div class="ibox-tools">
 									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -397,226 +388,26 @@ background:white;
 								
 									<div class="row">
 
+											<!--材料具体信息 -->
+																				<div class="form-group">
+											<label class="col-sm-2 control-label">材料编号</label>
+											<div class="col-sm-10">
+												<input name="material_num" id="rfqid" style="width:200px;" type="text" class="form-control"> 
+							&emsp;&emsp;&emsp;	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+								<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
+											</div>
+											<div class="row">
+										<div class="col-lg-12">
 
+										</div>
+									</div>		
+											
+											
+											
+										</div>
+											
 
-
-<div class="table-b">
-<table border="2">
-<tbody >
-
-
-<%
-
-String coll=(String)session.getAttribute("coll");
-RFQ rfq = new RFQ();
-rfq.setRfq_coll(coll);
-ArrayList<RFQ> rfqlist = RFQDao.findrfqByAnything(rfq);
-ArrayList<Quotation> quolist = new ArrayList<Quotation>();
-@SuppressWarnings("unchecked")
-ArrayList<Material> matlist = (ArrayList<Material>)session.getAttribute("matli");
-for(int i=0;i<rfqlist.size();i++)
-{
-	int num = rfqlist.get(i).getRfq_num();
-	if(QuotationDao.isqoNumExist(num))
-	{
-		Quotation quo = QuotationDao.findQuotationByNum(num);
-		quolist.add(quo);
-	}
-	
-}
-
-out.print("<tr>");
-	out.print("<td>");
-		out.print("<p style='background:#A2C3EA'>材料</p>");
-		out.print("<p style='background:#A2C3EA'>标记</p>");
-		out.print("<p style='background:#A2C3EA'>基本单位数量</p>");
-	out.print("</td>");
-	out.print("<td>");
-		out.print("<p style='background:#A6E5F4'>报价单：</p>");
-		out.print("<p style='background:#A6E5F4'>投标者：</p>");
-		out.print("<p style='background:#A6E5F4'>RFQ集合号：</p>");
-	out.print("</td>");
-	for(int i=0;i<quolist.size();i++)
-	{
-	out.print("<td>");
-
-		out.print("<a style='background:#C5EAEE;text-decoration:none' href='rufuse.jsp?quonum="
-		+quolist.get(i).getQuotation_num()+" '>"+quolist.get(i).getQuotation_num()+"</a>");
-		out.print("<p style='background:#C5EAEE'>"+quolist.get(i).getVendor_num()+"</p>");
-		out.print("<p style='background:#C5EAEE'>"+coll+"</p>");
-	out.print("</td>");
-	}
-out.print("</tr>");
-
-
-
-
-
-for(int i=0;i<matlist.size();i++)
-{
-	
-out.print("<tr>");
-	out.print("<td>");
-		out.print("<p style='background:#CCE3E3'>"+matlist.get(i).getMaterial_num()+"</p>");
-		out.print("<p style='background:#CCE3E3'>"+matlist.get(i).getMaterial_discr()+"</p>");
-		out.print("<p style='background:#CCE3E3' align='right'>"+"200  EA"+"</p>");
-	out.print("</td>");
-	out.print("<td>");
-		out.print("<p style='background:#CCE3E3'>总价值</p>");
-		out.print("<p style='background:#CCE3E3'>价格</p>");
-		out.print("<p style='background:#CCE3E3'>比率</p>");
-	out.print("</td>");
-	int availquos=0;//记录有几个报价单是有此材料的；
-	BigDecimal ans = new BigDecimal("0");//某报价单关于某材料的总价值
-	ArrayList<BigDecimal> prices = new ArrayList<BigDecimal>();//某报价单关于某材料的总价值
-	for (int j=0;j<quolist.size();j++)
-	{
-		Quotation qo=quolist.get(j);
-		BigDecimal sumval = new BigDecimal("0");//某报价单关于某材料的总价值
-		int quantity = 0;
-		ArrayList<Quotation_item> quoitlist = QuotationItemDao.findQuotationItemByQiNum(qo.getQuotation_num());
-		for(int k=0;k<quoitlist.size();k++)
-		{
-			Quotation_item qit=quoitlist.get(k);
-			if(qit.getMaterial_num().equals(matlist.get(i).getMaterial_num()))//若是此项材料
-			{
-				quantity+=qit.getQuantity();
-				BigDecimal bigdem_quantity=new BigDecimal(qit.getQuantity());
-				BigDecimal this_itemval = qit.getPrice().multiply(bigdem_quantity);//这一项的价值
-				sumval.add(this_itemval);
-			}
-		}
-		if(quantity!=0)
-		{
-			availquos++;
-			BigDecimal average_price = sumval.divide(new BigDecimal(quantity));//在这一项quotation内的均价
-			ans=ans.add(average_price);
-			prices.add(average_price);
-		}
-
-	}
-	BigDecimal gross_average_price = ans.divide(new BigDecimal(availquos));//所有报价单关于某材料的均价
-	
-	for (int j=0;j<quolist.size();j++)
-	{
-		Quotation qo=quolist.get(j);
-		BigDecimal sumval = new BigDecimal("0");//某报价单关于某材料的总价值
-		int quantity = 0;
-		ArrayList<Quotation_item> quoitlist = QuotationItemDao.findQuotationItemByQiNum(qo.getQuotation_num());
-		for(int k=0;k<quoitlist.size();k++)
-		{
-			Quotation_item qit=quoitlist.get(k);
-			if(qit.getMaterial_num().equals(matlist.get(i).getMaterial_num()))//若是此项材料
-			{
-				quantity+=qit.getQuantity();
-				BigDecimal bigdem_quantity=new BigDecimal(qit.getQuantity());
-				BigDecimal this_itemval = qit.getPrice().multiply(bigdem_quantity);//这一项的价值
-				sumval.add(this_itemval);
-			}
-		}
-		String val="不含有此材料";
-		String price="";
-		String rate="";
-		String rank="";
-		if(quantity!=0)
-		{
-			DecimalFormat df1 = new DecimalFormat("###,###.000");//格式化金额
-			val=df1.format(sumval);
-			BigDecimal average_price = sumval.divide(new BigDecimal(quantity));
-			price=df1.format(average_price);
-			BigDecimal derate=average_price.divide(gross_average_price);
-			DecimalFormat df = new DecimalFormat("0.00%");//格式化百分比
-			int rank1=1;
-			for (int z=0;z<prices.size();z++)
-			{
-				if (average_price.compareTo(prices.get(z))>0)
-					rank1++;
-			}
-			rate=df.format(derate);
-			if (rank1==1)//根据排名，底色不同
-				rank="#94D88F;'>"+rank1;
-			else
-				rank="#A2C3EA;'>"+rank1;
-		}
-		out.print("<td>");
-			out.print("<p style='background:white' align='right'>"+val+"</p>");
-			out.print("<p style='background:white' align='right'>"+price+"</p>");	
-			out.print("<p style='background:white' align='right'><span style='background-color:"+rank+"&nbsp;&nbsp;</span> "+rate+"</p>");
-		out.print("</td>");
-	}	
-out.print("</tr>");
-}
-out.print("<tr>");//最后一行
-	out.print("<td>");
-		out.print("<p style='background:#FFF843'>总览</p>");
-		out.print("<p style='background:#FFF843'>&nbsp</p>");
-	out.print("</td>");
-	BigDecimal ans1=new BigDecimal(0);
-	for(int i=0;i<quolist.size();i++)
-	{
-		ans1.add(quolist.get(i).getValue());
-	}
-	BigDecimal average_val=ans1.divide(new BigDecimal (quolist.size()));
-	for(int i=0;i<quolist.size();i++)
-	{
-		Quotation quo=quolist.get(i);
-		int rank1=1;
-		for(int j=0;j<quolist.size();j++)
-		{
-			if(quo.getValue().compareTo(quolist.get(j).getValue())>0)//计算排名
-				++rank1;
-		}
-		DecimalFormat df1 = new DecimalFormat("###,###.000");//格式化金额
-		String val=df1.format(quo.getValue());
-		DecimalFormat df2 = new DecimalFormat("0.00%");
-		BigDecimal derate=quo.getValue().divide(average_val);
-		String rate=df2.format(derate);
-		String rank;
-		if (rank1==1)//根据排名，底色不同
-			rank="#94D88F;'>"+rank1;
-		else
-			rank="#A2C3EA;'>"+rank1;
-		out.print("<td>");
-			out.print("<p style='background:#FFF843' align='right'>"+val+"</p>");
-			out.print("<p style='background:#FFF843' align='right'><span style='background-color:"+rank+"&nbsp;&nbsp;</span> "+rate+"</p>");
-		out.print("</td>");
-	}
-out.print("</tr>");
-%>	
-	
-	
-	
-
-
-</tbody>
-		
-</table>		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-											<!--RFQ具体信息 -->
-			</div>			
-										
-										
+										</div>
 									</div>
 
 							
@@ -628,16 +419,22 @@ out.print("</tr>");
 						</div>
 					</div>
 				</div>
-			</div>
+			<div class="footer" style="position: fixed; bottom: 0;">
 
-			<div class="footer">
-				
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2014-2015
+			<div class="pull-right">
+				<div class="text-right">
+				<input type="submit" class="btn btn-primary " style="margin:10px 20px 0 0;Float:right" value="执行">
 				</div>
 			</div>
-
+			<div>
+				<strong>Copyright</strong> 版权所有 © 2020-2021
+			</div>
 		</div>
+			</div>
+
+	
+
+	
 	
 
 
@@ -694,32 +491,27 @@ out.print("</tr>");
    <div id="inputbox2" class="opbox2">
    
    <a class='x' href=''; onclick="openwin2(0); return false;">关闭</a>
-   <p> 查找RFQ：   输入任意已知信息</p>
+   <p> 查找物料：   输入任意已知信息</p>
      <div class="ibox-content" style="padding:5px 5px 5px 5px;">
 														<div >
 															<div >
 																	<!--RFQ具体信息 -->
-																	<div class="form-group">
-																		<label for="title">RFQ种类</label> <input id="key1" type="text" class="form-control" >
+																							<div class="form-group">
+																		<label for="title">描述</label> <input id="key1" type="text" class="form-control" >
 																	</div>
 
 																	<div class="form-group">
-																		<label for="message">请购组织</label> <input class="form-control" id="key2" type="text" >
+																		<label for="message">基本单位</label> <input class="form-control" id="key2" type="text" >
 																	</div>
 
 																	<div class="form-group">
-																		<label for="message">RFQ集合号</label> <input class="form-control" id="key3" type="text" >
+																		<label for="message">MRP类型</label> <input class="form-control" id="key3" type="text" >
 																	</div>
 
 																	<div class="form-group">
-																		<label for="message">工厂</label> <input class="form-control" id="key4" type="text" >
+																		<label for="message">产品组</label> <input class="form-control" id="key4" type="text" >
 																	</div>
-
-
-																	<div class="form-group">
-																		<label for="showMethod">供应商</label> <input id="xxkey1" type="key5" class="form-control">
-																	</div>
-																	
+															
 						
 
 																</div><div class="row">

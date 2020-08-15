@@ -10,6 +10,7 @@ public class Quotation implements Serializable {
 	private int rfq_num;
 	private int vendor_num;
 	private BigDecimal value;
+	private int status;
 	
 	public int getQuotation_num() {
 		return quotation_num;
@@ -34,6 +35,12 @@ public class Quotation implements Serializable {
 	}
 	public void setValue(BigDecimal value) {
 		this.value = value;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	
