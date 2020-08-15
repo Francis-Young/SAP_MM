@@ -1,0 +1,245 @@
+package mm.controller;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import mm.bean.Material;
+import mm.bean.Quotation;
+import mm.bean.Quotation_item;
+import mm.bean.RFQ;
+import mm.bean.RFQ_item;
+import mm.bean.Requisition_item;
+import mm.bean.Vendor;
+import mm.dao.MaterialDao;
+import mm.dao.QuotationDao;
+import mm.dao.QuotationItemDao;
+import mm.dao.RFQDao;
+import mm.dao.RFQItemDao;
+import mm.dao.ReqItemDao;
+import mm.dao.VendorDao;
+
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.*;
+
+@WebServlet(urlPatterns="/order")
+public class OrderController extends HttpServlet{
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
+	{
+		//获取请求的行为
+		String action = req.getParameter("action");
+		System.out.println(action);
+		//根据不同的action请求，进入不同的方法
+		
+		switch (action)
+		{
+			case "save":
+				save(req,resp);
+				break;
+			case "bounce_to_select":
+				select(req,resp);
+				break;
+			case "get_quotation":
+				get_quotation(req,resp);
+				break;
+			default:
+				break;
+		}
+		
+	}
+
+
+
+
+
+
+
+	private void get_quotation(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO Auto-generated method stub
+		String material_num = req.getParameter("material_num");
+		ArrayList<Quotation_item>qilist= QuotationItemDao.findQuotationByMatNum(material_num);
+		ArrayList<Quotation> qolist=new ArrayList<Quotation>();
+		for(int i=0;i<qilist.size();i++)
+		{
+			Quotation_item qi=qilist.get(i);
+			Quotation qo =QuotationDao.findQuotationByNum(qi.getQuotation_num());
+			qolist.add(qo);
+		}
+		ArrayList<Vendor> venlist=new ArrayList<Vendor>();
+		for(int i=0;i<qolist.size();i++)
+		{
+			Quotation qo=qolist.get(i);
+			Vendor v=VendorDao.findVendorbynum(String.valueOf(qo.getVendor_num()));
+			venlist.add(v);
+		}
+		qolist=removeDuplicateWithOrder(qolist);
+			
+		HttpSession session= req.getSession();
+		session.setAttribute("qolist", qolist);
+		session.setAttribute("venlist", venlist);
+		req.getRequestDispatcher("ordershowquo.jsp");
+	}
+
+
+
+
+
+
+
+
+	// 删除ArrayList中重复元素，保持顺序     
+	 @SuppressWarnings("unchecked")
+	public static ArrayList<Quotation> removeDuplicateWithOrder(@SuppressWarnings("rawtypes") ArrayList list) {    
+	    @SuppressWarnings("rawtypes")
+		Set set = new HashSet();    
+	     @SuppressWarnings("rawtypes")
+	     ArrayList newList = new ArrayList();    
+	   for (@SuppressWarnings("rawtypes")
+	Iterator iter = list.iterator(); iter.hasNext();) {    
+	         Object element = iter.next();    
+	         if (set.add(element))    
+	            newList.add(element);    
+	      }     
+	     list.clear();    
+	     list.addAll(newList);    
+	    return list;    
+	 }
+
+
+
+
+
+	private void save(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO Auto-generated method stub
+		HttpSession session= req.getSession();
+		
+		RFQ rfq= (RFQ)session.getAttribute("passrfq");
+		Quotation quo=(Quotation)session.getAttribute("passquo");
+		quo.setRfq_num(rfq.getRfq_num());		
+		quo.setVendor_num(Integer.parseInt(rfq.getVendor_code()));
+		
+		int quo_num =QuotationDao.addQuotation(quo);
+		quo.setQuotation_num(quo_num);
+		String [] itemture=(String[]) session.getAttribute("checkname");//被选中的item
+		//不确定这么写对不对
+		int rfqnum=rfq.getRfq_num();
+		ArrayList<RFQ_item> rilist=RFQItemDao.findRFQItemByRfqnum(rfqnum);
+	    BigDecimal value= new BigDecimal("0");
+		for(int i=0;i<itemture.length;i++ )
+		{
+			Quotation_item qi = new Quotation_item();
+			if(itemture[i].equals("true"))
+			{
+				RFQ_item ri= rilist.get(i);
+				String price = "cc";//要改
+				String quantity="ff";//要改
+				BigDecimal deprice=new BigDecimal(price);
+				qi.setMaterial_num(ri.getMaterial_num());
+				qi.setDelivery_date(ri.getRequisition_deliverydate());
+				qi.setPrice(deprice);
+				qi.setQuantity(Integer.parseInt(quantity));
+				qi.setQuotation_num(quo_num);
+				qi.setQuotation_status(0);//还没定。。
+				qi.setCurrency_unit("RMB");
+				QuotationItemDao.addQuotationItem(qi);
+				value.add(deprice.multiply(new BigDecimal(quantity)));
+			}
+		}
+		quo.setValue(value);
+		QuotationDao.modifyQuotationByNum(quo);
+	}
+
+
+
+
+
+
+
+	private void edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		HttpSession session= req.getSession();
+		String [] itemture=req.getParameterValues("checkname");
+		session.setAttribute("itemture", itemture);
+		req.getRequestDispatcher("rfq6.jsp").forward(req,resp);//请求转发
+
+
+	
+
+		
+	}
+
+
+
+
+
+
+
+	private void select(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		int rfqnum=Integer.parseInt(req.getParameter("rfqnum"));
+		RFQ rfq = RFQDao.findRFQbyNum(rfqnum);
+		
+		Quotation quo = new Quotation();
+		quo.setQuotation_num(rfqnum);
+		String vnums=rfq.getVendor_code();
+		Vendor vd = VendorDao.findVendorbynum(vnums);
+		HttpSession session= req.getSession();
+		session.setAttribute("passrfq",rfq);
+		session.setAttribute("passquo",quo);
+		req.setAttribute("rfqnum",rfq.getRfq_num());
+		req.setAttribute("rfqtype",rfq.getRfq_type());
+		req.setAttribute("rfqdate",rfq.getRfq_date().toString());
+		req.setAttribute("ddldate",rfq.getRfq_deadline().toString());
+		req.setAttribute("vendor", rfq.getVendor_code());
+		req.setAttribute("vendorname", vd.getVname());
+		//Requisition resquisition = RequisitionDao.findRequisitionByNum(requisition_num);
+		req.getRequestDispatcher("quotationselect.jsp").forward(req,resp);//请求转发
+		
+	}
+
+
+
+
+
+
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
+	{
+		doGet(req, resp);
+	}
+	
+	 private java.sql.Date strToDate(String strDate) {  
+	        String str = strDate;  
+	        
+	        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");  
+	        java.util.Date d = null;  
+	        try {  
+	            d = format.parse(str);  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
+	        java.sql.Date date = new java.sql.Date(d.getTime());  
+	        return date;  
+	    }  		
+	
+	
+	
+	
+	
+	
+
+
+}
