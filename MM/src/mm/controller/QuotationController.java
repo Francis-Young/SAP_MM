@@ -53,9 +53,28 @@ public class QuotationController extends HttpServlet{
 			case "bounce_to_compare":
 				compare(req,resp);
 				break;
+			case "reject":
+				reject(req,resp);
+				break;
 			default:
 				break;
 		}
+		
+	}
+
+
+
+
+
+
+
+	private void reject(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO Auto-generated method stub
+		HttpSession session= req.getSession();
+		Quotation qo=(Quotation)session.getAttribute("refuse");
+		qo.setStatus(-1);
+		QuotationDao.modifyQuotationByNum(qo);
+		req.setAttribute("num", qo.getQuotation_num());
 		
 	}
 
@@ -177,20 +196,6 @@ public class QuotationController extends HttpServlet{
 
 
 
-
-
-	private void edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		HttpSession session= req.getSession();
-		String [] itemture=req.getParameterValues("checkname");
-		session.setAttribute("itemture", itemture);
-		req.getRequestDispatcher("rfq6.jsp").forward(req,resp);//请求转发
-
-
-	
-
-		
-	}
 
 
 
