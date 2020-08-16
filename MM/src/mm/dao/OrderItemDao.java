@@ -68,7 +68,42 @@ public class OrderItemDao {
 		
 		return oi;
 	}
-
+	//根据编号查询
+	public static ArrayList<Order_item> findOrderItemByONum(int num) {
+		ArrayList <Order_item> oilist = new ArrayList<Order_item>();
+		Order_item oi=new Order_item();
+		//建立数据库连接
+		Connection conn=DBUtil.getConnection();
+		try {
+		
+			String sql=""+"select * from Order_item where order_item_num = ?";
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, num);
+			//执行查询语句
+			ResultSet rs = psmt.executeQuery();
+			if (rs.next()) {
+				oi.setOrder_item_num(rs.getInt("order_item_num"));
+				oi.setOrder_num(rs.getInt("order_num"));
+				oi.setPrice(rs.getBigDecimal("price"));
+				oi.setPurchase_requisition_num(rs.getInt("purchase_requisition_num"));
+				oi.setQuantity(rs.getInt("quantity"));
+				oi.setCurrency_unit(rs.getString("currency_unit"));
+				oi.setDelivery_date(rs.getDate("delivery_date"));
+				oi.setMaterial_num(rs.getString("material_num"));
+				oi.setPlant(rs.getString("plant"));
+				oi.setSloc(rs.getString("sloc"));
+				oilist.add(oi);
+			}
+		}catch(SQLException e) {
+            e.printStackTrace();
+        }catch(NullPointerException f){
+            f.printStackTrace();
+        }finally {
+            DBUtil.closeConnection(conn);
+        }
+		
+		return oilist;
+	}
 	
 	//根据order编号查询 
 	public static ArrayList<Order_item> findOrderByVendorNum(int num) {

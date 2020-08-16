@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mm.bean.Order;
 import mm.bean.RFQ;
 import mm.bean.RFQ_item;
 import mm.bean.Requisition;
 import mm.bean.Requisition_item;
+import mm.dao.OrderDao;
 import mm.dao.RFQDao;
 import mm.dao.RFQItemDao;
 import mm.dao.ReqItemDao;
@@ -44,6 +46,9 @@ public class RFQController extends HttpServlet{
 			case "bounce_to_edit":
 				edit(req,resp);
 				break;	
+			case "view":
+				view(req,resp);
+				break;	
 			default:
 				break;
 		}
@@ -52,7 +57,18 @@ public class RFQController extends HttpServlet{
 
 
 
+	private void view(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO Auto-generated method stub
+		String rfqnum = req.getParameter("rfqnum");
+		RFQ r = RFQDao.findRFQbyNum(Integer.parseInt(rfqnum));
+		HttpSession session= req.getSession();
+		session.setAttribute("RFQ", r);
+		req.getRequestDispatcher("rfqview.jsp");
+	}
 
+
+
+	
 
 
 

@@ -351,10 +351,7 @@ function splitRow(){
 
 <%
 
-Order o = (Order) session.getAttribute("order");
-
-
-
+Quotation q = (Quotation) session.getAttribute("Quotation");
 
 
 %>	
@@ -362,9 +359,9 @@ Order o = (Order) session.getAttribute("order");
 	<!-- 换行有问题 -->					
 <div >									
 
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">订单编号：:</label>
+<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">报价单编号：:</label>
 <div class="col-md-2">		
-<input name="org" type="text" readonly="readonly"  class="form-control" value=<%= o.getOrder_num()%>>
+<input name="org" type="text" readonly="readonly"  class="form-control" value=<%= q.getQuotation_num()%>>
 
 </div>
 </div>
@@ -417,7 +414,7 @@ Order o = (Order) session.getAttribute("order");
 <th>短文本</th>
 <th>订购数量</th>
 <th>基本单位</th>
-<th>开始送货时间</th>
+
 <th>送货时间</th>
 <th>净价</th>
 <th>货币单位</th>
@@ -431,11 +428,11 @@ Order o = (Order) session.getAttribute("order");
 <tbody>
 
 <%
-
-ArrayList<Order_item> oilist= OrderItemDao.findOrderItemByONum(o.getOrder_num());
-for(int i=0;i<oilist.size();i++)
+RFQ rfq= RFQDao.findRFQbyNum(q.getQuotation_num());
+ArrayList<Quotation_item> qilist= QuotationItemDao.findQuotationItemByQiNum(q.getQuotation_num());
+for(int i=0;i<qilist.size();i++)
 {
-	Order_item qi=oilist.get(i);
+	Quotation_item qi=qilist.get(i);
 	Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
 	String s1="<td><input name='";
 	
@@ -449,9 +446,7 @@ for(int i=0;i<oilist.size();i++)
 		out.print(s1+"shorttext"+s3+m.getMaterial_shorttext()+s4);
 		out.print(s1+"quantity"+s3+qi.getQuantity()+s4);
 		out.print(s1+"baseunit"+s3+m.getMaterial_baseunit()+s4);
-		out.print("<div class='input-group date'> <span class='input-group-addon'>"+
-		"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+i+
-		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div>");
+	
 		out.print("<div class='input-group date'> <span class='input-group-addon'>"+
 		"<i class='fa fa-calendar'></i></span><input name='deliverydate"+i+
 		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div>");
@@ -459,8 +454,8 @@ for(int i=0;i<oilist.size();i++)
 		out.print(s1+"price"+s3+qi.getPrice().toString()+s4);
 		out.print(s1+"currency"+s3+qi.getCurrency_unit()+s4);
 		out.print(s1+"materialgroup"+s3+m.getMaterial_group()+s4);
-		out.print(s1+"plant"+s3+qi.getPlant()+s4);
-		out.print(s1+"storageloc"+s3+qi.getSloc()+s4);
+		out.print(s1+"plant"+s3+rfq.getRfq_plant()+s4);
+		out.print(s1+"storageloc"+s3+qi.getStorageloc()+s4);
 	out.print("</tr>");
 	out.print("<script>");
 	out.print("initDatePicker($('.input-group.date'));");

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import mm.bean.Material;
+import mm.bean.Order;
 import mm.bean.Quotation;
 import mm.bean.Quotation_item;
 import mm.bean.RFQ;
@@ -20,6 +21,7 @@ import mm.bean.RFQ_item;
 import mm.bean.Requisition_item;
 import mm.bean.Vendor;
 import mm.dao.MaterialDao;
+import mm.dao.OrderDao;
 import mm.dao.QuotationDao;
 import mm.dao.QuotationItemDao;
 import mm.dao.RFQDao;
@@ -56,10 +58,28 @@ public class QuotationController extends HttpServlet{
 			case "reject":
 				reject(req,resp);
 				break;
+			case "view":
+				view(req,resp);
+				break;
 			default:
 				break;
 		}
 		
+	}
+
+
+
+
+
+
+
+	private void view(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO Auto-generated method stub
+		String quotationnum = req.getParameter("quotationnum");
+		Quotation o = QuotationDao.findQuotationByNum(Integer.parseInt(quotationnum));
+		HttpSession session= req.getSession();
+		session.setAttribute("quotation", o);
+		req.getRequestDispatcher("quotationview.jsp");
 	}
 
 

@@ -351,10 +351,7 @@ function splitRow(){
 
 <%
 
-Order o = (Order) session.getAttribute("order");
-
-
-
+RFQ q = (RFQ) session.getAttribute("RFQ");
 
 
 %>	
@@ -362,21 +359,21 @@ Order o = (Order) session.getAttribute("order");
 	<!-- 换行有问题 -->					
 <div >									
 
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">订单编号：:</label>
+<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">RFQ编号：:</label>
 <div class="col-md-2">		
-<input name="org" type="text" readonly="readonly"  class="form-control" value=<%= o.getOrder_num()%>>
+<input name="org" type="text" readonly="readonly"  class="form-control" value=<%= q.getRfq_num()%>>
 
 </div>
 </div>
 
 <div >	
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">采购组:</label>
-<div class="col-md-2">		<input name="gro" type="text"  class="form-control" value="采购组">
+<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">采购组织:</label>
+<div class="col-md-2">		<input name="gro" type="text"  class="form-control" value=<%= q.getRfq_purchasing_org()%>>
 </div>
 </div>
 <div >	
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">公司代码:</label>
-<div class="col-md-2">		<input name="ccd" type="text"  class="form-control" value="CN00">
+<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">RFQ集合号:</label>
+<div class="col-md-2">		<input name="ccd" type="text"  class="form-control" <%= q.getRfq_coll()%>>
 </div>
 </div>
 
@@ -419,8 +416,7 @@ Order o = (Order) session.getAttribute("order");
 <th>基本单位</th>
 <th>开始送货时间</th>
 <th>送货时间</th>
-<th>净价</th>
-<th>货币单位</th>
+
 <th>物料组</th>
 <th>工厂</th>
 <th>运送地点</th>
@@ -432,10 +428,10 @@ Order o = (Order) session.getAttribute("order");
 
 <%
 
-ArrayList<Order_item> oilist= OrderItemDao.findOrderItemByONum(o.getOrder_num());
-for(int i=0;i<oilist.size();i++)
+ArrayList<RFQ_item> qilist= RFQItemDao.findRFQItemByRfqnum(q.getRfq_num());
+for(int i=0;i<qilist.size();i++)
 {
-	Order_item qi=oilist.get(i);
+	RFQ_item qi=qilist.get(i);
 	Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
 	String s1="<td><input name='";
 	
@@ -447,20 +443,16 @@ for(int i=0;i<oilist.size();i++)
 		out.print("<td>"+1+"</td>");
 		out.print(s1+"material"+s3+m.getMaterial_num()+s4);  //name:material id:m几
 		out.print(s1+"shorttext"+s3+m.getMaterial_shorttext()+s4);
-		out.print(s1+"quantity"+s3+qi.getQuantity()+s4);
+		out.print(s1+"quantity"+s3+qi.getRequisition_quantity()+s4);
 		out.print(s1+"baseunit"+s3+m.getMaterial_baseunit()+s4);
-		out.print("<div class='input-group date'> <span class='input-group-addon'>"+
-		"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+i+
-		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div>");
+		
 		out.print("<div class='input-group date'> <span class='input-group-addon'>"+
 		"<i class='fa fa-calendar'></i></span><input name='deliverydate"+i+
-		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div>");
+		"' type='text' value='"+qi.getRequisition_deliverydate().toString()+"' class='form-control'></div>");
 		
-		out.print(s1+"price"+s3+qi.getPrice().toString()+s4);
-		out.print(s1+"currency"+s3+qi.getCurrency_unit()+s4);
 		out.print(s1+"materialgroup"+s3+m.getMaterial_group()+s4);
-		out.print(s1+"plant"+s3+qi.getPlant()+s4);
-		out.print(s1+"storageloc"+s3+qi.getSloc()+s4);
+		out.print(s1+"plant"+s3+qi.getRequisition_plant()+s4);
+		out.print(s1+"storageloc"+s3+qi.getRequisition_storageloc()+s4);
 	out.print("</tr>");
 	out.print("<script>");
 	out.print("initDatePicker($('.input-group.date'));");
