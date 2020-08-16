@@ -144,6 +144,10 @@ public class PayDao {
 			{
 				o4=" is not null ";
 			}
+			else if(o4.indexOf(",")>0) 
+			{
+			o4=" in ("+o4+")";	
+			}
 			else
 			{
 				o4="="+o4;

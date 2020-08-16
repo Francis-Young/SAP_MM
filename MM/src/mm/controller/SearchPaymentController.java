@@ -57,7 +57,6 @@ public class SearchPaymentController extends HttpServlet implements Servlet {
 		request.setCharacterEncoding("UTF-8");
 		String data="";
 		try {
-			System.out.print("试一下");
 
 			String o1=request.getParameter("time");
 			String o2=request.getParameter("name");
