@@ -8,13 +8,13 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class OrderItemDao {
-	//²åÈëÒ»ÕÅÇë¹ºµ¥
+	//æ’å…¥ä¸€å¼ è¯·è´­å•
 	public static void addOrderItem(Order_item oi) {
-		//½¨Á¢ÓëÊı¾İ¿âµÄÁ¬½Ó
+		//å»ºç«‹ä¸æ•°æ®åº“çš„è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 			
-			String sql=""+ "insert into Order_item" +" (order_item_num,order_num,purchase_requisition_num,price,quantity,delivery_date,currency_unit,material_num) "+"values(default,?,?,?,?,?,?,?)";
+			String sql=""+ "insert into Order_item" +" (order_item_num,order_num,purchase_requisition_num,price,quantity,delivery_date,currency_unit,material_num,sloc,plant) "+"values(default,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 		
 			psmt.setInt(1, oi.getOrder_num());
@@ -24,6 +24,8 @@ public class OrderItemDao {
 			psmt.setDate(5, oi.getDelivery_date());
 			psmt.setString(6, oi.getCurrency_unit());
 			psmt.setString(7, oi.getMaterial_num());
+			psmt.setString(8, oi.getSloc());
+			psmt.setString(9, oi.getPlant());
 			psmt.execute();
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -31,18 +33,18 @@ public class OrderItemDao {
             DBUtil.closeConnection(conn);
         }
 	}
-	//¸ù¾İ±àºÅ²éÑ¯
+	//æ ¹æ®ç¼–å·æŸ¥è¯¢
 	public static Order_item findOrderItemByOiNum(int num) {
 		
 		Order_item oi=new Order_item();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from Order_item where order_item_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 				oi.setOrder_item_num(rs.getInt("order_item_num"));
@@ -53,7 +55,8 @@ public class OrderItemDao {
 				oi.setCurrency_unit(rs.getString("currency_unit"));
 				oi.setDelivery_date(rs.getDate("delivery_date"));
 				oi.setMaterial_num(rs.getString("material_num"));
-				
+				oi.setPlant(rs.getString("plant"));
+				oi.setSloc(rs.getString("sloc"));
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -67,18 +70,18 @@ public class OrderItemDao {
 	}
 
 	
-	//¸ù¾İorder±àºÅ²éÑ¯ 
+	//æ ¹æ®orderç¼–å·æŸ¥è¯¢ 
 	public static ArrayList<Order_item> findOrderByVendorNum(int num) {
 		ArrayList<Order_item> oilist=new ArrayList<Order_item>();
 		Order_item oi=new Order_item();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from Order_item where order_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
 			
@@ -103,16 +106,16 @@ public class OrderItemDao {
 		return oilist;
 	}
 	
-	//ÅĞ¶ÏÄ³¶©µ¥ÌõÄ¿ºÅ·ñ´æÔÚ£¬Èô´æÔÚÔò·µ»Øtrue£¬Èô²»´æÔÚ·µ»Øfalse
+	//åˆ¤æ–­æŸè®¢å•æ¡ç›®å·å¦å­˜åœ¨ï¼Œè‹¥å­˜åœ¨åˆ™è¿”å›trueï¼Œè‹¥ä¸å­˜åœ¨è¿”å›false
 	public static boolean isOiNumExist(int num) {
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
-			//²éÑ¯Óï¾ä£¬¸ù¾İÑ§ºÅ²éÑ¯
+			//æŸ¥è¯¢è¯­å¥ï¼Œæ ¹æ®å­¦å·æŸ¥è¯¢
 			String sql=""+"select * from Order_item where Order_item_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 				return true;
@@ -130,15 +133,15 @@ public class OrderItemDao {
 	
 	
 	
-	//ĞŞ¸Ä¶©µ¥ÌõÄ¿
+	//ä¿®æ”¹è®¢å•æ¡ç›®
 	public static int modifyOrderItem(Order_item oi) {
 		
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		int res=-1;
 		try {
 		
-			String sql=""+"update Order set order_num = ? ,purchase_requisition_num = ? ,price = ? ,quantity = ? ,delivery_date = ? ,currency_unit = ? ,material_num = ? where order_item_num= ?";
+			String sql=""+"update Order_item set order_num = ? ,purchase_requisition_num = ? ,price = ? ,quantity = ? ,delivery_date = ? ,currency_unit = ? ,material_num = ? ,plant=?,sloc=?, where order_item_num= ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, oi.getOrder_num());
 			psmt.setInt(2, oi.getPurchase_requisition_num());
@@ -147,8 +150,12 @@ public class OrderItemDao {
 			psmt.setDate(5, oi.getDelivery_date());
 			psmt.setString(6, oi.getCurrency_unit());
 			psmt.setString(7, oi.getMaterial_num());
-			psmt.setInt(8, oi.getOrder_item_num());
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			psmt.setString(8, oi.getPlant());
+			psmt.setString(9, oi.getSloc());
+			psmt.setInt(10, oi.getOrder_item_num());
+			
+			
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			res= psmt.executeUpdate();
 		
 		}catch(SQLException e) {
@@ -161,10 +168,10 @@ public class OrderItemDao {
 		return res;
 		
 	}	
-	//É¾³ı¶©µ¥ÌõÄ¿
+	//åˆ é™¤è®¢å•æ¡ç›®
 	public static int deleteOrderByNum(int num) {
 		
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		int res=-1;
 		try {
@@ -173,7 +180,7 @@ public class OrderItemDao {
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
 		
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			res= psmt.executeUpdate();
 		
 		}catch(SQLException e) {

@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>创建请购单</title>
+<title>报价单管理</title>
 <!--
 
     <link href="css/plugins/summernote/summernote.css" rel="stylesheet">
@@ -312,18 +312,18 @@ function splitRow(){
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>创建订单</h2>
+					<h2>维护报价单</h2>
 					<ol class="breadcrumb">
 						<li><a href="index.html">主页</a></li>
-						<li>订单管理</li>
-						<li class="active"><strong>创建订单</strong></li>
+						<li>报价单管理</li>
+						<li class="active"><strong>维护报价单</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
 			</div>
 
-	<form class="m-t" role="form" action="${pageContext.request.contextPath}/order" method="post">
-						       <input type='text' value='save' name='action' hidden='true'>	<!-- 控制表单名 -->					
+	<form class="m-t" role="form" action="${pageContext.request.contextPath}/quotation" method="post">
+						       <input type='text' value='reject' name='action' hidden='true'>	<!-- 控制表单名 -->					
 							<input type='text' id='num' value='0' name='num' hidden='true'>    <!-- 条目数量 -->	
 							
 			<div class="wrapper wrapper-content animated fadeIn">
@@ -351,16 +351,14 @@ function splitRow(){
 
 <%
 
-int quonum=Integer.parseInt(request.getAttribute("quo").toString());
-session.setAttribute("rfqnum", quonum);
+int quonum=Integer.parseInt(request.getAttribute("quonum").toString());
+
 Quotation qo=QuotationDao.findQuotationByNum(quonum);
+session.setAttribute("refuse", qo);
 RFQ rfq=RFQDao.findRFQbyNum(quonum);
-session.setAttribute("rfq", rfq);
-if(qo.getStatus()==-1)
-{
-	request.getRequestDispatcher("ordererror.jsp");
-	//out.print("<h2>此报价单已被否决</h2>");
-}
+
+String vnum=rfq.getVendor_code();
+Vendor vd=VendorDao.findVendorbynum(vnum);
 
 
 
@@ -369,23 +367,37 @@ if(qo.getStatus()==-1)
 	<!-- 换行有问题 -->					
 <div >									
 
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">采购组织:</label>
+<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">RFQ:</label>
 <div class="col-md-2">		
-<input name="org" type="text"  class="form-control" value=<%= rfq.getRfq_purchasing_org()%>>
+<input name="org" type="text"  class="form-control" readonly="readonly" value=<%= rfq.getRequisition_num()%>>
 
 </div>
 </div>
 
 <div >	
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">采购组:</label>
-<div class="col-md-2">		<input name="gro" type="text"  class="form-control" value=<%= rfq.getRfq_purchasing_group()%>>
+<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">RFQ类型:</label>
+<div class="col-md-2">		<input name="gro" type="text"  readonly="readonly" class="form-control" value=<%= rfq.getRfq_type()%>>
 </div>
 </div>
+
 <div >	
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">公司代码:</label>
-<div class="col-md-2">		<input name="ccd" type="text"  class="form-control" value="CN00">
+<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">RFQ日期:</label>
+<div class="col-md-2">		<input name="ccd" type="text"  readonly="readonly" class="form-control" value=<%= rfq.getRfq_date().toString()%>>
 </div>
 </div>
+
+<div >	
+<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">供应商:</label>
+<div class="col-md-2">		<input name="ccd" type="text"   readonly="readonly" class="form-control" value=<%= vd.getVnum()%>><span><%= vd.getVname()%></span>
+</div>
+</div>
+
+<div >	
+<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">报价单截止日期:</label>
+<div class="col-md-2">		<input name="ccd" type="text"  readonly="readonly" class="form-control" value=<%= rfq.getRfq_deadline()%>>
+</div>
+</div>
+
 
 <br>						
 						
@@ -439,13 +451,14 @@ if(qo.getStatus()==-1)
 <%
 
 ArrayList<Quotation_item> qilist= QuotationItemDao.findQuotationByQuoNum(quonum);
+
 for(int i=0;i<qilist.size();i++)
 {
 	Quotation_item qi=qilist.get(i);
 	Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
 	String s1="<td><input name='";
 	
-	String s3="' value='";
+	String s3="' readonly='readonly' value='";
 	String s4="'  type='text' class='form-control' /> </td>";
 	out.print("<tr>");
 		out.print("<td>"+"<input type='checkbox' name='cbox'></td>");
@@ -478,7 +491,7 @@ for(int i=0;i<qilist.size();i++)
 
 </tbody>
 </table>
-<input type="button" class="btn btn-info  dim" onClick="addRow();" style="font-size:16px;" value="+"/><span >&nbsp;<button class="btn btn-info " type="button"><i class="fa fa-paste"></i> split</button></span>
+<input type="submit" class="btn btn-info  dim"  style="font-size:16px;" value="否决"/>
 </div>
 </div>
 <br>

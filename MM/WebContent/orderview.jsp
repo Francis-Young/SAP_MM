@@ -351,16 +351,9 @@ function splitRow(){
 
 <%
 
-int quonum=Integer.parseInt(request.getAttribute("quo").toString());
-session.setAttribute("rfqnum", quonum);
-Quotation qo=QuotationDao.findQuotationByNum(quonum);
-RFQ rfq=RFQDao.findRFQbyNum(quonum);
-session.setAttribute("rfq", rfq);
-if(qo.getStatus()==-1)
-{
-	request.getRequestDispatcher("ordererror.jsp");
-	//out.print("<h2>此报价单已被否决</h2>");
-}
+Order o = (Order) session.getAttribute("order");
+
+
 
 
 
@@ -369,16 +362,16 @@ if(qo.getStatus()==-1)
 	<!-- 换行有问题 -->					
 <div >									
 
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">采购组织:</label>
+<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">订单编号：:</label>
 <div class="col-md-2">		
-<input name="org" type="text"  class="form-control" value=<%= rfq.getRfq_purchasing_org()%>>
+<input name="org" type="text" readonly="readonly"  class="form-control" value=<%= o.getOrder_num()%>>
 
 </div>
 </div>
 
 <div >	
 <label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">采购组:</label>
-<div class="col-md-2">		<input name="gro" type="text"  class="form-control" value=<%= rfq.getRfq_purchasing_group()%>>
+<div class="col-md-2">		<input name="gro" type="text"  class="form-control" value="采购组">
 </div>
 </div>
 <div >	
@@ -438,19 +431,19 @@ if(qo.getStatus()==-1)
 
 <%
 
-ArrayList<Quotation_item> qilist= QuotationItemDao.findQuotationByQuoNum(quonum);
-for(int i=0;i<qilist.size();i++)
+ArrayList<Order_item> oilist= OrderItemDao.findOrderItemByOiNum(o.getOrder_num());
+for(int i=0;i<oilist.size();i++)
 {
-	Quotation_item qi=qilist.get(i);
+	Order_item qi=oilist.get(i);
 	Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
 	String s1="<td><input name='";
 	
 	String s3="' value='";
-	String s4="'  type='text' class='form-control' /> </td>";
+	String s4="'  type='text' readonlt='readonly' class='form-control' /> </td>";
 	out.print("<tr>");
 		out.print("<td>"+"<input type='checkbox' name='cbox'></td>");
 		out.print("<td>"+(i*10+10)+"</td>");
-		out.print("<td>"+qo.getStatus()+"</td>");
+		out.print("<td>"+1+"</td>");
 		out.print(s1+"material"+s3+m.getMaterial_num()+s4);  //name:material id:m几
 		out.print(s1+"shorttext"+s3+m.getMaterial_shorttext()+s4);
 		out.print(s1+"quantity"+s3+qi.getQuantity()+s4);
@@ -465,8 +458,8 @@ for(int i=0;i<qilist.size();i++)
 		out.print(s1+"price"+s3+qi.getPrice().toString()+s4);
 		out.print(s1+"currency"+s3+qi.getCurrency_unit()+s4);
 		out.print(s1+"materialgroup"+s3+m.getMaterial_group()+s4);
-		out.print(s1+"plant"+s3+rfq.getRfq_plant()+s4);
-		out.print(s1+"storageloc"+s3+qi.getStorageloc()+s4);
+		out.print(s1+"plant"+s3+qi.getPlant()+s4);
+		out.print(s1+"storageloc"+s3+qi.getSloc()+s4);
 	out.print("</tr>");
 	out.print("<script>");
 	out.print("initDatePicker($('.input-group.date'));");

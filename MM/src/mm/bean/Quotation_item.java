@@ -14,6 +14,7 @@ public class Quotation_item implements Serializable {
 	private Date delivery_date;
 	private String currency_unit;
 	private int quotation_status;
+	private String storageloc;
 	
 	
 	public int getQuotation_item_num() {
@@ -64,6 +65,12 @@ public class Quotation_item implements Serializable {
 	}
 	public void setMaterial_num(String material_num) {
 		this.material_num = material_num;
+	}
+	public String getStorageloc() {
+		return storageloc;
+	}
+	public void setStorageloc(String storageloc) {
+		this.storageloc = storageloc;
 	}
 	
 	

@@ -14,6 +14,8 @@ public class Order_item implements Serializable {
 	private Date stat_delivery_date;
 	private String currency_unit;
 	private String material_num;
+	private String plant;
+	private String sloc;
 	
 	public int getOrder_num() {
 		return order_num;
@@ -68,6 +70,18 @@ public class Order_item implements Serializable {
 	}
 	public void setOrder_item_num(int order_item_num) {
 		this.order_item_num = order_item_num;
+	}
+	public String getSloc() {
+		return sloc;
+	}
+	public void setSloc(String sloc) {
+		this.sloc = sloc;
+	}
+	public String getPlant() {
+		return plant;
+	}
+	public void setPlant(String plant) {
+		this.plant = plant;
 	}
 	
 	

@@ -7,9 +7,10 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class OrderDao {
-	//²åÈëÒ»ÕÅÇë¹ºµ¥
-	public static void addOrder(Order qo) {
-		//½¨Á¢ÓëÊı¾İ¿âµÄÁ¬½Ó
+	//æ’å…¥ä¸€å¼ è¯·è´­å•
+	public static int addOrder(Order qo) {
+		//å»ºç«‹ä¸æ•°æ®åº“çš„è¿æ¥
+		int num=0;
 		Connection conn=DBUtil.getConnection();
 		try {
 			
@@ -20,24 +21,34 @@ public class OrderDao {
 			psmt.setInt(2, qo.getVendor_num());
 	
 			psmt.execute();
+			
+			sql="SELECT LAST_INSERT_ID()";
+			psmt = conn.prepareStatement(sql);
+			ResultSet rs = psmt.executeQuery();
+			if (rs.next()) {  
+				num= rs.getInt(1);
+		    }
+			
+			
 		}catch(SQLException e) {
             e.printStackTrace();
         }finally {
             DBUtil.closeConnection(conn);
         }
+		return num;
 	}
-	//¸ù¾İ±àºÅ²éÑ¯
+	//æ ¹æ®ç¼–å·æŸ¥è¯¢
 	public static Order findOrderByNum(int num) {
 		
 		Order rq=new Order();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from Order where order_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
@@ -56,18 +67,18 @@ public class OrderDao {
 		
 		return rq;
 	}
-	//¸ù¾İrfq±àºÅ²éÑ¯
+	//æ ¹æ®rfqç¼–å·æŸ¥è¯¢
 	public static Order findOrderByRFQNum(int num) {
 		
 		Order rq=new Order();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from Order where rfq_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
@@ -87,18 +98,18 @@ public class OrderDao {
 		return rq;
 	}
 	
-	//¸ù¾İ¹©Ó¦ÉÌ±àºÅ²éÑ¯ 
+	//æ ¹æ®ä¾›åº”å•†ç¼–å·æŸ¥è¯¢ 
 	public static ArrayList<Order> findOrderByVendorNum(int num) {
 		ArrayList<Order> qolist=new ArrayList<Order>();
 		Order qo=new Order();
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from Order where vendor_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
 			
@@ -118,16 +129,16 @@ public class OrderDao {
 		return qolist;
 	}
 	
-	//ÅĞ¶ÏÄ³±¨¼Ûµ¥ºÅ·ñ´æÔÚ£¬Èô´æÔÚÔò·µ»Øtrue£¬Èô²»´æÔÚ·µ»Øfalse
+	//åˆ¤æ–­æŸæŠ¥ä»·å•å·å¦å­˜åœ¨ï¼Œè‹¥å­˜åœ¨åˆ™è¿”å›trueï¼Œè‹¥ä¸å­˜åœ¨è¿”å›false
 	public static boolean isqoNumExist(int num) {
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		try {
-			//²éÑ¯Óï¾ä£¬¸ù¾İÑ§ºÅ²éÑ¯
+			//æŸ¥è¯¢è¯­å¥ï¼Œæ ¹æ®å­¦å·æŸ¥è¯¢
 			String sql=""+"select * from Order where Order_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 				return true;
@@ -145,10 +156,10 @@ public class OrderDao {
 	
 	
 	
-	//ĞŞ¸Ä±¨¼Ûµ¥
+	//ä¿®æ”¹æŠ¥ä»·å•
 	public static int modifyOrderByNum(Order qo) {
 		
-		//½¨Á¢Êı¾İ¿âÁ¬½Ó
+		//å»ºç«‹æ•°æ®åº“è¿æ¥
 		Connection conn=DBUtil.getConnection();
 		int res=-1;
 		try {
@@ -158,7 +169,7 @@ public class OrderDao {
 			psmt.setInt(1, qo.getRfq_num());
 			psmt.setInt(2, qo.getVendor_num());
 			psmt.setInt(3, qo.getOrder_num());
-			//Ö´ĞĞ²éÑ¯Óï¾ä
+			//æ‰§è¡ŒæŸ¥è¯¢è¯­å¥
 			res= psmt.executeUpdate();
 		
 		}catch(SQLException e) {

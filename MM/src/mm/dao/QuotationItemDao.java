@@ -69,7 +69,7 @@ public class QuotationItemDao {
 
 	
 	//根据quotation编号查询 
-	public static ArrayList<Quotation_item> findQuotationByVendorNum(int num) {
+	public static ArrayList<Quotation_item> findQuotationByQuoNum(int num) {
 		ArrayList<Quotation_item> qilist=new ArrayList<Quotation_item>();
 		Quotation_item qi=new Quotation_item();
 		//建立数据库连接
