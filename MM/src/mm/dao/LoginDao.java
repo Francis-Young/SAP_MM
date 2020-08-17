@@ -14,15 +14,15 @@ import mm.bean.User;
 import mm.utils.DBUtil;
 
 public class LoginDao {
-	public boolean isValid(String uid, String ucode) {
+	public boolean isValid(String unum, String ucode) {
 		boolean valid = false;
 		Connection conn = DBUtil.getConnection();
 
 		try {
-			PreparedStatement stat = conn.prepareStatement("select * from User where user_id=? and user_password=?");
-			stat.setString(1, uid);
+			PreparedStatement stat = conn.prepareStatement("select * from User where user_num=? and user_password=?");
+			stat.setString(1, unum);
 			stat.setString(2, ucode);
-			ResultSet rs = stat.executeQuery();// ÔöÉ¾¸ÄºÍ²éÑ¯£¬µ÷ÓÃ²»Í¬µÄº¯Êý
+			ResultSet rs = stat.executeQuery();// ï¿½ï¿½É¾ï¿½ÄºÍ²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½Í¬ï¿½Äºï¿½ï¿½ï¿½
 			if (rs.next())
 				valid = true;
 		} catch (SQLException e) {
@@ -33,9 +33,9 @@ public class LoginDao {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String llt = dateFormat.format(new Date());
 			try {
-				PreparedStatement stat = conn.prepareStatement("update User SET user_lastlogintime=? where user_id=?");
+				PreparedStatement stat = conn.prepareStatement("update User SET user_lastlogintime=? where user_num=?");
 				stat.setString(1, llt);
-				stat.setString(2, uid);
+				stat.setString(2, unum);
 				stat.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -45,15 +45,14 @@ public class LoginDao {
 		return valid;
 	}
 
-	public void initUser(User user, String uid) {
+	public void initUser(User user, String unum) {
 		Connection conn = DBUtil.getConnection();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
-			PreparedStatement stat = conn.prepareStatement("select user_id,user_portrait from User where user_id=?");
-			stat.setString(1, uid);
+			PreparedStatement stat = conn.prepareStatement("select user_name,user_portrait from User where user_num=?");
+			stat.setString(1, unum);
 			ResultSet rs = stat.executeQuery();
 			while (rs.next()) {
-				user.setUser_id(uid);
+				user.setUser_name(rs.getString("user_name"));
 				user.setUser_portrait(rs.getString("user_portrait"));
 
 			}

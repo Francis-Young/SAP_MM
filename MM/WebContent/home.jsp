@@ -34,7 +34,7 @@
 								class="img-circle" src="<%=session.getAttribute("uportrait")%>" />
 							</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<span class="clear"> <span class="block m-t-xs"> <strong
-										class="font-bold"><%=session.getAttribute("uid")%></strong>
+										class="font-bold"><%=session.getAttribute("uname")%></strong>
 								</span> <span class="text-muted text-xs block">管理员 <b
 										class="caret"></b></span>
 							</span>
@@ -104,7 +104,7 @@
 						</form>
 					</div>
 					<ul class="nav navbar-top-links navbar-right">
-						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uid")%></span>
+						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uname")%></span>
 						</li>
 						<li><a href="CreateMaterial">创建物料</a></li>
 						
