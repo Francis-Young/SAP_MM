@@ -153,7 +153,7 @@ public class PayDao {
 				o4="="+o4;
 			}
 			Connection connectionnew = DBUtil.getConnection();
-	        String sql="select * FROM Order_item JOIN `Order` ON Order_item.order_num=`Order`.order_num JOIN Vendor ON `Order`.vendor_num=Vendor.vendor_num where vendor_name"+o2+
+	        String sql="select * FROM Order_item JOIN `Order` ON Order_item.order_num_m=`Order`.order_num JOIN Vendor ON `Order`.vendor_code=Vendor.vendor_num where vendor_name"+o2+
 	        		" and Vendor.vendor_num"+o3+" and material_num"+o4+" and delivery_date"+o1+"";
 	        		; 
 	        Statement stmt = connectionnew.createStatement();
@@ -252,9 +252,9 @@ public class PayDao {
 			}
 			Connection connectionnew = DBUtil.getConnection();
 	        String sql="select * FROM Order_item "
-	        		+ "Join Payment On Order_item.order_num=Payment.Order_num "
-	        		+ " JOIN `Order` ON Order_item.order_num=`Order`.order_num "
-	        		+ "JOIN Vendor ON `Order`.vendor_num"
+	        		+ "Join Payment On Order_item.order_num_m=Payment.Order_num "
+	        		+ " JOIN `Order` ON Order_item.order_num_m=`Order`.order_num "
+	        		+ "JOIN Vendor ON `Order`.vendor_code"
 	        		+ "=Vendor.vendor_num where vendor_name"+o2+
 	        		" and Vendor.vendor_num"+o3+" and material_num"+o4+" and delivery_date"+o1+""+
     		" and Pay_time"+o5+" and Pay_User"+o6+" and Invoice_Text"+o7+"";
@@ -277,7 +277,7 @@ public class PayDao {
 		try {
 			String ownid=id;
 			Connection connectionnew = DBUtil.getConnection();
-	        String sql="select * FROM Order_item JOIN `Order` ON Order_item.order_num=`Order`.order_num JOIN Vendor ON `Order`.vendor_num=Vendor.vendor_num where Order_item.order_num="+ownid+""; 
+	        String sql="select * FROM Order_item JOIN `Order` ON Order_item.order_num_m=`Order`.order_num JOIN Vendor ON `Order`.vendor_code=Vendor.vendor_num where Order_item.order_num_m="+ownid+""; 
 	        Statement stmt = connectionnew.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);     
 	        s=resultSetToJson(rs);
@@ -295,7 +295,7 @@ public class PayDao {
 		try {
 			String ownid=id;
 			Connection connectionnew = DBUtil.getConnection();
-	        String sql="select * FROM Order_item JOIN Payment ON Order_item.order_num=Payment.Order_num where Pay_id="+ownid+""; 
+	        String sql="select * FROM Order_item JOIN Payment ON Order_item.order_num_m=Payment.Order_num where Pay_id="+ownid+""; 
 	        Statement stmt = connectionnew.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);     
 	        s=resultSetToJson(rs);
@@ -431,7 +431,7 @@ public class PayDao {
 			{
 				o8="="+o8;
 			}
-			if(o9.equals("all"))
+			if(o9.equals("all")||o9.equals(""))
 			{
 				o9=" is not null ";
 			}
@@ -441,15 +441,15 @@ public class PayDao {
 			}
 			Connection connectionnew = DBUtil.getConnection();
 	        String sql="select * FROM Order_item "
-	        		+ "Join Payment On Order_item.order_num=Payment.Order_num "
-	        		+ " JOIN `Order` ON Order_item.order_num=`Order`.order_num "
-	        		+ "JOIN Vendor ON `Order`.vendor_num"
+	        		+ "Join Payment On Order_item.order_num_m=Payment.Order_num "
+	        		+ " JOIN `Order` ON Order_item.order_num_m=`Order`.order_num "
+	        		+ "JOIN Vendor ON `Order`.vendor_code"
 	        		+ "=Vendor.vendor_num where vendor_name"+o2+
 	        		" and Vendor.vendor_num"+o3+" and material_num"+o4+" and delivery_date"+o1+""+
     		" and Pay_time"+o5+" and Pay_User"+o6+" and Invoice_Text"+o7+" "
     				+ "and Pay_id"+o8+" and Pay_Account"+o9;
 		
-	        ; 
+
 	        Statement stmt = connectionnew.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);     
 	        s=resultSetToJson(rs);
