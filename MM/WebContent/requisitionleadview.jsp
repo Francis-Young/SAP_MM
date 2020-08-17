@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>创建RFQ</title>
+<title>查看请购单</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -206,7 +206,7 @@ background:white;
 </head>
 
 <body>
-<form class="m-t" role="form" action="/${pageContext.request.contextPath}/requisition" method="post">
+<form class="m-t" role="form" action="${pageContext.request.contextPath}/requisition" method="post">
 <input type='text' value='view' name='action' hidden='true'>
 	<div id="wrapper">
 
@@ -347,11 +347,11 @@ background:white;
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>查看订单</h2>
+					<h2>查看请购单</h2>
 					<ol class="breadcrumb">
 						<li><a href="index.html">主页</a></li>
-						<li>订单管理</li>
-						<li class="active"><strong>查看订单</strong></li>
+						<li>请购单管理</li>
+						<li class="active"><strong>查看请购单</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -365,7 +365,7 @@ background:white;
 						<div class="ibox float-e-margins">
 
 							<div class="ibox-title">
-								<h5>查看订单</h5>
+								<h5>查看请购单</h5>
 								<div class="ibox-tools">
 									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -392,7 +392,7 @@ if(!(session.getAttribute("rnum")==null))
 
 										<div class="form-group">
 											<label class="col-sm-2 control-label">请购单编号：</label>
-											<div class="col-sm-10">
+											<div class="col-sm-2">
 												<input name="requisitionnum" class="form-control" value=<%=rnum %>> 
 																	<div  class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a></div>
 										
@@ -402,14 +402,15 @@ if(!(session.getAttribute("rnum")==null))
 										</div>
 									</div>
 
-									<div class="row">
-										<div class="col-lg-12">
-											 <input type="submit" class="btn btn-primary " value="继续">
-										
-										</div>
-									</div>
+					
 								
-
+<div class="footer" style="position: fixed; bottom: 0;">
+				<div class="pull-right">
+					<div class="text-right">
+		 <input type="submit" class="btn btn-primary " value="继续">
+					</div>
+				</div>
+			</div>
 </div>
 
 							</div>
@@ -418,12 +419,6 @@ if(!(session.getAttribute("rnum")==null))
 				</div>
 			</div>
 
-			<div class="footer">
-				
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2020-2021
-				</div>
-			</div>
 
 		
 	

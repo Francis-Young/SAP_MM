@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>创建RFQ</title>
+<title>修改订单</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -206,8 +206,8 @@ background:white;
 </head>
 
 <body>
-<form class="m-t" role="form" action="/RFQController" method="post">
-<input type='text' value='bounce_to_select' name='action' hidden='true'>
+<form class="m-t" role="form" action="${pageContext.request.contextPath}/order" method="post">
+<input type='text' value='change' name='action' hidden='true'>
 	<div id="wrapper">
 
 		<nav class="navbar-default navbar-static-side" role="navigation">
@@ -279,13 +279,7 @@ background:white;
 					<div class="navbar-header">
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
 							href="#"><i class="fa fa-bars"></i> </a>
-						<form role="search" class="navbar-form-custom"
-							action="search_results.html">
-							<div class="form-group">
-								<input type="text" placeholder="Search for something..."
-									class="form-control" name="top-search" id="top-search">
-							</div>
-						</form>
+					
 					</div>
 					<ul class="nav navbar-top-links navbar-right">
 						<li><span class="m-r-sm text-muted welcome-message">欢迎回来！</span></li>
@@ -353,11 +347,11 @@ background:white;
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>创建RFQ</h2>
+					<h2>修改订单</h2>
 					<ol class="breadcrumb">
 						<li><a href="index.html">主页</a></li>
-						<li>请购管理</li>
-						<li class="active"><strong>创建RFQ</strong></li>
+						<li>订单管理</li>
+						<li class="active"><strong>修改订单</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -371,7 +365,7 @@ background:white;
 						<div class="ibox float-e-margins">
 
 							<div class="ibox-title">
-								<h5>创建RFQ</h5>
+								<h5>修改订单</h5>
 								<div class="ibox-tools">
 									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -382,91 +376,56 @@ background:white;
 										<li><a href="#">配置 2</a></li>
 									</ul>
 									
-									</a>
+								
 								</div>
 							</div>
 
 							<div class="ibox-content">
 								
+<%
+String onum="";
+if(!(session.getAttribute("onum")==null))
+	onum=session.getAttribute("onum").toString();
+
+%>	
 									<div class="row">
 
-										<div class="col-md-4">
-											<!--RFQ具体信息 -->
-											<div class="form-group">
-												<label for="title">RFQ种类</label> <input id="vname" name="rfq_type"
-													type="text" class="form-control" placeholder="输入RFQ种类..." />
+										<div class="form-group">
+											<label class="col-sm-2 control-label">订单编号：</label>
+											<div class="col-sm-2">
+												<input name="ordernum" class="form-control" value=<%=onum %>> 
+																	<div  class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a></div>
+																	
+										
 											</div>
-
-											<div class="form-group">
-												<label for="message">使用语言</label> <input
-													class="form-control" id="vaddress" type="text" name="language"
-													class="form-control" placeholder="输入使用语言..."></input>
-											</div>
-
-											<div class="form-group">
-												<label for="message">RFQ日期</label> <input
-													class="form-control" id="vaddress" type="text" name="date"
-													class="form-control" placeholder="输入RFQ日期 ..."></input>
-											</div>
-
-											<div class="form-group">
-												<label for="message">RFQ截止日期</label> <input
-													class="form-control" id="vaddress" type="text" name="deadline"
-													class="form-control" placeholder="输入RFQ截止日期 ..."></input>
-											</div>
-
 										</div>
-
-										<div class="col-md-2"></div>
-
-										<div class="col-md-2" style="width:25%;">
-							
-											<strong></strong> 组织数据
-											<hr style="margin:0px 0px 5px 0px; border:0.1px black solid; "/>
-											<div class="form-group">
-												<label for="showMethod">采购组织</label> <input id="showMethod"
-										name="org"	type="text" placeholder="输入采购组织" class="form-control" />
-											</div>
-											<div class="form-group">
-												<label for="showMethod">采购小组</label> <input id="showMethod"
-										name="group" type="text" placeholder="输入采购小组" class="form-control" />
-											</div>
-											
-											<strong></strong> 商品默认数据
-											<hr style="margin:0px 0px 5px 0px; border:0.1px black solid; "/>
-											<div class="form-group">
-												<label for="showEasing">运送工厂</label> <input
-										name="plant"		id="showEasing" type="text" placeholder="输入运送工厂..."
-													class="form-control" />
-											</div>
 
 										</div>
 									</div>
 
 									<div class="row">
 										<div class="col-lg-12">
-											 <button type="button" class="btn btn-primary " onclick=openwin(1)>参考请购单</button>
-											<button type="button" class="btn btn-white" id="clearlasttoast">直接创建</button>
+										
 										</div>
 									</div>
 								
 
 </div>
-
+<div class="footer" style="position: fixed; bottom: 0;">
+				<div class="pull-right">
+					<div class="text-right">
+		 <input type="submit" class="btn btn-primary " value="继续">
+					</div>
+				</div>
+			</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="footer">
-				
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2014-2015
-				</div>
-			</div>
 
-		</div>
+		
 	
 
 

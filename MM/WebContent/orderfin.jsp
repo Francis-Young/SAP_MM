@@ -361,6 +361,7 @@ if(qo.getStatus()==-1)
 	request.getRequestDispatcher("ordererror.jsp");
 	//out.print("<h2>此报价单已被否决</h2>");
 }
+Vendor v=VendorDao.findVendorbynum(String.valueOf(qo.getVendor_num()));
 
 
 
@@ -379,6 +380,11 @@ if(qo.getStatus()==-1)
 <div >	
 <label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">采购组:</label>
 <div class="col-md-2">		<input name="gro" type="text"  class="form-control" value=<%= rfq.getRfq_purchasing_group()%>>
+</div>
+</div>
+<div >	
+<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">供应商:</label>
+<div class="col-md-2">		<input name="vendornum" type="text"  class="form-control" value=<%=v.getVnum() %>> <span><%=v.getVname() %></span>
 </div>
 </div>
 <div >	
@@ -424,6 +430,7 @@ if(qo.getStatus()==-1)
 <th>短文本</th>
 <th>订购数量</th>
 <th>基本单位</th>
+<th>开始送货时间</th>
 <th>送货时间</th>
 <th>净价</th>
 <th>货币单位</th>

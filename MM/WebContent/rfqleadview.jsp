@@ -392,7 +392,7 @@ if(!(session.getAttribute("rfqnum")==null))
 
 										<div class="form-group">
 											<label class="col-sm-2 control-label">rfq编号：</label>
-											<div class="col-sm-10">
+											<div class="col-sm-2">
 												<input name="rfqnum" class="form-control" value=<%=rfqnum %>> 
 																	<div  class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a></div>
 										
@@ -402,14 +402,15 @@ if(!(session.getAttribute("rfqnum")==null))
 										</div>
 									</div>
 
-									<div class="row">
-										<div class="col-lg-12">
-											 <input type="submit" class="btn btn-primary " value="继续">
-										
-										</div>
-									</div>
 								
-
+								
+<div class="footer" style="position: fixed; bottom: 0;">
+				<div class="pull-right">
+					<div class="text-right">
+		 <input type="submit" class="btn btn-primary " value="继续">
+					</div>
+				</div>
+			</div>
 </div>
 
 							</div>
@@ -418,12 +419,6 @@ if(!(session.getAttribute("rfqnum")==null))
 				</div>
 			</div>
 
-			<div class="footer">
-				
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2020-2021
-				</div>
-			</div>
 
 		
 	
