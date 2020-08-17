@@ -1,54 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="mm.utils.DBUtil"%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 
 <head>
-<script type="text/javascript">
-	var itemNo = 1;
-	var p_m_text;
-	var m_textArray = new Array();
-</script>
-
-<script>
-	function addRow() {
-		var oTable = document.getElementById("oTable");
-		var tBodies = oTable.tBodies;
-		var tbody = tBodies[0];
-		var tr = tbody.insertRow(tbody.rows.length);
-
-		var td_1 = tr.insertCell(0); //td_1,td_2。。。这些是每一行的单元格内要显示的元素,可以自己改内容和根据列数改数量
-		td_1.innerHTML = itemNo;
-		itemNo += 1;
-
-		var td_2 = tr.insertCell(1);
-		td_2.innerHTML = '<input id="m_text" name="m_text'+itemNo'" class="form-control" placeholder="输入物料编号..." />';
-		var td_3 = tr.insertCell(2);
-		td_3.innerHTML = '<input id="closeButton" name="check'+itemNo'" type="checkbox" value="checked" class="input-mini" checked="">';
-		var td_4 = tr.insertCell(3);
-		td_4.innerHTML = '<input class="form-control" id="vaddress" name="m_num'+itemNo'" type="text" class="form-control" placeholder="输入物料数量 ..."></input>';
-		var td_5 = tr.insertCell(4);
-		td_5.innerHTML = '<input id="showEasing" name="sloc'+itemNo'" type="text" placeholder="输入存储位置..." class="form-control" />';
-
-		//p_m_text = document.getElementsByName("m_text");
-		//m_textArray.push(p_m_text);
-		//$("#m_textArray").val(m_textArray);
-		//System.out.println(p_m_text);
-	}
-</script>
-
-<style type="text/css">
-.table-b table td {
-	border: 2px solid #e7eaec
-}
-</style>
-<style type="text/css">
-.table-b table td {
-	border: 2px solid #e7eaec
-}
-</style>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -71,6 +29,42 @@
 
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+
+<script type="text/javascript">
+	var itemNo = 0;
+</script>
+
+<script>
+	function addRow() {
+		itemNo += 1;
+		document.getElementById('num').value = itemNo;
+		
+		var oTable = document.getElementById("oTable");
+		var tBodies = oTable.tBodies;
+		var tbody = tBodies[0];
+		var tr = tbody.insertRow(tbody.rows.length);
+
+		var td_1 = tr.insertCell(0); //td_1,td_2。。。这些是每一行的单元格内要显示的元素,可以自己改内容和根据列数改数量
+		td_1.innerHTML = itemNo;
+		
+		var td_2 = tr.insertCell(1);
+		td_2.innerHTML = '<input name="m_text'+itemNo+'" id="materialtext" type="text" class="form-control" placeholder="输入物料编号..." />';
+		var td_3 = tr.insertCell(2);
+		td_3.innerHTML = '<input name="check'+itemNo+'" id="closeButton" type="checkbox" value="checked" class="input-mini" checked=""></input>';
+		var td_4 = tr.insertCell(3);
+		td_4.innerHTML = '<input name="m_num'+itemNo+'" class="form-control" id="vaddress" type="text" class="form-control" placeholder="输入物料数量 ..."></input>';
+		var td_5 = tr.insertCell(4);
+		td_5.innerHTML = '<input name="sloc'+itemNo+'" id="showEasing" type="text" placeholder="输入存储位置..." class="form-control" />';
+		
+	}
+</script>
+
+<style type="text/css" defer=true>
+.table-b table td {
+	border: 2px solid #e7eaec
+}
+</style>
+
 </head>
 
 <body>
@@ -124,7 +118,7 @@
 						class="nav-label">收货管理</span><span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level collapse">
 						<li><a href="Goodsreceipt">创建收货单</a></li>
-						<li><a href="lockscreen.html">查看库存</a></li>
+						<li><a href="Showstock">查看库存</a></li>
 					</ul></li>
 			</ul>
 
@@ -209,7 +203,11 @@
 
 				</nav>
 			</div>
-			<form class="m-t" role="form" action="Goodsreceipt" method="post">
+			<form class="m-t" role="form" action="${pageContext.request.contextPath}/goodsreceipt" method="post">
+			
+			<input type='text' value='creat' name='action' hidden='true'>
+			<input type='text' id='num' value='0' name='num' hidden='true'>
+			
 				<div class="row wrapper border-bottom white-bg page-heading">
 					<div class="col-lg-10">
 						<h2>创建收货单</h2>
@@ -269,6 +267,7 @@
 														</select>
 													</div>
 												</div>
+
 
 												<!-- 还要做出搜索效果 -->
 												<div class="col-sm-4">
@@ -345,6 +344,7 @@
 										<!-- 前后的灰色线 -->
 										<input type="hidden" name="m_textArray" value=""
 											id="m_textArray">
+
 										<div class="table-b">
 											<div class="wrapper wrapper-content animated fadeIn">
 												<div align="center">
@@ -373,6 +373,7 @@
 														</thead>
 														<tbody>
 															<tr>
+
 															</tr>
 														</tbody>
 													</table>
@@ -384,36 +385,27 @@
 													style="font-size: 16px;" value="+" /> -->
 											</div>
 										</div>
+										<br>
 										<script type="text/javascript">
 											addRow();
 										</script>
+										
 									</div>
-
-
-
 								</div>
 							</div>
 						</div>
-
-
 					</div>
 					<div class="footer">
 						<div class="row">
 							<div class="col-lg-12">
 								<div class="pull-right">
-									<button type="submit" class="btn btn-primary" id="showtoast">打印</button>
-									<button type="button" class="btn btn-white" id="cleartoasts">取消</button>
+									<button type="submit" class="btn btn-primary" id="showtoast">保存</button>
+									<button type="button" class="btn btn-white" id="cleartoasts">
+								<a href="Home.jsp">返回</a>
 								</div>
 							</div>
 						</div>
-						<div class="row m-t-lg">
-							<div class="pull-right">
-								10GB of <strong>250GB</strong> Free.
-							</div>
-							<div>
-								<strong>Copyright</strong> 版权所有 &copy; 2019-2020
-							</div>
-						</div>
+						
 					</div>
 			</form>
 		</div>
