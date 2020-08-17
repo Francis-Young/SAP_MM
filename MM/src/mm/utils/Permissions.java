@@ -29,4 +29,29 @@ public class Permissions {
 		}
 		return flag;
 	}
+
+	public String getPermissionName(String unum) {
+		String permissionnum = unum.substring(0, 4);
+		String department1 = permissionnum.substring(0, 2);
+		String department2 = permissionnum.substring(2, 4);
+		String pn="待定";
+		if(department1.equals("00")) {
+			if(department2.equals("00")) {
+				pn="物料主管";
+			}
+		}else if(department1.equals("01")) {
+			if(department2.equals("01")) {
+				pn="财务专员";
+			}
+		}else if(department1.equals("02")) {
+			if(department2.equals("01")) {
+				pn="采购职员";
+			}else if(department2.equals("02")) {
+				pn="收货职员";
+			}else if(department2.equals("03")) {
+				pn="仓库管理员";
+			}
+		}
+		return pn;
+	}
 }

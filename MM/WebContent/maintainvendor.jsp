@@ -122,7 +122,7 @@
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
 					<h2>
-						维护供应商-<%=v.getVnum()%></h2>
+						维护供应商-<%=v.getVcode()%></h2>
 					<ol class="breadcrumb">
 						<li><a href="Home">主页</a></li>
 						<li>供应商管理</li>

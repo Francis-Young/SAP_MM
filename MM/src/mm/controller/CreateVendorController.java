@@ -20,13 +20,13 @@ import mm.utils.Permissions;
  * Servlet implementation class CreateVendorController
  */
 @WebServlet("/CreateVendor")
-public class CreatevVendorController extends HttpServlet {
+public class CreateVendorController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public CreatevVendorController() {
+	public CreateVendorController() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -39,10 +39,11 @@ public class CreatevVendorController extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session=request.getSession();
-		Permissions p=new Permissions();
-		boolean flag=p.checkPermission("CreateVendor",(String)session.getAttribute("unum"));
+		Permissions permission=new Permissions();
+		boolean flag=permission.checkPermission("CreateVendor",(String)session.getAttribute("unum"));
 		if (!flag) {
 			request.getRequestDispatcher("/403.html").forward(request, response);
+			return;
 		}
 		VendorDao vdao = new VendorDao();
 		ArrayList<DownList> reconacct = new ArrayList<DownList>();
