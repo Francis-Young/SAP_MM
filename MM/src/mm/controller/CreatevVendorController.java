@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import mm.bean.DownList;
 import mm.bean.Vendor;
 import mm.dao.VendorDao;
+import mm.utils.Permissions;
 
 /**
  * Servlet implementation class CreateVendorController
@@ -37,6 +38,12 @@ public class CreatevVendorController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session=request.getSession();
+		Permissions p=new Permissions();
+		boolean flag=p.checkPermission("CreateVendor",(String)session.getAttribute("unum"));
+		if (!flag) {
+			request.getRequestDispatcher("/403.html").forward(request, response);
+		}
 		VendorDao vdao = new VendorDao();
 		ArrayList<DownList> reconacct = new ArrayList<DownList>();
 		ArrayList<DownList> paymentterms = new ArrayList<DownList>();
@@ -48,7 +55,7 @@ public class CreatevVendorController extends HttpServlet {
 		request.setAttribute("currency", currency);
 		request.setAttribute("language", language);
 		request.getRequestDispatcher("/createvendor.jsp").forward(request, response);
-
+		
 	}
 
 	/**

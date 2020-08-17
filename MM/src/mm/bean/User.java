@@ -1,16 +1,24 @@
 package mm.bean;
 
 public class User {
-	private String user_id;
+	private String user_num;
+	private String user_name;
 	private String user_portrait;
-	private int user_accessright;
 
-	public String getUser_id() {
-		return user_id;
+	public String getUser_num() {
+		return user_num;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUser_num(String user_num) {
+		this.user_num = user_num;
+	}
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 
 	public String getUser_portrait() {
@@ -21,11 +29,4 @@ public class User {
 		this.user_portrait = user_portrait;
 	}
 
-	public int getUser_accessright() {
-		return user_accessright;
-	}
-
-	public void setUser_accessright(int user_accessright) {
-		this.user_accessright = user_accessright;
-	}
 }

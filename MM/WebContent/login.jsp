@@ -39,7 +39,7 @@
 					<p>和传统的昨天告别，向规范的未来迈进</p>
 					<form class="m-t" role="form" action="Login" method="post">
 						<div class="form-group">
-							<input name="uid" type="text" class="form-control"
+							<input name="unum" type="text" class="form-control"
 								placeholder="用户ID" required="">
 						</div>
 						<div class="form-group">

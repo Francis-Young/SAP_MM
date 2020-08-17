@@ -49,19 +49,20 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		String uid = request.getParameter("uid");
+		String unum = request.getParameter("unum");
 		String upswd = request.getParameter("ucode");
 
 		LoginDao loginDao = new LoginDao();
-		boolean valid = loginDao.isValid(uid, upswd);
+		boolean valid = loginDao.isValid(unum, upswd);
 		if (valid) {
 			HttpSession session = request.getSession();
-			session.setAttribute("uid", uid);
 			session.setMaxInactiveInterval(2 * 60 * 10);
 
 			User user = new User();
-			loginDao.initUser(user, uid);
+			loginDao.initUser(user, unum);
+			session.setAttribute("unum", unum);
 			session.setAttribute("uportrait", user.getUser_portrait());
+			session.setAttribute("uname", user.getUser_name());
 			response.sendRedirect("Home");
 			return;
 		} else {

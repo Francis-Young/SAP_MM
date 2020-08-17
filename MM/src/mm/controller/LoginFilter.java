@@ -42,17 +42,17 @@ public class LoginFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) arg1;
 		HttpServletRequest request = (HttpServletRequest) arg0;
 		HttpSession session = request.getSession(true);
-		String uid = (String) session.getAttribute("uid");//
+		String unum = (String) session.getAttribute("unum");//
 		String url = request.getRequestURI();
 		if(url.endsWith(".css") || url.endsWith(".js") || url.endsWith(".png")|| url.endsWith(".jpg")){
             //如果发现是css或者js文件，直接放行
 			arg2.doFilter(arg0, arg1);
 		    return;
             }
-		if (uid == null || uid.equals("")) {
+		if (unum == null || unum.equals("")) {
 			// �жϻ�ȡ��·����Ϊ���Ҳ��Ƿ��ʵ�¼ҳ���ִ�е�¼����ʱ��ת
 			if (url != null && !url.equals("") && (url.indexOf("Login") < 0 && url.indexOf("login") < 0)) {
-				response.sendRedirect("Login");
+				request.getRequestDispatcher("/401.html").forward(request, response);
 				return;
 			}
 		}
