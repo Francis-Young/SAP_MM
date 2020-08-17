@@ -1,7 +1,6 @@
 package mm.dao;
 
 import mm.bean.Order;
-import mm.bean.Requisition_item;
 import mm.utils.DBUtil;
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,12 +13,15 @@ public class OrderDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 			
-			String sql=""+ "insert into Order" +" (order_num,rfq_num,vendor_num) "+"values(default,?,?)";
+			String sql=""+ "insert into Order" +" (order_num,rfq_num,vendor_num,docdate,pur_org,pur_group) "+"values(default,?,?,?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 		
 			psmt.setInt(1, qo.getRfq_num());
 			psmt.setInt(2, qo.getVendor_num());
-	
+			psmt.setDate(3, qo.getDocdate());
+			psmt.setString(4, qo.getPur_org());
+			psmt.setString(5, qo.getPur_org());
+
 			psmt.execute();
 			
 			sql="SELECT LAST_INSERT_ID()";
@@ -55,7 +57,10 @@ public class OrderDao {
 				rq.setOrder_num(rs.getInt("order_num"));
 				rq.setRfq_num(rs.getInt("rfq_num"));
 				rq.setVendor_num(rs.getInt("vendor_num"));
-				
+				rq.setDocdate(rs.getDate("docdate"));
+				rq.setPur_org(rs.getString("pur_org"));
+				rq.setPur_group(rs.getString("pur_group"));
+
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -85,7 +90,9 @@ public class OrderDao {
 				rq.setOrder_num(rs.getInt("order_num"));
 				rq.setRfq_num(rs.getInt("rfq_num"));
 				rq.setVendor_num(rs.getInt("vendor_num"));
-				
+				rq.setDocdate(rs.getDate("docdate"));
+				rq.setPur_org(rs.getString("pur_org"));
+				rq.setPur_group(rs.getString("pur_group"));
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -116,6 +123,9 @@ public class OrderDao {
 				qo.setOrder_num(rs.getInt("order_num"));
 				qo.setRfq_num(rs.getInt("rfq_num"));
 				qo.setVendor_num(rs.getInt("vendor_num"));
+				qo.setDocdate(rs.getDate("docdate"));
+				qo.setPur_org(rs.getString("pur_org"));
+				qo.setPur_group(rs.getString("pur_group"));
 				qolist.add(qo);
 			}
 		}catch(SQLException e) {
@@ -156,6 +166,8 @@ public class OrderDao {
 	
 	
 	
+
+	
 	//修改报价单
 	public static int modifyOrderByNum(Order qo) {
 		
@@ -164,11 +176,15 @@ public class OrderDao {
 		int res=-1;
 		try {
 		
-			String sql=""+"update Order set rfq_num = ?, vendor_num = ? where order_num = ?";
+			String sql=""+"update Order set rfq_num = ?, vendor_num = ? docdate =? ,pur_org =? ,pur_group =? where order_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, qo.getRfq_num());
 			psmt.setInt(2, qo.getVendor_num());
-			psmt.setInt(3, qo.getOrder_num());
+			
+			psmt.setDate(3, qo.getDocdate());
+			psmt.setString(4, qo.getPur_org());
+			psmt.setString(5, qo.getPur_org());
+			psmt.setInt(6, qo.getOrder_num());
 			//执行查询语句
 			res= psmt.executeUpdate();
 		
@@ -181,5 +197,30 @@ public class OrderDao {
         }
 		return res;
 		
-	}	
+	}
+	
+	//修改报价单
+	public static int deleteOitemByOnum(int order_num) {
+		
+		//建立数据库连接
+		Connection conn=DBUtil.getConnection();
+		int res=-1;
+		try {
+		
+			String sql=""+"delete from Order where order_num = ?";
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, order_num);
+			
+			res= psmt.executeUpdate();
+		
+		}catch(SQLException e) {
+            e.printStackTrace();
+        }catch(NullPointerException f){
+            f.printStackTrace();
+        }finally {
+            DBUtil.closeConnection(conn);
+        }
+		return res;
+		
+	}
 }

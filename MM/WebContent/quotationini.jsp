@@ -283,13 +283,7 @@ background:white;
 					<div class="navbar-header">
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
 							href="#"><i class="fa fa-bars"></i> </a>
-						<form role="search" class="navbar-form-custom"
-							action="search_results.html">
-							<div class="form-group">
-								<input type="text" placeholder="Search for something..."
-									class="form-control" name="top-search" id="top-search">
-							</div>
-						</form>
+					
 					</div>
 					<ul class="nav navbar-top-links navbar-right">
 						<li><span class="m-r-sm text-muted welcome-message">欢迎回来！</span></li>
@@ -357,7 +351,7 @@ background:white;
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>创建报价单</h2>
+					<h2>维护报价单</h2>
 					<ol class="breadcrumb">
 						<li><a href="index.html">主页</a></li>
 						<li>请购管理</li>
@@ -375,7 +369,7 @@ background:white;
 						<div class="ibox float-e-margins">
 
 							<div class="ibox-title">
-								<h5>创建RFQ</h5>
+								<h5>创建报价单</h5>
 								<div class="ibox-tools">
 									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -396,16 +390,13 @@ background:white;
 											<!--RFQ具体信息 -->
 																				<div class="form-group">
 											<label class="col-sm-2 control-label">RFQ编号</label>
-											<div class="col-sm-10">
+											<div class="col-sm-2">
 												<input name="rfqnum" id="rfqid" style="width:200px;" type="text" class="form-control"> 
-							&emsp;&emsp;&emsp;	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-								<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
+								<a style="float:right" onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
 											</div>
 											<div class="row">
 										<div class="col-lg-12">
-										<br>
-										<br>
-									&emsp;		<button type="submit" class="btn btn-white" id="clearlasttoast">继续</button>
+							
 										</div>
 									</div>		
 											
@@ -418,7 +409,14 @@ background:white;
 									</div>
 
 							
-								
+							
+<div class="footer" style="position: fixed; bottom: 0;">
+				<div class="pull-right">
+					<div class="text-right">
+		 <input type="submit" class="btn btn-primary " value="继续">
+					</div>
+				</div>
+			</div>									
 
 </div>
 
@@ -428,14 +426,9 @@ background:white;
 				</div>
 			</div>
 
-			<div class="footer">
-				
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2014-2015
-				</div>
-			</div>
 
-		</div>
+
+		
 	
 
 

@@ -1,6 +1,7 @@
 package mm.bean;
 
 import java.io.Serializable;
+
 import java.sql.Date;
 
 public class Order implements Serializable {
@@ -8,6 +9,10 @@ public class Order implements Serializable {
 	private int order_num;
 	private int vendor_num;
 	private int rfq_num;
+	private java.sql.Date docdate;
+	private String pur_org;
+	private String pur_group;
+	
 	
 	public int getOrder_num() {
 		return order_num;
@@ -26,6 +31,24 @@ public class Order implements Serializable {
 	}
 	public void setRfq_num(int rfq_num) {
 		this.rfq_num = rfq_num;
+	}
+	public java.sql.Date getDocdate() {
+		return docdate;
+	}
+	public void setDocdate(java.sql.Date docdate) {
+		this.docdate = docdate;
+	}
+	public String getPur_org() {
+		return pur_org;
+	}
+	public void setPur_org(String pur_org) {
+		this.pur_org = pur_org;
+	}
+	public String getPur_group() {
+		return pur_group;
+	}
+	public void setPur_group(String pur_group) {
+		this.pur_group = pur_group;
 	}
 	
 	

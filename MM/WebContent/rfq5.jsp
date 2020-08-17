@@ -240,16 +240,7 @@ language="java" contentType="text/html; charset=UTF-8"
 </thead>
 <tbody>
 
-<tr>
-<td><input type="checkbox" checked="" class="i-checks" name="input[]"></td>
-<td>10</td>
-<td>10</td>
-<td>10</td>
-<td>10</td>
-<td>10</td>
-<td>10</td>
-<td>10</td>
-</tr>
+
 <%
 //取出请购单的条目
 
@@ -306,9 +297,7 @@ out.print("<td>"+"kg"+"</td>");
 						<button type="button" class="btn btn-white" id="cleartoasts">取消</button>
 					</div>
 				</div>
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2014-2015
-				</div>
+		
 			</div>
 
 		</div>
