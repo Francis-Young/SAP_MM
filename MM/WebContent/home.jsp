@@ -61,25 +61,25 @@
 					<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
 							class="nav-label">采购管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="form_basic.html">创建请购单 </a></li>
-							<li><a href="form_advanced.html">查看请购单 </a></li>
-							<li><a href="form_wizard.html">创建RFQ </a></li>
-							<li><a href="form_file_upload.html">查看RFQ </a></li>
-							<li><a href="form_editors.html">维护报价单 </a></li>
-							<li><a href="form_markdown.html">比对报价单 </a></li>
-							<li><a href="form_markdown.html">创建订单 </a></li>
-							<li><a href="form_markdown.html">查看订单 </a></li>
-							<li><a href="form_markdown.html">维护订单 </a></li>
+							<li><a href="requisitionini.jsp">创建请购单 </a></li>
+							<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+							<li><a href="rfqini.jsp">创建RFQ </a></li>
+							<li><a href="rfqleadview.jsp">查看RFQ </a></li>
+							<li><a href="quotationini.jsp">维护报价单 </a></li>
+							<li><a href="quotationcompare.jsp">比对报价单 </a></li>
+							<li><a href="orderini.jsp">创建订单 </a></li>
+							<li><a href="orderleadview.jsp">查看订单 </a></li>
+							<li><a href="orderleadchange.jsp">维护订单 </a></li>
 						</ul></li>
 
 					<li><a href="#"><i class="fa fa-files-o"></i> <span
 							class="nav-label">收货管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="search_results.html">创建收货单 </a></li>
-							<li><a href="lockscreen.html">查询库存 </a></li>
-							<li><a href="invoice.html">创建发票 </a></li>
-							<li><a href="login_two_columns.html">付款 </a></li>
-							<li><a href="forgot_password.html">查看应付账款 </a></li>
+							<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
+							<li><a href="showstock.jsp">查询库存 </a></li>
+							<li><a href="createpayment.jsp">创建发票 </a></li>
+							<li><a href="postpayment.jsp">付款 </a></li>
+							<li><a href="account.jsp">查看应付账款 </a></li>
 						</ul></li>
 				</ul>
 			</div>
