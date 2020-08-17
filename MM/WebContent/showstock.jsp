@@ -1,43 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="java.util.ArrayList"%>
 <%@ page import="mm.utils.DBUtil"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
 <head>
-<script type="text/javascript">
-	var itemNo = 1;
-	var p_m_text;
-	var m_textArray = new Array();
-</script>
 
-<script>
-	function addRow() {
-		var oTable = document.getElementById("oTable");
-		var tBodies = oTable.tBodies;
-		var tbody = tBodies[0];
-		var tr = tbody.insertRow(tbody.rows.length);
-
-		var td_1 = tr.insertCell(0); //td_1,td_2。。。这些是每一行的单元格内要显示的元素,可以自己改内容和根据列数改数量
-		td_1.innerHTML = itemNo;
-		itemNo += 1;
-
-		var td_2 = tr.insertCell(1);
-		td_2.innerHTML = '<input id="m_text" name="m_text" class="form-control" placeholder="输入物料编号..." />';
-		var td_3 = tr.insertCell(2);
-		td_3.innerHTML = '<input id="closeButton" name="td_3" type="checkbox" value="checked" class="input-mini" checked="">';
-		var td_4 = tr.insertCell(3);
-		td_4.innerHTML = '<input class="form-control" id="vaddress" name="td_4" type="text" class="form-control" placeholder="输入物料数量 ..."></input>';
-		var td_5 = tr.insertCell(4);
-		td_5.innerHTML = '<input id="showEasing" name="td_5" type="text" placeholder="输入存储位置..." class="form-control" />';
-
-		p_m_text = document.getElementsByName("m_text");
-		m_textArray.push(p_m_text);
-		$("#m_textArray").val(m_textArray);
-		System.out.println(p_m_text);
-	}
-</script>
 
 <style type="text/css">
 .table-b table td {
@@ -124,7 +95,7 @@
 						class="nav-label">收货管理</span><span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level collapse">
 						<li><a href="Goodsreceipt">创建收货单</a></li>
-						<li><a href="lockscreen.html">查看库存</a></li>
+						<li><a href="Showstock">查看库存</a></li>
 					</ul></li>
 			</ul>
 
@@ -209,7 +180,7 @@
 
 				</nav>
 			</div>
-			<form class="m-t" role="form" action="Goodsreceipt" method="post">
+			<form class="m-t" role="form" action="Showstock" method="post">
 				<div class="row wrapper border-bottom white-bg page-heading">
 					<div class="col-lg-10">
 						<h2>创建收货单</h2>
@@ -229,7 +200,7 @@
 
 								<div class="ibox ">
 									<div class="ibox-title">
-										<h5>基本数据</h5>
+										<h5>物料信息</h5>
 										<div class="ibox-tools">
 											<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 											</a> <a class="close-link"> <i class="fa fa-times"></i>
@@ -239,182 +210,106 @@
 									<div class="ibox-content m-b-sm border-bottom">
 										<div class="row">
 											<div class="input-group m-b">
-
-												<!-- 两个暂无选择意义的下拉框 -->
-												<div class="col-sm-4">
-													<div class="form-group">
-
-														<select name="DataTables_Table_0_length"
-															aria-controls="DataTables_Table_0"
-															class="form-control form-control-sm">
-															<option value="1">收货单</option>
-															<option value="2">取消</option>
-															<option value="3">展示</option>
-															<option value="4">存储位置</option>
-															<option value="5">重新运输</option>
-															<option value="6">接连运输</option>
-														</select>
-
-													</div>
-												</div>
-												<div class="col-sm-4">
-													<div class="form-group">
-														<select name="DataTables_Table_0_length"
-															aria-controls="DataTables_Table_0"
-															class="form-control form-control-sm">
-															<option value="1">采购订单</option>
-															<option value="2">进货</option>
-															<option value="3">物料文件</option>
-															<option value="4">出货</option>
-															<option value="5">运输</option>
-															<option value="6">运输码</option>
-														</select>
-													</div>
-												</div>
-
 												<!-- 还要做出搜索效果 -->
 												<div class="col-sm-4">
 													<div class="form-group">
-														<input type="text" id="order_num" name="order_num"
-															value="" placeholder="采购单号" class="form-control">
+														<input type="text" id="order_num" name="m_text" value=""
+															placeholder="物料名称" class="form-control">
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="form-group">
+														<input type="text" id="order_num" name="sloc" value=""
+															placeholder="库存中心" class="form-control">
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="form-group">
+														<select name="DataTables_Table_0_length"
+															aria-controls="DataTables_Table_0"
+															class="form-control form-control-sm">
+															<option value="1">1</option>
+															<option value="2">2</option>
+															<option value="3">3</option>
+															<option value="4">4</option>
+															<option value="5">5</option>
+															<option value="6">6</option>
+														</select>
 													</div>
 												</div>
 											</div>
-										</div>
-										<!-- 两个日期 需返回  -->
-										<div class="row">
-											<div class="col-sm-4">
-												<div class="form-group">
-													<label class="font-normal">文件日期</label>
-													<div class="input-group date">
-														<span class="input-group-addon"><i
-															class="fa fa-calendar"></i></span> <input type="text"
-															id="posting_date" name="posting_date"
-															class="form-control" value="08/01/2020">
-													</div>
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<label class="font-normal">文件打印日期</label>
-													<div class="input-group date">
-														<span class="input-group-addon"><i
-															class="fa fa-calendar"></i></span> <input type="text"
-															id="document_date" name="document_date"
-															class="form-control" value="08/01/2020">
-													</div>
-												</div>
-											</div>
-										</div>
 
-										<div class="row">
-											<div class="col-sm-4">
-												<div class="form-group">
-													<select name="DataTables_Table_0_length"
-														aria-controls="DataTables_Table_0"
-														class="form-control form-control-sm">
-														<option value="1">单独放置</option>
-														<option value="2">共同放置</option>
-														<option value="3">单独放置（带备注）</option>
-													</select>
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<div class="form-group">
-													<input type="text" id="delivery_note" name="delivery_note"
-														value="" placeholder="运输备注" class="form-control">
-												</div>
-											</div>
 										</div>
 									</div>
+
 								</div>
-							</div>
-						</div>
-					</div>
-					<div class="wrapper wrapper-content animated fadeIn">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="ibox float-e-margins">
-									<div class="ibox-title">
-										<h5>运输数据</h5>
-										<div class="ibox-tools">
-											<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
-											</a> <a class="close-link"> <i class="fa fa-times"></i>
-											</a>
-										</div>
-									</div>
-									<div class="ibox-content m-b-sm border-bottom">
-										<!-- 前后的灰色线 -->
-										<input type="hidden" name="m_textArray" value=""
-											id="m_textArray">
-										<div class="table-b">
-											<div class="wrapper wrapper-content animated fadeIn">
-												<div align="center">
-													<table id="oTable" style="background-color: #f3f3f4;"
-														bordercolor="#e7eaec" border="2" cellpadding="50"
-														cellpadding="50" width="100%" height="200%" align="center">
+								<div class="wrapper wrapper-content animated fadeIn">
+									<div class="row">
+										<div class="col-lg-6">
+											<div class="ibox ">
+												<div class="ibox-title">
+													<h5>存货情况</h5>
+													<div class="ibox-tools">
+														<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+														</a> <a class="dropdown-toggle" data-toggle="dropdown"
+															href="#"> <i class="fa fa-wrench"></i>
+														</a>
+														<ul class="dropdown-menu dropdown-user">
+															<li><a href="#" class="dropdown-item">Config
+																	option 1</a></li>
+															<li><a href="#" class="dropdown-item">Config
+																	option 2</a></li>
+														</ul>
+														<a class="close-link"> <i class="fa fa-times"></i>
+														</a>
+													</div>
+												</div>
+												<div class="ibox-content">
+
+													<table class="table">
 														<thead>
 															<tr>
-																<th>
-																	<div align="center">条目</div>
-																</th>
-																<!--  这些是表头，可以自己改列数和内容-->
-																<th>
-																	<div align="center">物料编号</div>
-																</th>
-																<th>
-																	<div align="center">OK</div>
-																</th>
-																<th>
-																	<div align="center">物料数量</div>
-																</th>
-																<th>
-																	<div align="center">存储位置</div>
-																</th>
+																<th>物料编号</th>
+																<th>存储位置</th>
+																<th>剩余数量</th>
 															</tr>
 														</thead>
 														<tbody>
 															<tr>
+																<td><input class="form-control" name="vpostalcode"
+																	type="text" class="form-control"
+																	value="<%=request.getAttribute("m_text")%>"
+																	readonly="readonly"></input></td>
+																<td><input class="form-control" name="vpostalcode"
+																	type="text" class="form-control"
+																	value="<%=request.getAttribute("sloc")%>"
+																	readonly="readonly"></input></td>
+																<td><input class="form-control" name="vpostalcode"
+																	type="text" class="form-control"
+																	value="<%=request.getAttribute("m_amount")%>"
+																	readonly="readonly"></input></td>
+
+
 															</tr>
 														</tbody>
 													</table>
-												</div>
-												<input type="button" onClick="addRow();"
-													class="btn btn-white" value="+" />
 
-												<!-- 原先的设计<input type="button" onClick="addRow();"
-													style="font-size: 16px;" value="+" /> -->
+												</div>
 											</div>
 										</div>
-										<script type="text/javascript">
-											addRow();
-										</script>
+
 									</div>
-
-
-
 								</div>
 							</div>
 						</div>
-
-
 					</div>
 					<div class="footer">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="pull-right">
-									<button type="submit" class="btn btn-primary" id="showtoast">打印</button>
-									<button type="button" class="btn btn-white" id="cleartoasts">取消</button>
-								</div>
-							</div>
-						</div>
 						<div class="row m-t-lg">
 							<div class="pull-right">
-								10GB of <strong>250GB</strong> Free.
+								<button type="submit" class="btn btn-primary" id="showtoast">查看</button>
+								<button type="button" class="btn btn-white" id="cleartoasts">取消</button>
 							</div>
-							<div>
-								<strong>Copyright</strong> 版权所有 &copy; 2019-2020
-							</div>
+
 						</div>
 					</div>
 			</form>
