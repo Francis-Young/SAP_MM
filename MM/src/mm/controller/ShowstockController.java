@@ -30,12 +30,14 @@ public class ShowstockController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response, GoodsReceipt gr) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		GoodsReceipt gr = new GoodsReceipt();
+		
 		GoodsreceiptItemDao gridao = new GoodsreceiptItemDao();
 		gridao.showstock(gr);
+		request.setAttribute("m_text", gr.getM_text());
+		request.setAttribute("sloc", gr.getSloc());
 		request.setAttribute("m_amount", gr.getEnd_m_num());
 		request.getRequestDispatcher("/showstock.jsp").forward(request, response);
 	}
@@ -50,7 +52,7 @@ public class ShowstockController extends HttpServlet {
 		String m_text = request.getParameter("m_text");
 		gr.setM_text(m_text);
 		System.out.println(m_text);
-		doGet(request, response);
+		doGet(request, response, gr);
 	}
 
 }
