@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import mm.bean.DownList;
 import mm.bean.Vendor;
 import mm.dao.VendorDao;
+import mm.utils.Permissions;
 
 /**
  * Servlet implementation class MaintainVendorController
@@ -36,26 +37,35 @@ public class DisplayVendorController extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		String vnum = (String) session.getAttribute("vnum");
 
+		String vnum = (String) session.getAttribute("vnum");
 		VendorDao vdao = new VendorDao();
 		Vendor v = new Vendor();
 		if (vnum != null && !"".equals(vnum)) {
+			Permissions permission = new Permissions();
+			boolean flag = permission.checkPermission("CreateVendor", (String) session.getAttribute("unum"));
+			if (!flag) {
+				request.getRequestDispatcher("/403.html").forward(request, response);
+				return;
+			}
 			vdao.findVendor(vnum, v);
 			request.setAttribute("vendor", v);
+
+			ArrayList<DownList> reconacct = new ArrayList<DownList>();
+			ArrayList<DownList> paymentterms = new ArrayList<DownList>();
+			ArrayList<DownList> language = new ArrayList<DownList>();
+			ArrayList<DownList> currency = new ArrayList<DownList>();
+			vdao.initCreateTable(reconacct, v.getVreconacct(), paymentterms, v.getVpaymentterms(), currency,
+					v.getVcurrency(), language, v.getVlanguage());
+			request.setAttribute("reconaccts", reconacct);
+			request.setAttribute("paymenttermss", paymentterms);
+			request.setAttribute("currencys", currency);
+			request.setAttribute("languages", language);
+			request.getRequestDispatcher("/displayvendor.jsp").forward(request, response);
+		} else {
+			response.sendRedirect("Home");
 		}
 
-		ArrayList<DownList> reconacct = new ArrayList<DownList>();
-		ArrayList<DownList> paymentterms = new ArrayList<DownList>();
-		ArrayList<DownList> language = new ArrayList<DownList>();
-		ArrayList<DownList> currency = new ArrayList<DownList>();
-		vdao.initCreateTable(reconacct, v.getVreconacct(), paymentterms, v.getVpaymentterms(), currency,
-				v.getVcurrency(), language, v.getVlanguage());
-		request.setAttribute("reconaccts", reconacct);
-		request.setAttribute("paymenttermss", paymentterms);
-		request.setAttribute("currencys", currency);
-		request.setAttribute("languages", language);
-		request.getRequestDispatcher("/displayvendor.jsp").forward(request, response);
 	}
 
 	/**
