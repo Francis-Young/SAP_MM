@@ -9,13 +9,14 @@ import java.util.ArrayList;
 
 public class RFQDao {
 	//插入一张RFQ
-	public static int addRFQ( RFQ rf) {
+	public static String addRFQ( RFQ rf) {
 		//建立与数据库的连接
 		int num=0;
+		String code="error";
 		Connection conn=DBUtil.getConnection();
 		try {
 			
-			String sql=""+ "insert into RFQ" +" (rfq_num,rfq_type,rfq_language,rfq_date,rfq_deadline,rfq_purchasing_org,rfq_purchasing_group,rfq_plant,requisition_num,vendor_code,rfq_coll) "+"values(default,?,?,?,?,?,?,?,?,?,?)";
+			String sql=""+ "insert into RFQ" +" (rfq_num,rfq_type,rfq_language,rfq_date,rfq_deadline,rfq_purchasing_org,rfq_purchasing_group,rfq_plant,requisition_code,vendor_code,rfq_coll) "+"values(default,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 		
 			psmt.setString(1, rf.getRfq_type());
@@ -25,7 +26,7 @@ public class RFQDao {
 			psmt.setString(5, rf.getRfq_purchasing_org());
 			psmt.setString(6, rf.getRfq_purchasing_group());
 			psmt.setString(7, rf.getRfq_plant());
-			psmt.setInt(8, rf.getRequisition_num());
+			psmt.setString(8, rf.getRequisition_code());
 			psmt.setString(9, rf.getVendor_code());
 			psmt.setString(10, rf.getRfq_coll());
 
@@ -36,13 +37,14 @@ public class RFQDao {
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {  
 				num= rs.getInt(1);
+				code = insertcode(num);
 		    }
 		}catch(SQLException e) {
             e.printStackTrace();
         }finally {
             DBUtil.closeConnection(conn);
         }
-		return num;
+		return code;
 	}
 	//更新RFQ
 	public static void updateRFQ( RFQ rf) {
@@ -50,7 +52,7 @@ public class RFQDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 			
-			String sql=""+ "update RFQ set rfq_type = ? ,rfq_language = ? ,rfq_date = ? ,rfq_deadline = ? ,rfq_purchasing_org = ? ,rfq_purchasing_group = ? ,rfq_plant = ? ,requisition_num = ? ,vendor_code = ? ,rfq_coll = ? where rfq_num = ? " ;
+			String sql=""+ "update RFQ set rfq_type = ? ,rfq_language = ? ,rfq_date = ? ,rfq_deadline = ? ,rfq_purchasing_org = ? ,rfq_purchasing_group = ? ,rfq_plant = ? ,requisition_code = ? ,vendor_code = ? ,rfq_coll = ? where rfq_code = ? " ;
 			PreparedStatement psmt = conn.prepareStatement(sql);
 		
 			psmt.setString(1, rf.getRfq_type());
@@ -60,10 +62,10 @@ public class RFQDao {
 			psmt.setString(5, rf.getRfq_purchasing_org());
 			psmt.setString(6, rf.getRfq_purchasing_group());
 			psmt.setString(7, rf.getRfq_plant());
-			psmt.setInt(8, rf.getRequisition_num());
+			psmt.setString(8, rf.getRequisition_code());
 			psmt.setString(9, rf.getVendor_code());
 			psmt.setString(10, rf.getRfq_coll());
-			psmt.setInt(11, rf.getRfq_num());
+			psmt.setString(11, rf.getRfq_code());
 			psmt.execute();
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -72,21 +74,21 @@ public class RFQDao {
         }
 	}
 	//根据RFQ编号查询
-	public static RFQ findRFQbyNum(int num) {
+	public static RFQ findRFQbyCode(String code) {
 		
 		RFQ rf=new RFQ();
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		try {
 		
-			String sql=""+"select * from RFQ where rfq_num = ?";
+			String sql=""+"select * from RFQ where rfq_code = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, num);
+			psmt.setString(1, code);
 			//执行查询语句
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
-				rf.setRequisition_num(rs.getInt("requisition_num"));
+				rf.setRequisition_code(rs.getString("requisition_code"));
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_type(rs.getString("rfq_type"));
 				rf.setRfq_language(rs.getString("rfq_language"));
@@ -97,6 +99,7 @@ public class RFQDao {
 				rf.setVendor_code(rs.getString("vendor_code"));
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_num(rs.getInt("rfq_num"));
+				rf.setRfq_code(rs.getString("rfq_code"));
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -109,21 +112,21 @@ public class RFQDao {
 		return rf;
 	}
 	//根据请购单号查询
-	public static RFQ findRFQbyrequiNum(int num) {
+	public static RFQ findRFQbyrequiCode(String code) {
 		
 		RFQ rf=new RFQ();
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		try {
 		
-			String sql=""+"select * from RFQ where requisition_num = ?";
+			String sql=""+"select * from RFQ where requisition_code = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, num);
+			psmt.setString(1, code);
 			//执行查询语句
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
-				rf.setRequisition_num(rs.getInt("requisition_num"));
+				rf.setRequisition_code(rs.getString("requisition_code"));
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_type(rs.getString("rfq_type"));
 				rf.setRfq_language(rs.getString("rfq_language"));
@@ -134,6 +137,7 @@ public class RFQDao {
 				rf.setVendor_code(rs.getString("vendor_code"));
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_num(rs.getInt("rfq_num"));
+				rf.setRfq_code(rs.getString("rfq_code"));
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -160,7 +164,7 @@ public class RFQDao {
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
-				rf.setRequisition_num(rs.getInt("requisition_num"));
+				rf.setRequisition_code(rs.getString("requisition_code"));
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_type(rs.getString("rfq_type"));
 				rf.setRfq_language(rs.getString("rfq_language"));
@@ -171,6 +175,7 @@ public class RFQDao {
 				rf.setVendor_code(rs.getString("vendor_code"));
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_num(rs.getInt("rfq_num"));
+				rf.setRfq_code(rs.getString("rfq_code"));
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -197,7 +202,7 @@ public class RFQDao {
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
-				rf.setRequisition_num(rs.getInt("requisition_num"));
+				rf.setRequisition_code(rs.getString("requisition_code"));
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_type(rs.getString("rfq_type"));
 				rf.setRfq_language(rs.getString("rfq_language"));
@@ -208,6 +213,7 @@ public class RFQDao {
 				rf.setVendor_code(rs.getString("vendor_code"));
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_num(rs.getInt("rfq_num"));
+				rf.setRfq_code(rs.getString("rfq_code"));
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -234,7 +240,7 @@ public class RFQDao {
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
-				rf.setRequisition_num(rs.getInt("requisition_num"));
+				rf.setRequisition_code(rs.getString("requisition_code"));
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_type(rs.getString("rfq_type"));
 				rf.setRfq_language(rs.getString("rfq_language"));
@@ -245,6 +251,7 @@ public class RFQDao {
 				rf.setVendor_code(rs.getString("vendor_code"));
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_num(rs.getInt("rfq_num"));
+				rf.setRfq_code(rs.getString("rfq_code"));
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -271,7 +278,7 @@ public class RFQDao {
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
-				rf.setRequisition_num(rs.getInt("requisition_num"));
+				rf.setRequisition_code(rs.getString("requisition_code"));
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_type(rs.getString("rfq_type"));
 				rf.setRfq_language(rs.getString("rfq_language"));
@@ -282,6 +289,7 @@ public class RFQDao {
 				rf.setVendor_code(rs.getString("vendor_code"));
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_num(rs.getInt("rfq_num"));
+				rf.setRfq_code(rs.getString("rfq_code"));
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -308,7 +316,7 @@ public class RFQDao {
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 			
-				rf.setRequisition_num(rs.getInt("requisition_num"));
+				rf.setRequisition_code(rs.getString("requisition_code"));
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_type(rs.getString("rfq_type"));
 				rf.setRfq_language(rs.getString("rfq_language"));
@@ -319,6 +327,7 @@ public class RFQDao {
 				rf.setVendor_code(rs.getString("vendor_code"));
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_num(rs.getInt("rfq_num"));
+				rf.setRfq_code(rs.getString("rfq_code"));
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -410,5 +419,42 @@ public class RFQDao {
 		
 		
 }
+	
+	public static String insertcode(int num) {//生成code
+		
+		//建立数据库连接
+		Connection conn=DBUtil.getConnection();
+		int res=-1;
+		
+		int lenofav=9;
+		String char0="";
+		String snum=String.valueOf(num);
+		for(int i=1;i<=lenofav-snum.length();i++)
+		{
+			char0+="0";
+		}
+		String code="6"+char0+snum;
+		
+		try {
+			
+			String sql=""+"update RFQ set rfq_code=? where rfq_num = ? ";
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setString(1, code);
+			
+			psmt.setInt(2, num);
+			//执行查询语句
+			res= psmt.executeUpdate();
+		
+		}catch(SQLException e) {
+            e.printStackTrace();
+        }catch(NullPointerException f){
+            f.printStackTrace();
+        }finally {
+            DBUtil.closeConnection(conn);
+        }
+		return code;
+		
+	}
+	
 }
 

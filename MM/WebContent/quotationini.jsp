@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" import="mm.bean.*"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -382,16 +382,22 @@ background:white;
 									
 								</div>
 							</div>
-
+<%
+String rfqcode="";
+if(session.getAttribute("RFQ")!=null)
+	{RFQ r =(RFQ)session.getAttribute("RFQ");
+	rfqcode=r.getRfq_code();
+	}
+%>
 							<div class="ibox-content">
 								
 									<div class="row">
 
 											<!--RFQ具体信息 -->
 																				<div class="form-group">
-											<label class="col-sm-2 control-label">RFQ编号</label>
+											<label class="col-sm-2 control-label">RFQ编号:</label>
 											<div class="col-sm-2">
-												<input name="rfqnum" id="rfqid" style="width:200px;" type="text" class="form-control"> 
+												<input name="rfqnum" id="rfqid" value=<%=rfqcode %>style="width:200px;" type="text" class="form-control"> 
 								<a style="float:right" onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
 											</div>
 											<div class="row">

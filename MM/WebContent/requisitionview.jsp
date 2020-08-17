@@ -364,7 +364,7 @@ Requisition r = (Requisition) session.getAttribute("Requisition");
 
 <label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">请购单编号：:</label>
 <div class="col-md-2">		
-<input name="org" type="text" readonly="readonly"  class="form-control" value=<%= r.getRequisition_num()%>>
+<input name="org" type="text" readonly="readonly"  class="form-control" value=<%= r.getRequisition_code()%>>
 
 </div>
 </div>
@@ -437,7 +437,7 @@ Requisition r = (Requisition) session.getAttribute("Requisition");
 
 <%
 
-ArrayList<Requisition_item> oilist= ReqItemDao.findRequItemByReqnum(r.getRequisition_num());
+ArrayList<Requisition_item> oilist= ReqItemDao.findRequItemByReqcode(r.getRequisition_code());
 for(int i=0;i<oilist.size();i++)
 {
 	Requisition_item qi=oilist.get(i);

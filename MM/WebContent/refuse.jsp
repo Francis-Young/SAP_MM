@@ -602,10 +602,7 @@ for(int i=0;i<qilist.size();i++)
 						<button type="button" class="btn btn-white" id="cleartoasts"><a href="Home.jsp">返回</a></button>
 					</div>
 				</div>
-				
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2020-2021
-				</div>
+			
 			</div>
 </form>
 		</div>

@@ -92,7 +92,7 @@ public class searchServlet extends HttpServlet {
 			String s="";
 		for(int i=0; i<rqlist.size();i++)
 		{
-			s += "mark0"+rqlist.get(i).getRequisition_num()+"mark1"+rqlist.get(i).getRequisition_discription()+"mark2"+rqlist.get(i).getRequisition_purchasegroup()+"mark3";
+			s += "mark0"+rqlist.get(i).getRequisition_code()+"mark1"+rqlist.get(i).getRequisition_discription()+"mark2"+rqlist.get(i).getRequisition_purchasegroup()+"mark3";
 			
 		}
 		System.out.println(s);

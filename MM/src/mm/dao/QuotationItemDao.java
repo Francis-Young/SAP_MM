@@ -14,10 +14,10 @@ public class QuotationItemDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 			
-			String sql=""+ "insert into Quotation_item" +" (quotation_item_num,quotation_num,price,quantity,delivery_date,currency_unit,material_num,quotation_status) "+"values(default,?,?,?,?,?,?,?)";
+			String sql=""+ "insert into Quotation_item" +" (quotation_item_num,quotation_code,price,quantity,delivery_date,currency_unit,material_num,quotation_status) "+"values(default,?,?,?,?,?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 		
-			psmt.setInt(1, qi.getQuotation_num());
+			psmt.setString(1, qi.getQuotation_code());
 			psmt.setBigDecimal(2, qi.getPrice());
 			psmt.setInt(3, qi.getQuantity());
 			psmt.setDate(4, qi.getDelivery_date());
@@ -47,7 +47,7 @@ public class QuotationItemDao {
 			if (rs.next()) {
 				Quotation_item qi=new Quotation_item();
 				qi.setQuotation_item_num(rs.getInt("quotation_item_num"));
-				qi.setQuotation_num(rs.getInt("quotation_num"));
+				qi.setQuotation_code(rs.getString("quotation_code"));
 				qi.setPrice(rs.getBigDecimal("price"));
 				qi.setQuotation_status(rs.getInt("quotation_status"));
 				qi.setQuantity(rs.getInt("quantity"));
@@ -69,22 +69,22 @@ public class QuotationItemDao {
 
 	
 	//根据quotation编号查询 
-	public static ArrayList<Quotation_item> findQuotationByQuoNum(int num) {
+	public static ArrayList<Quotation_item> findQuotationByQuoCode(String code) {
 		ArrayList<Quotation_item> qilist=new ArrayList<Quotation_item>();
 		Quotation_item qi=new Quotation_item();
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		try {
 		
-			String sql=""+"select * from Quotation_item where quotation_num = ?";
+			String sql=""+"select * from Quotation_item where quotation_code = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, num);
+			psmt.setString(1, code);
 			//执行查询语句
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
 			
 				qi.setQuotation_item_num(rs.getInt("quotation_item_num"));
-				qi.setQuotation_num(rs.getInt("quotation_num"));
+				qi.setQuotation_code(rs.getString("quotation_code"));
 				qi.setPrice(rs.getBigDecimal("price"));
 				qi.setQuotation_status(rs.getInt("quotation_status"));
 				qi.setQuantity(rs.getInt("quantity"));
@@ -119,7 +119,7 @@ public class QuotationItemDao {
 			while (rs.next()) {
 			
 				qi.setQuotation_item_num(rs.getInt("quotation_item_num"));
-				qi.setQuotation_num(rs.getInt("quotation_num"));
+				qi.setQuotation_code(rs.getString("quotation_code"));
 				qi.setPrice(rs.getBigDecimal("price"));
 				qi.setQuotation_status(rs.getInt("quotation_status"));
 				qi.setQuantity(rs.getInt("quantity"));
@@ -174,9 +174,9 @@ public class QuotationItemDao {
 		int res=-1;
 		try {
 		
-			String sql=""+"update Quotation set quotation_num = ? ,price = ? ,quantity = ? ,delivery_date = ? ,currency_unit = ? ,material_num = ?,Quotation_status= ? where quotation_item_num= ?";
+			String sql=""+"update Quotation set quotation_code = ? ,price = ? ,quantity = ? ,delivery_date = ? ,currency_unit = ? ,material_num = ?,Quotation_status= ? where quotation_item_num= ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, qi.getQuotation_num());
+			psmt.setString(1, qi.getQuotation_code());
 			psmt.setBigDecimal(2, qi.getPrice());
 			psmt.setInt(3, qi.getQuantity());
 			psmt.setDate(4, qi.getDelivery_date());

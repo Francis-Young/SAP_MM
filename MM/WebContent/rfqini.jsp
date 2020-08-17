@@ -436,13 +436,20 @@ background:white;
 										</div>
 									</div>
 
-									<div class="row">
+
+		
+	<div class="footer" style="position: fixed; bottom: 0;">
+			<div class="pull-right">
+				<div class="text-right">
+	 	<div class="row">
 										<div class="col-lg-12">
 											 <button type="button" class="btn btn-primary " onclick=openwin(1)>参考请购单</button>
 											<button type="button" class="btn btn-white" id="clearlasttoast">直接创建</button>
 										</div>
 									</div>
-								
+				</div>
+			</div>
+		</div>						
 
 </div>
 
@@ -452,12 +459,7 @@ background:white;
 				</div>
 			</div>
 
-			<div class="footer">
-				
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2014-2015
-				</div>
-			</div>
+
 
 		</div>
 	

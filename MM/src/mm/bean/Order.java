@@ -7,12 +7,13 @@ import java.sql.Date;
 public class Order implements Serializable {
 
 	private int order_num;
-	private int vendor_num;
-	private int rfq_num;
+	private String vendor_code;
+	private String rfq_code;
 	private java.sql.Date docdate;
 	private String pur_org;
 	private String pur_group;
-	
+	private String order_code;
+	private int order_num_m;
 	
 	public int getOrder_num() {
 		return order_num;
@@ -20,18 +21,7 @@ public class Order implements Serializable {
 	public void setOrder_num(int order_num) {
 		this.order_num = order_num;
 	}
-	public int getVendor_num() {
-		return vendor_num;
-	}
-	public void setVendor_num(int vendor_num) {
-		this.vendor_num = vendor_num;
-	}
-	public int getRfq_num() {
-		return rfq_num;
-	}
-	public void setRfq_num(int rfq_num) {
-		this.rfq_num = rfq_num;
-	}
+
 	public java.sql.Date getDocdate() {
 		return docdate;
 	}
@@ -49,6 +39,30 @@ public class Order implements Serializable {
 	}
 	public void setPur_group(String pur_group) {
 		this.pur_group = pur_group;
+	}
+	public String getOrder_code() {
+		return order_code;
+	}
+	public void setOrder_code(String order_code) {
+		this.order_code = order_code;
+	}
+	public String getRfq_code() {
+		return rfq_code;
+	}
+	public void setRfq_code(String rfq_code) {
+		this.rfq_code = rfq_code;
+	}
+	public String getVendor_code() {
+		return vendor_code;
+	}
+	public void setVendor_code(String vendor_code) {
+		this.vendor_code = vendor_code;
+	}
+	public int getOrder_num_m() {
+		return order_num_m;
+	}
+	public void setOrder_num_m(int order_num_m) {
+		this.order_num_m = order_num_m;
 	}
 	
 	

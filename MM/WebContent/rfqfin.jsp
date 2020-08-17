@@ -245,8 +245,8 @@ language="java" contentType="text/html; charset=UTF-8"
 //取出请购单的条目
 
 RFQ rfq= (RFQ)session.getAttribute("passdata");
-int requisition_num=rfq.getRequisition_num();
-ArrayList<Requisition_item> rilist=ReqItemDao.findRequItemByReqnum(requisition_num);
+String reqnum=rfq.getRequisition_code();
+ArrayList<Requisition_item> rilist=ReqItemDao.findRequItemByReqcode(reqnum);
 for(int i=0;i<rilist.size();i++)
 {
 Requisition_item ri = rilist.get(i);
