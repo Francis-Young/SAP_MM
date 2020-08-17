@@ -365,7 +365,7 @@ function vaildday()
 
 RFQ rfq= (RFQ)session.getAttribute("passrfq");
 
-ArrayList<RFQ_item> rilist=RFQItemDao.findRFQItemByRfqnum(rfq.getRfq_num());
+ArrayList<RFQ_item> rilist=RFQItemDao.findRFQItemByRfqCode(rfq.getRfq_code());
 for(int i=0;i<rilist.size();i++)
 {
 RFQ_item ri = rilist.get(i);

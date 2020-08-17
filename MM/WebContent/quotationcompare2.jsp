@@ -416,10 +416,10 @@ ArrayList<Quotation> quolist = new ArrayList<Quotation>();
 ArrayList<Material> matlist = (ArrayList<Material>)session.getAttribute("matli");
 for(int i=0;i<rfqlist.size();i++)
 {
-	int num = rfqlist.get(i).getRfq_num();
-	if(QuotationDao.isqoNumExist(num))
+	String num = rfqlist.get(i).getRfq_code();
+	if(QuotationDao.isqoCodeExist(num))
 	{
-		Quotation quo = QuotationDao.findQuotationByNum(num);
+		Quotation quo = QuotationDao.findQuotationByCode(num);
 		quolist.add(quo);
 	}
 	
@@ -442,7 +442,7 @@ out.print("<tr>");
 
 		out.print("<a style='background:#C5EAEE;text-decoration:none' href='rufuse.jsp?quonum="
 		+quolist.get(i).getQuotation_num()+" '>"+quolist.get(i).getQuotation_num()+"</a>");
-		out.print("<p style='background:#C5EAEE'>"+quolist.get(i).getVendor_num()+"</p>");
+		out.print("<p style='background:#C5EAEE'>"+quolist.get(i).getVendor_code()+"</p>");
 		out.print("<p style='background:#C5EAEE'>"+coll+"</p>");
 	out.print("</td>");
 	}
@@ -474,7 +474,7 @@ out.print("<tr>");
 		Quotation qo=quolist.get(j);
 		BigDecimal sumval = new BigDecimal("0");//某报价单关于某材料的总价值
 		int quantity = 0;
-		ArrayList<Quotation_item> quoitlist = QuotationItemDao.findQuotationItemByQiNum(qo.getQuotation_num());
+		ArrayList<Quotation_item> quoitlist = QuotationItemDao.findQuotationByQuoCode(qo.getQuotation_code());
 		for(int k=0;k<quoitlist.size();k++)
 		{
 			Quotation_item qit=quoitlist.get(k);
@@ -502,7 +502,7 @@ out.print("<tr>");
 		Quotation qo=quolist.get(j);
 		BigDecimal sumval = new BigDecimal("0");//某报价单关于某材料的总价值
 		int quantity = 0;
-		ArrayList<Quotation_item> quoitlist = QuotationItemDao.findQuotationItemByQiNum(qo.getQuotation_num());
+		ArrayList<Quotation_item> quoitlist = QuotationItemDao.findQuotationByQuoCode(qo.getQuotation_code());
 		for(int k=0;k<quoitlist.size();k++)
 		{
 			Quotation_item qit=quoitlist.get(k);

@@ -76,7 +76,7 @@ public class QuotationController extends HttpServlet{
 	private void view(HttpServletRequest req, HttpServletResponse resp) {
 		// TODO Auto-generated method stub
 		String quotationnum = req.getParameter("quotationnum");
-		Quotation o = QuotationDao.findQuotationByNum(Integer.parseInt(quotationnum));
+		Quotation o = QuotationDao.findQuotationByCode(quotationnum);
 		HttpSession session= req.getSession();
 		session.setAttribute("quotation", o);
 		req.getRequestDispatcher("quotationview.jsp");
@@ -93,8 +93,8 @@ public class QuotationController extends HttpServlet{
 		HttpSession session= req.getSession();
 		Quotation qo=(Quotation)session.getAttribute("refuse");
 		qo.setStatus(-1);
-		QuotationDao.modifyQuotationByNum(qo);
-		req.setAttribute("num", qo.getQuotation_num());
+		QuotationDao.modifyQuotationByCode(qo);
+		req.setAttribute("quonum", qo.getQuotation_code());
 		
 	}
 
@@ -115,10 +115,10 @@ public class QuotationController extends HttpServlet{
 
 		for(int i=0;i<rfqlist.size();i++)
 		{
-			int num = rfqlist.get(i).getRfq_num();
-			if(QuotationDao.isqoNumExist(num))
+			String quocode = rfqlist.get(i).getRfq_code();
+			if(QuotationDao.isqoCodeExist(quocode))
 			{
-				Quotation quo = QuotationDao.findQuotationByNum(num);
+				Quotation quo = QuotationDao.findQuotationByCode(quocode);
 				quolist.add(quo);
 			}
 			
@@ -127,8 +127,8 @@ public class QuotationController extends HttpServlet{
 		
 		for(int i=0;i<quolist.size();i++)
 		{
-			int num = quolist.get(i).getQuotation_num();
-			ArrayList<Quotation_item> qilist=QuotationItemDao.findQuotationItemByQiNum(num);
+			String code = quolist.get(i).getQuotation_code();
+			ArrayList<Quotation_item> qilist=QuotationItemDao.findQuotationByQuoCode(code);
 			for (int j=0;j<qilist.size();j++)
 			{
 				matlist.add(qilist.get(i).getMaterial_num());
@@ -178,15 +178,15 @@ public class QuotationController extends HttpServlet{
 		
 		RFQ rfq= (RFQ)session.getAttribute("passrfq");
 		Quotation quo=(Quotation)session.getAttribute("passquo");
-		quo.setRfq_num(rfq.getRfq_num());		
-		quo.setVendor_num(Integer.parseInt(rfq.getVendor_code()));
+		quo.setRfq_code(rfq.getRfq_code());		
+		quo.setVendor_code(rfq.getVendor_code());
 		
-		int quo_num =QuotationDao.addQuotation(quo);
-		quo.setQuotation_num(quo_num);
+		String quo_code =QuotationDao.addQuotation(quo);
+		quo.setQuotation_code(quo_code);
 		String [] itemture=(String[]) session.getAttribute("checkname");//被选中的item
 		//不确定这么写对不对
-		int rfqnum=rfq.getRfq_num();
-		ArrayList<RFQ_item> rilist=RFQItemDao.findRFQItemByRfqnum(rfqnum);
+		String rfqcode=rfq.getRfq_code();
+		ArrayList<RFQ_item> rilist=RFQItemDao.findRFQItemByRfqCode(rfqcode);
 	    BigDecimal value= new BigDecimal("0");
 		for(int i=0;i<itemture.length;i++ )
 		{
@@ -201,7 +201,7 @@ public class QuotationController extends HttpServlet{
 				qi.setDelivery_date(ri.getRequisition_deliverydate());
 				qi.setPrice(deprice);
 				qi.setQuantity(Integer.parseInt(quantity));
-				qi.setQuotation_num(quo_num);
+				qi.setQuotation_code(quo_code);
 				qi.setQuotation_status(0);//还没定。。
 				qi.setCurrency_unit("RMB");
 				QuotationItemDao.addQuotationItem(qi);
@@ -209,7 +209,7 @@ public class QuotationController extends HttpServlet{
 			}
 		}
 		quo.setValue(value);
-		QuotationDao.modifyQuotationByNum(quo);
+		QuotationDao.modifyQuotationByCode(quo);
 	}
 
 
@@ -226,17 +226,17 @@ public class QuotationController extends HttpServlet{
 	private void select(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int rfqnum=Integer.parseInt(req.getParameter("rfqnum"));
-		RFQ rfq = RFQDao.findRFQbyNum(rfqnum);
+		String rfqcode=req.getParameter("rfqnum");
+		RFQ rfq = RFQDao.findRFQbyCode(rfqcode);
 		
 		Quotation quo = new Quotation();
-		quo.setQuotation_num(rfqnum);
+		quo.setQuotation_code(rfqcode);
 		String vnums=rfq.getVendor_code();
 		Vendor vd = VendorDao.findVendorbynum(vnums);
 		HttpSession session= req.getSession();
 		session.setAttribute("passrfq",rfq);
 		session.setAttribute("passquo",quo);
-		req.setAttribute("rfqnum",rfq.getRfq_num());
+		req.setAttribute("rfqnum",rfq.getRfq_code());
 		req.setAttribute("rfqtype",rfq.getRfq_type());
 		req.setAttribute("rfqdate",rfq.getRfq_date().toString());
 		req.setAttribute("ddldate",rfq.getRfq_deadline().toString());

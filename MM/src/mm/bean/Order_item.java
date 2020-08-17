@@ -6,7 +6,7 @@ import java.sql.Date;
 
 public class Order_item implements Serializable {
 	private int order_item_num;
-	private int order_num;
+	private String order_code;
 	private int purchase_requisition_num;
 	private BigDecimal price;
 	private int quantity;
@@ -17,12 +17,7 @@ public class Order_item implements Serializable {
 	private String plant;
 	private String sloc;
 	
-	public int getOrder_num() {
-		return order_num;
-	}
-	public void setOrder_num(int order_num) {
-		this.order_num = order_num;
-	}
+
 	public int getPurchase_requisition_num() {
 		return purchase_requisition_num;
 	}
@@ -82,6 +77,12 @@ public class Order_item implements Serializable {
 	}
 	public void setPlant(String plant) {
 		this.plant = plant;
+	}
+	public String getOrder_code() {
+		return order_code;
+	}
+	public void setOrder_code(String order_code) {
+		this.order_code = order_code;
 	}
 	
 	

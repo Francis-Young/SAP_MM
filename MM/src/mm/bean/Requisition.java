@@ -8,7 +8,7 @@ public class Requisition implements Serializable {
 	private int requisition_num;
 	private String requisition_discription;
 	private String requisition_purchasegroup;
-	
+	private String requisition_code;
 	
 	public int getRequisition_num() {
 		return requisition_num;
@@ -27,6 +27,12 @@ public class Requisition implements Serializable {
 	}
 	public void setRequisition_purchasegroup(String requisition_purchasegroup) {
 		this.requisition_purchasegroup = requisition_purchasegroup;
+	}
+	public String getRequisition_code() {
+		return requisition_code;
+	}
+	public void setRequisition_code(String requisition_code) {
+		this.requisition_code = requisition_code;
 	}
 	
 	

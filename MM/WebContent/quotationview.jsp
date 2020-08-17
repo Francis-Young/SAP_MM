@@ -428,8 +428,8 @@ Quotation q = (Quotation) session.getAttribute("Quotation");
 <tbody>
 
 <%
-RFQ rfq= RFQDao.findRFQbyNum(q.getQuotation_num());
-ArrayList<Quotation_item> qilist= QuotationItemDao.findQuotationItemByQiNum(q.getQuotation_num());
+RFQ rfq= RFQDao.findRFQbyCode(q.getQuotation_code());
+ArrayList<Quotation_item> qilist= QuotationItemDao.findQuotationByQuoCode(q.getQuotation_code());
 for(int i=0;i<qilist.size();i++)
 {
 	Quotation_item qi=qilist.get(i);

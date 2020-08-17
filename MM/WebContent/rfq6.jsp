@@ -355,7 +355,7 @@ background:white;
 					<h2>创建RFQ</h2>
 					<ol class="breadcrumb">
 						<li><a href="index.html">主页</a></li>
-						<li>请购管理</li>
+						<li>RFQ管理</li>
 						<li class="active"><strong>创建RFQ</strong></li>
 					</ol>
 				</div>
@@ -468,7 +468,7 @@ String lan = rfq.getRfq_language();
 									<div class="row">
 										<div class="col-lg-12">
 											
-											<button type="submit" class="btn btn-white" id="clearlasttoast">保存</button>
+											<input type="submit" class="btn btn-white" id="clearlasttoast">保存</button>
 										</div>
 									</div>
 								

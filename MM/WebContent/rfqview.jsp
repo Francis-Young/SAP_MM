@@ -428,7 +428,7 @@ RFQ q = (RFQ) session.getAttribute("RFQ");
 
 <%
 
-ArrayList<RFQ_item> qilist= RFQItemDao.findRFQItemByRfqnum(q.getRfq_num());
+ArrayList<RFQ_item> qilist= RFQItemDao.findRFQItemByRfqCode(q.getRfq_code());
 for(int i=0;i<qilist.size();i++)
 {
 	RFQ_item qi=qilist.get(i);

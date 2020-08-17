@@ -398,7 +398,6 @@ if(!(session.getAttribute("rnum")==null))
 										
 											</div>
 										</div>
-
 										</div>
 									</div>
 

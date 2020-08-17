@@ -7,7 +7,7 @@ import java.sql.Date;
 public class Quotation_item implements Serializable {
 
 	private int quotation_item_num;
-	private int quotation_num;
+	private String quotation_code;
 	private String material_num;
 	private BigDecimal price;
 	private int quantity;
@@ -22,12 +22,6 @@ public class Quotation_item implements Serializable {
 	}
 	public void setQuotation_item_num(int quotation_item_num) {
 		this.quotation_item_num = quotation_item_num;
-	}
-	public int getQuotation_num() {
-		return quotation_num;
-	}
-	public void setQuotation_num(int quotation_num) {
-		this.quotation_num = quotation_num;
 	}
 
 	public BigDecimal getPrice() {
@@ -71,6 +65,12 @@ public class Quotation_item implements Serializable {
 	}
 	public void setStorageloc(String storageloc) {
 		this.storageloc = storageloc;
+	}
+	public String getQuotation_code() {
+		return quotation_code;
+	}
+	public void setQuotation_code(String quotation_code) {
+		this.quotation_code = quotation_code;
 	}
 	
 	
