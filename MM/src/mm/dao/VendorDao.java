@@ -302,6 +302,37 @@ public class VendorDao {
 		DBUtil.closeConnection(conn);
 		return v;
 	}
+	public static Vendor findVendorbyCode(String vcode) {
+		Connection conn = DBUtil.getConnection();
+		Vendor v = new Vendor();
+		try {
+			PreparedStatement stat = conn.prepareStatement(
+					"select * from Vendor where vendor_code=?");
+			stat.setString(1, vcode);
+			ResultSet rs = stat.executeQuery();
+			if (rs.next()) {
+				v.setVtype(rs.getString("vendor_type"));
+				v.setVname(rs.getString("vendor_name"));
+				v.setVtaxnum(rs.getString("vendor_taxnum"));
+				v.setVcompanycode(rs.getString("vendor_companycode"));
+				v.setVreconacct(rs.getString("vendor_reconacct"));
+				v.setVpaymentterms(rs.getString("vendor_paymentterms"));
+				v.setVcurrency(rs.getString("vendor_currency"));
+				v.setVstreet(rs.getString("vendor_street"));
+				v.setVpostalcode(rs.getString("vendor_postalcode"));
+				v.setVcity(rs.getString("vendor_city"));
+				v.setVcountry(rs.getString("vendor_country"));
+				v.setVregion(rs.getString("vendor_region"));
+				v.setVlanguage(rs.getString("vendor_language"));
+				v.setVclerk(rs.getString("vendor_clerk"));
+				v.setVcode(vcode);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DBUtil.closeConnection(conn);
+		return v;
+	}
 
 	public static ArrayList<Vendor> findVendorByAnything(Vendor vd) {
 		ArrayList<Vendor> rqlist = new ArrayList<Vendor>();

@@ -520,9 +520,9 @@ for(int i=0;i<venlist.size();i++)
 	for(int j=0;j<qolist.size();j++)
 	{
 		Quotation qo=qolist.get(j);
-		if(String.valueOf(qo.getVendor_num()).equals(venlist.get(i).getVnum()) )//如果是此供应商
+		if(String.valueOf(qo.getVendor_code()).equals(venlist.get(i).getVcode()) )//如果是此供应商
 		out.print("<div class='item'>");
-		out.print("<a href='orderfin.jsp?quo="+qo.getQuotation_num()+"'>"+qo.getQuotation_num()+"</a></div>");
+		out.print("<a href='orderfin.jsp?quo="+qo.getQuotation_code()+"'>"+qo.getQuotation_code()+"</a></div>");
 		out.print("<li class='item_divider'></li>");
 	}
 	out.print("<li class='menu_divider'></li>");

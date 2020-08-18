@@ -351,17 +351,17 @@ function splitRow(){
 
 <%
 
-int quonum=Integer.parseInt(request.getAttribute("quo").toString());
+String quonum=request.getAttribute("quo").toString();
 session.setAttribute("rfqnum", quonum);
-Quotation qo=QuotationDao.findQuotationByNum(quonum);
-RFQ rfq=RFQDao.findRFQbyNum(quonum);
+Quotation qo=QuotationDao.findQuotationByCode(quonum);
+RFQ rfq=RFQDao.findRFQbyCode(quonum);
 session.setAttribute("rfq", rfq);
 if(qo.getStatus()==-1)
 {
 	request.getRequestDispatcher("ordererror.jsp");
 	//out.print("<h2>此报价单已被否决</h2>");
 }
-Vendor v=VendorDao.findVendorbynum(String.valueOf(qo.getVendor_num()));
+Vendor v=VendorDao.findVendorbyCode((qo.getVendor_code()));
 
 
 
@@ -384,7 +384,7 @@ Vendor v=VendorDao.findVendorbynum(String.valueOf(qo.getVendor_num()));
 </div>
 <div >	
 <label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">供应商:</label>
-<div class="col-md-2">		<input name="vendornum" type="text"  class="form-control" value=<%=v.getVnum() %>> <span><%=v.getVname() %></span>
+<div class="col-md-2">		<input name="vendornum" type="text"  class="form-control" value=<%=v.getVcode() %>> <span><%=v.getVname() %></span>
 </div>
 </div>
 <div >	
@@ -445,7 +445,7 @@ Vendor v=VendorDao.findVendorbynum(String.valueOf(qo.getVendor_num()));
 
 <%
 
-ArrayList<Quotation_item> qilist= QuotationItemDao.findQuotationByQuoNum(quonum);
+ArrayList<Quotation_item> qilist= QuotationItemDao.findQuotationByQuoCode(quonum);
 for(int i=0;i<qilist.size();i++)
 {
 	Quotation_item qi=qilist.get(i);
