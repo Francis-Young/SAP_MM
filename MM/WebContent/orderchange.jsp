@@ -325,7 +325,7 @@ function splitRow(){
 
 
 Order o = (Order)session.getAttribute("order");
-Vendor v = VendorDao.findVendorbynum(String.valueOf(o.getVendor_num()));
+Vendor v = VendorDao.findVendorbyCode(o.getVendor_code());
 
 %>	
 	<form class="m-t" role="form" action="${pageContext.request.contextPath}/order" method="post">
@@ -356,7 +356,7 @@ Vendor v = VendorDao.findVendorbynum(String.valueOf(o.getVendor_num()));
 
 <label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">订单编号:</label>
 <div class="col-md-2">		
-<input name="org" type="text"  class="form-control" value=<%= o.getOrder_num()%>>
+<input name="org" type="text"  class="form-control" value=<%= o.getOrder_code()%>>
 
 </div>
 </div>
@@ -364,7 +364,7 @@ Vendor v = VendorDao.findVendorbynum(String.valueOf(o.getVendor_num()));
 
 <label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">供应商:</label>
 <div class="col-md-2">		
-<input name="org" type="text"  class="form-control" value=<%= v.getVnum()%>><span><%=v.getVname() %></span>
+<input name="org" type="text"  class="form-control" value=<%= v.getVcode()%>><span><%=v.getVcode() %></span>
 
 </div>
 </div>
@@ -453,7 +453,7 @@ Vendor v = VendorDao.findVendorbynum(String.valueOf(o.getVendor_num()));
 
 <%
 
-ArrayList<Order_item> qilist= OrderItemDao.findOrderItemByONum(o.getOrder_num());
+ArrayList<Order_item> qilist= OrderItemDao.findOrderItemByOCode(o.getOrder_code());
 for(int i=0;i<qilist.size();i++)
 {
 	Order_item qi=qilist.get(i);

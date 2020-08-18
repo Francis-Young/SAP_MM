@@ -82,16 +82,15 @@ public class OrderController extends HttpServlet{
 		Date docdate = new Date((new java.util.Date()).getTime());
 
 		Order o = new Order();
-		o.setRfq_num(00000000);//"no reference
+		//o.setRfq_num(00000000);//"no reference
 		o.setDocdate(docdate);
 		String org=req.getParameter("org");
 		String gro=req.getParameter("gro");
 		o.setPur_group(gro);
 		o.setPur_org(org);
 		String vnum=req.getParameter("vendornum");
-		int vennum=Integer.parseInt(vnum);
-		o.setVendor_num(vennum);
-		int onum = OrderDao.addOrder(o);
+		o.setVendor_code(vnum);
+		String onum = OrderDao.addOrder(o);
 		session.setAttribute("onum",onum );
 		String[] answerArr = req.getParameterValues("cbox");//查被选中的item
 		String[] materialrArr = req.getParameterValues("material");//查物料
@@ -110,7 +109,7 @@ public class OrderController extends HttpServlet{
 			Order_item oi = new Order_item();
 			if(answerArr[i].equals("true"))
 			{
-				oi.setOrder_num(onum);
+				oi.setOrder_code(onum);
 				String material_num=materialrArr[i];
 				oi.setMaterial_num(material_num);
 				oi.setDelivery_date(strToDate(deliverydateArr[i]));
@@ -137,7 +136,7 @@ public class OrderController extends HttpServlet{
 	private void view(HttpServletRequest req, HttpServletResponse resp) {
 		// TODO Auto-generated method stub
 		String ordernum = req.getParameter("ordernum");
-		Order o = OrderDao.findOrderByNum(Integer.parseInt(ordernum));
+		Order o = OrderDao.findOrderByCode(ordernum);
 		HttpSession session= req.getSession();
 		session.setAttribute("order", o);
 		req.getRequestDispatcher("orderview.jsp");
@@ -157,14 +156,14 @@ public class OrderController extends HttpServlet{
 		for(int i=0;i<qilist.size();i++)
 		{
 			Quotation_item qi=qilist.get(i);
-			Quotation qo =QuotationDao.findQuotationByNum(qi.getQuotation_num());
+			Quotation qo =QuotationDao.findQuotationByCode(qi.getQuotation_code());
 			qolist.add(qo);
 		}
 		ArrayList<Vendor> venlist=new ArrayList<Vendor>();
 		for(int i=0;i<qolist.size();i++)
 		{
 			Quotation qo=qolist.get(i);
-			Vendor v=VendorDao.findVendorbynum(String.valueOf(qo.getVendor_num()));
+			Vendor v=VendorDao.findVendorbyCode(qo.getVendor_code());
 			venlist.add(v);
 		}
 		qolist=removeDuplicateWithOrder(qolist);
@@ -207,22 +206,22 @@ public class OrderController extends HttpServlet{
 	private void save(HttpServletRequest req, HttpServletResponse resp) {
 		// TODO Auto-generated method stub
 		HttpSession session= req.getSession();
-		int rfqnum = (int)session.getAttribute("rfqnum");
+		String rfq_code = (String) session.getAttribute("rfqnum");
 	
 		Date docdate = new Date((new java.util.Date()).getTime());
 
 		Order o = new Order();
-		o.setRfq_num(rfqnum);
+		o.setRfq_code(rfq_code);
 		o.setDocdate(docdate);
 		String org=req.getParameter("org");
 		String gro=req.getParameter("gro");
 		o.setPur_group(gro);
 		o.setPur_org(org);
-		Quotation qo=QuotationDao.findQuotationByNum(rfqnum);
+		Quotation qo=QuotationDao.findQuotationByCode(rfq_code);
 
 		RFQ rfq= (RFQ)session.getAttribute("rfq");
-		o.setVendor_num(Integer.parseInt(rfq.getVendor_code()));
-		int onum = OrderDao.addOrder(o);
+		o.setVendor_code(rfq.getVendor_code());
+		String onum = OrderDao.addOrder(o);
 		session.setAttribute("onum",onum );
 		String[] answerArr = req.getParameterValues("cbox");//查被选中的item
 		String[] materialrArr = req.getParameterValues("material");//查物料
@@ -241,7 +240,7 @@ public class OrderController extends HttpServlet{
 			Order_item oi = new Order_item();
 			if(answerArr[i].equals("true"))
 			{
-				oi.setOrder_num(onum);
+				oi.setOrder_code(onum);
 				String material_num=materialrArr[i];
 				oi.setMaterial_num(material_num);
 				oi.setDelivery_date(strToDate(deliverydateArr[i]));
@@ -287,13 +286,13 @@ public class OrderController extends HttpServlet{
 	private void select(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int rfqnum=Integer.parseInt(req.getParameter("rfqnum"));
-		RFQ rfq = RFQDao.findRFQbyNum(rfqnum);
+		String rfqnum=req.getParameter("rfqnum");
+		RFQ rfq = RFQDao.findRFQbyCode(rfqnum);
 		
 		Quotation quo = new Quotation();
-		quo.setQuotation_num(rfqnum);
+		quo.setQuotation_code(rfqnum);
 		String vnums=rfq.getVendor_code();
-		Vendor vd = VendorDao.findVendorbynum(vnums);
+		Vendor vd = VendorDao.findVendorbyCode(vnums);
 		HttpSession session= req.getSession();
 		session.setAttribute("passrfq",rfq);
 		session.setAttribute("passquo",quo);

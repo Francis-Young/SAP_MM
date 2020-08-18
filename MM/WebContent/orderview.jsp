@@ -432,8 +432,8 @@ Order o = (Order) session.getAttribute("order");
 
 <%
 
-ArrayList<Order_item> oilist= OrderItemDao.findOrderItemByONum(o.getOrder_num());
-for(int i=0;i<oilist.size();i++)
+ArrayList<Order_item> oilist= OrderItemDao.findOrderItemByOCode(o.getOrder_code())
+;for(int i=0;i<oilist.size();i++)
 {
 	Order_item qi=oilist.get(i);
 	Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
