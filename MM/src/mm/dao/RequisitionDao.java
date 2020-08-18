@@ -87,11 +87,21 @@ public class RequisitionDao {
 		try {
 		
 			String sql=""+"select * from Requisition ";
+			int flag=0;
 			if (!rq.getRequisition_discription().equals("xx"))
-				sql+="where requisition_discription ="+'"'+rq.getRequisition_discription()+'"'+",";
+			{
+				sql+="where requisition_discription ="+'"'+rq.getRequisition_discription()+'"';
+				flag=1;
+			}
 			if (!rq.getRequisition_purchasegroup().equals("xx"))
-				sql+="where requisition_purchasegroup ="+'"'+rq.getRequisition_purchasegroup()+'"';
-			sql = sql.substring(0, sql.length() - 1);
+			{
+				if(flag==1)
+					sql+=" AND  ";
+				else
+					sql+=" where  ";
+				sql+=" requisition_purchasegroup ="+'"'+rq.getRequisition_purchasegroup()+'"';
+				flag=1;
+			}
 			System.out.println(sql);
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			
