@@ -50,15 +50,14 @@ public class vendorSearchServlet extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 	    resp.setHeader("Cache-Control", "no-cache"); 
 		String key= req.getParameter("key");
-		System.out.println(key);
-		String vcity="xx";
-		String vcountry="xx";
-		String vcompanycode="xx";
-		String vname="xx";
-		String vtype="xx";
-		String vclerk="xx";
+		String vcity="xx1";
+		String vcountry="xx2";
+		String vcompanycode="xx3";
+		String vname="xx4";
+		String vtype="xx5";
+		String vclerk="xx6";
 		
-		String pattern1 ="(.*),";//description
+		String pattern1 ="(.*),mark1";//description
 	    // 创建 Pattern 对象
 	    Pattern r = Pattern.compile(pattern1);
 	    // 现在创建 matcher 对象
@@ -68,15 +67,17 @@ public class vendorSearchServlet extends HttpServlet {
 	    	vname=m.group(1);
 	    }
 	    
-	    String pattern2 =",(.*)";//description
+	    String pattern2 ;//description
 	    // 创建 Pattern 对象
-	    r = Pattern.compile(pattern2);
-	    // 现在创建 matcher 对象
-	    m = r.matcher(key);
 	    for (int i=1;i<=5;i++)
 	    	{
-	    	if(m.find())
+	    	pattern2 =",mark"+i+"(.*),"+",mark"+(i+1);
+	    	 r = Pattern.compile(pattern2);
+	 	    // 现在创建 matcher 对象
+	 	    m = r.matcher(key);
+	    	if(m.find()&&!(m.group(1).equals("")))
 	    	{
+	    		System.out.println("sd"+m.group(1));
 	    		if(i==1)
 	    		    vtype=m.group(1);
 	    		if(i==2)
@@ -87,12 +88,14 @@ public class vendorSearchServlet extends HttpServlet {
 		    		vcity=m.group(1);
 	    		if(i==5)
 		    		vclerk=m.group(1);
-	    	
 	    	}
 	    	}
 	    
-		
-		
+		System.out.println(vcity);
+		System.out.println(vclerk);
+		System.out.println(vcompanycode);
+		System.out.println(vcountry);
+		System.out.println(vname);
 		Vendor vd = new Vendor();
 		vd.setVcity(vcity);
 		vd.setVcountry(vcountry);
@@ -100,7 +103,7 @@ public class vendorSearchServlet extends HttpServlet {
 		vd.setVname(vname);
 		vd.setVtype(vtype);
 		vd.setVclerk(vclerk);
-		
+	
 		
 		List<Vendor> vli=VendorDao.findVendorByAnything(vd);
 		
