@@ -51,7 +51,6 @@
 <script src="js/plugins/summernote/summernote.min.js"></script>
 
 <!-- Data picker -->
-<script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
 
 <script>
 function initDatePicker(ele){
@@ -182,60 +181,97 @@ function splitRow(){
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element">
-							<span> <img alt="image" class="img-circle"
-								src="img/profile_small.jpg" />
+							<span> <img height="48px" width="48px" alt="image"
+								class="img-circle" src="<%=session.getAttribute("uportrait")%>" />
 							</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<span class="clear"> <span class="block m-t-xs"> <strong
-										class="font-bold">王昆</strong>
-								</span> <span class="text-muted text-xs block">管理员 <b
+										class="font-bold"><%=session.getAttribute("uname")%></strong>
+								</span> <span class="text-muted text-xs block"><%=session.getAttribute("upermission")%><b
 										class="caret"></b></span>
 							</span>
 							</a>
 							<ul class="dropdown-menu animated fadeInRight m-t-xs">
-								<li><a href="profile.html">个人信息</a></li>
-								<li><a href="contacts.html">联系方式</a></li>
-								<li><a href="mailbox.html">邮箱</a></li>
+								<li><a>个人信息</a></li>
+								<li><a>联系方式</a></li>
+								<li><a>邮箱</a></li>
 								<li class="divider"></li>
-								<li><a href="login.html">退出登录</a></li>
+								<li><a href="Login">退出登录</a></li>
 							</ul>
 						</div>
 						<div class="logo-element">IN+</div>
 					</li>
-					<li><a href="layouts.html"><i class="fa fa-home"></i> <span
-							class="nav-label">主页</span></a></li>
-					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
-							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
+					<li><a href="Home"><i class="fa fa-home"></i> <span class="nav-label">主页</span></a></li>
+					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="graph_flot.html">创建供应商</a></li>
-							<li><a href="graph_morris.html">维护供应商</a></li>
+							<li><a href="CreateVendor">创建供应商</a></li>
+							<li><a href="SelectVendor?type=display">查询供应商</a></li>
+							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
-					<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
-							class="nav-label">请购</span><span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level collapse">
-							<li><a href="form_basic.html"></a></li>
-							<li><a href="form_advanced.html">创建请购单</a></li>
-							<li><a href="form_wizard.html">分步引导</a></li>
-							<li><a href="form_file_upload.html">文件上传</a></li>
-							<li><a href="form_editors.html">富文本编辑</a></li>
-							<li><a href="form_markdown.html">Markdown</a></li>
-						</ul></li>
+						
+						
+						
+						<li class="active">
+                      <a href="#"><i class="fa fa-shopping-cart"></i><span class="nav-label">采购管理 </span><span class="fa arrow"></span></a>
+                      <ul class="nav nav-second-level collapse in" style="">
+                          <li class="">
+                              <a href="#">请购单管理 <span class="fa arrow"></span></a>
+                              <ul class="nav nav-third-level collapse" style="height: 0px;">
+                                  <li>
+                                      <a href="requisitionini.jsp">创建请购单 </a>
+                                  </li>
+                                  <li>
+                                      <li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+                                
+                              
 
-					<li><a href="#"><i class="fa fa-files-o"></i> <span
-							class="nav-label">收货</span><span class="fa arrow"></span></a>
+                              </ul>
+                          </li>
+                           <li class="">
+                              <a href="#">RFQ管理 <span class="fa arrow"></span></a>
+                              <ul class="nav nav-third-level collapse" style="height: 0px;">
+                                  <li>
+                                     <a href="rfqini.jsp">创建RFQ </a>
+                                  </li>
+                                  <li>
+                                     <a href="rfqleadview.jsp">查看RFQ </a>
+                                  </li>
+                            
+
+                              </ul>
+                          </li> <li class="">
+                              <a href="#">报价单管理 <span class="fa arrow"></span></a>
+                              <ul class="nav nav-third-level collapse" style="height: 0px;">
+                                  <li>
+                                      <a href="quotationini.jsp">维护报价单 </a>
+                                  </li>
+                                  <li>
+                                      <a href="quotationcompare.jsp">比对报价单 </a>
+                                  </li>
+
+                              </ul>
+                          </li> <li class="">
+                              <a href="#">订单管理 <span class="fa arrow"></span></a>
+                              <ul class="nav nav-third-level collapse" style="height: 0px;">
+							<li><a href="orderini.jsp">创建订单 </a></li>
+							<li><a href="orderleadview.jsp">查看订单 </a></li>
+							<li><a href="orderleadchange.jsp">维护订单 </a></li>
+
+                              </ul>
+                          </li>
+                      </ul>
+                  </li>
+                  
+		
+
+					<li><a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">收货管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="search_results.html">搜索结果</a></li>
-							<li><a href="lockscreen.html">锁屏</a></li>
-							<li><a href="invoice.html">发票</a></li>
-							<li><a href="login.html">登录</a></li>
-							<li><a href="login_two_columns.html">登录 v.2</a></li>
-							<li><a href="forgot_password.html">忘记密码</a></li>
-							<li><a href="register.html">注册</a></li>
-							<li><a href="404.html">404</a></li>
-							<li><a href="500.html">500</a></li>
-							<li><a href="empty_page.html">空白页面</a></li>
+							<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
+							<li><a href="showstock.jsp">查询库存 </a></li>
+							<li><a href="createpayment.jsp">创建发票 </a></li>
+							<li><a href="postpayment.jsp">付款 </a></li>
+							<li><a href="account.jsp">查看应付账款 </a></li>
 						</ul></li>
 				</ul>
-
 			</div>
 		</nav>
 
@@ -312,11 +348,11 @@ function splitRow(){
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>创建订单</h2>
+					<h2>查看请购单</h2>
 					<ol class="breadcrumb">
 						<li><a href="index.html">主页</a></li>
-						<li>订单管理</li>
-						<li class="active"><strong>创建订单</strong></li>
+						<li>请购单管理</li>
+						<li class="active"><strong>查看请购单</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -351,7 +387,7 @@ function splitRow(){
 
 <%
 
-Requisition r = (Requisition) session.getAttribute("Requisition");
+Requisition r = (Requisition) session.getAttribute("requisition");
 
 
 
@@ -362,7 +398,7 @@ Requisition r = (Requisition) session.getAttribute("Requisition");
 	<!-- 换行有问题 -->					
 <div >									
 
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">请购单编号：:</label>
+<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">请购单编号:</label>
 <div class="col-md-2">		
 <input name="org" type="text" readonly="readonly"  class="form-control" value=<%= r.getRequisition_code()%>>
 
@@ -381,12 +417,7 @@ Requisition r = (Requisition) session.getAttribute("Requisition");
 </div>
 
 
-<div class="form-group">
-				<label class="col-sm-2 control-label">头部注明</label>
-				<div class="col-sm-10">
-					<p><%out.print(r.getRequisition_discription()); %></p>
-				</div>
-			</div>
+
 
 <br>						
 						
@@ -397,15 +428,16 @@ Requisition r = (Requisition) session.getAttribute("Requisition");
 								
 
 									<div class="row">
-										<div class="col-lg-12">
-										
-											<button type="button" class="btn btn-white"
-												id="clearlasttoast">清除</button>
-										</div>
+								<div class="form-group">
+				<label class="col-sm-2 control-label">头部注明</label>
+				<div class="col-sm-10">
+					<p><%out.print(r.getRequisition_discription()); %></p>
+				</div>
+			</div>
 									</div>
 							<!-- tab -->	
 								
-		<div class="tabs-container">
+		<div class="tabs-container" >
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> 送货时间表</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">材料信息</a></li>
@@ -414,8 +446,8 @@ Requisition r = (Requisition) session.getAttribute("Requisition");
                             <div id="tab-1" class="tab-pane active">
                                 <div class="panel-body">
              <div style="width:950px;  overflow-x:scroll;">										
-<div class="table-b">
-<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="100%">
+<div class="table-b" style="width:1300px">
+<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="1250px">
 <thead>
 <tr>
 <th><input type="checkbox" id="checkbox0"></th>
@@ -451,20 +483,18 @@ for(int i=0;i<oilist.size();i++)
 		out.print("<td>"+(i*10+10)+"</td>");
 		out.print("<td>"+1+"</td>");
 		out.print(s1+"material"+s3+m.getMaterial_num()+s4);  //name:material id:m几
-		out.print(s1+"shorttext"+s3+m.getMaterial_shorttext()+s4);
+		out.print(s1+"shorttext"+s3+m.getMaterial_discr()+s4);
 		out.print(s1+"quantity"+s3+qi.getRequisition_quantity()+s4);
 		out.print(s1+"baseunit"+s3+m.getMaterial_baseunit()+s4);
-		out.print("<div class='input-group date'> <span class='input-group-addon'>"+
+		out.print("<td><div class='input-group date'> <span class='input-group-addon'>"+
 		"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+i+
-		"' type='text' value='"+qi.getRequisition_deliverydate().toString()+"' class='form-control'></div>");
+		"' type='text' readonly='true' value='"+qi.getRequisition_deliverydate().toString()+"' class='form-control'></div></td>");
 
 		out.print(s1+"materialgroup"+s3+m.getMaterial_group()+s4);
 		out.print(s1+"plant"+s3+qi.getRequisition_plant()+s4);
 		out.print(s1+"storageloc"+s3+qi.getRequisition_storageloc()+s4);
 	out.print("</tr>");
-	out.print("<script>");
-	out.print("initDatePicker($('.input-group.date'));");
-	out.print("</script>");
+
 }
 
 
@@ -472,7 +502,6 @@ for(int i=0;i<oilist.size();i++)
 
 </tbody>
 </table>
-<input type="button" class="btn btn-info  dim" onClick="addRow();" style="font-size:16px;" value="+"/><span >&nbsp;<button class="btn btn-info " type="button"><i class="fa fa-paste"></i> split</button></span>
 </div>
 </div>
 <br>
@@ -541,14 +570,19 @@ for(int i=0;i<qilist.size();i++)
                             </div>
                             <div id="tab-2" class="tab-pane">
                                 <div class="panel-body">
-                                    <strong>Donec quam felis</strong>
-
-                                    <p>千未知的植物注意到我：当我听到在茎的小世界的嗡嗡声，和熟悉的昆虫无数难以形容的形式
-                                        然后，我感觉到全能者的存在，他在自己的形象中形成了我们，并且呼吸</p>
-
-                                    <p>I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite
-                                        sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet.</p>
-                                </div>
+               <% for(int i=0;i<oilist.size();i++)
+               {
+            		Requisition_item qi=oilist.get(i);
+            		Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
+                    out.print("<strong>"+m.getMaterial_num()+"<strong>");
+                    out.print("<p>MRP类型:"+m.getMaterial_MRPtype()+"</p>");
+                    out.print("<p>描述:"+m.getMaterial_discr()+"</p>");
+                                    
+               }              
+              %>                
+                                
+                             </div>    
+                                
                             </div>
                         </div>
 
@@ -579,13 +613,12 @@ for(int i=0;i<qilist.size();i++)
 			<div class="footer" style="position: fixed; bottom: 0;">
 				<div class="pull-right">
 					<div class="text-right">
-						<input type="submit"  value="保存" class="btn btn-success btn-sm demo2" id="showtoast">
-						<button type="button" class="btn btn-white" id="cleartoasts"><a href="Home.jsp">返回</a></button>
+					
+						<button type="button" class="btn btn-white" id="cleartoasts"><a href="requisitionleadview.jsp">返回</a></button>
 					</div>
 				</div>
 				
 				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2020-2021
 				</div>
 			</div>
 </form>
