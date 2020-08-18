@@ -1,5 +1,3 @@
-<%@page import="mm.dao.*"%>
-<%@page import="mm.bean.*,java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -64,7 +62,15 @@ function initDatePicker(ele){
 }
     $(document).ready(function(){
 
+       // $('.summernote').summernote();
 
+   //     $('.input-group.date').datepicker({
+    //        todayBtn: "linked",
+   //         keyboardNavigation: false,
+   //         forceParse: false,
+   //         calendarWeeks: true,
+   //         autoclose: true
+   //     });
 		initDatePicker($(".input-group.date"));
    });
     
@@ -72,98 +78,40 @@ function initDatePicker(ele){
     
 </script>
 
+<script type="text/javascript">
+var itemNo = 0;//---添加行
+</script>
 <script>
-function addRow(){
-	
-	var oTable = document.getElementById("oTable");
-	var itemNo=oTable.rows.length+1;
-	
-	
-	
-	
-	var s1="<input name='";
-	
-
-	var s4="'  type='text' class='form-control' /> ";
-    
+function addRow(){		
+	itemNo+=10;
+	document.getElementById('num').value=itemNo;
+    var oTable = document.getElementById("oTable");
     var tBodies = oTable.tBodies;
     var tbody = tBodies[0];
     var tr = tbody.insertRow(tbody.rows.length);
     var td_1 = tr.insertCell(0);
-    td_1.innerHTML = "<input type='checkbox' name='cbox'></td>";
-    
+    td_1.innerHTML = itemNo;
     
     var td_2 = tr.insertCell(1);
-    td_2.innerHTML = itemNo*10;
-    
+    td_2.innerHTML = '<input name="material'+itemNo+'" id="vname" type="text" class="form-control" placeholder="输入材料编号..." />';
     var td_3 = tr.insertCell(2);
-    td_3.innerHTML = "unCheck";
+    td_3.innerHTML = '<input class="form-control" name="quantity'+itemNo+'" id="vaddress" type="text" class="form-control" placeholder="输入请购数量 ..."></input>';
     var td_4 = tr.insertCell(3);
-    td_4.innerHTML = s1+"material"+s4;
+    td_4.innerHTML = 	'<div id="'+itemNo+'" class="input-group date"> <span class="input-group-addon">'+
+'<i class="fa fa-calendar"></i></span><input name="deliverydate'+itemNo+'" type="text" class="form-control" readonly="readonly">'+
+'</div>';
     var td_5 = tr.insertCell(4);
-    td_5.innerHTML = "默认";
+    td_5.innerHTML = '<input name="plant'+itemNo+'" id="showEasing" type="text" placeholder="输入运送工厂..." class="form-control" />';
     var td_6 = tr.insertCell(5);
-    td_6.innerHTML = s1+"quantity"+s4;
+    td_6.innerHTML = '<input name="storloc'+itemNo+'" id="showEasing" type="text" placeholder="输入仓库地点..." class="form-control" />';
     var td_7 = tr.insertCell(6);
-    td_7.innerHTML = "默认";
-    var td_8 = tr.insertCell(7);
-    td_8.innerHTML ="<div class='input-group date'> <span class='input-group-addon'>"+
-	"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+
-	"' type='text'  class='form-control'></div>";
-	var td_9 = tr.insertCell(8);
-    td_9.innerHTML ="<div class='input-group date'> <span class='input-group-addon'>"+
-	"<i class='fa fa-calendar'></i></span><input name='deliverydate"+
-	"' type='text'  class='form-control'></div>";
-    var td_10 = tr.insertCell(9);
-    td_10.innerHTML = s1+"price"+s4;
-
-    var td_11 = tr.insertCell(10);
-    td_11.innerHTML =oTable.getElementsByTagName("tr")[0].getElementsByTagName("td")[8].innerHTML;
+    td_7.innerHTML = '<input name="organ'+itemNo+'" id="showMethod" type="text" placeholder="输入请购组织" class="form-control" />';
+    initDatePicker($('#'+itemNo));
     
-    var td_12 = tr.insertCell(11);
-    td_12.innerHTML = "默认";
-    var td_13 = tr.insertCell(12);
-    td_13.innerHTML =s1+"plant"+s4;
-    var td_14 = tr.insertCell(13);
-    td_14.innerHTML = s1+"storageloc"+s4;
-    initDatePicker($(".input-group.date"));
     }
 
 </script>
 
-<script>
-function splitRow(){	
-	
-	var oTable = document.getElementById("oTable");
-	var itemNo=oTable.rows.length+1;
-	var cheArr=document.getElementsByName("cbox");
-	var si;
-	for(var i=0;i<inputArr.length;i++)
-	{
-		if(inputArr[i].checked)
-		{
-			si=i;//要分开的那一行
-			break;
-		}
-			
-	}
-	var tBodies = oTable.tBodies;
-    var tbody = tBodies[0];
-    var trnew = tbody.insertRow(tbody.rows.length);
-    trnew.innerHTML = oTable.getElementsByTagName("tr")[itemNo-2];
-	for(var i=itemNo-2;i>si+1;i--)
-	{
-		oTable.getElementsByTagName("tr")[i]=oTable.getElementsByTagName("tr")[i-1];	
-	}
-	oTable.getElementsByTagName("tr")[si+1]=oTable.getElementsByTagName("tr")[si];
-	var quansplit1 =oTable.getElementsByTagName("tr")[si+1].getElementsByName("quantity")[0].value;
-	oTable.getElementsByTagName("tr")[si+1].getElementsByName("quantity")[0].value=Math.ceil(quansplit1 /2);
-	oTable.getElementsByTagName("tr")[si].getElementsByName("quantity")[0].value=quansplit1-Math.ceil(quansplit1 /2);
-
-	initDatePicker($(".input-group.date"));
-    }
-
-</script>
 
 
 
@@ -283,6 +231,13 @@ function splitRow(){
 					<div class="navbar-header">
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
 							href="#"><i class="fa fa-bars"></i> </a>
+						<form role="search" class="navbar-form-custom"
+							action="search_results.html">
+							<div class="form-group">
+								<input type="text" placeholder="Search for something..."
+									class="form-control" name="top-search" id="top-search">
+							</div>
+						</form>
 					</div>
 					<ul class="nav navbar-top-links navbar-right">
 						<li><span class="m-r-sm text-muted welcome-message">欢迎回来！</span></li>
@@ -349,18 +304,18 @@ function splitRow(){
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>创建订单</h2>
+					<h2>创建请购单</h2>
 					<ol class="breadcrumb">
 						<li><a href="index.html">主页</a></li>
-						<li>订单管理</li>
-						<li class="active"><strong>创建订单</strong></li>
+						<li>请购管理</li>
+						<li class="active"><strong>创建请购单</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
 			</div>
 
-	<form class="m-t" role="form" action="${pageContext.request.contextPath}/order" method="post">
-						       <input type='text' value='save' name='action' hidden='true'>	<!-- 控制表单名 -->					
+	<form class="m-t" role="form" action="${pageContext.request.contextPath}/requisition" method="post">
+						       <input type='text' value='creat' name='action' hidden='true'>	<!-- 控制表单名 -->					
 							<input type='text' id='num' value='0' name='num' hidden='true'>    <!-- 条目数量 -->	
 							
 			<div class="wrapper wrapper-content animated fadeIn">
@@ -369,7 +324,7 @@ function splitRow(){
 						<div class="ibox float-e-margins">
 
 							<div class="ibox-title">
-								<h5>创建订单</h5>
+								<h5>创建请购单</h5>
 								<div class="ibox-tools">
 									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -385,226 +340,56 @@ function splitRow(){
 							</div>
 
 							<div class="ibox-content">
+							
+												
+									<div class="row">
 
-<%
+										<div class="form-group">
+											<label class="col-sm-2 control-label">头部注明</label>
+											<div class="col-sm-10">
+												<textarea name="head_requisition" style="width:700px;height:100px;" class="form-control"> 
+												</textarea >
+												<span class="help-block m-b-none">文本内容可能延伸超出一行</span>
+											</div>
+										</div>
+										
+<div class="table-b">
+<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="100%">
+<thead>
+<tr>
+<th>条目</th>
+<th>材料编号</th>
+<th>请购数量</th>
+<th>请购运送时间</th>
+<th>请购运送工厂</th>
+<th>请购运送地点</th>
+<th>请购组织</th>
 
-Order o = (Order) session.getAttribute("order");
+</tr>
+</thead>
+<tbody>
+<tr>
 
-
-
-
-
-%>	
-
-	<!-- 换行有问题 -->					
-<div >									
-
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">订单编号：:</label>
-<div class="col-md-2">		
-<input name="org" type="text" readonly="readonly"  class="form-control" value=<%= o.getOrder_num()%>>
-
+</tr>
+</tbody>
+</table>
+<input type="button" onClick="addRow();" style="font-size:16px;" value="+"/>
 </div>
-</div>
-
-<div >	
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">采购组:</label>
-<div class="col-md-2">		<input name="gro" type="text"  class="form-control" value="采购组">
-</div>
-</div>
-<div >	
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">公司代码:</label>
-<div class="col-md-2">		<input name="ccd" type="text"  class="form-control" value="CN00">
-</div>
-</div>
-
-<br>						
-						
+<br>
+<script type="text/javascript">addRow();</script>
 
 
 
-
-								
+									</div>
 
 									<div class="row">
 										<div class="col-lg-12">
-										
+											<button type="button" class="btn btn-primary"
+												id="showsimple">增加</button>
 											<button type="button" class="btn btn-white"
 												id="clearlasttoast">清除</button>
 										</div>
 									</div>
-							<!-- tab -->	
-								
-		<div class="tabs-container">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> 送货时间表</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">材料信息</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div id="tab-1" class="tab-pane active">
-                                <div class="panel-body">
-             <div style="width:950px;  overflow-x:scroll;">										
-<div class="table-b">
-<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="100%">
-<thead>
-<tr>
-<th><input type="checkbox" id="checkbox0"></th>
-<th>条目</th>
-<th>状态</th>
-<th>材料编号</th>
-<th>短文本</th>
-<th>订购数量</th>
-<th>基本单位</th>
-<th>开始送货时间</th>
-<th>送货时间</th>
-<th>净价</th>
-<th>货币单位</th>
-<th>物料组</th>
-<th>工厂</th>
-<th>运送地点</th>
-
-
-</tr>
-</thead>
-<tbody>
-
-<%
-
-ArrayList<Order_item> oilist= OrderItemDao.findOrderItemByOCode(o.getOrder_code())
-;for(int i=0;i<oilist.size();i++)
-{
-	Order_item qi=oilist.get(i);
-	Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
-	String s1="<td><input name='";
-	
-	String s3="' value='";
-	String s4="'  type='text' readonly='readonly' class='form-control' /> </td>";
-	out.print("<tr>");
-		out.print("<td>"+"<input type='checkbox' name='cbox'></td>");
-		out.print("<td>"+(i*10+10)+"</td>");
-		out.print("<td>"+1+"</td>");
-		out.print(s1+"material"+s3+m.getMaterial_num()+s4);  //name:material id:m几
-		out.print(s1+"shorttext"+s3+m.getMaterial_shorttext()+s4);
-		out.print(s1+"quantity"+s3+qi.getQuantity()+s4);
-		out.print(s1+"baseunit"+s3+m.getMaterial_baseunit()+s4);
-		out.print("<div class='input-group date'> <span class='input-group-addon'>"+
-		"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+i+
-		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div>");
-		out.print("<div class='input-group date'> <span class='input-group-addon'>"+
-		"<i class='fa fa-calendar'></i></span><input name='deliverydate"+i+
-		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div>");
-		
-		out.print(s1+"price"+s3+qi.getPrice().toString()+s4);
-		out.print(s1+"currency"+s3+qi.getCurrency_unit()+s4);
-		out.print(s1+"materialgroup"+s3+m.getMaterial_group()+s4);
-		out.print(s1+"plant"+s3+qi.getPlant()+s4);
-		out.print(s1+"storageloc"+s3+qi.getSloc()+s4);
-	out.print("</tr>");
-	out.print("<script>");
-	out.print("initDatePicker($('.input-group.date'));");
-	out.print("</script>");
-}
-
-
-%>
-
-</tbody>
-</table>
-<input type="button" class="btn btn-info  dim" onClick="addRow();" style="font-size:16px;" value="+"/><span >&nbsp;<button class="btn btn-info " type="button"><i class="fa fa-paste"></i> split</button></span>
-</div>
-</div>
-<br>
-
-
-
-<!--  
-<div style="width:950px;  overflow-x:scroll;">										
-<div class="table-b">
-<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="100%">
-<thead>
-<tr>
-
-<th><input type="checkbox" id="checkbox0"></th>
-<th>材料编号</th>
-
-<th>订购数量</th>
-<th>基本单位</th>
-<th>送货时间</th>
-<th>净价</th>
-<th>货币单位</th>
-
-<th>工厂</th>
-<th>运送地点</th>
-
-
-</tr>
-</thead>
-<tbody>
-
- 
-for(int i=0;i<qilist.size();i++)
-{
-	Quotation_item qi=qilist.get(i);
-	Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
-	String s1="<td><input name='";
-	String s2="' id='";
-	String s3="' value='";
-	String s4="'  type='text' class='form-control' /> </td>";
-	out.print("<tr>");
-		out.print("<td>"+"<input type='checkbox' name='cbox'></td>");
-		out.print("<td>"+(i*10+10)+"</td>");
-		out.print(s1+"material"+s2+"m"+i+s3+m.getMaterial_num()+"readonly='readonly'"+s4);  //name:material id:m几
-		out.print(s1+"quantity"+s2+"q"+i+s3+qi.getQuantity()+s4);
-		out.print(s1+"baseunit"+s2+"bu"+i+s3+m.getMaterial_baseunit()+"readonly='readonly'"+s4);
-		out.print("<div id='d"+i+"'class='input-group date'> <span class='input-group-addon'>"+
-		"<i class='fa fa-calendar'></i></span><input name='deliverydate"+i+
-		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div>");
-		out.print(s1+"price"+s2+"pr"+i+s3+qi.getPrice().toString()+"readonly='readonly'"+s4);
-		out.print(s1+"currency"+s2+"c"+i+s3+qi.getCurrency_unit()+"readonly='readonly'"+s4);
-		out.print(s1+"plant"+s2+"pl"+i+s3+rfq.getRfq_plant()+"readonly='readonly'"+s4);
-		out.print(s1+"storageloc"+s2+"sl"+i+s3+qi.getStorageloc()+s4);
-	out.print("</tr>");
-}
-
-</tbody>
-</table>
-<input type="button" onClick="splitRow();" style="font-size:16px;" value="+"/>
-</div>
-</div>
--->
-
-
-
-                                </div>
-                            </div>
-                            <div id="tab-2" class="tab-pane">
-                                <div class="panel-body">
-                                    <strong>Donec quam felis</strong>
-
-                                    <p>千未知的植物注意到我：当我听到在茎的小世界的嗡嗡声，和熟悉的昆虫无数难以形容的形式
-                                        然后，我感觉到全能者的存在，他在自己的形象中形成了我们，并且呼吸</p>
-
-                                    <p>I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite
-                                        sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet.</p>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>						
-								
-								
-				<!-- tab结束 -->					
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
 								
 
 							</div>
@@ -613,21 +398,21 @@ for(int i=0;i<qilist.size();i++)
 				</div>
 			</div>
 
-			<div class="footer" style="position: fixed; bottom: 0;">
+			<div class="footer">
 				<div class="pull-right">
 					<div class="text-right">
 						<input type="submit"  value="保存" class="btn btn-success btn-sm demo2" id="showtoast">
 						<button type="button" class="btn btn-white" id="cleartoasts"><a href="Home.jsp">返回</a></button>
 					</div>
 				</div>
-				
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2020-2021
-				</div>
 			</div>
-</form>
+				</form>
+				
+			</div>
+
 		</div>
-	</div>
+
+
 
 
 	<!-- Toastr script -->

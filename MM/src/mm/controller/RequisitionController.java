@@ -46,13 +46,14 @@ public class RequisitionController extends HttpServlet{
 
 
 
-	private void view(HttpServletRequest req, HttpServletResponse resp) {
+	private void view(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String requisitioncode = req.getParameter("requisitionnum");
 		Requisition r = RequisitionDao.findRequisitionByCode(requisitioncode);
 		HttpSession session= req.getSession();
 		session.setAttribute("requisition", r);
-		req.getRequestDispatcher("requisitionview.jsp");
+		System.out.print("view!");
+		req.getRequestDispatcher("requisitionview.jsp").forward(req,resp);
 	}
 
 
