@@ -12,7 +12,7 @@ public class ReqItemDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 			
-			String sql=""+ "insert into Requisition_item" +" (req_item_num,requisition_num,material_num,requisition_quantity,requisition_deliverydate,requisition_plant,requisition_storageloc) "+"values(default,?,?,?,?,?,?)";
+			String sql=""+ "insert into Requisition_item" +" (req_item_num,requisition_code,material_num,requisition_quantity,requisition_deliverydate,requisition_plant,requisition_storageloc) "+"values(default,?,?,?,?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, ri.getRequisition_code());
 			psmt.setString(2, ri.getMaterial_num());
@@ -98,7 +98,7 @@ public class ReqItemDao {
 	//根据请购单编号查询
 	public static ArrayList<Requisition_item> findRequItemByReqcode(String reqnum) {
 		ArrayList<Requisition_item> rilist=new ArrayList<Requisition_item>();
-		Requisition_item ri=new Requisition_item();
+		
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		try {
@@ -110,6 +110,7 @@ public class ReqItemDao {
 			//执行查询语句
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
+				Requisition_item ri=new Requisition_item();
 				ri.setReq_item_num(rs.getInt("req_item_num"));
 				ri.setRequisition_code(rs.getString("requisition_code"));
 				ri.setMaterial_num(rs.getString("material_num"));
@@ -117,9 +118,10 @@ public class ReqItemDao {
 				ri.setRequisition_plant(rs.getString("requisition_plant"));
 				ri.setRequisition_storageloc(rs.getString("requisition_storageloc"));
 				ri.setRequisition_quantity(rs.getInt("requisition_quantity"));
-			
 				rilist.add(ri);
 			}
+		
+
 		}catch(SQLException e) {
             e.printStackTrace();
         }catch(NullPointerException f){

@@ -65,7 +65,7 @@ public class RequisitionController extends HttpServlet{
 	{
 		doGet(req, resp);
 	}
-	private void creat(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
+	private void creat(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("utf-8");
 		int num=Integer.parseInt(req.getParameter("num"));
@@ -76,7 +76,7 @@ public class RequisitionController extends HttpServlet{
 		Requisition rqi = new Requisition();
 		rqi.setRequisition_purchasegroup(group);
 		head = new String(head.getBytes("ISO-8859-1"),"UTF-8"); //??????????;
-		head="???????";
+	
 		rqi.setRequisition_discription(head);
 		String requisition_code=RequisitionDao.addRequisition(rqi);
 		
@@ -103,15 +103,9 @@ public class RequisitionController extends HttpServlet{
 			ri.setRequisition_storageloc(req.getParameter("storloc"+i));
 			ReqItemDao.addRequisitionItem(ri);
 		}
-		
-   	
-		
-		
-		
-		
-		
-		
-		
+		req.setAttribute("requisition_code", requisition_code);
+		req.getRequestDispatcher("requisitionini.jsp").forward(req, resp);
+
 		
 		
 	}

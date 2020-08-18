@@ -72,7 +72,7 @@ public class RFQController extends HttpServlet{
 
 
 
-	private void save(HttpServletRequest req, HttpServletResponse resp) {
+	private void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session= req.getSession();
 		
@@ -103,8 +103,9 @@ public class RFQController extends HttpServlet{
 				RFQItemDao.addRFQItem(rf);
 			}
 		}
-		
-		
+		req.setAttribute("rfq_code", rfq_code);
+		req.getRequestDispatcher("rfqfin.jsp").forward(req,resp);//请求转发
+
 	}
 
 
@@ -118,10 +119,9 @@ public class RFQController extends HttpServlet{
 		HttpSession session= req.getSession();
 		String [] itemture=req.getParameterValues("checkname");
 		session.setAttribute("itemture", itemture);
-		req.getRequestDispatcher("rfq6.jsp").forward(req,resp);//请求转发
 
 
-	
+		req.getRequestDispatcher("rfqfin.jsp").forward(req,resp);//请求转发
 
 		
 	}
@@ -143,7 +143,7 @@ public class RFQController extends HttpServlet{
 		String rfq_purchasing_org = req.getParameter("org");
 		String rfq_purchasing_group = req.getParameter("group");
 		String rfq_plant = req.getParameter("plant");
-		String requisition_code=req.getParameter("reqnum");
+		String requisition_code=req.getParameter("requisition_num");
 		String vendor_code=req.getParameter("vendorcode");
 		RFQ rfq = new RFQ();
 		rfq.setRequisition_code(requisition_code);
@@ -162,7 +162,7 @@ public class RFQController extends HttpServlet{
 		session.setAttribute("passdata",rfq);
 		
 		//Requisition resquisition = RequisitionDao.findRequisitionByNum(requisition_num);
-		req.getRequestDispatcher("rfq5.jsp").forward(req,resp);//请求转发
+		req.getRequestDispatcher("rfqselect.jsp").forward(req,resp);//请求转发
 		
 	}
 
@@ -177,7 +177,8 @@ public class RFQController extends HttpServlet{
 	{
 		doGet(req, resp);
 	}
-	private void create(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
+	@SuppressWarnings("unused")
+	private void create(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
 		req.setCharacterEncoding("utf-8");
@@ -209,7 +210,7 @@ public class RFQController extends HttpServlet{
 		rfq.setVendor_code(vendor_code);
 		
 		String rfq_code=RFQDao.addRFQ(rfq);
-		
+		req.setAttribute("rfq_code", rfq_code);
 		Enumeration<String> enu=req.getParameterNames();
 		while(enu.hasMoreElements()){
 		String paraName=(String)enu.nextElement();
@@ -237,13 +238,8 @@ public class RFQController extends HttpServlet{
 		*/
    	
 		
-		
-		
-		
-		
-		
-		
-		
+
+
 		
 	}
 	 private java.sql.Date strToDate(String strDate) {  
