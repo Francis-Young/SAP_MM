@@ -12,9 +12,9 @@ public class ReqItemDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 			
-			String sql=""+ "insert into Requisition_item" +" (req_item_num,requisition_num,material_num,requisition_quantity,requisition_deliverydate,requisition_plant,requisition_storageloc) "+"values(default,?,?,?,?,?,?)";
+			String sql=""+ "insert into Requisition_item" +" (req_item_num,requisition_code,material_num,requisition_quantity,requisition_deliverydate,requisition_plant,requisition_storageloc) "+"values(default,?,?,?,?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, ri.getRequisition_num());
+			psmt.setString(1, ri.getRequisition_code());
 			psmt.setString(2, ri.getMaterial_num());
 			psmt.setInt(3, ri.getRequisition_quantity());
 			psmt.setDate(4, ri.getRequisition_deliverydate());
@@ -42,7 +42,7 @@ public class ReqItemDao {
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
 				ri.setReq_item_num(rs.getInt("req_item_num"));
-				ri.setRequisition_num(rs.getInt("requisition_num"));
+				ri.setRequisition_code(rs.getString("requisition_code"));
 				ri.setMaterial_num(rs.getString("material_num"));
 				ri.setRequisition_deliverydate(rs.getDate("requisition_deliverydate"));
 				ri.setRequisition_plant(rs.getString("requisition_plant"));
@@ -67,7 +67,7 @@ public class ReqItemDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 		
-			String sql=""+"select * from Requisition_item where requisition_num = ?  and material_num = ? ";
+			String sql=""+"select * from Requisition_item where requisition_code = ?  and material_num = ? ";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, reqnum);
 			psmt.setInt(2, matnum);
@@ -75,7 +75,7 @@ public class ReqItemDao {
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
 				ri.setReq_item_num(rs.getInt("req_item_num"));
-				ri.setRequisition_num(rs.getInt("requisition_num"));
+				ri.setRequisition_code(rs.getString("requisition_code"));
 				ri.setMaterial_num(rs.getString("material_num"));
 				ri.setRequisition_deliverydate(rs.getDate("requisition_deliverydate"));
 				ri.setRequisition_plant(rs.getString("requisition_plant"));
@@ -96,30 +96,32 @@ public class ReqItemDao {
 	}
 	
 	//根据请购单编号查询
-	public static ArrayList<Requisition_item> findRequItemByReqnum(int reqnum) {
+	public static ArrayList<Requisition_item> findRequItemByReqcode(String reqnum) {
 		ArrayList<Requisition_item> rilist=new ArrayList<Requisition_item>();
-		Requisition_item ri=new Requisition_item();
+		
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		try {
 		
-			String sql=""+"select * from Requisition_item where requisition_num = ?  ";
+			String sql=""+"select * from Requisition_item where requisition_code = ?  ";
 			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, reqnum);
+			psmt.setString(1, reqnum);
 			
 			//执行查询语句
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
+				Requisition_item ri=new Requisition_item();
 				ri.setReq_item_num(rs.getInt("req_item_num"));
-				ri.setRequisition_num(rs.getInt("requisition_num"));
+				ri.setRequisition_code(rs.getString("requisition_code"));
 				ri.setMaterial_num(rs.getString("material_num"));
 				ri.setRequisition_deliverydate(rs.getDate("requisition_deliverydate"));
 				ri.setRequisition_plant(rs.getString("requisition_plant"));
 				ri.setRequisition_storageloc(rs.getString("requisition_storageloc"));
 				ri.setRequisition_quantity(rs.getInt("requisition_quantity"));
-			
 				rilist.add(ri);
 			}
+		
+
 		}catch(SQLException e) {
             e.printStackTrace();
         }catch(NullPointerException f){
@@ -140,9 +142,9 @@ public class ReqItemDao {
 		int res=-1;
 		try {
 		
-			String sql=""+"update Requisition_item set requisition_num = ? ,material_num = ? ,requisition_quantity = ? ,requisition_deliverydate = ? ,requisition_plant = ? ,requisition_storageloc = ? ";
+			String sql=""+"update Requisition_item set requisition_code = ? ,material_num = ? ,requisition_quantity = ? ,requisition_deliverydate = ? ,requisition_plant = ? ,requisition_storageloc = ? ";
 			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, ri.getRequisition_num());
+			psmt.setString(1, ri.getRequisition_code());
 			psmt.setString(2, ri.getMaterial_num());
 			psmt.setInt(3, ri.getRequisition_quantity());
 			psmt.setDate(4, ri.getRequisition_deliverydate());

@@ -5,18 +5,13 @@ import java.sql.Date;
 
 public class RFQ_item implements Serializable {
 	private int rfqItem_num;
-	private int rfq_num;
+	private String rfq_code;
 	private String material_num;
 	private int requisition_quantity;
 	private Date requisition_deliverydate;
 	private String requisition_storageloc;
 	private String requisition_plant;
-	public int getRfq_num() {
-		return rfq_num;
-	}
-	public void setRfq_num(int rfq_num) {
-		this.rfq_num = rfq_num;
-	}
+
 	public String getMaterial_num() {
 		return material_num;
 	}
@@ -52,6 +47,12 @@ public class RFQ_item implements Serializable {
 	}
 	public void setRfqItem_num(int rfqItem_num) {
 		this.rfqItem_num = rfqItem_num;
+	}
+	public String getRfq_code() {
+		return rfq_code;
+	}
+	public void setRfq_code(String rfq_code) {
+		this.rfq_code = rfq_code;
 	}
 	
 	

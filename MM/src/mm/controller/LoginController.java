@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import mm.bean.User;
 import mm.dao.LoginDao;
+import mm.utils.Permissions;
 
 /**
  * Servlet implementation class LoginController
@@ -59,10 +60,12 @@ public class LoginController extends HttpServlet {
 			session.setMaxInactiveInterval(2 * 60 * 10);
 
 			User user = new User();
+			Permissions p=new Permissions();
 			loginDao.initUser(user, unum);
 			session.setAttribute("unum", unum);
 			session.setAttribute("uportrait", user.getUser_portrait());
 			session.setAttribute("uname", user.getUser_name());
+			session.setAttribute("upermission", p.getPermissionName(unum));
 			response.sendRedirect("Home");
 			return;
 		} else {

@@ -34,15 +34,15 @@
 								class="img-circle" src="<%=session.getAttribute("uportrait")%>" />
 							</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<span class="clear"> <span class="block m-t-xs"> <strong
-										class="font-bold"><%=session.getAttribute("uid")%></strong>
-								</span> <span class="text-muted text-xs block">管理员 <b
+										class="font-bold"><%=session.getAttribute("uname")%></strong>
+								</span> <span class="text-muted text-xs block"><%=session.getAttribute("upermission")%><b
 										class="caret"></b></span>
 							</span>
 							</a>
 							<ul class="dropdown-menu animated fadeInRight m-t-xs">
-								<li><a href="profile.html">个人信息</a></li>
-								<li><a href="contacts.html">联系方式</a></li>
-								<li><a href="mailbox.html">邮箱</a></li>
+								<li><a>个人信息</a></li>
+								<li><a>联系方式</a></li>
+								<li><a>邮箱</a></li>
 								<li class="divider"></li>
 								<li><a href="Login">退出登录</a></li>
 							</ul>
@@ -55,35 +55,33 @@
 							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
 							<li><a href="CreateVendor">创建供应商</a></li>
-							<li><a href="graph_morris.html">维护供应商</a></li>
+							<li><a href="SelectVendor?type=display">查询供应商</a></li>
+							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
 					<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
-							class="nav-label">采购</span><span class="fa arrow"></span></a>
+							class="nav-label">采购管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="form_basic.html"></a></li>
-							<li><a href="form_advanced.html">高级插件</a></li>
-							<li><a href="form_wizard.html">分步引导</a></li>
-							<li><a href="form_file_upload.html">文件上传</a></li>
-							<li><a href="form_editors.html">富文本编辑</a></li>
-							<li><a href="form_markdown.html">Markdown</a></li>
+							<li><a href="requisitionini.jsp">创建请购单 </a></li>
+							<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+							<li><a href="rfqini.jsp">创建RFQ </a></li>
+							<li><a href="rfqleadview.jsp">查看RFQ </a></li>
+							<li><a href="quotationini.jsp">维护报价单 </a></li>
+							<li><a href="quotationcompare.jsp">比对报价单 </a></li>
+							<li><a href="orderini.jsp">创建订单 </a></li>
+							<li><a href="orderleadview.jsp">查看订单 </a></li>
+							<li><a href="orderleadchange.jsp">维护订单 </a></li>
 						</ul></li>
 
 					<li><a href="#"><i class="fa fa-files-o"></i> <span
-							class="nav-label">收货</span><span class="fa arrow"></span></a>
+							class="nav-label">收货管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="search_results.html">搜索结果</a></li>
-							<li><a href="lockscreen.html">锁屏</a></li>
-							<li><a href="invoice.html">发票</a></li>
-							<li><a href="login.html">登录</a></li>
-							<li><a href="login_two_columns.html">登录 v.2</a></li>
-							<li><a href="forgot_password.html">忘记密码</a></li>
-							<li><a href="register.html">注册</a></li>
-							<li><a href="404.html">404</a></li>
-							<li><a href="500.html">500</a></li>
-							<li><a href="empty_page.html">空白页面</a></li>
+							<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
+							<li><a href="showstock.jsp">查询库存 </a></li>
+							<li><a href="createpayment.jsp">创建发票 </a></li>
+							<li><a href="postpayment.jsp">付款 </a></li>
+							<li><a href="account.jsp">查看应付账款 </a></li>
 						</ul></li>
 				</ul>
-
 			</div>
 		</nav>
 
@@ -94,68 +92,14 @@
 					<div class="navbar-header">
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
 							href="#"><i class="fa fa-bars"></i> </a>
-						<form role="search" class="navbar-form-custom"
-							action="search_results.html">
-							<div class="form-group">
-								<input type="text" placeholder="Search for something..."
-									class="form-control" name="top-search" id="top-search">
-							</div>
-						</form>
 					</div>
+					<ul class="nav navbar-top-links navbar-left">
+						<li><a> <i class="fa fa-paper-plane"></i>Be What's Next.
+						</a></li>
+					</ul>
 					<ul class="nav navbar-top-links navbar-right">
-						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uid")%></span></li>
-						<li class="dropdown"><a class="dropdown-toggle count-info"
-							data-toggle="dropdown" href="#"> <i class="fa fa-envelope"></i>
-								<span class="label label-warning">16</span>
-						</a>
-							<ul class="dropdown-menu dropdown-messages">
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/a7.jpg">
-										</a>
-										<div class="media-body">
-											<small class="pull-right">46小时前</small> <strong>李文俊</strong>
-											关注了 <strong>刘海洋</strong>. <br> <small class="text-muted">3
-												天 前- 10.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/a4.jpg">
-										</a>
-										<div class="media-body ">
-											<small class="pull-right text-navy">5小时前</small> <strong>王昆</strong>
-											关注了 <strong>李文俊</strong>. <br> <small class="text-muted">昨天下午1:21
-												- 11.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/profile.jpg">
-										</a>
-										<div class="media-body ">
-											<small class="pull-right">23小时前</small> <strong>张三</strong>
-											赞了 <strong>李四</strong>. <br> <small class="text-muted">2天前
-												- 11.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="text-center link-block">
-										<a href="mailbox.html"> <i class="fa fa-envelope"></i> <strong>查看更多消息</strong>
-										</a>
-									</div>
-								</li>
-							</ul></li>
-
+						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uname")%></span>
+						</li>
 						<li><a href="Login"> <i class="fa fa-sign-out"></i> 退出登录
 						</a></li>
 					</ul>

@@ -5,21 +5,16 @@ import java.sql.Date;
 
 public class Requisition_item implements Serializable {
 
-	private int requisition_num;
+	
 	private int req_item_num;
 	private String material_num;
 	private int requisition_quantity;
 	private Date requisition_deliverydate;
 	private String requisition_plant;
 	private String requisition_storageloc;
+	private String requisition_code;
 	
-	
-	public int getRequisition_num() {
-		return requisition_num;
-	}
-	public void setRequisition_num(int requisition_num) {
-		this.requisition_num = requisition_num;
-	}
+
 	public int getReq_item_num() {
 		return req_item_num;
 	}
@@ -55,6 +50,13 @@ public class Requisition_item implements Serializable {
 	}
 	public void setRequisition_storageloc(String requisition_storageloc) {
 		this.requisition_storageloc = requisition_storageloc;
+	}
+
+	public String getRequisition_code() {
+		return requisition_code;
+	}
+	public void setRequisition_code(String requisition_code) {
+		this.requisition_code = requisition_code;
 	}
 	
 	

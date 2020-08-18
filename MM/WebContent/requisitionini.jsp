@@ -62,20 +62,10 @@ function initDatePicker(ele){
 }
     $(document).ready(function(){
 
-       // $('.summernote').summernote();
-
-   //     $('.input-group.date').datepicker({
-    //        todayBtn: "linked",
-   //         keyboardNavigation: false,
-   //         forceParse: false,
-   //         calendarWeeks: true,
-   //         autoclose: true
-   //     });
 		initDatePicker($(".input-group.date"));
    });
     
 
-    
 </script>
 
 <script type="text/javascript">
@@ -116,7 +106,13 @@ function addRow(){
 
 
 <style type="text/css">
-.table-b table td{border:2px solid #808080}
+.table-b td{border:1px solid #808080; padding:0px}
+.table > tbody > tr > td {
+  border-top: 1px solid #e7eaec;
+  line-height: 1.42857;
+  padding: 0px;
+  vertical-align: top;
+}
 </style>
 
 </head>
@@ -125,145 +121,101 @@ function addRow(){
 
 	<div id="wrapper">
 
-		<nav class="navbar-default navbar-static-side" role="navigation">
-			<div class="sidebar-collapse">
+			<nav class="navbar-default navbar-static-side" role="navigation">
+			<div class="sidebar-collapse" style="z-index: 10";>
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element">
-							<span> <img alt="image" class="img-circle"
-								src="img/profile_small.jpg" />
+							<span> <img height="48px" width="48px" alt="image"
+								class="img-circle" src="<%=session.getAttribute("uportrait")%>" />
 							</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<span class="clear"> <span class="block m-t-xs"> <strong
-										class="font-bold">王昆</strong>
-								</span> <span class="text-muted text-xs block">管理员 <b
+										class="font-bold"><%=session.getAttribute("uname")%></strong>
+								</span> <span class="text-muted text-xs block"><%=session.getAttribute("upermission")%><b
 										class="caret"></b></span>
 							</span>
 							</a>
 							<ul class="dropdown-menu animated fadeInRight m-t-xs">
-								<li><a href="profile.html">个人信息</a></li>
-								<li><a href="contacts.html">联系方式</a></li>
-								<li><a href="mailbox.html">邮箱</a></li>
+								<li><a>个人信息</a></li>
+								<li><a>联系方式</a></li>
+								<li><a>邮箱</a></li>
 								<li class="divider"></li>
-								<li><a href="login.html">退出登录</a></li>
+								<li><a href="Login">退出登录</a></li>
 							</ul>
 						</div>
 						<div class="logo-element">IN+</div>
 					</li>
-					<li><a href="layouts.html"><i class="fa fa-home"></i> <span
+					<li><a href="Home"><i class="fa fa-home"></i> <span
 							class="nav-label">主页</span></a></li>
+
 					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
 							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="graph_flot.html">创建供应商</a></li>
-							<li><a href="graph_morris.html">维护供应商</a></li>
-						</ul></li>
-					<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
-							class="nav-label">请购</span><span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level collapse">
-							<li><a href="form_basic.html"></a></li>
-							<li><a href="form_advanced.html">创建请购单</a></li>
-							<li><a href="form_wizard.html">分步引导</a></li>
-							<li><a href="form_file_upload.html">文件上传</a></li>
-							<li><a href="form_editors.html">富文本编辑</a></li>
-							<li><a href="form_markdown.html">Markdown</a></li>
+							<li><a href="CreateVendor">创建供应商</a></li>
+							<li><a href="SelectVendor?type=display">查询供应商</a></li>
+							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
 
-					<li><a href="#"><i class="fa fa-files-o"></i> <span
-							class="nav-label">收货</span><span class="fa arrow"></span></a>
+					<li class="active"><a href="#"><i class="fa fa-shopping-cart"></i><span
+							class="nav-label"> 采购管理 </span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="search_results.html">搜索结果</a></li>
-							<li><a href="lockscreen.html">锁屏</a></li>
-							<li><a href="invoice.html">发票</a></li>
-							<li><a href="login.html">登录</a></li>
-							<li><a href="login_two_columns.html">登录 v.2</a></li>
-							<li><a href="forgot_password.html">忘记密码</a></li>
-							<li><a href="register.html">注册</a></li>
-							<li><a href="404.html">404</a></li>
-							<li><a href="500.html">500</a></li>
-							<li><a href="empty_page.html">空白页面</a></li>
+							<li class="active"><a href="#">请购单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="requisitionini.jsp">创建请购单 </a></li>
+									<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+								</ul></li>
+							<li><a href="#">RFQ管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="rfqini.jsp">创建RFQ </a></li>
+									<li><a href="rfqleadview.jsp">查看RFQ </a></li>
+								</ul></li>
+							<li><a href="#">报价单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="quotationini.jsp">维护报价单 </a></li>
+									<li><a href="quotationcompare.jsp">比对报价单 </a></li>
+
+								</ul></li>
+							<li><a href="#">订单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="orderini.jsp">创建订单 </a></li>
+									<li><a href="orderleadview.jsp">查看订单 </a></li>
+									<li><a href="orderleadchange.jsp">维护订单 </a></li>
+								</ul></li>
+						</ul></li>
+					<li><a href="#"><i class="fa fa-files-o"></i> <span
+							class="nav-label">收货管理</span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
+							<li><a href="showstock.jsp">查询库存 </a></li>
+							<li><a href="createpayment.jsp">创建发票 </a></li>
+							<li><a href="postpayment.jsp">付款 </a></li>
+							<li><a href="account.jsp">查看应付账款 </a></li>
 						</ul></li>
 				</ul>
-
 			</div>
 		</nav>
 
 		<div id="page-wrapper" class="gray-bg">
-			<div class="row border-bottom">
+				<div class="row border-bottom">
 				<nav class="navbar navbar-static-top" role="navigation"
 					style="margin-bottom: 0">
 					<div class="navbar-header">
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
 							href="#"><i class="fa fa-bars"></i> </a>
-						<form role="search" class="navbar-form-custom"
-							action="search_results.html">
-							<div class="form-group">
-								<input type="text" placeholder="Search for something..."
-									class="form-control" name="top-search" id="top-search">
-							</div>
-						</form>
 					</div>
+					<ul class="nav navbar-top-links navbar-left">
+						<li><a> <i class="fa fa-paper-plane"></i>Be What's Next.
+						</a></li>
+					</ul>
 					<ul class="nav navbar-top-links navbar-right">
-						<li><span class="m-r-sm text-muted welcome-message">欢迎回来！</span></li>
-						<li class="dropdown"><a class="dropdown-toggle count-info"
-							data-toggle="dropdown" href="#"> <i class="fa fa-envelope"></i>
-								<span class="label label-warning">16</span>
-						</a>
-							<ul class="dropdown-menu dropdown-messages">
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/a7.jpg">
-										</a>
-										<div class="media-body">
-											<small class="pull-right">46小时前</small> <strong>李文俊</strong>
-											关注了 <strong>刘海洋</strong>. <br> <small class="text-muted">3
-												天 前- 10.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/a4.jpg">
-										</a>
-										<div class="media-body ">
-											<small class="pull-right text-navy">5小时前</small> <strong>王昆</strong>
-											关注了 <strong>李文俊</strong>. <br> <small class="text-muted">昨天下午1:21
-												- 11.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/profile.jpg">
-										</a>
-										<div class="media-body ">
-											<small class="pull-right">23小时前</small> <strong>张三</strong>
-											赞了 <strong>李四</strong>. <br> <small class="text-muted">2天前
-												- 11.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="text-center link-block">
-										<a href="mailbox.html"> <i class="fa fa-envelope"></i> <strong>查看更多消息</strong>
-										</a>
-									</div>
-								</li>
-							</ul></li>
-
-						<li><a href="login.html"> <i class="fa fa-sign-out"></i>
-								退出登录
+						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uname")%></span>
+						</li>
+						<li><a href="Login"> <i class="fa fa-sign-out"></i> 退出登录
 						</a></li>
 					</ul>
 
 				</nav>
 			</div>
-
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
@@ -303,22 +255,27 @@ function addRow(){
 							</div>
 
 							<div class="ibox-content">
-							
-												
-									<div class="row">
-
-										<div class="form-group">
-											<label class="col-sm-2 control-label">头部注明</label>
-											<div class="col-sm-10">
-												<textarea name="head_requisition" style="width:700px;height:100px;" class="form-control"> 
-												</textarea >
-												<span class="help-block m-b-none">文本内容可能延伸超出一行</span>
+								<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">头部注明</label>
+												<div class="col-sm-10">
+													<textarea name="head_requisition" placeholder="文本内容可能延伸超出一行"
+														style="width: 700px; height: 100px;" class="form-control"></textarea>
+												</div>
 											</div>
+
 										</div>
+									</div>
+		<br>
+																	
+<div class="row">
+
+								
 										
 <div class="table-b">
-<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="100%">
-<thead>
+<table id="oTable" class="table table-bordered" style="border:1 ; width:100;">
+<thead style="border:2 ; width:100;">
 <tr>
 <th>条目</th>
 <th>材料编号</th>
@@ -336,7 +293,12 @@ function addRow(){
 </tr>
 </tbody>
 </table>
-<input type="button" onClick="addRow();" style="font-size:16px;" value="+"/>
+<div class="row">
+<div class="pull-right">
+<input type="button" class="btn btn-primary" onClick="addRow();" style="font-size: 16px;margin:3px;" value="+" />
+<button type="reset" class="btn btn-white" id="clearlasttoast" style="margin:19px;">清除</button>
+</div>
+</div>
 </div>
 <br>
 <script type="text/javascript">addRow();</script>
@@ -345,29 +307,37 @@ function addRow(){
 
 									</div>
 
-									<div class="row">
-										<div class="col-lg-12">
-											<button type="button" class="btn btn-primary"
-												id="showsimple">增加</button>
-											<button type="button" class="btn btn-white"
-												id="clearlasttoast">清除</button>
-										</div>
-									</div>
-								
-
 							</div>
 						</div>
 					</div>
 				</div>
+
+				
+							
+				
+				
 			</div>
 
-			<div class="footer">
+			<div class="footer" style="position: fixed; bottom: 0 ;z-index: 1;">
+
 				<div class="pull-right">
 					<div class="text-right">
 						<input type="submit"  value="保存" class="btn btn-success btn-sm demo2" id="showtoast">
-						<button type="button" class="btn btn-white" id="cleartoasts"><a href="Home.jsp">返回</a></button>
+						<a href="${pageContext.request.contextPath}/Home"><button type="button" class="btn btn-white" id="cleartoasts">返回</button></a>
 					</div>
 				</div>
+				
+				<div style="padding-top: 2px;">
+						
+						<p>
+							<font size="3" color="#1ab394">			
+<%
+if(request.getAttribute("requisition_code")!=null)
+	out.print("成功创建请购单："+request.getAttribute("requisition_code").toString());
+             %>	</font>
+						</p>
+						
+					</div>
 			</div>
 				</form>
 				

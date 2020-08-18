@@ -8,16 +8,17 @@ import java.util.ArrayList;
 
 public class RequisitionDao {
 	//插入一张请购单,返回最新插入单子的num
-	public static int addRequisition( Requisition rq) {
+	public static String addRequisition( Requisition rq) {
 		//建立与数据库的连接
 		int num=0;
+		String code="error";
 		Connection conn=DBUtil.getConnection();
 		try {
 			
 			String sql=""+ "insert into Requisition" +" (requisition_num,requisition_discription,requisition_purchasegroup) "+"values(default,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 		
-			psmt.setString(1, "狗"+rq.getRequisition_discription());
+			psmt.setString(1, rq.getRequisition_discription());
 			psmt.setString(2, rq.getRequisition_purchasegroup());
 			
 			psmt.execute();
@@ -38,25 +39,26 @@ public class RequisitionDao {
 			}*/
 			if (rs.next()) {  
 				num= rs.getInt(1);
+				code = insertcode(num);
 		    }
 		}catch(SQLException e) {
             e.printStackTrace();
         }finally {
             DBUtil.closeConnection(conn);
         }
-		return num;
+		return code;
 	}
 	//根据编号查询
-	public static Requisition findRequisitionByNum(int num) {
+	public static Requisition findRequisitionByCode(String code) {
 		
 		Requisition rq=new Requisition();
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		try {
 		
-			String sql=""+"select * from Requisition where requisition_num = ?";
+			String sql=""+"select * from Requisition where requisition_code = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, num);
+			psmt.setString(1, code);
 			//执行查询语句
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
@@ -64,7 +66,7 @@ public class RequisitionDao {
 				rq.setRequisition_num(rs.getInt("requisition_num"));
 				rq.setRequisition_discription(rs.getString("requisition_discription"));
 				rq.setRequisition_purchasegroup(rs.getString("requisition_purchasegroup"));
-				
+				rq.setRequisition_code(rs.getString("requisition_code"));
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -85,11 +87,21 @@ public class RequisitionDao {
 		try {
 		
 			String sql=""+"select * from Requisition ";
+			int flag=0;
 			if (!rq.getRequisition_discription().equals("xx"))
-				sql+="where requisition_discription ="+'"'+rq.getRequisition_discription()+'"'+",";
+			{
+				sql+="where requisition_discription ="+'"'+rq.getRequisition_discription()+'"';
+				flag=1;
+			}
 			if (!rq.getRequisition_purchasegroup().equals("xx"))
-				sql+="where requisition_purchasegroup ="+'"'+rq.getRequisition_purchasegroup()+'"';
-			sql = sql.substring(0, sql.length() - 1);
+			{
+				if(flag==1)
+					sql+=" AND  ";
+				else
+					sql+=" where  ";
+				sql+=" requisition_purchasegroup ="+'"'+rq.getRequisition_purchasegroup()+'"';
+				flag=1;
+			}
 			System.out.println(sql);
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			
@@ -100,6 +112,7 @@ public class RequisitionDao {
 				rq1.setRequisition_num(rs.getInt("requisition_num"));
 				rq1.setRequisition_discription(rs.getString("requisition_discription"));
 				rq1.setRequisition_purchasegroup(rs.getString("requisition_purchasegroup"));
+				rq1.setRequisition_code(rs.getString("requisition_code"));
 				rqlist.add(rq1);
 			}
 		}catch(SQLException e) {
@@ -130,7 +143,7 @@ public class RequisitionDao {
 				rq.setRequisition_num(rs.getInt("requisition_num"));
 				rq.setRequisition_discription(rs.getString("requisition_discription"));
 				rq.setRequisition_purchasegroup(rs.getString("requisition_purchasegroup"));
-				
+				rq.setRequisition_code(rs.getString("requisition_code"));
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -168,18 +181,18 @@ public class RequisitionDao {
 		return false;
 	}
 	//修改请购单
-	public static int updateRequisitionByNum(int num,String description, String group) {
+	public static int updateRequisitionByCode(String code,String description, String group) {
 		
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		int res=-1;
 		try {
 		
-			String sql=""+"update Requisition set requisition_discription=? , requisition_purchasegroup = ? where requisition_num = ? ";
+			String sql=""+"update Requisition set requisition_discription=? , requisition_purchasegroup = ? where requisition_code = ? ";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, description);
 			psmt.setString(2, group);
-			psmt.setInt(3, num);
+			psmt.setString(3, code);
 			//执行查询语句
 			res= psmt.executeUpdate();
 		
@@ -193,6 +206,40 @@ public class RequisitionDao {
 		return res;
 		
 	}
-	//返回最新插入单子的num
+	public static String insertcode(int num) {//生成code
+		
+		//建立数据库连接
+		Connection conn=DBUtil.getConnection();
+		int res=-1;
+		
+		int lenofav=7;
+		String char0="";
+		String snum=String.valueOf(num);
+		for(int i=1;i<=lenofav-snum.length();i++)
+		{
+			char0+="0";
+		}
+		String code="001"+char0+snum;
+		
+		try {
+			
+			String sql=""+"update Requisition set requisition_code=? where requisition_num = ? ";
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setString(1, code);
+			
+			psmt.setInt(2, num);
+			//执行查询语句
+			res= psmt.executeUpdate();
+		
+		}catch(SQLException e) {
+            e.printStackTrace();
+        }catch(NullPointerException f){
+            f.printStackTrace();
+        }finally {
+            DBUtil.closeConnection(conn);
+        }
+		return code;
+		
+	}
 
 }

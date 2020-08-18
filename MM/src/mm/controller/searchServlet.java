@@ -58,7 +58,7 @@ public class searchServlet extends HttpServlet {
 	    Pattern r = Pattern.compile(pattern1);
 	    // 现在创建 matcher 对象
 	    Matcher m = r.matcher(key);
-	    if (m.find())
+	    if (m.find() && !(m.group(1).equals("")))
 	    {
 	    	description=m.group(1);
 	    }
@@ -68,7 +68,7 @@ public class searchServlet extends HttpServlet {
 	    r = Pattern.compile(pattern2);
 	    // 现在创建 matcher 对象
 	    m = r.matcher(key);
-	    if (m.find())
+	    if (m.find() && !(m.group(1).equals("")))
 	    {
 	    	group=m.group(1);
 	    }
@@ -76,6 +76,7 @@ public class searchServlet extends HttpServlet {
 	    Requisition rq = new Requisition();
 	    rq.setRequisition_discription(description);
 	    rq.setRequisition_purchasegroup(group);
+	    System.out.print(rq.getRequisition_purchasegroup());
 		List<Requisition> rqlist=RequisitionDao.findRequisitionByAnything(rq);
 		
 		  
@@ -92,7 +93,7 @@ public class searchServlet extends HttpServlet {
 			String s="";
 		for(int i=0; i<rqlist.size();i++)
 		{
-			s += "mark0"+rqlist.get(i).getRequisition_num()+"mark1"+rqlist.get(i).getRequisition_discription()+"mark2"+rqlist.get(i).getRequisition_purchasegroup()+"mark3";
+			s += "mark0"+rqlist.get(i).getRequisition_code()+"mark1"+rqlist.get(i).getRequisition_discription()+"mark2"+rqlist.get(i).getRequisition_purchasegroup()+"mark3";
 			
 		}
 		System.out.println(s);

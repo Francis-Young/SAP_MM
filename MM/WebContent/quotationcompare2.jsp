@@ -219,64 +219,101 @@ background:white;
 	<div id="wrapper">
 
 		<nav class="navbar-default navbar-static-side" role="navigation">
-			<div class="sidebar-collapse">
+				<div class="sidebar-collapse">
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element">
-							<span> <img alt="image" class="img-circle"
-								src="img/profile_small.jpg" />
+							<span> <img height="48px" width="48px" alt="image"
+								class="img-circle" src="<%=session.getAttribute("uportrait")%>" />
 							</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<span class="clear"> <span class="block m-t-xs"> <strong
-										class="font-bold">王昆</strong>
-								</span> <span class="text-muted text-xs block">管理员 <b
+										class="font-bold"><%=session.getAttribute("uname")%></strong>
+								</span> <span class="text-muted text-xs block"><%=session.getAttribute("upermission")%><b
 										class="caret"></b></span>
 							</span>
 							</a>
 							<ul class="dropdown-menu animated fadeInRight m-t-xs">
-								<li><a href="profile.html">个人信息</a></li>
-								<li><a href="contacts.html">联系方式</a></li>
-								<li><a href="mailbox.html">邮箱</a></li>
+								<li><a>个人信息</a></li>
+								<li><a>联系方式</a></li>
+								<li><a>邮箱</a></li>
 								<li class="divider"></li>
-								<li><a href="login.html">退出登录</a></li>
+								<li><a href="Login">退出登录</a></li>
 							</ul>
 						</div>
 						<div class="logo-element">IN+</div>
 					</li>
-					<li><a href="layouts.html"><i class="fa fa-home"></i> <span
-							class="nav-label">主页</span></a></li>
-					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
-							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
+					<li><a href="Home"><i class="fa fa-home"></i> <span class="nav-label">主页</span></a></li>
+					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="graph_flot.html">创建供应商</a></li>
-							<li><a href="graph_morris.html">维护供应商</a></li>
+							<li><a href="CreateVendor">创建供应商</a></li>
+							<li><a href="SelectVendor?type=display">查询供应商</a></li>
+							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
-					<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
-							class="nav-label">RFQ</span><span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level collapse">
-							<li><a href="form_basic.html"></a></li>
-							<li><a href="form_advanced.html">创建RFQ</a></li>
-							<li><a href="form_wizard.html">分步引导</a></li>
-							<li><a href="form_file_upload.html">文件上传</a></li>
-							<li><a href="form_editors.html">富文本编辑</a></li>
-							<li><a href="form_markdown.html">Markdown</a></li>
-						</ul></li>
+						
+						
+						
+						<li class="active">
+                      <a href="#"><i class="fa fa-shopping-cart"></i><span class="nav-label">采购管理 </span><span class="fa arrow"></span></a>
+                      <ul class="nav nav-second-level collapse in" style="">
+                          <li class="">
+                              <a href="#">请购单管理 <span class="fa arrow"></span></a>
+                              <ul class="nav nav-third-level collapse" style="height: 0px;">
+                                  <li>
+                                      <a href="requisitionini.jsp">创建请购单 </a>
+                                  </li>
+                                  <li>
+                                      <li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+                                
+                              
 
-					<li><a href="#"><i class="fa fa-files-o"></i> <span
-							class="nav-label">收货</span><span class="fa arrow"></span></a>
+                              </ul>
+                          </li>
+                           <li class="">
+                              <a href="#">RFQ管理 <span class="fa arrow"></span></a>
+                              <ul class="nav nav-third-level collapse" style="height: 0px;">
+                                  <li>
+                                     <a href="rfqini.jsp">创建RFQ </a>
+                                  </li>
+                                  <li>
+                                     <a href="rfqleadview.jsp">查看RFQ </a>
+                                  </li>
+                            
+
+                              </ul>
+                          </li> <li class="">
+                              <a href="#">报价单管理 <span class="fa arrow"></span></a>
+                              <ul class="nav nav-third-level collapse" style="height: 0px;">
+                                  <li>
+                                      <a href="quotationini.jsp">维护报价单 </a>
+                                  </li>
+                                  <li>
+                                      <a href="quotationcompare.jsp">比对报价单 </a>
+                                  </li>
+
+                              </ul>
+                          </li> <li class="">
+                              <a href="#">订单管理 <span class="fa arrow"></span></a>
+                              <ul class="nav nav-third-level collapse" style="height: 0px;">
+							<li><a href="orderini.jsp">创建订单 </a></li>
+							<li><a href="orderleadview.jsp">查看订单 </a></li>
+							<li><a href="orderleadchange.jsp">维护订单 </a></li>
+
+                              </ul>
+                          </li>
+                      </ul>
+                  </li>
+                  
+		
+
+					<li><a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">收货管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="search_results.html">搜索结果</a></li>
-							<li><a href="lockscreen.html">锁屏</a></li>
-							<li><a href="invoice.html">发票</a></li>
-							<li><a href="login.html">登录</a></li>
-							<li><a href="login_two_columns.html">登录 v.2</a></li>
-							<li><a href="forgot_password.html">忘记密码</a></li>
-							<li><a href="register.html">注册</a></li>
-							<li><a href="404.html">404</a></li>
-							<li><a href="500.html">500</a></li>
-							<li><a href="empty_page.html">空白页面</a></li>
+							<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
+							<li><a href="showstock.jsp">查询库存 </a></li>
+							<li><a href="createpayment.jsp">创建发票 </a></li>
+							<li><a href="postpayment.jsp">付款 </a></li>
+							<li><a href="account.jsp">查看应付账款 </a></li>
 						</ul></li>
 				</ul>
-
 			</div>
 		</nav>
 
@@ -416,10 +453,10 @@ ArrayList<Quotation> quolist = new ArrayList<Quotation>();
 ArrayList<Material> matlist = (ArrayList<Material>)session.getAttribute("matli");
 for(int i=0;i<rfqlist.size();i++)
 {
-	int num = rfqlist.get(i).getRfq_num();
-	if(QuotationDao.isqoNumExist(num))
+	String num = rfqlist.get(i).getRfq_code();
+	if(QuotationDao.isqoCodeExist(num))
 	{
-		Quotation quo = QuotationDao.findQuotationByNum(num);
+		Quotation quo = QuotationDao.findQuotationByCode(num);
 		quolist.add(quo);
 	}
 	
@@ -442,7 +479,7 @@ out.print("<tr>");
 
 		out.print("<a style='background:#C5EAEE;text-decoration:none' href='rufuse.jsp?quonum="
 		+quolist.get(i).getQuotation_num()+" '>"+quolist.get(i).getQuotation_num()+"</a>");
-		out.print("<p style='background:#C5EAEE'>"+quolist.get(i).getVendor_num()+"</p>");
+		out.print("<p style='background:#C5EAEE'>"+quolist.get(i).getVendor_code()+"</p>");
 		out.print("<p style='background:#C5EAEE'>"+coll+"</p>");
 	out.print("</td>");
 	}
@@ -474,7 +511,7 @@ out.print("<tr>");
 		Quotation qo=quolist.get(j);
 		BigDecimal sumval = new BigDecimal("0");//某报价单关于某材料的总价值
 		int quantity = 0;
-		ArrayList<Quotation_item> quoitlist = QuotationItemDao.findQuotationItemByQiNum(qo.getQuotation_num());
+		ArrayList<Quotation_item> quoitlist = QuotationItemDao.findQuotationByQuoCode(qo.getQuotation_code());
 		for(int k=0;k<quoitlist.size();k++)
 		{
 			Quotation_item qit=quoitlist.get(k);
@@ -502,7 +539,7 @@ out.print("<tr>");
 		Quotation qo=quolist.get(j);
 		BigDecimal sumval = new BigDecimal("0");//某报价单关于某材料的总价值
 		int quantity = 0;
-		ArrayList<Quotation_item> quoitlist = QuotationItemDao.findQuotationItemByQiNum(qo.getQuotation_num());
+		ArrayList<Quotation_item> quoitlist = QuotationItemDao.findQuotationByQuoCode(qo.getQuotation_code());
 		for(int k=0;k<quoitlist.size();k++)
 		{
 			Quotation_item qit=quoitlist.get(k);

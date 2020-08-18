@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Vendor implements Serializable {
 
 	private String vnum;
+	private String vcode;
 	private String vname;
 	private String vtype;
 	private String vtaxnum;
@@ -21,6 +22,14 @@ public class Vendor implements Serializable {
 	private String vclerk;
 	private boolean vdoublecheckinvoice;
 
+	public String getVcode() {
+		return vcode;
+	}
+
+	public void setVcode(String vcode) {
+		this.vcode = vcode;
+	}
+
 	public boolean isVdoublecheckinvoice() {
 		return vdoublecheckinvoice;
 	}
@@ -28,8 +37,6 @@ public class Vendor implements Serializable {
 	public void setVdoublecheckinvoice(boolean vdoublecheckinvoice) {
 		this.vdoublecheckinvoice = vdoublecheckinvoice;
 	}
-
-	
 
 	public String getVnum() {
 		return vnum;

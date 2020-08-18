@@ -9,7 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>创建RFQ</title>
-
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 
@@ -19,9 +18,47 @@
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
 <!-- Sweet Alert -->
 <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
+<link href="css/animate.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+
+<!-- Mainly scripts 日期-->
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="js/inspinia.js"></script>
+<script src="js/plugins/pace/pace.min.js"></script>
+
+<!-- SUMMERNOTE -->
+<script src="js/plugins/summernote/summernote.min.js"></script>
+
+<!-- Data picker -->
+<script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+<script>
+function initDatePicker(ele){
+	ele.datepicker({
+	autoSize:true,
+	autoclose: true,
+	language: "zh-CN",
+	viewDate:new Date()
+	})
+}
+    $(document).ready(function(){
+
+		initDatePicker($(".input-group.date"));
+   });
+    
+
+</script>
 <script>
 function selectline(ele)
 {
@@ -157,7 +194,7 @@ function open_and_search()
 <style>
 #wrapper
 {
-     z-index: 99;
+     z-index: 1;
    position: absolute;
 }
 
@@ -165,7 +202,7 @@ function open_and_search()
     z-index: 100;
     width:50%; margin-top:10%; margin:auto; padding:28px;
     top:25%; left:25%;
-    height:350px; border:1px #111 solid;
+    height:310px; border:1px #111 solid;
     display:none;            /* 默认对话框隐藏 */
 
 position: absolute;
@@ -206,69 +243,81 @@ background:white;
 </head>
 
 <body>
-<form class="m-t" role="form" action="/RFQController" method="post">
+<form class="m-t" role="form" action="${pageContext.request.contextPath}//rfq" method="post">
 <input type='text' value='bounce_to_select' name='action' hidden='true'>
 	<div id="wrapper">
 
 		<nav class="navbar-default navbar-static-side" role="navigation">
-			<div class="sidebar-collapse">
+			<div class="sidebar-collapse" style="z-index: 10";>
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element">
-							<span> <img alt="image" class="img-circle"
-								src="img/profile_small.jpg" />
+							<span> <img height="48px" width="48px" alt="image"
+								class="img-circle" src="<%=session.getAttribute("uportrait")%>" />
 							</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<span class="clear"> <span class="block m-t-xs"> <strong
-										class="font-bold">王昆</strong>
-								</span> <span class="text-muted text-xs block">管理员 <b
+										class="font-bold"><%=session.getAttribute("uname")%></strong>
+								</span> <span class="text-muted text-xs block"><%=session.getAttribute("upermission")%><b
 										class="caret"></b></span>
 							</span>
 							</a>
 							<ul class="dropdown-menu animated fadeInRight m-t-xs">
-								<li><a href="profile.html">个人信息</a></li>
-								<li><a href="contacts.html">联系方式</a></li>
-								<li><a href="mailbox.html">邮箱</a></li>
+								<li><a>个人信息</a></li>
+								<li><a>联系方式</a></li>
+								<li><a>邮箱</a></li>
 								<li class="divider"></li>
-								<li><a href="login.html">退出登录</a></li>
+								<li><a href="Login">退出登录</a></li>
 							</ul>
 						</div>
 						<div class="logo-element">IN+</div>
 					</li>
-					<li><a href="layouts.html"><i class="fa fa-home"></i> <span
+					<li><a href="Home"><i class="fa fa-home"></i> <span
 							class="nav-label">主页</span></a></li>
+
 					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
 							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="graph_flot.html">创建供应商</a></li>
-							<li><a href="graph_morris.html">维护供应商</a></li>
-						</ul></li>
-					<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
-							class="nav-label">RFQ</span><span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level collapse">
-							<li><a href="form_basic.html"></a></li>
-							<li><a href="form_advanced.html">创建RFQ</a></li>
-							<li><a href="form_wizard.html">分步引导</a></li>
-							<li><a href="form_file_upload.html">文件上传</a></li>
-							<li><a href="form_editors.html">富文本编辑</a></li>
-							<li><a href="form_markdown.html">Markdown</a></li>
+							<li><a href="CreateVendor">创建供应商</a></li>
+							<li><a href="SelectVendor?type=display">查询供应商</a></li>
+							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
 
-					<li><a href="#"><i class="fa fa-files-o"></i> <span
-							class="nav-label">收货</span><span class="fa arrow"></span></a>
+					<li class="active"><a href="#"><i class="fa fa-shopping-cart"></i><span
+							class="nav-label"> 采购管理 </span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="search_results.html">搜索结果</a></li>
-							<li><a href="lockscreen.html">锁屏</a></li>
-							<li><a href="invoice.html">发票</a></li>
-							<li><a href="login.html">登录</a></li>
-							<li><a href="login_two_columns.html">登录 v.2</a></li>
-							<li><a href="forgot_password.html">忘记密码</a></li>
-							<li><a href="register.html">注册</a></li>
-							<li><a href="404.html">404</a></li>
-							<li><a href="500.html">500</a></li>
-							<li><a href="empty_page.html">空白页面</a></li>
+							<li class="active"><a href="#">请购单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="requisitionini.jsp">创建请购单 </a></li>
+									<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+								</ul></li>
+							<li><a href="#">RFQ管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="rfqini.jsp">创建RFQ </a></li>
+									<li><a href="rfqleadview.jsp">查看RFQ </a></li>
+								</ul></li>
+							<li><a href="#">报价单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="quotationini.jsp">维护报价单 </a></li>
+									<li><a href="quotationcompare.jsp">比对报价单 </a></li>
+
+								</ul></li>
+							<li><a href="#">订单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="orderini.jsp">创建订单 </a></li>
+									<li><a href="orderleadview.jsp">查看订单 </a></li>
+									<li><a href="orderleadchange.jsp">维护订单 </a></li>
+								</ul></li>
+						</ul></li>
+					<li><a href="#"><i class="fa fa-files-o"></i> <span
+							class="nav-label">收货管理</span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
+							<li><a href="showstock.jsp">查询库存 </a></li>
+							<li><a href="createpayment.jsp">创建发票 </a></li>
+							<li><a href="postpayment.jsp">付款 </a></li>
+							<li><a href="account.jsp">查看应付账款 </a></li>
 						</ul></li>
 				</ul>
-
 			</div>
 		</nav>
 
@@ -280,62 +329,14 @@ background:white;
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
 							href="#"><i class="fa fa-bars"></i> </a>
 					</div>
+					<ul class="nav navbar-top-links navbar-left">
+						<li><a> <i class="fa fa-paper-plane"></i>Be What's Next.
+						</a></li>
+					</ul>
 					<ul class="nav navbar-top-links navbar-right">
-						<li><span class="m-r-sm text-muted welcome-message">欢迎回来！</span></li>
-						<li class="dropdown"><a class="dropdown-toggle count-info"
-							data-toggle="dropdown" href="#"> <i class="fa fa-envelope"></i>
-								<span class="label label-warning">16</span>
-						</a>
-							<ul class="dropdown-menu dropdown-messages">
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/a7.jpg">
-										</a>
-										<div class="media-body">
-											<small class="pull-right">46小时前</small> <strong>李文俊</strong>
-											关注了 <strong>刘海洋</strong>. <br> <small class="text-muted">3
-												天 前- 10.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/a4.jpg">
-										</a>
-										<div class="media-body ">
-											<small class="pull-right text-navy">5小时前</small> <strong>王昆</strong>
-											关注了 <strong>李文俊</strong>. <br> <small class="text-muted">昨天下午1:21
-												- 11.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/profile.jpg">
-										</a>
-										<div class="media-body ">
-											<small class="pull-right">23小时前</small> <strong>张三</strong>
-											赞了 <strong>李四</strong>. <br> <small class="text-muted">2天前
-												- 11.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="text-center link-block">
-										<a href="mailbox.html"> <i class="fa fa-envelope"></i> <strong>查看更多消息</strong>
-										</a>
-									</div>
-								</li>
-							</ul></li>
-
-						<li><a href="login.html"> <i class="fa fa-sign-out"></i>
-								退出登录
+						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uname")%></span>
+						</li>
+						<li><a href="Login"> <i class="fa fa-sign-out"></i> 退出登录
 						</a></li>
 					</ul>
 
@@ -380,39 +381,48 @@ background:white;
 							</div>
 
 							<div class="ibox-content">
-								
-									<div class="row">
-
-										<div class="col-md-4">
+							
+<div class="row">
+										<div class="col-md-2">
 											<!--RFQ具体信息 -->
+											
 											<div class="form-group">
-												<label for="title">RFQ种类</label> <input id="vname" name="rfq_type"
+												<label for="title">RFQ种类</label> <input id="vname" name="type"
 													type="text" class="form-control" placeholder="输入RFQ种类..." />
 											</div>
-
+</div>
+<div class="col-md-2">
 											<div class="form-group">
 												<label for="message">使用语言</label> <input
 													class="form-control" id="vaddress" type="text" name="language"
 													class="form-control" placeholder="输入使用语言..."></input>
 											</div>
-
+                                         </div>
+  </div>
+  
+  <div class="row">
+  <div class="col-md-2">
 											<div class="form-group">
-												<label for="message">RFQ日期</label> <input
-													class="form-control" id="vaddress" type="text" name="date"
-													class="form-control" placeholder="输入RFQ日期 ..."></input>
+												<label for="message">RFQ日期</label> <div id="sb" class="input-group date"> <span class="input-group-addon">
+							<i class="fa fa-calendar"></i></span><input name="date" type="text" class="form-control" >
 											</div>
-
+	  </div>
+											</div>
+ <div class="col-md-2">
 											<div class="form-group">
-												<label for="message">RFQ截止日期</label> <input
-													class="form-control" id="vaddress" type="text" name="deadline"
-													class="form-control" placeholder="输入RFQ截止日期 ..."></input>
+												<label for="message">RFQ截止日期</label> <div id="sb2"  class="input-group date"> <span class="input-group-addon">
+										<i class="fa fa-calendar"></i></span><input name="deadline" type="text" class="form-control" >
 											</div>
-
+<script>
+initDatePicker($("#sb"));
+initDatePicker($("#sb2"));
+</script>
 										</div>
+ </div>
+  </div>
 
-										<div class="col-md-2"></div>
-
-										<div class="col-md-2" style="width:25%;">
+										
+										<div  style="width:35%;">
 							
 											<strong></strong> 组织数据
 											<hr style="margin:0px 0px 5px 0px; border:0.1px black solid; "/>
@@ -431,20 +441,29 @@ background:white;
 												<label for="showEasing">运送工厂</label> <input
 										name="plant"		id="showEasing" type="text" placeholder="输入运送工厂..."
 													class="form-control" />
-											</div>
+					
+					
+							</div>
 
 										</div>
-									</div>
+								
+	</div>
 
-									<div class="row">
+		
+	<div class="footer" style="position: fixed; bottom: 0;">
+			<div class="pull-right">
+				<div class="text-right">
+	 	<div class="row">
 										<div class="col-lg-12">
 											 <button type="button" class="btn btn-primary " onclick=openwin(1)>参考请购单</button>
 											<button type="button" class="btn btn-white" id="clearlasttoast">直接创建</button>
 										</div>
 									</div>
-								
+				</div>
+			</div>
+		</div>						
 
-</div>
+
 
 							</div>
 						</div>
@@ -452,12 +471,7 @@ background:white;
 				</div>
 			</div>
 
-			<div class="footer">
-				
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2014-2015
-				</div>
-			</div>
+
 
 		</div>
 	
@@ -506,7 +520,7 @@ background:white;
 					
 					</div>
         
-        <input type="button" value="确定">
+    
         
         </div>
      </div>
@@ -534,7 +548,7 @@ background:white;
 																	</div>
 
 																	<div class="form-group">
-																		<label for="message">请购描述</label> <input class="form-control" id="key2" type="text" placeholder="输入请购描述...">
+																		<label for="message">请购描述</label> <input class="form-control" id="key1" type="text" placeholder="输入请购描述...">
 																	</div>
 
 
@@ -543,7 +557,7 @@ background:white;
 																	</div>
 																	
 																	<div class="form-group">
-																		<label for="showMethod">请购小组</label> <input id="key1" type="text" placeholder="输入请购小组" class="form-control">
+																		<label for="showMethod">请购小组</label> <input id="key2" type="text" placeholder="输入请购小组" class="form-control">
 																	</div>
 
 
@@ -585,20 +599,9 @@ background:white;
 								</table>  
      </div>
      
-	<script src="js/jquery-2.1.1.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-	<!-- Custom and plugin javascript -->
-	<script src="js/inspinia.js"></script>
-	<script src="js/plugins/pace/pace.min.js"></script>
-
-	<!-- Toastr script -->
+		<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
-    <!-- Sweet alert -->
-    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
-    
+
 	<script type="text/javascript">
 		$(function() {
 			var i = -1;
@@ -609,7 +612,10 @@ background:white;
 				return msg;
 			};
 
-			
+			$('#showsimple').click(function() {
+				// Display a success toast, with a title
+				toastr.success('可以添加新的请购材料', '提示!')
+			});
 			$('#showtoast')
 					.click(
 							function() {
@@ -729,10 +735,75 @@ background:white;
 			$('#cleartoasts').click(function() {
 				toastr.clear();
 			});
-		})
-	</script>
-	<!-- float window -->
+		});
+		</script> 
+   
+  
 
+    <!-- Custom and plugin javascript -->
+    <script src="js/inspinia.js">
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+    <!-- Sweet alert -->
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('.demo1').click(function(){
+            swal({
+                title: "Welcome in Alerts",
+                text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+            });
+        });
+
+        $('.demo2').click(function(){
+            swal({
+                title: "请购单添加成功!",
+                text: "您的请购单号是10034245",
+                type: "success"
+            });
+        });
+
+        $('.demo3').click(function () {
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this imaginary file!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            }, function () {
+                swal("Deleted!", "Your imaginary file has been deleted.", "success");
+            });
+        });
+
+        $('.demo4').click(function () {
+            swal({
+                        title: "Are you sure?",
+                        text: "Your will not be able to recover this imaginary file!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes, delete it!",
+                        cancelButtonText: "No, cancel plx!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                        } else {
+                            swal("Cancelled", "Your imaginary file is safe :)", "error");
+                        }
+                    });
+        });
+
+
+    });
+
+</script>
 	
 </body>
 

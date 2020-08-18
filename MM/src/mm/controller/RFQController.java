@@ -60,7 +60,7 @@ public class RFQController extends HttpServlet{
 	private void view(HttpServletRequest req, HttpServletResponse resp) {
 		// TODO Auto-generated method stub
 		String rfqnum = req.getParameter("rfqnum");
-		RFQ r = RFQDao.findRFQbyNum(Integer.parseInt(rfqnum));
+		RFQ r = RFQDao.findRFQbyCode(rfqnum);
 		HttpSession session= req.getSession();
 		session.setAttribute("RFQ", r);
 		req.getRequestDispatcher("rfqview.jsp");
@@ -72,7 +72,7 @@ public class RFQController extends HttpServlet{
 
 
 
-	private void save(HttpServletRequest req, HttpServletResponse resp) {
+	private void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session= req.getSession();
 		
@@ -81,11 +81,11 @@ public class RFQController extends HttpServlet{
 		String vendor_code=req.getParameter("vendor");
 		rfq.setRfq_coll(rfq_coll);
 		rfq.setVendor_code(vendor_code);
-		int rfq_num =RFQDao.addRFQ(rfq);
+		String rfq_code =RFQDao.addRFQ(rfq);
 		
 		String [] itemture=(String[]) session.getAttribute("itemture");//不确定这么写对不对
-		int requisition_num=rfq.getRequisition_num();
-		ArrayList<Requisition_item> rilist=ReqItemDao.findRequItemByReqnum(requisition_num);
+		String requisition_code=rfq.getRequisition_code();
+		ArrayList<Requisition_item> rilist=ReqItemDao.findRequItemByReqcode(requisition_code);
 	
 		for(int i=0;i<itemture.length;i++ )
 		{
@@ -95,7 +95,7 @@ public class RFQController extends HttpServlet{
 				RFQ_item rf = new RFQ_item();
 				String material_num=ri.getMaterial_num();
 				rf.setMaterial_num(material_num);
-				rf.setRfq_num(rfq_num);
+				rf.setRfq_code(rfq_code);
 				rf.setRequisition_deliverydate(ri.getRequisition_deliverydate());
 				rf.setRequisition_plant(ri.getRequisition_plant());
 				rf.setRequisition_quantity(ri.getRequisition_quantity());
@@ -103,8 +103,9 @@ public class RFQController extends HttpServlet{
 				RFQItemDao.addRFQItem(rf);
 			}
 		}
-		
-		
+		req.setAttribute("rfq_code", rfq_code);
+		req.getRequestDispatcher("rfqfin.jsp").forward(req,resp);//请求转发
+
 	}
 
 
@@ -118,10 +119,9 @@ public class RFQController extends HttpServlet{
 		HttpSession session= req.getSession();
 		String [] itemture=req.getParameterValues("checkname");
 		session.setAttribute("itemture", itemture);
-		req.getRequestDispatcher("rfq6.jsp").forward(req,resp);//请求转发
 
 
-	
+		req.getRequestDispatcher("rfqfin.jsp").forward(req,resp);//请求转发
 
 		
 	}
@@ -143,10 +143,10 @@ public class RFQController extends HttpServlet{
 		String rfq_purchasing_org = req.getParameter("org");
 		String rfq_purchasing_group = req.getParameter("group");
 		String rfq_plant = req.getParameter("plant");
-		int requisition_num=Integer.parseInt(req.getParameter("reqnum"));
+		String requisition_code=req.getParameter("requisition_num");
 		String vendor_code=req.getParameter("vendorcode");
 		RFQ rfq = new RFQ();
-		rfq.setRequisition_num(requisition_num);
+		rfq.setRequisition_code(requisition_code);
 		
 		rfq.setRfq_date(rfq_date);
 		rfq.setRfq_deadline(rfq_deadline);
@@ -162,7 +162,7 @@ public class RFQController extends HttpServlet{
 		session.setAttribute("passdata",rfq);
 		
 		//Requisition resquisition = RequisitionDao.findRequisitionByNum(requisition_num);
-		req.getRequestDispatcher("rfq5.jsp").forward(req,resp);//请求转发
+		req.getRequestDispatcher("rfqselect.jsp").forward(req,resp);//请求转发
 		
 	}
 
@@ -177,7 +177,8 @@ public class RFQController extends HttpServlet{
 	{
 		doGet(req, resp);
 	}
-	private void create(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
+	@SuppressWarnings("unused")
+	private void create(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
 		req.setCharacterEncoding("utf-8");
@@ -192,11 +193,11 @@ public class RFQController extends HttpServlet{
 		String rfq_purchasing_org = req.getParameter("org");
 		String rfq_purchasing_group = req.getParameter("group");
 		String rfq_plant = req.getParameter("plant");
-		int requisition_num=Integer.parseInt(req.getParameter("reqnum"));
+		String requisition_code=req.getParameter("reqnum");
 		String vendor_code=req.getParameter("vendorcode");
 		String rfq_coll=req.getParameter("coll");
 		RFQ rfq = new RFQ();
-		rfq.setRequisition_num(requisition_num);
+		rfq.setRequisition_code(requisition_code);
 		rfq.setRfq_coll(rfq_coll);
 		rfq.setRfq_date(rfq_date);
 		rfq.setRfq_deadline(rfq_deadline);
@@ -208,8 +209,8 @@ public class RFQController extends HttpServlet{
 		rfq.setRfq_type(rfq_type);
 		rfq.setVendor_code(vendor_code);
 		
-		int rfq_num=RFQDao.addRFQ(rfq);
-		
+		String rfq_code=RFQDao.addRFQ(rfq);
+		req.setAttribute("rfq_code", rfq_code);
 		Enumeration<String> enu=req.getParameterNames();
 		while(enu.hasMoreElements()){
 		String paraName=(String)enu.nextElement();
@@ -237,13 +238,8 @@ public class RFQController extends HttpServlet{
 		*/
    	
 		
-		
-		
-		
-		
-		
-		
-		
+
+
 		
 	}
 	 private java.sql.Date strToDate(String strDate) {  

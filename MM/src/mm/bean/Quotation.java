@@ -7,10 +7,11 @@ import java.sql.Date;
 public class Quotation implements Serializable {
 
 	private int quotation_num;
-	private int rfq_num;
-	private int vendor_num;
+	private String rfq_code;
+	private String vendor_code;
 	private BigDecimal value;
 	private int status;
+	private String quotation_code;
 	
 	public int getQuotation_num() {
 		return quotation_num;
@@ -18,18 +19,7 @@ public class Quotation implements Serializable {
 	public void setQuotation_num(int quotation_num) {
 		this.quotation_num = quotation_num;
 	}
-	public int getRfq_num() {
-		return rfq_num;
-	}
-	public void setRfq_num(int rfq_num) {
-		this.rfq_num = rfq_num;
-	}
-	public int getVendor_num() {
-		return vendor_num;
-	}
-	public void setVendor_num(int vendor_num) {
-		this.vendor_num = vendor_num;
-	}
+
 	public BigDecimal getValue() {
 		return value;
 	}
@@ -41,6 +31,24 @@ public class Quotation implements Serializable {
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	public String getQuotation_code() {
+		return quotation_code;
+	}
+	public void setQuotation_code(String quotation_code) {
+		this.quotation_code = quotation_code;
+	}
+	public String getVendor_code() {
+		return vendor_code;
+	}
+	public void setVendor_code(String vendor_code) {
+		this.vendor_code = vendor_code;
+	}
+	public String getRfq_code() {
+		return rfq_code;
+	}
+	public void setRfq_code(String rfq_code) {
+		this.rfq_code = rfq_code;
 	}
 
 	

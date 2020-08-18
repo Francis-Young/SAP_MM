@@ -41,6 +41,11 @@ public class LoginFilter implements Filter {
 
 		HttpServletResponse response = (HttpServletResponse) arg1;
 		HttpServletRequest request = (HttpServletRequest) arg0;
+		response.setDateHeader("Expires",-1); //IE游览器支持的
+		
+		//保证兼容性
+		response.setHeader("Cache-Control", "no-cache");
+		response.setHeader("Pragme", "no-cache");
 		HttpSession session = request.getSession(true);
 		String unum = (String) session.getAttribute("unum");//
 		String url = request.getRequestURI();
@@ -52,6 +57,12 @@ public class LoginFilter implements Filter {
 		if (unum == null || unum.equals("")) {
 			// �жϻ�ȡ��·����Ϊ���Ҳ��Ƿ��ʵ�¼ҳ���ִ�е�¼����ʱ��ת
 			if (url != null && !url.equals("") && (url.indexOf("Login") < 0 && url.indexOf("login") < 0)) {
+				
+				response.setDateHeader("Expires",-1); //IE游览器支持的
+				
+				//保证兼容性
+				response.setHeader("Cache-Control", "no-cache");
+				response.setHeader("Pragme", "no-cache");
 				request.getRequestDispatcher("/401.html").forward(request, response);
 				return;
 			}

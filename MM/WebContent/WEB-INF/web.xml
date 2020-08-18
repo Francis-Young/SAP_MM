@@ -109,7 +109,7 @@
     <servlet-name>SearchPaymentController</servlet-name>
     <url-pattern>/SearchPayment</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <description></description>
     <display-name>TestController</display-name>
     <servlet-name>TestController</servlet-name>
@@ -129,5 +129,14 @@
     <servlet-name>DisplayVendorController</servlet-name>
     <url-pattern>/DisplayVendor</url-pattern>
   </servlet-mapping>
-
+    <servlet>
+    <description></description>
+    <display-name>ShowstockController</display-name>
+    <servlet-name>ShowstockController</servlet-name>
+    <servlet-class>mm.controller.ShowstockController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowstockController</servlet-name>
+    <url-pattern>/Showstock</url-pattern>
+  </servlet-mapping>
 </web-app>
