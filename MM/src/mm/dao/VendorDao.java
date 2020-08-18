@@ -186,7 +186,7 @@ public class VendorDao {
 		Connection conn = DBUtil.getConnection();
 		try {
 			PreparedStatement stat = conn
-					.prepareStatement("select vendor_num,vendor_name,vendor_type,vendor_city from Vendor");
+					.prepareStatement("select vendor_num,vendor_name,vendor_type,vendor_city,vendor_code from Vendor");
 			ResultSet rs = stat.executeQuery();
 			while (rs.next()) {
 				Vendor vi = new Vendor();
@@ -202,6 +202,7 @@ public class VendorDao {
 					vtype = "组织";
 				vi.setVtype(vtype);
 				vi.setVcity(rs.getString(4));
+				vi.setVcode(rs.getString(5));
 
 				v.add(vi);
 			}
