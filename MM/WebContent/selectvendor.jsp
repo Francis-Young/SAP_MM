@@ -35,52 +35,58 @@
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element">
-							<span> <img alt="image" class="img-circle"
-								src="img/profile_small.jpg" />
+							<span> <img height="48px" width="48px" alt="image"
+								class="img-circle" src="<%=session.getAttribute("uportrait")%>" />
 							</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<span class="clear"> <span class="block m-t-xs"> <strong
-										class="font-bold"><%=session.getAttribute("uid")%></strong>
-								</span> <span class="text-muted text-xs block">管理员 <b
+										class="font-bold"><%=session.getAttribute("uname")%></strong>
+								</span> <span class="text-muted text-xs block"><%=session.getAttribute("upermission")%><b
 										class="caret"></b></span>
 							</span>
 							</a>
 							<ul class="dropdown-menu animated fadeInRight m-t-xs">
-								<li><a href="profile.html">个人信息</a></li>
-								<li><a href="contacts.html">联系方式</a></li>
-								<li><a href="mailbox.html">邮箱</a></li>
+								<li><a>个人信息</a></li>
+								<li><a>联系方式</a></li>
+								<li><a>邮箱</a></li>
 								<li class="divider"></li>
-								<li><a href="login.html">退出登录</a></li>
+								<li><a href="Login">退出登录</a></li>
 							</ul>
 						</div>
 						<div class="logo-element">IN+</div>
 					</li>
-					<li><a href="index.html"><i class="fa fa-th-large"></i> <span
-							class="nav-label">首页</span> <span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level">
-							<li><a href="index.html">首页 v.1</a></li>
-							<li><a href="dashboard_2.html">首页 v.2</a></li>
-							<li><a href="dashboard_3.html">首页 v.3</a></li>
-							<li><a href="dashboard_4_1.html">首页 v.4</a></li>
-							<li><a href="dashboard_5.html">首页 v.5 <span
-									class="label label-primary pull-right">NEW</span></a></li>
-						</ul></li>
+					<li><a href="Home"><i class="fa fa-home"></i> <span
+							class="nav-label">主页</span></a></li>
 					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
-							class="nav-label">布局</span></a></li>
-					<li><a href="#"><i class="fa fa-bar-chart-o"></i> <span
-							class="nav-label">图表</span><span class="fa arrow"></span></a>
+							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="graph_flot.html">Flot Charts</a></li>
-							<li><a href="graph_morris.html">Morris.js Charts</a></li>
-							<li><a href="graph_rickshaw.html">Rickshaw Charts</a></li>
-							<li><a href="graph_chartjs.html">Chart.js</a></li>
-							<li><a href="graph_chartist.html">Chartist</a></li>
-							<li><a href="c3.html">c3 charts</a></li>
-							<li><a href="graph_peity.html">Peity Charts</a></li>
-							<li><a href="graph_sparkline.html">Sparkline Charts</a></li>
+							<li><a href="CreateVendor">创建供应商</a></li>
+							<li><a href="SelectVendor?type=display">查询供应商</a></li>
+							<li><a href="SelectVendor?type=update">维护供应商</a></li>
+						</ul></li>
+					<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
+							class="nav-label">采购管理</span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li><a href="requisitionini.jsp">创建请购单 </a></li>
+							<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+							<li><a href="rfqini.jsp">创建RFQ </a></li>
+							<li><a href="rfqleadview.jsp">查看RFQ </a></li>
+							<li><a href="quotationini.jsp">维护报价单 </a></li>
+							<li><a href="quotationcompare.jsp">比对报价单 </a></li>
+							<li><a href="orderini.jsp">创建订单 </a></li>
+							<li><a href="orderleadview.jsp">查看订单 </a></li>
+							<li><a href="orderleadchange.jsp">维护订单 </a></li>
 						</ul></li>
 
+					<li><a href="#"><i class="fa fa-files-o"></i> <span
+							class="nav-label">收货管理</span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
+							<li><a href="showstock.jsp">查询库存 </a></li>
+							<li><a href="createpayment.jsp">创建发票 </a></li>
+							<li><a href="postpayment.jsp">付款 </a></li>
+							<li><a href="account.jsp">查看应付账款 </a></li>
+						</ul></li>
 				</ul>
-
 			</div>
 		</nav>
 
@@ -91,30 +97,18 @@
 					<div class="navbar-header">
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
 							href="#"><i class="fa fa-bars"></i> </a>
-						<form role="search" class="navbar-form-custom"
-							action="search_results.html">
-							<div class="form-group">
-								<input type="text" placeholder="Search for something..."
-									class="form-control" name="top-search" id="top-search">
-							</div>
-						</form>
 					</div>
+					<ul class="nav navbar-top-links navbar-left">
+						<li><a> <i class="fa fa-paper-plane"></i>Be What's Next.
+						</a></li>
+					</ul>
 					<ul class="nav navbar-top-links navbar-right">
-						<li><span class="m-r-sm text-muted welcome-message">欢迎来到goopay</span>
+						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uname")%></span>
 						</li>
-						<li class="dropdown"><a class="dropdown-toggle count-info"
-							data-toggle="dropdown" href="#"> <i class="fa fa-envelope"></i>
-								<span class="label label-warning">16</span>
-						</a></li>
-						<li class="dropdown"><a class="dropdown-toggle count-info"
-							data-toggle="dropdown" href="#"> <i class="fa fa-bell"></i> <span
-								class="label label-primary">8</span>
-						</a></li>
-
-
 						<li><a href="Login"> <i class="fa fa-sign-out"></i> 退出登录
 						</a></li>
 					</ul>
+
 				</nav>
 			</div>
 			<div class="row wrapper border-bottom white-bg page-heading">
@@ -169,7 +163,7 @@
 													<tr>
 														<td><input type="radio" name="v"
 															value="${vendor.vnum}" /></td>
-														<td><c:out value="${vendor.vnum}"></c:out></td>
+														<td><c:out value="${vendor.vcode}"></c:out></td>
 														<td><c:out value="${vendor.vname}"></c:out></td>
 														<td class="center"><c:out value="${vendor.vtype}"></c:out></td>
 														<td class="center"><c:out value="${vendor.vcity}"></c:out></td>
