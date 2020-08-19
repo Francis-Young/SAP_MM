@@ -88,7 +88,7 @@ public class vendorSearchServlet extends HttpServlet {
 			String s="";
 		for(int i=0; i<vli.size();i++)
 		{
-			s += "mark0"+vli.get(i).getVnum()+"mark1"+vli.get(i).getVname()+"mark2"+vli.get(i).getVtype()+"mark3"
+			s += "mark0"+vli.get(i).getVcode()+"mark1"+vli.get(i).getVname()+"mark2"+vli.get(i).getVtype()+"mark3"
 					+vli.get(i).getVcompanycode()+"mark4"+vli.get(i).getVcity()+"mark5";
 			
 		}

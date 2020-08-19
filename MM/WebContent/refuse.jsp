@@ -388,7 +388,7 @@ function splitRow(){
 
 <%
 
-String quonum=request.getAttribute("quonum").toString();
+String quonum=request.getParameter("quonum").toString();
 
 Quotation qo=QuotationDao.findQuotationByCode(quonum);
 session.setAttribute("refuse", qo);
@@ -463,7 +463,7 @@ Vendor vd=VendorDao.findVendorbyCode(vnum);
                                 <div class="panel-body">
              <div style="width:950px;  overflow-x:scroll;">										
 <div class="table-b">
-<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="100%">
+<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="1400px">
 <thead>
 <tr>
 <th><input type="checkbox" id="checkbox0"></th>
@@ -505,13 +505,10 @@ for(int i=0;i<qilist.size();i++)
 		out.print(s1+"shorttext"+s3+m.getMaterial_shorttext()+s4);
 		out.print(s1+"quantity"+s3+qi.getQuantity()+s4);
 		out.print(s1+"baseunit"+s3+m.getMaterial_baseunit()+s4);
-		out.print("<div class='input-group date'> <span class='input-group-addon'>"+
+		out.print("<td><div class='input-group date'> <span class='input-group-addon'>"+
 		"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+i+
-		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div>");
-		out.print("<div class='input-group date'> <span class='input-group-addon'>"+
-		"<i class='fa fa-calendar'></i></span><input name='deliverydate"+i+
-		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div>");
-		
+		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div></td>");
+	
 		out.print(s1+"price"+s3+qi.getPrice().toString()+s4);
 		out.print(s1+"currency"+s3+qi.getCurrency_unit()+s4);
 		out.print(s1+"materialgroup"+s3+m.getMaterial_group()+s4);
@@ -596,15 +593,19 @@ for(int i=0;i<qilist.size();i++)
                                 </div>
                             </div>
                             <div id="tab-2" class="tab-pane">
-                                <div class="panel-body">
-                                    <strong>Donec quam felis</strong>
-
-                                    <p>千未知的植物注意到我：当我听到在茎的小世界的嗡嗡声，和熟悉的昆虫无数难以形容的形式
-                                        然后，我感觉到全能者的存在，他在自己的形象中形成了我们，并且呼吸</p>
-
-                                    <p>I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite
-                                        sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet.</p>
-                                </div>
+                                 <div class="panel-body">
+               <% for(int i=0;i<qilist.size();i++)
+               {
+            	    Quotation_item qi=qilist.get(i);
+            		Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
+                    out.print("<strong>"+m.getMaterial_num()+"<strong>");
+                    out.print("<p>MRP类型:"+m.getMaterial_MRPtype()+"</p>");
+                    out.print("<p>描述:"+m.getMaterial_discr()+"</p>");
+                                    
+               }              
+              %>                
+                                
+                             </div>    
                             </div>
                         </div>
 
