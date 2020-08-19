@@ -454,6 +454,7 @@ ArrayList<Material> matlist = (ArrayList<Material>)session.getAttribute("matli")
 for(int i=0;i<rfqlist.size();i++)
 {
 	String num = rfqlist.get(i).getRfq_code();
+	System.out.print("num"+num);
 	if(QuotationDao.isqoCodeExist(num))
 	{
 		Quotation quo = QuotationDao.findQuotationByCode(num);
@@ -477,8 +478,8 @@ out.print("<tr>");
 	{
 	out.print("<td>");
 
-		out.print("<a style='background:#C5EAEE;text-decoration:none' href='rufuse.jsp?quonum="
-		+quolist.get(i).getQuotation_num()+" '>"+quolist.get(i).getQuotation_num()+"</a>");
+		out.print("<a style='background:#C5EAEE;text-decoration:none' href='refuse.jsp?quonum="
+		+quolist.get(i).getQuotation_code()+" '>"+quolist.get(i).getQuotation_code()+"</a>");
 		out.print("<p style='background:#C5EAEE'>"+quolist.get(i).getVendor_code()+"</p>");
 		out.print("<p style='background:#C5EAEE'>"+coll+"</p>");
 	out.print("</td>");
@@ -519,20 +520,21 @@ out.print("<tr>");
 			{
 				quantity+=qit.getQuantity();
 				BigDecimal bigdem_quantity=new BigDecimal(qit.getQuantity());
+				System.out.println("qit"+qit.getQuotation_item_num());
 				BigDecimal this_itemval = qit.getPrice().multiply(bigdem_quantity);//这一项的价值
-				sumval.add(this_itemval);
+				sumval=sumval.add(this_itemval);
 			}
 		}
 		if(quantity!=0)
 		{
 			availquos++;
-			BigDecimal average_price = sumval.divide(new BigDecimal(quantity));//在这一项quotation内的均价
+			BigDecimal average_price = sumval.divide(new BigDecimal(quantity),7,BigDecimal.ROUND_HALF_UP);//在这一项quotation内的均价
 			ans=ans.add(average_price);
 			prices.add(average_price);
 		}
 
 	}
-	BigDecimal gross_average_price = ans.divide(new BigDecimal(availquos));//所有报价单关于某材料的均价
+	BigDecimal gross_average_price = ans.divide(new BigDecimal(availquos),7,BigDecimal.ROUND_HALF_UP);//所有报价单关于某材料的均价
 	
 	for (int j=0;j<quolist.size();j++)
 	{
@@ -548,7 +550,7 @@ out.print("<tr>");
 				quantity+=qit.getQuantity();
 				BigDecimal bigdem_quantity=new BigDecimal(qit.getQuantity());
 				BigDecimal this_itemval = qit.getPrice().multiply(bigdem_quantity);//这一项的价值
-				sumval.add(this_itemval);
+				sumval=sumval.add(this_itemval);
 			}
 		}
 		String val="不含有此材料";
@@ -559,9 +561,9 @@ out.print("<tr>");
 		{
 			DecimalFormat df1 = new DecimalFormat("###,###.000");//格式化金额
 			val=df1.format(sumval);
-			BigDecimal average_price = sumval.divide(new BigDecimal(quantity));
+			BigDecimal average_price = sumval.divide(new BigDecimal(quantity),7,BigDecimal.ROUND_HALF_UP);
 			price=df1.format(average_price);
-			BigDecimal derate=average_price.divide(gross_average_price);
+			BigDecimal derate=average_price.divide(gross_average_price,7,BigDecimal.ROUND_HALF_UP);
 			DecimalFormat df = new DecimalFormat("0.00%");//格式化百分比
 			int rank1=1;
 			for (int z=0;z<prices.size();z++)
@@ -588,12 +590,18 @@ out.print("<tr>");//最后一行
 		out.print("<p style='background:#FFF843'>总览</p>");
 		out.print("<p style='background:#FFF843'>&nbsp</p>");
 	out.print("</td>");
+	out.print("<td>");
+		out.print("<p style='background:#FFF843'>总价</p>");
+		out.print("<p style='background:#FFF843'>排行：</p>");
+	out.print("</td>");
 	BigDecimal ans1=new BigDecimal(0);
 	for(int i=0;i<quolist.size();i++)
 	{
-		ans1.add(quolist.get(i).getValue());
+		ans1=ans1.add(quolist.get(i).getValue());
 	}
-	BigDecimal average_val=ans1.divide(new BigDecimal (quolist.size()));
+	System.out.println("ans"+ans1);
+	System.out.println("quolist.size()"+quolist.size());
+	BigDecimal average_val=ans1.divide(new BigDecimal (quolist.size()),7,BigDecimal.ROUND_HALF_UP);
 	for(int i=0;i<quolist.size();i++)
 	{
 		Quotation quo=quolist.get(i);
@@ -606,8 +614,12 @@ out.print("<tr>");//最后一行
 		DecimalFormat df1 = new DecimalFormat("###,###.000");//格式化金额
 		String val=df1.format(quo.getValue());
 		DecimalFormat df2 = new DecimalFormat("0.00%");
-		BigDecimal derate=quo.getValue().divide(average_val);
+		System.out.println("quv"+quo.getValue());
+		BigDecimal derate=quo.getValue().divide(average_val,7,BigDecimal.ROUND_HALF_UP);
+		System.out.println(average_val);
+		
 		String rate=df2.format(derate);
+		System.out.println("v"+rate);
 		String rank;
 		if (rank1==1)//根据排名，底色不同
 			rank="#94D88F;'>"+rank1;
@@ -615,7 +627,7 @@ out.print("<tr>");//最后一行
 			rank="#A2C3EA;'>"+rank1;
 		out.print("<td>");
 			out.print("<p style='background:#FFF843' align='right'>"+val+"</p>");
-			out.print("<p style='background:#FFF843' align='right'><span style='background-color:"+rank+"&nbsp;&nbsp;</span> "+rate+"</p>");
+			out.print("<p style='background:#FFF843' align='right'><span style='background-color:"+rank+"&nbsp;&nbsp;</span> "+rate+"</p>");
 		out.print("</td>");
 	}
 out.print("</tr>");
@@ -668,11 +680,19 @@ out.print("</tr>");
 			</div>
 
 			<div class="footer">
-				
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2014-2015
-				</div>
-			</div>
+				<div style="padding-top: 2px;">
+
+						<p>
+							<font size="3" color="#1ab394"> <%
+ 	if (request.getAttribute("quonum") != null) {
+ 		out.print("报价单已维护：" + request.getAttribute("quonum").toString());
+ 		session.setAttribute("quonum", request.getAttribute("quonum").toString());
+ 	}
+ %>
+							</font>
+						</p>
+
+					</div>
 
 		</div>
 	

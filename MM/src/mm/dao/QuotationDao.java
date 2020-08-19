@@ -15,7 +15,7 @@ public class QuotationDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 			
-			String sql=""+ "insert into Quotation" +" (quotation_code,rfq_code,vendor_code) "+"values(?,?,?)";
+			String sql=""+ "insert into Quotation" +" (quotation_num,quotation_code,rfq_code,vendor_code) "+"values(default,?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, qo.getRfq_code());
 			psmt.setString(2, qo.getRfq_code());
@@ -52,7 +52,8 @@ public class QuotationDao {
 				rq.setRfq_code(rs.getString("rfq_code"));
 				rq.setVendor_code(rs.getString("vendor_code"));
 				rq.setQuotation_code(rs.getString("quotation_code"));
-				
+				rq.setValue(rs.getBigDecimal("value"));
+				rq.setStatus(rs.getInt("status"));
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -83,6 +84,7 @@ public class QuotationDao {
 				rq.setRfq_code(rs.getString("rfq_code"));
 				rq.setVendor_code(rs.getString("vendor_code"));
 				rq.setQuotation_code(rs.getString("quotation_code"));
+				rq.setValue(rs.getBigDecimal("value"));
 
 			}
 		}catch(SQLException e) {
@@ -115,6 +117,7 @@ public class QuotationDao {
 				qo.setRfq_code(rs.getString("rfq_code"));
 				qo.setVendor_code(rs.getString("vendor_code"));
 				qo.setQuotation_code(rs.getString("quotation_code"));
+				qo.setValue(rs.getBigDecimal("value"));
 
 				qolist.add(qo);
 			}
@@ -164,12 +167,14 @@ public class QuotationDao {
 		int res=-1;
 		try {
 		
-			String sql=""+"update Quotation set rfq_code = ?, vendor_code = ? value=? where quotation_code = ?";
+			String sql=""+"update Quotation set rfq_code = ?, vendor_code = ?, value=? ,status=? where quotation_code = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, qo.getRfq_code());
 			psmt.setString(2, qo.getVendor_code());
 			psmt.setBigDecimal(3, qo.getValue());
-			psmt.setString(4, qo.getQuotation_code());
+			psmt.setInt(4, qo.getStatus());
+			psmt.setString(5, qo.getQuotation_code());
+			
 			//执行查询语句
 			res= psmt.executeUpdate();
 		
