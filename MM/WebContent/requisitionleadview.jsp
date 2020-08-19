@@ -243,7 +243,7 @@ function open_and_search()
 
 	<div id="wrapper">
 		<nav class="navbar-default navbar-static-side" role="navigation">
-	<div class="sidebar-collapse">
+			<div class="sidebar-collapse">
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element">
@@ -266,92 +266,47 @@ function open_and_search()
 						</div>
 						<div class="logo-element">IN+</div>
 					</li>
-
 					<li><a href="Home"><i class="fa fa-home"></i> <span
 							class="nav-label">主页</span></a></li>
+
 					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
 							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
-
 						<ul class="nav nav-second-level collapse">
 							<li><a href="CreateVendor">创建供应商</a></li>
 							<li><a href="SelectVendor?type=display">查询供应商</a></li>
 							<li><a href="SelectVendor?type=update">维护供应商</a></li>
-
 						</ul></li>
-					<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
-							class="nav-label">采购管理</span><span class="fa arrow"></span></a>
+
+					<li class="active"><a href="#"><i
+							class="fa fa-shopping-cart"></i><span class="nav-label">
+								采购管理 </span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="requisitionini.jsp">创建请购单 </a></li>
-							<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
-							<li><a href="rfqini.jsp">创建RFQ </a></li>
-							<li><a href="rfqleadview.jsp">查看RFQ </a></li>
-							<li><a href="quotationini.jsp">维护报价单 </a></li>
-							<li><a href="quotationcompare.jsp">比对报价单 </a></li>
-							<li><a href="orderini.jsp">创建订单 </a></li>
-							<li><a href="orderleadview.jsp">查看订单 </a></li>
-							<li><a href="orderleadchange.jsp">维护订单 </a></li>
+							<li class="active"><a href="#">请购单管理 <span
+									class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="requisitionini.jsp">创建请购单 </a></li>
+									<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+								</ul></li>
+							<li><a href="#">RFQ管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="rfqini.jsp">创建RFQ </a></li>
+									<li><a href="rfqleadview.jsp">查看RFQ </a></li>
+								</ul></li>
+							<li><a href="#">报价单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="quotationini.jsp">维护报价单 </a></li>
+									<li><a href="quotationcompare.jsp">比对报价单 </a></li>
 
+								</ul></li>
+							<li><a href="#">订单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="orderini.jsp">创建订单 </a></li>
+									<li><a href="orderleadview.jsp">查看订单 </a></li>
+									<li><a href="orderleadchange.jsp">维护订单 </a></li>
+								</ul></li>
 						</ul></li>
-						
-						
-						
-						<li class="active">
-                      <a href="#"><i class="fa fa-shopping-cart"></i><span class="nav-label">采购管理 </span><span class="fa arrow"></span></a>
-                      <ul class="nav nav-second-level collapse in" style="">
-                          <li class="">
-                              <a href="#">请购单管理 <span class="fa arrow"></span></a>
-                              <ul class="nav nav-third-level collapse" style="height: 0px;">
-                                  <li>
-                                      <a href="requisitionini.jsp">创建请购单 </a>
-                                  </li>
-                                  <li>
-                                      <li><a href="requisitionleadview.jsp">查看请购单 </a></li>
-                                
-                              
-
-                              </ul>
-                          </li>
-                           <li class="">
-                              <a href="#">RFQ管理 <span class="fa arrow"></span></a>
-                              <ul class="nav nav-third-level collapse" style="height: 0px;">
-                                  <li>
-                                     <a href="rfqini.jsp">创建RFQ </a>
-                                  </li>
-                                  <li>
-                                     <a href="rfqleadview.jsp">查看RFQ </a>
-                                  </li>
-                            
-
-                              </ul>
-                          </li> <li class="">
-                              <a href="#">报价单管理 <span class="fa arrow"></span></a>
-                              <ul class="nav nav-third-level collapse" style="height: 0px;">
-                                  <li>
-                                      <a href="quotationini.jsp">维护报价单 </a>
-                                  </li>
-                                  <li>
-                                      <a href="quotationcompare.jsp">比对报价单 </a>
-                                  </li>
-
-                              </ul>
-                          </li> <li class="">
-                              <a href="#">订单管理 <span class="fa arrow"></span></a>
-                              <ul class="nav nav-third-level collapse" style="height: 0px;">
-							<li><a href="orderini.jsp">创建订单 </a></li>
-							<li><a href="orderleadview.jsp">查看订单 </a></li>
-							<li><a href="orderleadchange.jsp">维护订单 </a></li>
-
-                              </ul>
-                          </li>
-                      </ul>
-                  </li>
-                  
-		
-
-
 					<li><a href="#"><i class="fa fa-files-o"></i> <span
 							class="nav-label">收货管理</span><span class="fa arrow"></span></a>
-
 						<ul class="nav nav-second-level collapse">
 							<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
 							<li><a href="showstock.jsp">查询库存 </a></li>
@@ -385,11 +340,12 @@ function open_and_search()
 				</nav>
 			</div>
 
+			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
 					<h2>查看请购单</h2>
 					<ol class="breadcrumb">
-						<li><a href="Home">主页</a></li>
+						<li><a href="index.html">主页</a></li>
 						<li>请购单管理</li>
 						<li class="active"><strong>查看请购单</strong></li>
 					</ol>
@@ -397,7 +353,6 @@ function open_and_search()
 				<div class="col-lg-2"></div>
 			</div>
 
-			<!--正文 -->
 			<form class="m-t" role="form"
 				action="${pageContext.request.contextPath}/requisition"
 				method="post">
@@ -406,7 +361,6 @@ function open_and_search()
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="ibox float-e-margins">
-
 								<div class="ibox-title">
 									<h5>查看请购单</h5>
 									<div class="ibox-tools">
@@ -418,12 +372,8 @@ function open_and_search()
 											<li><a href="#">配置 1</a></li>
 											<li><a href="#">配置 2</a></li>
 										</ul>
-
-
 									</div>
-								</div>
-
-								<div class="ibox-content">
+								</div><div class="ibox-content">
 
 									<%
 										String rnum = "";
@@ -435,10 +385,11 @@ function open_and_search()
 										<div class="form-group">
 											<label class="col-sm-2 control-label">请购单编号：</label>
 											<div class="col-sm-2">
-
-												<input name="requisitionnum" id="requisitionnum"class="form-control" value=<%=rnum %>> 
-																	<div  class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a></div>
-
+												<input name="requisitionnum" id="requisitionnum"
+													class="form-control" value=<%=rnum%>>
+											</div>
+											<div class="infont col-md-3 col-sm-4" style="Float: left">
+												<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
 											</div>
 										</div>
 									</div>
@@ -447,10 +398,20 @@ function open_and_search()
 						</div>
 					</div>
 				</div>
+				<div class="footer">
+					<div class="pull-right">
+						<input type="submit" class="btn btn-primary " value="继续">
+					</div>
+				</div>
+				<!-- 第一层弹窗 -->
 				<div id='inputbox' class="opbox1">
+
 					<a class='x' href='' ; onclick="openwin(0); return false;">关闭</a>
+
 					<div class="ibox-content">
+
 						<div class="form-group">
+
 							<label class="col-sm-2 control-label"
 								style="width: 13%; padding: 1px;">请购单</label>
 							<div class="col-sm-10" style="width: 87%; padding: 1px;">
@@ -476,16 +437,11 @@ function open_and_search()
 								onclick="openwin(0); return false;">取消</button>
 							<input type="submit" class="btn btn-primary "
 								style="margin: 60px 20px 0 0; Float: right" value="继续">
-						</div>
-						<input type="button" value="确定">
-					</div>
-				</div>
 
-				<div class="footer">
-					<div class="pull-right">
-						<div class="text-right">
-							<input type="submit" class="btn btn-primary " value="继续">
 						</div>
+
+						<input type="button" value="确定">
+
 					</div>
 				</div>
 			</form>
@@ -509,7 +465,6 @@ function open_and_search()
         }
      </script>
 
-	<!-- 第一层弹窗 -->
 
 
 
@@ -527,86 +482,73 @@ function open_and_search()
 							class="form-control" placeholder="输入请购单种类...">
 					</div>
 
-        
-        <input type="button" value="确定">
-        
-        </div>
-     </div>
-     </form>
-     
-   <!-- 第二层弹窗 -->  
-   <div id="inputbox2" class="opbox2">
-   
-   <a class='x' href=''; onclick="openwin2(0); return false;">关闭</a>
-   <p> 查找请购单：   输入任意已知信息</p>
-     <div class="ibox-content" style="padding:5px 5px 5px 5px;">
-														<div >
-															<div >
-																	<!--请购单具体信息 -->
-																	<div class="form-group">
-																		<label for="title">请购单种类</label> <input id="vname" type="text" class="form-control" placeholder="输入请购单种类...">
-																	</div>
+					<div class="form-group">
+						<label for="message">使用语言</label> <input class="form-control"
+							id="vaddress" type="text" placeholder="输入使用语言...">
+					</div>
 
-																	<div class="form-group">
-																		<label for="message">使用语言</label> <input class="form-control" id="vaddress" type="text" placeholder="输入使用语言...">
-																	</div>
+					<div class="form-group">
+						<label for="message">请购单日期</label> <input class="form-control"
+							id="vaddress" type="text" placeholder="输入请购单日期 ...">
+					</div>
 
-																	<div class="form-group">
-																		<label for="message">请购单日期</label> <input class="form-control" id="vaddress" type="text" placeholder="输入请购单日期 ...">
-																	</div>
-
-																	<div class="form-group">
-																		<label for="message">请购描述</label> <input class="form-control" id="key1" type="text" placeholder="输入请购描述...">
-																	</div>
+					<div class="form-group">
+						<label for="message">请购描述</label> <input class="form-control"
+							id="key1" type="text" placeholder="输入请购描述...">
+					</div>
 
 
-																	<div class="form-group">
-																		<label for="showMethod">请购组织</label> <input id="xxkey1" type="text" placeholder="输入请购组织" class="form-control">
-																	</div>
-																	
-																	<div class="form-group">
-																		<label for="showMethod">请购小组</label> <input id="key2" type="text" placeholder="输入请购小组" class="form-control">
-																	</div>
+					<div class="form-group">
+						<label for="showMethod">请购组织</label> <input id="xxkey1"
+							type="text" placeholder="输入请购组织" class="form-control">
+					</div>
+
+					<div class="form-group">
+						<label for="showMethod">请购小组</label> <input id="key2" type="text"
+							placeholder="输入请购小组" class="form-control">
+					</div>
 
 
-																	<div class="form-group">
-																		<label for="showEasing">请购运送工厂</label> <input id="showEasing" type="text" placeholder="输入请购运送工厂..." class="form-control">
-																	</div>
+					<div class="form-group">
+						<label for="showEasing">请购运送工厂</label> <input id="showEasing"
+							type="text" placeholder="输入请购运送工厂..." class="form-control">
+					</div>
 
-																</div><div class="row">
-																	<div class="col-lg-12">
-																		<button type="button" class="btn btn-primary" id="showsimple" onclick=open_and_search()>搜索</button>
-																	</div>
-												
-														</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<button type="button" class="btn btn-primary" id="showsimple"
+							onclick=open_and_search()>搜索</button>
+					</div>
 
-													</div>
-     
-     </div>
-     </div>
-     <!-- 第三层弹窗 -->
-   <div id="inputbox3" class="opbox3">
-   
-   <a class='x' href=''; onclick="openwin3(0); return false;">关闭</a>
-   <table id="tbl" class="table table-striped">
+				</div>
 
-									<thead id="tableHead">
-										<tr>
-											<th></th>
-											<th>请购单编号</th>
-											<th>请购日期</th>
-											<th>请购组织</th>
-										</tr>
-									</thead>
+			</div>
+
+		</div>
+	</div>
+	<!-- 第三层弹窗 -->
+	<div id="inputbox3" class="opbox3">
+
+		<a class='x' href='' ; onclick="openwin3(0); return false;">关闭</a>
+		<table id="tbl" class="table table-striped">
+
+			<thead id="tableHead">
+				<tr>
+					<th></th>
+					<th>请购单编号</th>
+					<th>请购日期</th>
+					<th>请购组织</th>
+				</tr>
+			</thead>
 
 
-									<tbody id="tableBody">
-									
+			<tbody id="tableBody">
 
-									</tbody>
-								</table>  
-     </div>
-     
+
+			</tbody>
+		</table>
+	</div>
 
 	<script src="js/jquery-2.1.1.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -752,7 +694,7 @@ function open_and_search()
 			$('#cleartoasts').click(function() {
 				toastr.clear();
 			});
-		}
+		})
 	</script>
 	<!-- float window -->
 
