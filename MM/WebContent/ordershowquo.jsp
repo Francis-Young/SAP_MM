@@ -49,11 +49,10 @@ function openMenu(obj) {
     menuTitleId = obj.id;
     menuId = "menu" + menuTitleId.substring(10);
     indicatorId = "indicator" + menuTitleId.substring(10);
-
     menu = document.getElementById(menuId);
+    
     indicator = document.getElementById(indicatorId);
     height = menu.style.height;
-
     if (height == "0px" || height == "") {
         childAmount = menu.getElementsByTagName('div').length;
         dividerAmount = menu.getElementsByTagName('li').length;
@@ -326,7 +325,7 @@ background:white;
 </head>
 
 <body>
-<form class="m-t" role="form" action="/QoatationController" method="post">
+<form class="m-t" role="form" action="${pageContext.request.contextPath}/order" method="post">
 <input type='text' value='bounce_to_select' name='action' hidden='true'>
 	<div id="wrapper">
 
@@ -538,7 +537,7 @@ background:white;
 
 							<div class="ibox-content">
 								
-									<div class="row">
+								
 
 <!--展开式报价单选择列表 -->
 
@@ -551,18 +550,20 @@ ArrayList<Vendor> venlist= (ArrayList<Vendor>) session.getAttribute("venlist");
 for(int i=0;i<venlist.size();i++)
 {
 	int i1=i+1;
-	out.print("<div id='menu_title"+i1+"' class='menu_title' onclick='openMenu(this)'>"+
-		   " <div class='indicator' id='indicator"+i1+"' >^</div> " +venlist.get(i).getVname()+"</div>"  );
+	out.print("<div id='menu_title"+i1+"' class='menu_title' onclick='openMenu(this)'>"+venlist.get(i).getVname()+
+		   " <div class='indicator' id='indicator"+i1+"' >^</div> </div>"  );
 	out.print("<div class='menu' id='menu"+i1+"'>");//"+i1+"
 	for(int j=0;j<qolist.size();j++)
 	{
 		Quotation qo=qolist.get(j);
 		if(String.valueOf(qo.getVendor_code()).equals(venlist.get(i).getVcode()) )//如果是此供应商
+		{
 		out.print("<div class='item'>");
 		out.print("<a href='orderfin.jsp?quo="+qo.getQuotation_code()+"'>"+qo.getQuotation_code()+"</a></div>");
 		out.print("<li class='item_divider'></li>");
+		}
 	}
-	out.print("<li class='menu_divider'></li>");
+	out.print("</div><li class='menu_divider'></li>");
 }
 
 
@@ -570,10 +571,11 @@ for(int i=0;i<venlist.size();i++)
 </div>
 
 
+
 						
 						
 																		
-										</div>
+									
 										</div>
 									</div>
 </div>
@@ -592,7 +594,7 @@ for(int i=0;i<venlist.size();i++)
 				<strong>Copyright</strong> 版权所有 © 2014-2015
 			</div>
 		</div>
-			</div>
+	
 
 
 	

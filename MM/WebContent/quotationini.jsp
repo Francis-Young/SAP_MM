@@ -210,7 +210,6 @@ background:white;
 </head>
 
 <body>
-<input type='text' value='bounce_to_select' name='action' hidden='true'>
 	<div id="wrapper">
 
 		<nav class="navbar-default navbar-static-side" role="navigation">
@@ -352,6 +351,7 @@ if(session.getAttribute("RFQ")!=null)
 	}
 %>
 <form class="m-t" role="form" action="${pageContext.request.contextPath}/quotation" method="post">
+<input type='text' value='bounce_to_select' name='action' hidden='true'>
 
 							<div class="ibox-content">
 								
@@ -377,7 +377,7 @@ if(session.getAttribute("RFQ")!=null)
 
 										</div>
 									</div>
- </form>
+
 							
 							
 <div class="footer" style="position: fixed; bottom: 0;">
@@ -400,7 +400,7 @@ if(session.getAttribute("RFQ")!=null)
 
 					</div>
 			</div>									
-
+ </form>
 </div>
 
 							</div>

@@ -14,15 +14,15 @@ public class OrderDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 			
-			String sql=""+ "insert into Order" +" (order_num,rfq_code,vendor_code,docdate,pur_org,pur_group) "+"values(default,?,?,?,?,?)";
+			String sql=""+ "insert into `Order`" +" (order_num,rfq_code,vendor_code,docdate,pur_org,pur_group) "+"values(default,?,?,?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 		
 			psmt.setString(1, qo.getRfq_code());
 			psmt.setString(2, qo.getVendor_code());
 			psmt.setDate(3, qo.getDocdate());
 			psmt.setString(4, qo.getPur_org());
-			psmt.setString(5, qo.getPur_org());
-
+			psmt.setString(5, qo.getPur_group());
+			System.out.println(sql);
 			psmt.execute();
 			
 			sql="SELECT LAST_INSERT_ID()";
@@ -49,7 +49,7 @@ public class OrderDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 		
-			String sql=""+"select * from Order where order_code = ?";
+			String sql=""+"select * from `Order` where order_code = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, code);
 			//执行查询语句
@@ -82,7 +82,7 @@ public class OrderDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 		
-			String sql=""+"select * from Order where rfq_code = ?";
+			String sql=""+"select * from `Order` where rfq_code = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, code);
 			//执行查询语句
@@ -115,7 +115,7 @@ public class OrderDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 		
-			String sql=""+"select * from Order where vendor_code = ?";
+			String sql=""+"select * from `Order` where vendor_code = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString (1, code);
 			//执行查询语句
@@ -149,7 +149,7 @@ public class OrderDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 			//查询语句，根据学号查询
-			String sql=""+"select * from Order where Order_num = ?";
+			String sql=""+"select * from `Order` where Order_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
 			//执行查询语句
@@ -180,7 +180,7 @@ public class OrderDao {
 		int res=-1;
 		try {
 		
-			String sql=""+"update Order set rfq_code = ?, vendor_code = ? docdate =? ,pur_org =? ,pur_group =? where order_code = ?";
+			String sql=""+"update `Order` set rfq_code = ?, vendor_code = ? docdate =? ,pur_org =? ,pur_group =? where order_code = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, qo.getRfq_code());
 			psmt.setString(2, qo.getVendor_code());
@@ -211,7 +211,7 @@ public class OrderDao {
 		int res=-1;
 		try {
 		
-			String sql=""+"delete from Order where order_num = ?";
+			String sql=""+"delete from `Order` where order_num = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, order_num);
 			
@@ -244,7 +244,7 @@ public class OrderDao {
 		
 		try {
 			
-			String sql=""+"update Order set order_code=? where order_num = ? ";
+			String sql=""+"update `Order` set order_code=? where order_num = ? ";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setString(1, code);
 			
