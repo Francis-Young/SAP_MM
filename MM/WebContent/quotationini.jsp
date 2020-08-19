@@ -434,7 +434,7 @@ if(session.getAttribute("RFQ")!=null)
 																				<div class="form-group">
 											<label class="col-sm-2 control-label">RFQ编号:</label>
 											<div class="col-sm-2">
-												<input name="rfqnum" id="rfqid" value=<%=rfqcode %>style="width:200px;" type="text" class="form-control"> 
+												<input name="rfqnum" id="rfqid" value=<%=rfqcode %> style="width:200px;" type="text" class="form-control"> 
 								<a style="float:right" onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
 											</div>
 											<div class="row">
