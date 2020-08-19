@@ -96,6 +96,7 @@ public class QuotationItemDao {
 				qi.setMaterial_num(rs.getString("material_num"));
 				qi.setStorageloc(rs.getString("storageloc"));
 				qilist.add(qi);
+				System.out.println(qi.getPrice());
 			}
 		}catch(SQLException e) {
             e.printStackTrace();

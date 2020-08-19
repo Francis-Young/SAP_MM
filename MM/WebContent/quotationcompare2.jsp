@@ -520,7 +520,7 @@ out.print("<tr>");
 			{
 				quantity+=qit.getQuantity();
 				BigDecimal bigdem_quantity=new BigDecimal(qit.getQuantity());
-				System.out.println("qit"+qit.getQuotation_item_num());
+				System.out.println("price"+qit.getPrice());
 				BigDecimal this_itemval = qit.getPrice().multiply(bigdem_quantity);//这一项的价值
 				sumval=sumval.add(this_itemval);
 			}
@@ -553,6 +553,7 @@ out.print("<tr>");
 				sumval=sumval.add(this_itemval);
 			}
 		}
+		System.out.print("dfdff");
 		String val="不含有此材料";
 		String price="";
 		String rate="";
