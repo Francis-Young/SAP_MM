@@ -213,7 +213,7 @@ for(int i=0;i<rilist.size();i++)
 Requisition_item ri = rilist.get(i);
 System.out.print(ri.getReq_item_num());
 out.print("<tr>");
-out.print("<td><input type='checkbox' checked='' class='i-checks' name='checkname'></td>");
+out.print("<td><input type='checkbox' checked='' class='i-checks' name='checkname' value='"+i+"' ></td>");
 out.print("<td>"+(i+10)*10+"</td>");
 out.print("<td>"+ri.getMaterial_num()+"</td>");
 out.print("<td>"+ri.getRequisition_quantity()+"</td>");

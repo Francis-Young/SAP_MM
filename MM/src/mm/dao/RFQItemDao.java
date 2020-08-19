@@ -15,7 +15,7 @@ public class RFQItemDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 			
-			String sql=""+ "insert into RFQ_item" +" (rfqItem_num,rfq_code,material_num,requisition_quantity,requisition_deliverydate,requisition_plant) "+"values(default,?,?,?,?,?)";
+			String sql=""+ "insert into RFQ_item" +" (rfqItem_num,rfq_code,material_num,requisition_quantity,requisition_deliverydate,requisition_plant,requisition_storageloc) "+"values(default,?,?,?,?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			
 			psmt.setString(1, ri.getRfq_code());
@@ -23,7 +23,7 @@ public class RFQItemDao {
 			psmt.setInt(3, ri.getRequisition_quantity());
 			psmt.setDate(4, ri.getRequisition_deliverydate());
 			psmt.setString(5, ri.getRequisition_plant());
-
+			psmt.setString(6, ri.getRequisition_storageloc());
 			psmt.execute();
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -86,7 +86,7 @@ public class RFQItemDao {
 	//根据rfq编号查询
 	public static ArrayList<RFQ_item> findRFQItemByRfqCode(String rfqcode) {
 		ArrayList<RFQ_item> rilist=new ArrayList<RFQ_item>();
-		RFQ_item ri=new RFQ_item();
+		
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		try {
@@ -98,6 +98,7 @@ public class RFQItemDao {
 			//执行查询语句
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
+				RFQ_item ri=new RFQ_item();
 				ri.setMaterial_num(rs.getString("material_num"));
 				ri.setRequisition_deliverydate(rs.getDate("requisition_deliverydate"));
 				ri.setRequisition_plant(rs.getString("requisition_plant"));
@@ -105,7 +106,6 @@ public class RFQItemDao {
 				ri.setRequisition_storageloc(rs.getString("requisition_storageloc"));
 				ri.setRfq_code(rs.getString("rfq_code"));
 				ri.setRfqItem_num(rs.getInt("rfqItem_num"));
-			
 				rilist.add(ri);
 			}
 		}catch(SQLException e) {

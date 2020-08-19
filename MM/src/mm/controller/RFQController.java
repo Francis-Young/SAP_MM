@@ -57,13 +57,14 @@ public class RFQController extends HttpServlet{
 
 
 
-	private void view(HttpServletRequest req, HttpServletResponse resp) {
+	private void view(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("view!");
 		String rfqnum = req.getParameter("rfqnum");
 		RFQ r = RFQDao.findRFQbyCode(rfqnum);
 		HttpSession session= req.getSession();
 		session.setAttribute("RFQ", r);
-		req.getRequestDispatcher("rfqview.jsp");
+		req.getRequestDispatcher("rfqview.jsp").forward(req, resp);
 	}
 
 
@@ -86,12 +87,11 @@ public class RFQController extends HttpServlet{
 		String [] itemture=(String[]) session.getAttribute("itemture");//不确定这么写对不对
 		String requisition_code=rfq.getRequisition_code();
 		ArrayList<Requisition_item> rilist=ReqItemDao.findRequItemByReqcode(requisition_code);
-	
+		System.out.println(itemture.length);
 		for(int i=0;i<itemture.length;i++ )
 		{
-			if(itemture[i].equals("true"))
-			{
-				Requisition_item ri = rilist.get(i);
+			int j=Integer.parseInt(itemture[i]);
+				Requisition_item ri = rilist.get(j);
 				RFQ_item rf = new RFQ_item();
 				String material_num=ri.getMaterial_num();
 				rf.setMaterial_num(material_num);
@@ -101,7 +101,7 @@ public class RFQController extends HttpServlet{
 				rf.setRequisition_quantity(ri.getRequisition_quantity());
 				rf.setRequisition_storageloc(ri.getRequisition_storageloc());
 				RFQItemDao.addRFQItem(rf);
-			}
+			
 		}
 		req.setAttribute("rfq_code", rfq_code);
 		req.getRequestDispatcher("rfqfin.jsp").forward(req,resp);//请求转发
@@ -118,6 +118,7 @@ public class RFQController extends HttpServlet{
 		// TODO Auto-generated method stub
 		HttpSession session= req.getSession();
 		String [] itemture=req.getParameterValues("checkname");
+		System.out.print(itemture.length);
 		session.setAttribute("itemture", itemture);
 
 

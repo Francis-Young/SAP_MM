@@ -391,7 +391,7 @@ public class VendorDao {
 					sql+=" AND  ";
 				else
 					sql+=" where  ";
-				sql+=" where vendor_city ="+'"'+vd.getVcity()+'"';
+				sql+=" vendor_city ="+'"'+vd.getVcity()+'"';
 				flag=1;
 			}
 			
