@@ -88,13 +88,14 @@ public class QuotationController extends HttpServlet{
 
 
 
-	private void reject(HttpServletRequest req, HttpServletResponse resp) {
+	private void reject(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session= req.getSession();
 		Quotation qo=(Quotation)session.getAttribute("refuse");
 		qo.setStatus(-1);
 		QuotationDao.modifyQuotationByCode(qo);
 		req.setAttribute("quonum", qo.getQuotation_code());
+		req.getRequestDispatcher("quotationcompare2.jsp").forward(req, resp);;
 		
 	}
 
@@ -104,7 +105,7 @@ public class QuotationController extends HttpServlet{
 
 
 
-	private void compare(HttpServletRequest req, HttpServletResponse resp)  {
+	private void compare(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException  {
 		// TODO Auto-generated method stub
 		
 		String coll = req.getParameter("coll");
@@ -146,7 +147,7 @@ public class QuotationController extends HttpServlet{
 		HttpSession session= req.getSession();
 		session.setAttribute("coll",coll);
 		session.setAttribute("matli",matoblist);
-		req.getRequestDispatcher("Quotationcompare2.jsp");
+		req.getRequestDispatcher("quotationcompare2.jsp").forward(req, resp);
 	
 	}
 
@@ -172,7 +173,7 @@ public class QuotationController extends HttpServlet{
 
 
 
-	private void save(HttpServletRequest req, HttpServletResponse resp) {
+	private void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session= req.getSession();
 		
@@ -180,39 +181,54 @@ public class QuotationController extends HttpServlet{
 		Quotation quo=(Quotation)session.getAttribute("passquo");
 		quo.setRfq_code(rfq.getRfq_code());		
 		quo.setVendor_code(rfq.getVendor_code());
-		
+		quo.setStatus(0);
 		String quo_code =QuotationDao.addQuotation(quo);
 		quo.setQuotation_code(quo_code);
-		String [] itemture=(String[]) session.getAttribute("checkname");//被选中的item
+		String [] itemture=req.getParameterValues("checkname");//被选中的item
 		//不确定这么写对不对
 		String rfqcode=rfq.getRfq_code();
 		ArrayList<RFQ_item> rilist=RFQItemDao.findRFQItemByRfqCode(rfqcode);
 	    BigDecimal value= new BigDecimal("0");
+	 
+	  
+	    
+	    
+	    
 		for(int i=0;i<itemture.length;i++ )
 		{
-			Quotation_item qi = new Quotation_item();
-			if(itemture[i].equals("true"))
-			{
-				RFQ_item ri= rilist.get(i);
-				String price = "cc";//要改
-				String quantity="ff";//要改
+			int j=Integer.parseInt(itemture[i]);
+				Quotation_item qi = new Quotation_item();
+			
+				RFQ_item ri= rilist.get(j);
+				String price = req.getParameter("price"+j);
+				int quantity=ri.getRequisition_quantity();
+				
 				BigDecimal deprice=new BigDecimal(price);
 				qi.setMaterial_num(ri.getMaterial_num());
 				qi.setDelivery_date(ri.getRequisition_deliverydate());
-				qi.setPrice(deprice);
-				qi.setQuantity(Integer.parseInt(quantity));
+				qi.setStorageloc(ri.getRequisition_storageloc());
+				qi.setQuantity(quantity);
 				qi.setQuotation_code(quo_code);
 				qi.setQuotation_status(0);//还没定。。
 				qi.setCurrency_unit("RMB");
 				QuotationItemDao.addQuotationItem(qi);
-				value.add(deprice.multiply(new BigDecimal(quantity)));
-			}
+				
+				
+				BigDecimal ff= new BigDecimal(price);
+				qi.setPrice(ff);
+			    BigDecimal dd= new BigDecimal(quantity);
+			    value=value.add(ff.multiply(dd));
+				
+				
+				System.out.println(value);
 		}
 		quo.setValue(value);
 		QuotationDao.modifyQuotationByCode(quo);
+	
+	
+	req.setAttribute("quo_code", quo.getQuotation_code());
+	req.getRequestDispatcher("quotationini.jsp").forward(req,resp);//请求转发
 	}
-
-
 
 
 

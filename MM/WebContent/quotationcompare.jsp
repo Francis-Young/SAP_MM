@@ -212,12 +212,10 @@ background:white;
 </head>
 
 <body>
-<form class="m-t" role="form" action="/QoatationController" method="post">
-<input type='text' value='bounce_to_compare' name='action' hidden='true'>
 	<div id="wrapper">
 
 		<nav class="navbar-default navbar-static-side" role="navigation">
-			<div class="sidebar-collapse">
+			<div class="sidebar-collapse" style="z-index: 10";>
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element">
@@ -240,70 +238,45 @@ background:white;
 						</div>
 						<div class="logo-element">IN+</div>
 					</li>
-					<li><a href="Home"><i class="fa fa-home"></i> <span class="nav-label">主页</span></a></li>
-					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
+					<li><a href="Home"><i class="fa fa-home"></i> <span
+							class="nav-label">主页</span></a></li>
+
+					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
+							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
 							<li><a href="CreateVendor">创建供应商</a></li>
 							<li><a href="SelectVendor?type=display">查询供应商</a></li>
 							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
-						
-						
-						
-						<li class="active">
-                      <a href="#"><i class="fa fa-shopping-cart"></i><span class="nav-label">采购管理 </span><span class="fa arrow"></span></a>
-                      <ul class="nav nav-second-level collapse in" style="">
-                          <li class="">
-                              <a href="#">请购单管理 <span class="fa arrow"></span></a>
-                              <ul class="nav nav-third-level collapse" style="height: 0px;">
-                                  <li>
-                                      <a href="requisitionini.jsp">创建请购单 </a>
-                                  </li>
-                                  <li>
-                                      <li><a href="requisitionleadview.jsp">查看请购单 </a></li>
-                                
-                              
 
-                              </ul>
-                          </li>
-                           <li class="">
-                              <a href="#">RFQ管理 <span class="fa arrow"></span></a>
-                              <ul class="nav nav-third-level collapse" style="height: 0px;">
-                                  <li>
-                                     <a href="rfqini.jsp">创建RFQ </a>
-                                  </li>
-                                  <li>
-                                     <a href="rfqleadview.jsp">查看RFQ </a>
-                                  </li>
-                            
+					<li class="active"><a href="#"><i class="fa fa-shopping-cart"></i><span
+							class="nav-label"> 采购管理 </span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li class="active"><a href="#">请购单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="requisitionini.jsp">创建请购单 </a></li>
+									<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+								</ul></li>
+							<li><a href="#">RFQ管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="rfqini.jsp">创建RFQ </a></li>
+									<li><a href="rfqleadview.jsp">查看RFQ </a></li>
+								</ul></li>
+							<li><a href="#">报价单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="quotationini.jsp">维护报价单 </a></li>
+									<li><a href="quotationcompare.jsp">比对报价单 </a></li>
 
-                              </ul>
-                          </li> <li class="">
-                              <a href="#">报价单管理 <span class="fa arrow"></span></a>
-                              <ul class="nav nav-third-level collapse" style="height: 0px;">
-                                  <li>
-                                      <a href="quotationini.jsp">维护报价单 </a>
-                                  </li>
-                                  <li>
-                                      <a href="quotationcompare.jsp">比对报价单 </a>
-                                  </li>
-
-                              </ul>
-                          </li> <li class="">
-                              <a href="#">订单管理 <span class="fa arrow"></span></a>
-                              <ul class="nav nav-third-level collapse" style="height: 0px;">
-							<li><a href="orderini.jsp">创建订单 </a></li>
-							<li><a href="orderleadview.jsp">查看订单 </a></li>
-							<li><a href="orderleadchange.jsp">维护订单 </a></li>
-
-                              </ul>
-                          </li>
-                      </ul>
-                  </li>
-                  
-		
-
-					<li><a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">收货管理</span><span class="fa arrow"></span></a>
+								</ul></li>
+							<li><a href="#">订单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="orderini.jsp">创建订单 </a></li>
+									<li><a href="orderleadview.jsp">查看订单 </a></li>
+									<li><a href="orderleadchange.jsp">维护订单 </a></li>
+								</ul></li>
+						</ul></li>
+					<li><a href="#"><i class="fa fa-files-o"></i> <span
+							class="nav-label">收货管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
 							<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
 							<li><a href="showstock.jsp">查询库存 </a></li>
@@ -316,76 +289,21 @@ background:white;
 		</nav>
 
 		<div id="page-wrapper" class="gray-bg">
-			<div class="row border-bottom">
+				<div class="row border-bottom">
 				<nav class="navbar navbar-static-top" role="navigation"
 					style="margin-bottom: 0">
 					<div class="navbar-header">
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
 							href="#"><i class="fa fa-bars"></i> </a>
-						<form role="search" class="navbar-form-custom"
-							action="search_results.html">
-							<div class="form-group">
-								<input type="text" placeholder="Search for something..."
-									class="form-control" name="top-search" id="top-search">
-							</div>
-						</form>
 					</div>
+					<ul class="nav navbar-top-links navbar-left">
+						<li><a> <i class="fa fa-paper-plane"></i>Be What's Next.
+						</a></li>
+					</ul>
 					<ul class="nav navbar-top-links navbar-right">
-						<li><span class="m-r-sm text-muted welcome-message">欢迎回来！</span></li>
-						<li class="dropdown"><a class="dropdown-toggle count-info"
-							data-toggle="dropdown" href="#"> <i class="fa fa-envelope"></i>
-								<span class="label label-warning">16</span>
-						</a>
-							<ul class="dropdown-menu dropdown-messages">
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/a7.jpg">
-										</a>
-										<div class="media-body">
-											<small class="pull-right">46小时前</small> <strong>李文俊</strong>
-											关注了 <strong>刘海洋</strong>. <br> <small class="text-muted">3
-												天 前- 10.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/a4.jpg">
-										</a>
-										<div class="media-body ">
-											<small class="pull-right text-navy">5小时前</small> <strong>王昆</strong>
-											关注了 <strong>李文俊</strong>. <br> <small class="text-muted">昨天下午1:21
-												- 11.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/profile.jpg">
-										</a>
-										<div class="media-body ">
-											<small class="pull-right">23小时前</small> <strong>张三</strong>
-											赞了 <strong>李四</strong>. <br> <small class="text-muted">2天前
-												- 11.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="text-center link-block">
-										<a href="mailbox.html"> <i class="fa fa-envelope"></i> <strong>查看更多消息</strong>
-										</a>
-									</div>
-								</li>
-							</ul></li>
-
-						<li><a href="login.html"> <i class="fa fa-sign-out"></i>
-								退出登录
+						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uname")%></span>
+						</li>
+						<li><a href="Login"> <i class="fa fa-sign-out"></i> 退出登录
 						</a></li>
 					</ul>
 
@@ -406,6 +324,8 @@ background:white;
 				<div class="col-lg-2"></div>
 			</div>
 
+<form class="m-t" role="form" action="${pageContext.request.contextPath}/quotation" method="post">
+<input type='text' value='bounce_to_compare' name='action' hidden='true'>
 
 
 			<div class="wrapper wrapper-content animated fadeIn">
@@ -465,7 +385,6 @@ background:white;
 											
 										<br>
 										<br>
-								<button style="float:right" type="submit" class="btn btn-white" id="clearlasttoast">执行比较</button>
 										</div>
 									</div>		
 											
@@ -485,19 +404,29 @@ background:white;
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
+				
+				
+			
+			
 
 			<div class="footer">
+			<div class="pull-right">
+						<div class="text-right">
+											<button style="float:right" type="submit" class="btn btn-white" id="clearlasttoast">执行比较</button>
+ <a
+								href="${pageContext.request.contextPath}/Home"><button
+									type="button" class="btn btn-white" id="cleartoasts">取消</button></a>
+						</div>
+					</div>
 				
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2014-2015
-				</div>
+	
 			</div>
 
-		</div>
+		
 	
-
+ </form>
+ 	</div>
+ </div>
 
 	<!-- Mainly scripts for pop windows-->
 	   <script>  
@@ -546,7 +475,7 @@ background:white;
         
         </div>
      </div>
-     </form>
+    
      
    <!-- 第二层弹窗 -->  
    <div id="inputbox2" class="opbox2">

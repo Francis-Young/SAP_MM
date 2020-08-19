@@ -100,6 +100,7 @@ public class RFQDao {
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_num(rs.getInt("rfq_num"));
 				rf.setRfq_code(rs.getString("rfq_code"));
+				rf.setRfq_plant(rs.getString("rfq_plant"));
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -138,6 +139,10 @@ public class RFQDao {
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_num(rs.getInt("rfq_num"));
 				rf.setRfq_code(rs.getString("rfq_code"));
+				rf.setRfq_plant(rs.getString("rfq_plant"));
+				rf.setRfq_plant(rs.getString("rfq_plant"));
+
+
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -214,6 +219,8 @@ public class RFQDao {
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_num(rs.getInt("rfq_num"));
 				rf.setRfq_code(rs.getString("rfq_code"));
+				rf.setRfq_plant(rs.getString("rfq_plant"));
+
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -252,6 +259,8 @@ public class RFQDao {
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_num(rs.getInt("rfq_num"));
 				rf.setRfq_code(rs.getString("rfq_code"));
+				rf.setRfq_plant(rs.getString("rfq_plant"));
+
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -290,6 +299,8 @@ public class RFQDao {
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_num(rs.getInt("rfq_num"));
 				rf.setRfq_code(rs.getString("rfq_code"));
+				rf.setRfq_plant(rs.getString("rfq_plant"));
+
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -328,6 +339,8 @@ public class RFQDao {
 				rf.setRfq_coll(rs.getString("rfq_coll"));
 				rf.setRfq_num(rs.getInt("rfq_num"));
 				rf.setRfq_code(rs.getString("rfq_code"));
+				rf.setRfq_plant(rs.getString("rfq_plant"));
+
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -373,37 +386,78 @@ public class RFQDao {
 	public static ArrayList<RFQ> findrfqByAnything(RFQ vd) {
 		
 		ArrayList<RFQ> rqlist=new ArrayList<RFQ>();
-		RFQ vd1=new RFQ();
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		try {
 		
 			String sql=""+"select * from RFQ ";
-			if (!vd.getRfq_coll().equals("xx"))
-				sql+="where rfq_coll ="+'"'+vd.getRfq_coll()+'"'+",";
-			if (!vd.getRfq_plant().equals("xx"))
-				sql+="where rfq_plant ="+'"'+vd.getRfq_plant()+'"';
-			if (!vd.getRfq_purchasing_org().equals("xx"))
-				sql+="where rfq_purchasing_org ="+'"'+vd.getRfq_purchasing_org()+'"';
-			if (!vd.getVendor_code().equals("xx"))
-				sql+="where vendor_code ="+'"'+vd.getVendor_code()+'"';
-			if (!vd.getRfq_type().equals("xx"))
-				sql+="where vendor_type ="+'"'+vd.getRfq_type()+'"';
 			
-
 			
-			sql = sql.substring(0, sql.length() - 1);
+			int flag=0;
+			if (!(vd.getRfq_coll()==null))
+			{
+				sql+="where  rfq_coll ="+'"'+vd.getRfq_coll()+'"';
+				flag=1;
+			}
+			if (!(vd.getRfq_plant()==(null)))
+			{
+				if(flag==1)
+					sql+=" AND  ";
+				else
+					sql+=" where  ";
+				sql+=" rfq_plant ="+'"'+vd.getRfq_plant()+'"';
+				flag=1;
+			}
+			if (!(vd.getRfq_purchasing_org()==(null)))
+			{
+				if(flag==1)
+					sql+=" AND  ";
+				else
+					sql+=" where  ";
+				sql+=" rfq_purchasing_org ="+'"'+vd.getRfq_purchasing_org()+'"';
+				flag=1;
+			}
+			if (!(vd.getVendor_code()==null))
+			{
+				if(flag==1)
+					sql+=" AND  ";
+				else
+					sql+=" where  ";
+				sql+=" vendor_code ="+'"'+vd.getVendor_code()+'"';
+				flag=1;
+			}
+			if (!(vd.getRfq_type()==(null)))
+			{
+				if(flag==1)
+					sql+=" AND  ";
+				else
+					sql+=" where  ";
+				sql+=" vendor_type ="+'"'+vd.getRfq_type()+'"';
+				flag=1;
+			}
+			
 			System.out.println(sql);
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			
 			//执行查询语句
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
-				vd.setRfq_deadline(rs.getDate("rfq_deadline"));
-				vd.setRfq_plant(rs.getString("rfq_plant"));
-				vd.setVendor_code(rs.getString("vendor_code"));
-				vd.setRfq_coll(rs.getString("rfq_coll"));
-				vd.setRfq_num(rs.getInt("rfq_num"));
+				RFQ rf=new RFQ();
+				rf.setRequisition_code(rs.getString("requisition_code"));
+				rf.setRfq_coll(rs.getString("rfq_coll"));
+				rf.setRfq_type(rs.getString("rfq_type"));
+				rf.setRfq_language(rs.getString("rfq_language"));
+				rf.setRfq_date(rs.getDate("rfq_date"));
+				rf.setRfq_deadline(rs.getDate("rfq_deadline"));
+				rf.setRfq_purchasing_org(rs.getString("rfq_purchasing_org"));
+				rf.setRfq_purchasing_group(rs.getString("rfq_purchasing_group"));
+				rf.setVendor_code(rs.getString("vendor_code"));
+				rf.setRfq_coll(rs.getString("rfq_coll"));
+				rf.setRfq_num(rs.getInt("rfq_num"));
+				rf.setRfq_code(rs.getString("rfq_code"));
+				rf.setRfq_plant(rs.getString("rfq_plant"));
+
+				rqlist.add(rf);
 			}
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -412,7 +466,7 @@ public class RFQDao {
         }finally {
             DBUtil.closeConnection(conn);
         }
-		
+		System.out.println(rqlist.size());
 		return rqlist;
 		
 		

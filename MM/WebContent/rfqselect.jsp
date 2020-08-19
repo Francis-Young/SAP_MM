@@ -1,5 +1,5 @@
 <%@ page import="java.util.List,mm.bean.*,mm.dao.*,java.util.ArrayList"
-language="java" contentType="text/html; charset=UTF-8"
+	language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -32,8 +32,14 @@ language="java" contentType="text/html; charset=UTF-8"
 
 
 <style type="text/css">
-.table-b table td{border:1px solid #808080;padding:1%}
-.table-b table th{padding:1%}
+.table-b table td {
+	border: 1px solid #808080;
+	padding: 1%
+}
+
+.table-b table th {
+	padding: 1%
+}
 </style>
 
 </head>
@@ -42,7 +48,7 @@ language="java" contentType="text/html; charset=UTF-8"
 
 	<div id="wrapper">
 
-	<nav class="navbar-default navbar-static-side" role="navigation">
+		<nav class="navbar-default navbar-static-side" role="navigation">
 			<div class="sidebar-collapse" style="z-index: 10";>
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
@@ -77,15 +83,17 @@ language="java" contentType="text/html; charset=UTF-8"
 							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
 
-					<li class="active"><a href="#"><i class="fa fa-shopping-cart"></i><span
-							class="nav-label"> 采购管理 </span><span class="fa arrow"></span></a>
+					<li class="active"><a href="#"><i
+							class="fa fa-shopping-cart"></i><span class="nav-label">
+								采购管理 </span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li class="active"><a href="#">请购单管理 <span class="fa arrow"></span></a>
+							<li><a href="#">请购单管理 <span class="fa arrow"></span></a>
 								<ul class="nav nav-third-level">
 									<li><a href="requisitionini.jsp">创建请购单 </a></li>
 									<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
 								</ul></li>
-							<li><a href="#">RFQ管理 <span class="fa arrow"></span></a>
+							<li class="active"><a href="#">RFQ管理 <span
+									class="fa arrow"></span></a>
 								<ul class="nav nav-third-level ">
 									<li><a href="rfqini.jsp">创建RFQ </a></li>
 									<li><a href="rfqleadview.jsp">查看RFQ </a></li>
@@ -144,7 +152,7 @@ language="java" contentType="text/html; charset=UTF-8"
 				<div class="col-lg-10">
 					<h2>创建RFQ</h2>
 					<ol class="breadcrumb">
-						<li><a href="index.html">主页</a></li>
+						<li><a href="Home">主页</a></li>
 						<li>请购管理</li>
 						<li class="active"><strong>创建RFQ</strong></li>
 					</ol>
@@ -176,75 +184,57 @@ language="java" contentType="text/html; charset=UTF-8"
 							</div>
 
 							<div class="ibox-content">
-<form class="m-t" role="form" action="${pageContext.request.contextPath}/rfq" method="post">
+								<form class="m-t" role="form"
+									action="${pageContext.request.contextPath}/rfq" method="post">
+									<input type='text' value='bounce_to_edit' name='action'
+										hidden='true'> 
+									<div class="table-b">
+										<table id="oTable" class="table table-bordered">
+											<thead>
+												<tr>
+													<th></th>
+													<th>条目</th>
+													<th>材料编号</th>
+													<th>请购数量</th>
+													<th>请购运送时间</th>
+													<th>请购运送工厂</th>
+													<th>请购运送地点</th>
+													<th>单位</th>
 
-<input type='text' value='bounce_to_edit' name='action' hidden='true'>
-
-<input type="submit" class="btn btn-primary " style="margin:60px 20px 0 0;" value="接受条目">	
-<br>
-<br>						
-<div class="table-b">
-<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="1" cellpadding="0" width="100%">
-<thead>
-<tr>
-<th></th>
-<th>条目</th>
-<th>材料编号</th>
-<th>请购数量</th>
-<th>请购运送时间</th>
-<th>请购运送工厂</th>
-<th>请购运送地点</th>
-<th>单位</th>
-
-</tr>
-</thead>
-<tbody>
+												</tr>
+											</thead>
+											<tbody>
 
 
-<%
-//取出请购单的条目
+												<%
+													//取出请购单的条目
 
-RFQ rfq= (RFQ)session.getAttribute("passdata");
-String reqnum=rfq.getRequisition_code();
-ArrayList<Requisition_item> rilist=ReqItemDao.findRequItemByReqcode(reqnum);
+													RFQ rfq = (RFQ) session.getAttribute("passdata");
+													String reqnum = rfq.getRequisition_code();
+													ArrayList<Requisition_item> rilist = ReqItemDao.findRequItemByReqcode(reqnum);
 
-for(int i=0;i<rilist.size();i++)
-{
-Requisition_item ri = rilist.get(i);
-System.out.print(ri.getReq_item_num());
-out.print("<tr>");
-out.print("<td><input type='checkbox' checked='' class='i-checks' name='checkname' value='"+i+"' ></td>");
-out.print("<td>"+(i+10)*10+"</td>");
-out.print("<td>"+ri.getMaterial_num()+"</td>");
-out.print("<td>"+ri.getRequisition_quantity()+"</td>");
-out.print("<td>"+ri.getRequisition_deliverydate()+"</td>");
-out.print("<td>"+ri.getRequisition_plant()+"</td>");
-out.print("<td>"+ri.getRequisition_storageloc()+"</td>");
-out.print("<td>"+"kg"+"</td>");
-}
-
-%>
-
-
-
-
-
-
-
-
-
-
-
-</tbody>
-</table>
-</div>
-						
-						
-						
-						
-								
+													for (int i = 0; i < rilist.size(); i++) {
+														Requisition_item ri = rilist.get(i);
+														System.out.print(ri.getReq_item_num());
+														out.print("<tr>");
+														out.print("<td><input type='checkbox' checked='' class='i-checks' name='checkname' value='" + i
+																+ "' ></td>");
+														out.print("<td>" + (i + 10) * 10 + "</td>");
+														out.print("<td>" + ri.getMaterial_num() + "</td>");
+														out.print("<td>" + ri.getRequisition_quantity() + "</td>");
+														out.print("<td>" + ri.getRequisition_deliverydate() + "</td>");
+														out.print("<td>" + ri.getRequisition_plant() + "</td>");
+														out.print("<td>" + ri.getRequisition_storageloc() + "</td>");
+														out.print("<td>" + "kg" + "</td>");
+													}
+												%>
+											</tbody>
+										</table>
+									</div>
+									<input type="submit"
+										class="btn btn-primary " 
+										value="接受条目">
 								</form>
-
 							</div>
 						</div>
 					</div>
@@ -254,23 +244,25 @@ out.print("<td>"+"kg"+"</td>");
 			<div class="footer">
 				<div class="pull-right">
 					<div class="text-right">
-						<input type="submit" class="btn btn-success btn-sm demo2" id="showtoast" value="保存">
-                    <a href="${pageContext.request.contextPath}/Home"><button type="button" class="btn btn-white" id="cleartoasts">取消</button></a>
+						<input type="submit" class="btn btn-success btn-sm demo2"
+							id="showtoast" value="保存"> <a
+							href="${pageContext.request.contextPath}/Home"><button
+								type="button" class="btn btn-white" id="cleartoasts">取消</button></a>
 					</div>
 				</div>
-						<div style="padding-top: 2px;">
-						
-						<p>
-							<font size="3" color="#1ab394">			
-<%
-if(request.getAttribute("rfq_code")!=null)
-	{out.print("成功创建RFQ："+request.getAttribute("rfq_code").toString());
-	session.setAttribute("rfqnum", request.getAttribute("rfq_code").toString());
-	}
-             %>	</font>
-						</p>
-						
-					</div>
+				<div style="padding-top: 2px;">
+
+					<p>
+						<font size="3" color="#1ab394"> <%
+ 	if (request.getAttribute("rfq_code") != null) {
+ 		out.print("成功创建RFQ：" + request.getAttribute("rfq_code").toString());
+ 		session.setAttribute("rfqnum", request.getAttribute("rfq_code").toString());
+ 	}
+ %>
+						</font>
+					</p>
+
+				</div>
 			</div>
 
 		</div>
