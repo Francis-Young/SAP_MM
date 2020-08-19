@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="mm.bean.DownList"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -29,7 +30,8 @@
 
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
-
+<!-- Sweet Alert -->
+<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 <script type="text/javascript">
 	var itemNo = 0;
 </script>
@@ -38,7 +40,7 @@
 	function addRow() {
 		itemNo += 1;
 		document.getElementById('num').value = itemNo;
-		
+
 		var oTable = document.getElementById("oTable");
 		var tBodies = oTable.tBodies;
 		var tbody = tBodies[0];
@@ -46,7 +48,7 @@
 
 		var td_1 = tr.insertCell(0); //td_1,td_2。。。这些是每一行的单元格内要显示的元素,可以自己改内容和根据列数改数量
 		td_1.innerHTML = itemNo;
-		
+
 		var td_2 = tr.insertCell(1);
 		td_2.innerHTML = '<input name="m_text'+itemNo+'" id="materialtext" type="text" class="form-control" placeholder="输入物料编号..." />';
 		var td_3 = tr.insertCell(2);
@@ -55,10 +57,205 @@
 		td_4.innerHTML = '<input name="m_num'+itemNo+'" class="form-control" id="vaddress" type="text" class="form-control" placeholder="输入物料数量 ..."></input>';
 		var td_5 = tr.insertCell(4);
 		td_5.innerHTML = '<input name="sloc'+itemNo+'" id="showEasing" type="text" placeholder="输入存储位置..." class="form-control" />';
-		
+
 	}
 </script>
 
+<!-- 弹出框 -->
+<script>
+	function selectline(ele) //单击后赋值的函数
+	{
+		var clickContent = ele;
+		//获取要赋值的input的元素
+		var inputElement = document.getElementById("order_num");
+		//给input框赋值
+		inputElement.value = clickContent.cells[1].innerHTML;//.innerText;
+
+		openwin3(0); //关掉两个弹窗
+		openwin2(0);
+	}
+</script>
+
+<script type="text/javascript">
+	function search() //异步搜索的函数
+	{
+		var key = $("#key1").val() + "," + $("#key2").val() //这一段是你要向后台传的数据
+		var url = "${pageContext.request.contextPath}/searchServlet?key=" + key
+
+		function gettext(text) //正则解码函数
+		{
+			var subt = text.match(/mark.(\S*?)mark./);
+			return subt[1];
+		}
+
+		$
+				.ajax({
+					type : "post",
+					url : "${pageContext.request.contextPath}/searchServlet", //后台的地址
+					async : true, //默认-异步（true） 同步-false
+					dataType : "text",
+
+					data : {
+						"key" : key
+					},
+					beforeSend : function() {
+					},
+					success : function(dataArray) { //dataArray就是后台传来的数据
+						//我从后台传回来的数据有3项，所以这里定义了3组变量
+						var o_num = dataArray.match(/mark0(\S*?)mark1/g);
+						var o_date = dataArray.match(/mark1(\S*?)mark2/g);
+
+						$("tbody#tableBody").remove();//删除已有表格	
+						//下面写一个表格，是我要插入到弹窗里的
+						var tableBody = "<tbody id='tableBody'>";
+
+						for (var i = 0; i < o_num.length; i++) {
+
+							tableBody += '<tr onclick="selectline(this)">';
+
+							tableBody += '<td><input type="checkbox" checked="" class="i-checks" name="input[]"></td>';
+							tableBody += "<td>" + gettext(decodeURI(o_num[i]))
+									+ "</td>";
+							tableBody += "<td>" + gettext(decodeURI(o_date[i]))
+									+ "</td>";
+
+							tableBody += "</tr>";
+						}
+
+						tableBody += "</tBody>";
+
+						$("#tableHead").after(tableBody); //这个表格将位于id是tableHead的表头后面
+
+					},
+					error : function(e, textStatus, request) {
+
+						alert("错误！" + e.status);
+						var json = JSON.parse(request.responseText);
+						alert(json.city);
+						alert(request.responseText)
+						alert(" parser error" + textStatus); // parser error;
+					},
+					complete : function() {
+
+						//表格隔行显色，鼠标悬浮高亮显示
+						var oTab = document.getElementById('tbl');
+						var oldColor = '';//用于保存原来一行的颜色
+
+						for (var i = 0; oTab.tBodies[0].rows.length; i++) {
+
+							//当鼠标移上去，改变字体色-背景色
+							oTab.tBodies[0].rows[i].onmouseover = function() {
+								oldColor = this.style.background;
+								this.style.background = "#009B63";
+								this.style.color = "#ffffff";
+							};
+
+							//当鼠标移开，恢复原来的颜色
+							oTab.tBodies[0].rows[i].onmouseout = function() {
+								this.style.background = oldColor;
+								this.style.color = "#000000";
+							};
+
+							//隔行显色
+							if (i % 2) {
+								oTab.tBodies[0].rows[i].style.background = "#EAF2D3";
+							} else {
+								oTab.tBodies[0].rows[i].style.background = "";
+							}
+						}
+					}
+				});
+
+	}
+</script>
+<script>
+	function open_and_search() //点击搜索按钮后会触发的弹窗和搜索事件
+	{
+		openwin3(1);
+		search();
+	}
+</script>
+<style>
+#wrapper //正常页面层 {
+	z-index: 99;
+	position: absolute;
+}
+
+.opbox1 {
+	z-index: 100;
+	width: 50%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 25%;
+	left: 25%;
+	height: 350px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
+}
+
+.opbox1.show {
+	display: block;
+}
+
+.opbox1 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
+}
+
+.opbox2 {
+	z-index: 101;
+	width: 40%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 5%;
+	left: 30%;
+	height: 650px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
+}
+
+.opbox2.show {
+	display: block;
+}
+
+.opbox2 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
+}
+
+.opbox3 {
+	z-index: 101;
+	width: 40%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 5%;
+	left: 30%;
+	height: 650px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
+}
+
+.opbox3.show {
+	display: block;
+}
+
+.opbox3 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
+}
+</style>
 <style type="text/css" defer=true>
 .table-b table td {
 	border: 2px solid #e7eaec
@@ -76,52 +273,76 @@
 			<ul class="nav metismenu" id="side-menu">
 				<li class="nav-header">
 					<div class="dropdown profile-element">
-						<span> <img alt="image" class="img-circle"
-							src="img/profile_small.jpg" />
+						<span> <img height="48px" width="48px" alt="image"
+							class="img-circle" src="<%=session.getAttribute("uportrait")%>" />
 						</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <span
 							class="clear"> <span class="block m-t-xs"> <strong
-									class="font-bold">王昆</strong>
-							</span> <span class="text-muted text-xs block">管理员 <b
+									class="font-bold"><%=session.getAttribute("uname")%></strong>
+							</span> <span class="text-muted text-xs block"><%=session.getAttribute("upermission")%><b
 									class="caret"></b></span>
 						</span>
 						</a>
 						<ul class="dropdown-menu animated fadeInRight m-t-xs">
-							<li><a href="profile.html">个人信息</a></li>
-							<li><a href="contacts.html">联系方式</a></li>
-							<li><a href="mailbox.html">邮箱</a></li>
+							<li><a>个人信息</a></li>
+							<li><a>联系方式</a></li>
+							<li><a>邮箱</a></li>
 							<li class="divider"></li>
-							<li><a href="login.html">退出登录</a></li>
+							<li><a href="Login">退出登录</a></li>
 						</ul>
 					</div>
 					<div class="logo-element">IN+</div>
 				</li>
-				<li><a href="layouts.html"><i class="fa fa-home"></i> <span
+				<li><a href="Home"><i class="fa fa-home"></i> <span
 						class="nav-label">主页</span></a></li>
+
 				<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
 						class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level collapse">
 						<li><a href="CreateVendor">创建供应商</a></li>
-						<li><a href="graph_morris.html">维护供应商</a></li>
+						<li><a href="SelectVendor?type=display">查询供应商</a></li>
+						<li><a href="SelectVendor?type=update">维护供应商</a></li>
 					</ul></li>
-				<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
-						class="nav-label">采购</span><span class="fa arrow"></span></a>
+
+				<li><a href="#"><i class="fa fa-shopping-cart"></i><span
+						class="nav-label"> 采购管理 </span><span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level collapse">
-						<li><a href="form_basic.html"></a></li>
-						<li><a href="form_advanced.html">高级插件</a></li>
-						<li><a href="form_wizard.html">分步引导</a></li>
-						<li><a href="form_file_upload.html">文件上传</a></li>
-						<li><a href="form_editors.html">富文本编辑</a></li>
-						<li><a href="form_markdown.html">Markdown</a></li>
+						<li><a href="#">请购单管理 <span class="fa arrow"></span></a>
+							<ul class="nav nav-third-level">
+								<li><a href="requisitionini.jsp">创建请购单 </a></li>
+								<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+							</ul></li>
+						<li><a href="#">RFQ管理 <span class="fa arrow"></span></a>
+							<ul class="nav nav-third-level ">
+								<li><a href="rfqini.jsp">创建RFQ </a></li>
+								<li><a href="rfqleadview.jsp">查看RFQ </a></li>
+							</ul></li>
+						<li><a href="#">报价单管理 <span class="fa arrow"></span></a>
+							<ul class="nav nav-third-level">
+								<li><a href="quotationini.jsp">维护报价单 </a></li>
+								<li><a href="quotationcompare.jsp">比对报价单 </a></li>
+
+							</ul></li>
+						<li><a href="#">订单管理 <span class="fa arrow"></span></a>
+							<ul class="nav nav-third-level ">
+								<li><a href="orderini.jsp">创建订单 </a></li>
+								<li><a href="orderleadview.jsp">查看订单 </a></li>
+								<li><a href="orderleadchange.jsp">维护订单 </a></li>
+
+							</ul></li>
 					</ul></li>
+
+
 
 				<li><a href="#"><i class="fa fa-files-o"></i> <span
 						class="nav-label">收货管理</span><span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level collapse">
-						<li><a href="Goodsreceipt">创建收货单</a></li>
-						<li><a href="Showstock">查看库存</a></li>
+						<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
+						<li><a href="showstock.jsp">查询库存 </a></li>
+						<li><a href="createpayment.jsp">创建发票 </a></li>
+						<li><a href="postpayment.jsp">付款 </a></li>
+						<li><a href="account.jsp">查看应付账款 </a></li>
 					</ul></li>
 			</ul>
-
 		</div>
 		</nav>
 
@@ -132,82 +353,27 @@
 				<div class="navbar-header">
 					<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
 						href="#"><i class="fa fa-bars"></i> </a>
-
-					<form role="search" class="navbar-form-custom"
-						action="search_results.html">
-						<div class="form-group">
-							<input type="text" placeholder="Search for something..."
-								class="form-control" name="top-search" id="top-search">
-						</div>
-					</form>
-
 				</div>
+				<ul class="nav navbar-top-links navbar-left">
+					<li><a> <i class="fa fa-paper-plane"></i>Be What's Next.
+					</a></li>
+				</ul>
 				<ul class="nav navbar-top-links navbar-right">
-					<li><span class="m-r-sm text-muted welcome-message">欢迎回来！</span></li>
-					<li class="dropdown"><a class="dropdown-toggle count-info"
-						data-toggle="dropdown" href="#"> <i class="fa fa-envelope"></i>
-							<span class="label label-warning">16</span>
-					</a>
-						<ul class="dropdown-menu dropdown-messages">
-							<li>
-								<div class="dropdown-messages-box">
-									<a href="profile.html" class="pull-left"> <img alt="image"
-										class="img-circle" src="img/a7.jpg">
-									</a>
-									<div class="media-body">
-										<small class="pull-right">46小时前</small> <strong>李文俊</strong>
-										关注了 <strong>刘海洋</strong>. <br> <small class="text-muted">3
-											天 前- 10.06.2014</small>
-									</div>
-								</div>
-							</li>
-							<li class="divider"></li>
-							<li>
-								<div class="dropdown-messages-box">
-									<a href="profile.html" class="pull-left"> <img alt="image"
-										class="img-circle" src="img/a4.jpg">
-									</a>
-									<div class="media-body ">
-										<small class="pull-right text-navy">5小时前</small> <strong>王昆</strong>
-										关注了 <strong>李文俊</strong>. <br> <small class="text-muted">昨天下午1:21
-											- 11.06.2014</small>
-									</div>
-								</div>
-							</li>
-							<li class="divider"></li>
-							<li>
-								<div class="dropdown-messages-box">
-									<a href="profile.html" class="pull-left"> <img alt="image"
-										class="img-circle" src="img/profile.jpg">
-									</a>
-									<div class="media-body ">
-										<small class="pull-right">23小时前</small> <strong>张三</strong> 赞了
-										<strong>李四</strong>. <br> <small class="text-muted">2天前
-											- 11.06.2014</small>
-									</div>
-								</div>
-							</li>
-							<li class="divider"></li>
-							<li>
-								<div class="text-center link-block">
-									<a href="mailbox.html"> <i class="fa fa-envelope"></i> <strong>查看更多消息</strong>
-									</a>
-								</div>
-							</li>
-						</ul></li>
-
-					<li><a href="login.html"> <i class="fa fa-sign-out"></i>
-							退出登录
+					<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uname")%></span>
+					</li>
+					<li><a href="Login"> <i class="fa fa-sign-out"></i> 退出登录
 					</a></li>
 				</ul>
 
 				</nav>
 			</div>
-			<form class="m-t" role="form" action="${pageContext.request.contextPath}/goodsreceipt" method="post">
-			
-			<input type='text' value='creat' name='action' hidden='true'>
-			<input type='text' id='num' value='0' name='num' hidden='true'>
-			
+			<form class="m-t" role="form"
+				action="${pageContext.request.contextPath}/goodsreceipt"
+				method="post" onsubmit="return validate();">
+
+				<input type='text' value='creat' name='action' hidden='true'>
+				<input type='text' id='num' value='0' name='num' hidden='true'>
+
 				<div class="row wrapper border-bottom white-bg page-heading">
 					<div class="col-lg-10">
 						<h2>创建收货单</h2>
@@ -238,7 +404,6 @@
 										<div class="row">
 											<div class="input-group m-b">
 
-												<!-- 两个暂无选择意义的下拉框 -->
 												<div class="col-sm-4">
 													<div class="form-group">
 														<select name="DataTables_Table_0_length"
@@ -267,17 +432,33 @@
 														</select>
 													</div>
 												</div>
-
-
-												<!-- 还要做出搜索效果 -->
 												<div class="col-sm-4">
 													<div class="form-group">
-														<input type="text" id="order_num" name="order_num"
-															value="" placeholder="采购单号" class="form-control">
+														<%
+															String o_vendor = "";
+															if (!(session.getAttribute("o_vendor") == null))
+																o_vendor = session.getAttribute("o_vendor").toString();
+														%>
+
+
+
+
+
+														<input name="o_vendor" id="o_vendor" class="form-control"
+															placeholder="采购单号" value=<%=o_vendor%>>
+														<div class="infont col-md-3 col-sm-4" style="Float: right">
+															<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
+														</div>
+
+
+
 													</div>
 												</div>
+
+
 											</div>
 										</div>
+
 										<!-- 两个日期 需返回  -->
 										<div class="row">
 											<div class="col-sm-4">
@@ -389,10 +570,34 @@
 										<script type="text/javascript">
 											addRow();
 										</script>
-										
+
 									</div>
 								</div>
 							</div>
+						</div>
+					</div>
+					<div id='inputbox' class="opbox1">
+						<a class='x' href='' ; onclick="openwin(0); return false;">关闭</a>
+						<div class="ibox-content">
+							<div class="form-group">
+								<label class="col-sm-2 control-label"
+									style="width: 13%; padding: 1px;">订单</label>
+								<div class="col-sm-10" style="width: 87%; padding: 1px;">
+									<input name="requisition_num" id="reqnum" type="text"
+										class="form-control" style="width: 80%">
+									<div class="infont col-md-3 col-sm-4" style="Float: right">
+										<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
+									</div>
+								</div>
+
+
+								<button type="button" class="btn btn-primary "
+									style="margin: 60px 20px 0 0; Float: right"
+									onclick="openwin(0); return false;">取消</button>
+								<input type="submit" class="btn btn-primary "
+									style="margin: 60px 20px 0 0; Float: right" value="继续">
+							</div>
+							<input type="button" value="确定">
 						</div>
 					</div>
 					<div class="footer">
@@ -400,22 +605,71 @@
 							<div class="col-lg-12">
 								<div class="pull-right">
 									<button type="submit" class="btn btn-primary" id="showtoast">保存</button>
+									<button type="reset" class="btn btn-white" id="clearlasttoast">清除</button>
 									<button type="button" class="btn btn-white" id="cleartoasts">
-								<a href="Home.jsp">返回</a>
+										<a href="Home">返回</a>
+									</button>
+
 								</div>
 							</div>
+
+							<div style="padding-top: 2px;">
+								<%
+									String notice = (String) request.getAttribute("notice");
+									if (notice != null && !"".equals(notice)) {
+								%>
+								<p>
+									<font size="3" color=<%=request.getAttribute("color")%>><%=notice%></font>
+								</p>
+								<%
+									request.setAttribute("notice", "");
+									}
+								%>
+							</div>
 						</div>
-						
 					</div>
 			</form>
 		</div>
 
 	</div>
+	<!-- Mainly scripts for pop windows-->
+	<script>
+		function openwin(n) {
+			document.getElementById('inputbox').style.display = n ? 'block'
+					: 'none'; /* 点击按钮打开/关闭 对话框 */
+		}
+	</script>
+	<script>
+		function openwin2(n) {
+			document.getElementById('inputbox2').style.display = n ? 'block'
+					: 'none'; /* 点击按钮打开/关闭 对话框 */
+		}
+	</script>
+	<script>
+		function openwin3(n) {
+			document.getElementById('inputbox3').style.display = n ? 'block'
+					: 'none'; /* 点击按钮打开/关闭 对话框 */
+		}
+	</script>
+	<!--写第1个弹窗的内容-->
+	<div id='inputbox' class="opbox1">
+		<!--第2，3个弹窗就改class为opbox2,3-->
+		<a class='x' href='' ; onclick="openwin1(0); return false;">关闭</a>
+		<!--   第2，3个弹窗就改成openwin2 openwin3 */-->
+		<p>查找订单： 输入相关信息</p>
+		<div class="ibox-content" style="padding: 5px 5px 5px 5px;">
+			<div class="form-group">
+				<label for="title">订单交易对象</label> <input id="o_vendor" type="text"
+					class="form-control" placeholder="输入订单交易对象...">
 
+			</div>
+			<input type="button" value="确定">
+		</div>
+		<!--你要放在第一个弹窗里的东西-->
+	</div>
+	<!--*****************写第2，3个弹窗的内容。。。-->
 
 	<!-- Mainly scripts -->
-
-
 
 	<script src="js/jquery-2.1.1.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -446,9 +700,86 @@
 
 		});
 	</script>
+	<!-- Sweet alert -->
+	<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
 	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
+	<script>
+		$(document)
+				.ready(
+						function() {
 
+							$('.demo1')
+									.click(
+											function() {
+												swal({
+													title : "Welcome in Alerts",
+													text : "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+												});
+											});
+
+							$('.demo2').click(function() {
+								swal({
+									title : "收货单添加成功!",
+									text : "您的请购单号是10034245",
+									type : "success"
+								});
+							});
+
+							$('.demo3')
+									.click(
+											function() {
+												swal(
+														{
+															title : "Are you sure?",
+															text : "You will not be able to recover this imaginary file!",
+															type : "warning",
+															showCancelButton : true,
+															confirmButtonColor : "#DD6B55",
+															confirmButtonText : "Yes, delete it!",
+															closeOnConfirm : false
+														},
+														function() {
+															swal(
+																	"Deleted!",
+																	"Your imaginary file has been deleted.",
+																	"success");
+														});
+											});
+
+							$('.demo4')
+									.click(
+											function() {
+												swal(
+														{
+															title : "Are you sure?",
+															text : "Your will not be able to recover this imaginary file!",
+															type : "warning",
+															showCancelButton : true,
+															confirmButtonColor : "#DD6B55",
+															confirmButtonText : "Yes, delete it!",
+															cancelButtonText : "No, cancel plx!",
+															closeOnConfirm : false,
+															closeOnCancel : false
+														},
+														function(isConfirm) {
+															if (isConfirm) {
+																swal(
+																		"Deleted!",
+																		"Your imaginary file has been deleted.",
+																		"success");
+															} else {
+																swal(
+																		"Cancelled",
+																		"Your imaginary file is safe :)",
+																		"error");
+															}
+														});
+											});
+
+						});
+	</script>
 	<script type="text/javascript">
 		$(function() {
 			var i = -1;

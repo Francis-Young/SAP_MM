@@ -75,7 +75,7 @@ public class OrderController extends HttpServlet{
 
 
 
-	private void change(HttpServletRequest req, HttpServletResponse resp) {
+	private void change(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session= req.getSession();
 	
@@ -93,6 +93,8 @@ public class OrderController extends HttpServlet{
 		String onum = OrderDao.addOrder(o);
 		session.setAttribute("onum",onum );
 		String[] answerArr = req.getParameterValues("cbox");//查被选中的item
+	
+		
 		String[] materialrArr = req.getParameterValues("material");//查物料
 		String[] quantityArr = req.getParameterValues("quantity");//查被选中的item
 		String[] deliverydateArr = req.getParameterValues("deliverydate");//查被选中的item
@@ -107,8 +109,8 @@ public class OrderController extends HttpServlet{
 		for(int i=0;i<answerArr.length;i++ )
 		{
 			Order_item oi = new Order_item();
-			if(answerArr[i].equals("true"))
-			{
+			int j=Integer.parseInt(answerArr[i]);
+		
 				oi.setOrder_code(onum);
 				String material_num=materialrArr[i];
 				oi.setMaterial_num(material_num);
@@ -120,10 +122,10 @@ public class OrderController extends HttpServlet{
 				oi.setPlant(plantArr[i]);
 				oi.setSloc(storagelocArr[i]);
 				OrderItemDao.addOrderItem(oi);
-			}
+			
 			
 		}
-		
+
 	
 	}
 
@@ -148,7 +150,7 @@ public class OrderController extends HttpServlet{
 
 
 
-	private void get_quotation(HttpServletRequest req, HttpServletResponse resp) {
+	private void get_quotation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String material_num = req.getParameter("material_num");
 		ArrayList<Quotation_item>qilist= QuotationItemDao.findQuotationByMatNum(material_num);
@@ -157,6 +159,13 @@ public class OrderController extends HttpServlet{
 		{
 			Quotation_item qi=qilist.get(i);
 			Quotation qo =QuotationDao.findQuotationByCode(qi.getQuotation_code());
+			int flag=1;
+			for(int j=0;j<qolist.size();j++)
+			{
+				if(qolist.get(j).getQuotation_code().equals(qo.getQuotation_code()))
+					flag=0;
+			}
+			if(flag==1)
 			qolist.add(qo);
 		}
 		ArrayList<Vendor> venlist=new ArrayList<Vendor>();
@@ -164,14 +173,28 @@ public class OrderController extends HttpServlet{
 		{
 			Quotation qo=qolist.get(i);
 			Vendor v=VendorDao.findVendorbyCode(qo.getVendor_code());
+			int flag=1;
+			for(int j=0;j<venlist.size();j++)
+			{
+				if(venlist.get(j).getVcode().equals(v.getVcode()))
+					flag=0;
+			}
+			if(flag==1)
 			venlist.add(v);
 		}
-		qolist=removeDuplicateWithOrder(qolist);
-			
+		
+		for(int i=0;i<venlist.size();i++)
+		{
+		
+			Vendor v=venlist.get(i);
+			System.out.println(v.getVname());
+		}
+		System.out.println(venlist);
+		
 		HttpSession session= req.getSession();
 		session.setAttribute("qolist", qolist);
 		session.setAttribute("venlist", venlist);
-		req.getRequestDispatcher("ordershowquo.jsp");
+		req.getRequestDispatcher("ordershowquo.jsp").forward(req, resp);;
 	}
 
 
@@ -198,18 +221,33 @@ public class OrderController extends HttpServlet{
 	     list.addAll(newList);    
 	    return list;    
 	 }
+	 @SuppressWarnings("unchecked")
+	public static ArrayList<Vendor> removeDuplicateWithOrder2(@SuppressWarnings("rawtypes") ArrayList list) {    
+	    @SuppressWarnings("rawtypes")
+		Set set = new HashSet();    
+	     @SuppressWarnings("rawtypes")
+	     ArrayList newList = new ArrayList();    
+	   for (@SuppressWarnings("rawtypes")
+	Iterator iter = list.iterator(); iter.hasNext();) {    
+	         Object element = iter.next();    
+	         if (set.add(element))    
+	            newList.add(element);    
+	      }     
+	     list.clear();    
+	     list.addAll(newList);    
+	    return list;    
+	 }
 
 
 
 
-
-	private void save(HttpServletRequest req, HttpServletResponse resp) {
+	private void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session= req.getSession();
 		String rfq_code = (String) session.getAttribute("rfqnum");
 	
 		Date docdate = new Date((new java.util.Date()).getTime());
-
+		
 		Order o = new Order();
 		o.setRfq_code(rfq_code);
 		o.setDocdate(docdate);
@@ -223,23 +261,28 @@ public class OrderController extends HttpServlet{
 		o.setVendor_code(rfq.getVendor_code());
 		String onum = OrderDao.addOrder(o);
 		session.setAttribute("onum",onum );
-		String[] answerArr = req.getParameterValues("cbox");//查被选中的item
-		String[] materialrArr = req.getParameterValues("material");//查物料
-		String[] quantityArr = req.getParameterValues("quantity");//查被选中的item
-		String[] deliverydateArr = req.getParameterValues("deliverydate");//查被选中的item
-		String[] statdeliverydateArr = req.getParameterValues("statdeliverydate");//查被选中的item
+		String[] answerArr =(String[]) req.getParameterValues("cbox");//查被选中的item
+		for(int j=0;j<answerArr.length;j++ )
+		{
+			System.out.println("sdsdsd"+answerArr.length);
+			System.out.println(answerArr[j]);
+		}
+		
+		String[] materialrArr =(String[]) req.getParameterValues("material");//查物料
+		String[] quantityArr =(String[]) req.getParameterValues("quantity");//查被选中的item
+		String[] deliverydateArr =(String[]) req.getParameterValues("deliverydate");//查被选中的item
+		String[] statdeliverydateArr = (String[])req.getParameterValues("statdeliverydate");//查被选中的item
 
-		String[] priceArr = req.getParameterValues("price");//查被选中的item
-		String[] plantArr = req.getParameterValues("plant");//查被选中的item
-		String[] storagelocArr = req.getParameterValues("storageloc");//查被选中的item
-		String[] currencyArr = req.getParameterValues("currency");
+		String[] priceArr =(String[]) req.getParameterValues("price");//查被选中的item
+		String[] plantArr =(String[]) req.getParameterValues("plant");//查被选中的item
+		String[] storagelocArr =(String[]) req.getParameterValues("storageloc");//查被选中的item
+		String[] currencyArr =(String[]) req.getParameterValues("currency");
 		//不确定这么写对不对
 		
-		for(int i=0;i<answerArr.length;i++ )
+		for(int j=2;j<answerArr.length;j++ )
 		{
+			int i=Integer.parseInt(answerArr[j]);
 			Order_item oi = new Order_item();
-			if(answerArr[i].equals("true"))
-			{
 				oi.setOrder_code(onum);
 				String material_num=materialrArr[i];
 				oi.setMaterial_num(material_num);
@@ -251,10 +294,11 @@ public class OrderController extends HttpServlet{
 				oi.setPlant(plantArr[i]);
 				oi.setSloc(storagelocArr[i]);
 				OrderItemDao.addOrderItem(oi);
-			}
+			
 			
 		}
-		
+		req.setAttribute("order_code", onum);
+		req.getRequestDispatcher("orderfin.jsp").forward(req,resp);//请求转发
 	
 	}
 
