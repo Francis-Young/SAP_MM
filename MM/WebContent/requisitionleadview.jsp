@@ -401,6 +401,8 @@ function open_and_search()
 				<div class="footer">
 					<div class="pull-right">
 						<input type="submit" class="btn btn-primary " value="继续">
+						<a href="${pageContext.request.contextPath}/Home"><button
+								type="button" class="btn btn-white" id="cleartoasts">返回</button></a>
 					</div>
 				</div>
 				<!-- 第一层弹窗 -->

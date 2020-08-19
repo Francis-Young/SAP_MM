@@ -471,8 +471,7 @@ initDatePicker($("#sb2"));
 									<div style="width: 35%;">
 
 										<h3>组织数据</h3>
-										<hr
-											style="margin: 0px 0px 5px 0px; border: 0.1px black solid;" />
+										<div class="hr-line-dashed"></div>
 										<div class="form-group">
 											<label for="showMethod">采购组织</label> <input id="showMethod"
 												name="org" type="text" placeholder="输入采购组织"
@@ -483,9 +482,9 @@ initDatePicker($("#sb2"));
 												name="group" type="text" placeholder="输入采购小组"
 												class="form-control" />
 										</div>
-										<br> <h3>商品默认数据</h3>
-										<hr
-											style="margin: 0px 0px 5px 0px; border: 0.1px black solid;" />
+										<br>
+										<h3>商品默认数据</h3>
+										<div class="hr-line-dashed"></div>
 										<div class="form-group">
 											<label for="showEasing">运送工厂</label> <input name="plant"
 												id="showEasing" type="text" placeholder="输入运送工厂..."

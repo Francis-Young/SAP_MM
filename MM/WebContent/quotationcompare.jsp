@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>报价单比较</title>
+<title>对比报价单</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -352,11 +352,11 @@ function open_and_search()
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>报价单比较</h2>
+					<h2>对比报价单</h2>
 					<ol class="breadcrumb">
 						<li><a href="Home">主页</a></li>
 						<li>报价单管理</li>
-						<li class="active"><strong>报价单比较</strong></li>
+						<li class="active"><strong>对比报价单</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -394,50 +394,56 @@ function open_and_search()
 										<div class="col-lg-12">
 											<!--RFQ具体信息 -->
 											<div class="form-group">
-												<label style="padding: 0em;" class="col-sm-2 control-label">采购组织</label>
-												<div class="col-sm-10">
-													<input name="org" id="rfqid" style="width: 200px;"
-														type="text" class="form-control">
-													&emsp;&emsp;&emsp;
-													&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-													<a onclick="openwin(1)"><i class="fa fa-search-plus"></i></a>
-												</div>
-
-												<label style="padding: 0em;" class="col-sm-2 control-label">RFQ集合号</label>
-												<div class="col-sm-10">
-													<input name="coll" id="rfqid" style="width: 200px;"
-														type="text" class="form-control">
-													&emsp;&emsp;&emsp;
-													&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-													<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
-												</div>
-
-												<label style="padding: 0em;" class="col-sm-2 control-label">有效价格</label>
-												<div class="col-sm-10">
-													<input type='checkbox' checked class='i-checks'
-														name='checkname2'>
-												</div>
-
 
 												<div class="row">
-													<div class="col-lg-12">
-														<hr>
-														<label style="padding: 0em;"
-															class="col-sm-2 control-label">均价比较</label>
-														<div class="col-sm-10">
-															<input type='checkbox' checked class='i-checks'
-																name='checkname1'>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="col-sm-3 control-label">采购组织</label>
+															<div class="col-sm-6">
+																<input name="org" id="rfqid" class="form-control">
+															</div>
+															<div class="infont col-md-3 col-sm-4" style="Float: left">
+																<a onclick="openwin(1)"><i class="fa fa-search-plus"></i></a>
+															</div>
 														</div>
-
-
-														<br> <br>
 													</div>
 												</div>
+												<br>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="col-sm-3 control-label">RFQ集合号</label>
+															<div class="col-sm-6">
+																<input name="coll" id="rfqid" class="form-control">
+															</div>
+															<div class="infont col-md-3 col-sm-4" style="Float: left">
+																<a onclick="openwin2(1)"><i
+																	class="fa fa-search-plus"></i></a>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="hr-line-dashed"></div>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="col-sm-3 control-label">有效价格</label> <input
+																type='checkbox' checked class='i-checks'
+																name='checkname2'>
+														</div>
+													</div>
 
-
-
+												</div>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="col-sm-3 control-label">均价比较</label> <input
+																type='checkbox' checked class='i-checks'
+																name='checkname1'>
+														</div>
+													</div>
+												</div>
 											</div>
-
 										</div>
 									</div>
 								</div>
@@ -445,26 +451,14 @@ function open_and_search()
 						</div>
 					</div>
 				</div>
-
-
-
-
-
 				<div class="footer">
 					<div class="pull-right">
-						<div class="text-right">
-							<button style="float: right" type="submit" class="btn btn-white"
-								id="clearlasttoast">执行比较</button>
-							<a href="${pageContext.request.contextPath}/Home"><button
-									type="button" class="btn btn-white" id="cleartoasts">取消</button></a>
-						</div>
+
+						<button type="submit" class="btn btn-primary" id="clearlasttoast">执行比较</button>
+						<a href="${pageContext.request.contextPath}/Home"><button
+								type="button" class="btn btn-white" id="cleartoasts">返回</button></a>
 					</div>
-
-
 				</div>
-
-
-
 			</form>
 		</div>
 	</div>
@@ -514,16 +508,12 @@ function open_and_search()
 						<a onclick="#"><i class="fa fa-search-plus"></i></a>
 					</div>
 				</div>
-
-				<button type="button" class="btn btn-primary "
-					style="margin: 60px 20px 0 0; Float: right"
-					onclick="openwin(0); return false;">取消</button>
-				<input type="submit" class="btn btn-primary "
-					style="margin: 60px 20px 0 0; Float: right" value="继续">
-
+				<div class="pull-right">
+					<input type="submit" class="btn btn-primary " value="继续">
+					<button type="button" class="btn btn-white "
+						onclick="openwin(0); return false;">取消</button>
+				</div>
 			</div>
-
-			<input type="button" value="确定">
 
 		</div>
 	</div>

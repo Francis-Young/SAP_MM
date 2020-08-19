@@ -323,7 +323,7 @@ function addRow(){
 
 				<div class="pull-right">
 					<div class="text-right">
-						<input type="submit"  value="保存" class="btn btn-success btn-sm demo2" id="showtoast">
+						<input type="submit"  value="保存" class="btn btn-primary" id="showtoast">
 						<a href="${pageContext.request.contextPath}/Home"><button type="button" class="btn btn-white" id="cleartoasts">返回</button></a>
 					</div>
 				</div>
