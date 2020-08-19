@@ -1,5 +1,5 @@
 <%@page import="mm.dao.*"%>
-<%@page import="mm.bean.*,java.util.ArrayList"%>
+<%@page import="mm.bean.*,java.util.ArrayList,java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>修改订单</title>
+<title>创建请购单</title>
 <!--
 
     <link href="css/plugins/summernote/summernote.css" rel="stylesheet">
@@ -77,57 +77,37 @@ function addRow(){
 	
 	var oTable = document.getElementById("oTable");
 	var itemNo=oTable.rows.length+1;
+	var inputArr=document.getElementsByName("cbox");
+	var si;
+	for(var i=0;i<inputArr.length;i++)
+	{
+		
+		
+			si=i+1;
+			
+		
+			
+	}
 	
-	
-	
-	
-	var s1="<input name='";
-	
-
-	var s4="'  type='text' class='form-control' /> ";
-    
-    var tBodies = oTable.tBodies;
+	var tBodies = oTable.tBodies;
     var tbody = tBodies[0];
-    var tr = tbody.insertRow(tbody.rows.length);
-    var td_1 = tr.insertCell(0);
-    td_1.innerHTML = "<input type='checkbox' name='cbox'></td>";
-    
-    
-    var td_2 = tr.insertCell(1);
-    td_2.innerHTML = itemNo*10;
-    
-    var td_3 = tr.insertCell(2);
-    td_3.innerHTML = "unCheck";
-    var td_4 = tr.insertCell(3);
-    td_4.innerHTML = s1+"material"+s4;
-    var td_5 = tr.insertCell(4);
-    td_5.innerHTML = "默认";
-    var td_6 = tr.insertCell(5);
-    td_6.innerHTML = s1+"quantity"+s4;
-    var td_7 = tr.insertCell(6);
-    td_7.innerHTML = "默认";
-    var td_8 = tr.insertCell(7);
-    td_8.innerHTML ="<div class='input-group date'> <span class='input-group-addon'>"+
-	"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+
-	"' type='text'  class='form-control'></div>";
-	var td_9 = tr.insertCell(8);
-    td_9.innerHTML ="<div class='input-group date'> <span class='input-group-addon'>"+
-	"<i class='fa fa-calendar'></i></span><input name='deliverydate"+
-	"' type='text'  class='form-control'></div>";
-    var td_10 = tr.insertCell(9);
-    td_10.innerHTML = s1+"price"+s4;
+    var trnew = tbody.insertRow(tbody.rows.length);
+    trnew.innerHTML = oTable.getElementsByTagName("tr")[itemNo-2].innerHTML;
+	for(var i=itemNo-2;i>si+1;i--)
+	{
+		oTable.getElementsByTagName("tr")[i].innerHTML=oTable.getElementsByTagName("tr")[i-1].innerHTML;	
+	}
+	oTable.getElementsByTagName("tr")[si+1].innerHTML=oTable.getElementsByTagName("tr")[si].innerHTML;
+	var checkb= document.getElementsByClassName("chbox");
+	for(var j=0;j<checkb.length;j++ )
+		{
+		checkb[j].value=j;
+		}
 
-    var td_11 = tr.insertCell(10);
-    td_11.innerHTML =oTable.getElementsByTagName("tr")[0].getElementsByTagName("td")[8].innerHTML;
-    
-    var td_12 = tr.insertCell(11);
-    td_12.innerHTML = "默认";
-    var td_13 = tr.insertCell(12);
-    td_13.innerHTML =s1+"plant"+s4;
-    var td_14 = tr.insertCell(13);
-    td_14.innerHTML = s1+"storageloc"+s4;
-    initDatePicker($(".input-group.date"));
+
+	initDatePicker($(".input-group.date"));
     }
+
 
 </script>
 
@@ -136,29 +116,33 @@ function splitRow(){
 	
 	var oTable = document.getElementById("oTable");
 	var itemNo=oTable.rows.length+1;
-	var cheArr=document.getElementsByName("cbox");
+	var inputArr=document.getElementsByName("cbox");
 	var si;
 	for(var i=0;i<inputArr.length;i++)
 	{
 		if(inputArr[i].checked)
 		{
-			si=i;//要分开的那一行
+			si=i+1;//要分开的那一行
 			break;
 		}
 			
 	}
+	
 	var tBodies = oTable.tBodies;
     var tbody = tBodies[0];
     var trnew = tbody.insertRow(tbody.rows.length);
-    trnew.innerHTML = oTable.getElementsByTagName("tr")[itemNo-2];
+    trnew.innerHTML = oTable.getElementsByTagName("tr")[itemNo-2].innerHTML;
 	for(var i=itemNo-2;i>si+1;i--)
 	{
-		oTable.getElementsByTagName("tr")[i]=oTable.getElementsByTagName("tr")[i-1];	
+		oTable.getElementsByTagName("tr")[i].innerHTML=oTable.getElementsByTagName("tr")[i-1].innerHTML;	
 	}
-	oTable.getElementsByTagName("tr")[si+1]=oTable.getElementsByTagName("tr")[si];
-	var quansplit1 =oTable.getElementsByTagName("tr")[si+1].getElementsByName("quantity")[0].value;
-	oTable.getElementsByTagName("tr")[si+1].getElementsByName("quantity")[0].value=Math.ceil(quansplit1 /2);
-	oTable.getElementsByTagName("tr")[si].getElementsByName("quantity")[0].value=quansplit1-Math.ceil(quansplit1 /2);
+	oTable.getElementsByTagName("tr")[si+1].innerHTML=oTable.getElementsByTagName("tr")[si].innerHTML;
+	var checkb= document.getElementsByClassName("chbox");
+	for(var j=0;j<checkb.length;j++ )
+		{
+		checkb[j].value=j;
+		}
+
 
 	initDatePicker($(".input-group.date"));
     }
@@ -178,7 +162,7 @@ function splitRow(){
 	<div id="wrapper">
 
 		<nav class="navbar-default navbar-static-side" role="navigation">
-				<div class="sidebar-collapse">
+	<div class="sidebar-collapse">
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element">
@@ -358,16 +342,9 @@ function splitRow(){
 				</div>
 				<div class="col-lg-2"></div>
 			</div>
-<%
 
-
-Order o = (Order)session.getAttribute("order");
-Vendor v = VendorDao.findVendorbyCode(o.getVendor_code());
-
-%>	
 	<form class="m-t" role="form" action="${pageContext.request.contextPath}/order" method="post">
 						       <input type='text' value='change' name='action' hidden='true'>	<!-- 控制表单名 -->					
-							<input type='text' id='num' value='0' name='num' hidden='true'>    <!-- 条目数量 -->	
 							
 			<div class="wrapper wrapper-content animated fadeIn">
 				<div class="row">
@@ -375,7 +352,7 @@ Vendor v = VendorDao.findVendorbyCode(o.getVendor_code());
 						<div class="ibox float-e-margins">
 
 							<div class="ibox-title">
-								<h5>修改订单</h5>
+								<h5>创建订单</h5>
 								<div class="ibox-tools">
 									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -389,43 +366,29 @@ Vendor v = VendorDao.findVendorbyCode(o.getVendor_code());
 									</a>
 								</div>
 							</div>
-<div >									
 
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">订单编号:</label>
-<div class="col-md-2">		
-<input name="org" type="text"  class="form-control" value=<%= o.getOrder_code()%>>
-
-</div>
-</div>
-<div >									
-
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">供应商:</label>
-<div class="col-md-2">		
-<input name="org" type="text"  class="form-control" value=<%= v.getVcode()%>><span><%=v.getVcode() %></span>
-
-</div>
-</div>
-<div >									
-
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">文档建立时间:</label>
-<div class="col-md-2">		
-<input name="org" type="text"  class="form-control" value=<%=o.getDocdate() %>>
-
-</div>
-</div>
 							<div class="ibox-content">
 
+<%
 
+String onum = (String) session.getAttribute("onum");
+Order o = OrderDao.findOrderByCode(onum);
+
+
+Vendor v=VendorDao.findVendorbyCode((o.getVendor_code()));
+
+
+
+%>	
 
 	<!-- 换行有问题 -->					
-<div >									
+<div class="row">									
 
 <label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">采购组织:</label>
 <div class="col-md-2">		
 <input name="org" type="text"  class="form-control" value=<%= o.getPur_org()%>>
+</div>
 
-</div>
-</div>
 
 <div >	
 <label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">采购组:</label>
@@ -433,8 +396,17 @@ Vendor v = VendorDao.findVendorbyCode(o.getVendor_code());
 </div>
 </div>
 <div >	
+<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">供应商:</label>
+<div class="col-md-2">		<input name="vendornum" type="text"  class="form-control" value=<%=v.getVcode() %>> <span><%=v.getVname() %></span>
+</div>
+</div>
+</div>
+<div class="row">	
 <label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">公司代码:</label>
 <div class="col-md-2">		<input name="ccd" type="text"  class="form-control" value="CN00">
+</div>
+<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">订单号:</label>
+<div class="col-md-2">		<input name="onum" type="text"  class="form-control" value=<%=onum %>>
 </div>
 </div>
 
@@ -465,12 +437,12 @@ Vendor v = VendorDao.findVendorbyCode(o.getVendor_code());
                                 <div class="panel-body">
              <div style="width:950px;  overflow-x:scroll;">										
 <div class="table-b">
-<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="100%">
+<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="160%">
 <thead>
 <tr>
 <th><input type="checkbox" id="checkbox0"></th>
 <th>条目</th>
-<th>状态</th>
+
 <th>材料编号</th>
 <th>短文本</th>
 <th>订购数量</th>
@@ -490,35 +462,35 @@ Vendor v = VendorDao.findVendorbyCode(o.getVendor_code());
 
 <%
 
-ArrayList<Order_item> qilist= OrderItemDao.findOrderItemByOCode(o.getOrder_code());
-for(int i=0;i<qilist.size();i++)
+ArrayList<Order_item> oilist= OrderItemDao.findOrderItemByOCode(onum);
+for(int i=0;i<oilist.size();i++)
 {
-	Order_item qi=qilist.get(i);
-	Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
+	Order_item oi=oilist.get(i);
+	Material m = MaterialDao.findMaterialbyNum(oi.getMaterial_num());
 	String s1="<td><input name='";
+
 	
 	String s3="' value='";
 	String s4="'  type='text' class='form-control' /> </td>";
 	out.print("<tr>");
-		out.print("<td>"+"<input type='checkbox' name='cbox'></td>");
+		out.print("<td>"+"<input type='checkbox' name='cbox' class='chbox' value='"+"'></td>");
 		out.print("<td>"+(i*10+10)+"</td>");
-		out.print("<td>"+1+"</td>");
 		out.print(s1+"material"+s3+m.getMaterial_num()+s4);  //name:material id:m几
-		out.print(s1+"shorttext"+s3+m.getMaterial_shorttext()+s4);
-		out.print(s1+"quantity"+s3+qi.getQuantity()+s4);
+		out.print(s1+"shorttext"+s3+m.getMaterial_discr()+s4);
+		out.print("<td class='quan'><input name='"+"quantity"+s3+oi.getQuantity()+s4);
 		out.print(s1+"baseunit"+s3+m.getMaterial_baseunit()+s4);
-		out.print("<div class='input-group date'> <span class='input-group-addon'>"+
-		"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+i+
-		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div>");
-		out.print("<div class='input-group date'> <span class='input-group-addon'>"+
-		"<i class='fa fa-calendar'></i></span><input name='deliverydate"+i+
-		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div>");
+		out.print("<td><div class='input-group date'> <span class='input-group-addon'>"+
+				"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+
+				"' type='text' value='"+oi.getStat_delivery_date().toString()+"' class='form-control'></div></td>");
+		out.print("<td><div class='input-group date'> <span class='input-group-addon'>"+
+		"<i class='fa fa-calendar'></i></span><input name='deliverydate"+
+		"' type='text' value='"+oi.getDelivery_date().toString()+"' class='form-control'></div></td>");
 		
-		out.print(s1+"price"+s3+qi.getPrice().toString()+s4);
-		out.print(s1+"currency"+s3+qi.getCurrency_unit()+s4);
+		out.print(s1+"price"+s3+oi.getPrice().toString()+s4);
+		out.print(s1+"currency"+s3+oi.getCurrency_unit()+s4);
 		out.print(s1+"materialgroup"+s3+m.getMaterial_group()+s4);
-		out.print(s1+"plant"+s3+qi.getPlant()+s4);
-		out.print(s1+"storageloc"+s3+qi.getSloc()+s4);
+		out.print(s1+"plant"+s3+oi.getPlant()+s4);
+		out.print(s1+"storageloc"+s3+oi.getSloc()+s4);
 	out.print("</tr>");
 	out.print("<script>");
 	out.print("initDatePicker($('.input-group.date'));");
@@ -530,7 +502,7 @@ for(int i=0;i<qilist.size();i++)
 
 </tbody>
 </table>
-<input type="button" class="btn btn-info  dim" onClick="addRow();" style="font-size:16px;" value="+"/><span >&nbsp;<button class="btn btn-info " type="button"><i class="fa fa-paste"></i> split</button></span>
+<input type="button" class="btn btn-info  dim" onClick="addRow();" style="font-size:16px;" value="+"/><span >&nbsp;<button class="btn btn-info " type="button" onclick="splitRow()"><i class="fa fa-paste"></i> split</button></span>
 </div>
 </div>
 <br>
@@ -597,16 +569,27 @@ for(int i=0;i<qilist.size();i++)
 
                                 </div>
                             </div>
-                            <div id="tab-2" class="tab-pane">
-                                <div class="panel-body">
-                                    <strong>Donec quam felis</strong>
-
-                                    <p>千未知的植物注意到我：当我听到在茎的小世界的嗡嗡声，和熟悉的昆虫无数难以形容的形式
-                                        然后，我感觉到全能者的存在，他在自己的形象中形成了我们，并且呼吸</p>
-
-                                    <p>I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite
-                                        sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet.</p>
-                                </div>
+                               <div id="tab-2" class="tab-pane">
+                                 <div class="panel-body">
+               <% for(int i=0;i<oilist.size();i++)
+               {
+            	    Order_item qi=oilist.get(i);
+            		Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
+                    out.print("<strong>"+m.getMaterial_num()+"<strong>");
+                    out.print("<p>MRP类型:"+m.getMaterial_MRPtype()+"</p>");
+                    out.print("<p>描述:"+m.getMaterial_discr()+"</p>");
+                                    
+               }              
+              %>     
+<script>
+var checkbb= document.getElementsByClassName("chbox");
+for(var i=0;i<checkbb.length;i++ )
+{
+checkbb[i].value=i;
+}
+</script>           
+                                
+                             </div>    
                             </div>
                         </div>
 
@@ -641,10 +624,21 @@ for(int i=0;i<qilist.size();i++)
 						<button type="button" class="btn btn-white" id="cleartoasts"><a href="Home.jsp">返回</a></button>
 					</div>
 				</div>
+					<div style="padding-top: 2px;">
+						
+						<p>
+							<font size="3" color="#1ab394">			
+<%
+if(request.getAttribute("order_code")!=null)
+	{
+	out.print("成功维护订单："+request.getAttribute("order_code").toString());
+	session.setAttribute("onum", request.getAttribute("order_code"));
+	}
+             %>	</font>
+						</p>
+						
+					</div>
 				
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2020-2021
-				</div>
 			</div>
 </form>
 		</div>

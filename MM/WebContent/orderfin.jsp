@@ -1,5 +1,5 @@
 <%@page import="mm.dao.*"%>
-<%@page import="mm.bean.*,java.util.ArrayList"%>
+<%@page import="mm.bean.*,java.util.ArrayList,java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -158,14 +158,11 @@ function splitRow(){
 	}
 	oTable.getElementsByTagName("tr")[si+1].innerHTML=oTable.getElementsByTagName("tr")[si].innerHTML;
 	var checkb= document.getElementsByClassName("chbox");
-	for(var j=1;j<checkb.length;j++ )
+	for(var j=0;j<checkb.length;j++ )
 		{
-		checkb[j].value=j-1;
+		checkb[j].value=j;
 		}
-	for(var j=1;j<checkb.length;j++ )
-	{
-	alert(checkb[j].value);
-	}
+
 
 	initDatePicker($(".input-group.date"));
     }
@@ -496,6 +493,7 @@ for(int i=0;i<qilist.size();i++)
 	Quotation_item qi=qilist.get(i);
 	Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
 	String s1="<td><input name='";
+
 	
 	String s3="' value='";
 	String s4="'  type='text' class='form-control' /> </td>";
@@ -508,10 +506,10 @@ for(int i=0;i<qilist.size();i++)
 		out.print("<td class='quan'><input name='"+"quantity"+s3+qi.getQuantity()+s4);
 		out.print(s1+"baseunit"+s3+m.getMaterial_baseunit()+s4);
 		out.print("<td><div class='input-group date'> <span class='input-group-addon'>"+
-		"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+i+
+		"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+
 		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div></td>");
 		out.print("<td><div class='input-group date'> <span class='input-group-addon'>"+
-		"<i class='fa fa-calendar'></i></span><input name='deliverydate"+i+
+		"<i class='fa fa-calendar'></i></span><input name='deliverydate"+
 		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div></td>");
 		
 		out.print(s1+"price"+s3+qi.getPrice().toString()+s4);
@@ -611,9 +609,9 @@ for(int i=0;i<qilist.size();i++)
               %>     
 <script>
 var checkbb= document.getElementsByClassName("chbox");
-for(var i=1;i<checkbb.length;i++ )
+for(var i=0;i<checkbb.length;i++ )
 {
-checkbb[i].value=i-1;
+checkbb[i].value=i;
 }
 </script>           
                                 
