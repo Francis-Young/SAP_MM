@@ -207,7 +207,6 @@ background:white;
 
 <body>
 <form class="m-t" role="form" action="${pageContext.request.contextPath}/order" method="post">
-<input type='text' value='change' name='action' hidden='true'>
 	<div id="wrapper">
 
 		<nav class="navbar-default navbar-static-side" role="navigation">
@@ -433,6 +432,7 @@ if(!(session.getAttribute("onum")==null))
 												<input name="ordernum" class="form-control" value=<%=onum %>> 
 																	<div  class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a></div>
 																	
+										<input type='text' value='leadchange' name='action' hidden='true'>
 										
 											</div>
 										</div>

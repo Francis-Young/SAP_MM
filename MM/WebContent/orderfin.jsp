@@ -1,5 +1,5 @@
 <%@page import="mm.dao.*"%>
-<%@page import="mm.bean.*,java.util.ArrayList"%>
+<%@page import="mm.bean.*,java.util.ArrayList,java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -136,29 +136,33 @@ function splitRow(){
 	
 	var oTable = document.getElementById("oTable");
 	var itemNo=oTable.rows.length+1;
-	var cheArr=document.getElementsByName("cbox");
+	var inputArr=document.getElementsByName("cbox");
 	var si;
 	for(var i=0;i<inputArr.length;i++)
 	{
 		if(inputArr[i].checked)
 		{
-			si=i;//要分开的那一行
+			si=i+1;//要分开的那一行
 			break;
 		}
 			
 	}
+	
 	var tBodies = oTable.tBodies;
     var tbody = tBodies[0];
     var trnew = tbody.insertRow(tbody.rows.length);
-    trnew.innerHTML = oTable.getElementsByTagName("tr")[itemNo-2];
+    trnew.innerHTML = oTable.getElementsByTagName("tr")[itemNo-2].innerHTML;
 	for(var i=itemNo-2;i>si+1;i--)
 	{
-		oTable.getElementsByTagName("tr")[i]=oTable.getElementsByTagName("tr")[i-1];	
+		oTable.getElementsByTagName("tr")[i].innerHTML=oTable.getElementsByTagName("tr")[i-1].innerHTML;	
 	}
-	oTable.getElementsByTagName("tr")[si+1]=oTable.getElementsByTagName("tr")[si];
-	var quansplit1 =oTable.getElementsByTagName("tr")[si+1].getElementsByName("quantity")[0].value;
-	oTable.getElementsByTagName("tr")[si+1].getElementsByName("quantity")[0].value=Math.ceil(quansplit1 /2);
-	oTable.getElementsByTagName("tr")[si].getElementsByName("quantity")[0].value=quansplit1-Math.ceil(quansplit1 /2);
+	oTable.getElementsByTagName("tr")[si+1].innerHTML=oTable.getElementsByTagName("tr")[si].innerHTML;
+	var checkb= document.getElementsByClassName("chbox");
+	for(var j=0;j<checkb.length;j++ )
+		{
+		checkb[j].value=j;
+		}
+
 
 	initDatePicker($(".input-group.date"));
     }
@@ -388,14 +392,14 @@ function splitRow(){
 
 <%
 
-String quonum=request.getAttribute("quo").toString();
+String quonum=request.getParameter("quo").toString();
 session.setAttribute("rfqnum", quonum);
 Quotation qo=QuotationDao.findQuotationByCode(quonum);
 RFQ rfq=RFQDao.findRFQbyCode(quonum);
 session.setAttribute("rfq", rfq);
 if(qo.getStatus()==-1)
 {
-	request.getRequestDispatcher("ordererror.jsp");
+	request.getRequestDispatcher("ordererror.jsp").forward(request, response);
 	//out.print("<h2>此报价单已被否决</h2>");
 }
 Vendor v=VendorDao.findVendorbyCode((qo.getVendor_code()));
@@ -405,14 +409,14 @@ Vendor v=VendorDao.findVendorbyCode((qo.getVendor_code()));
 %>	
 
 	<!-- 换行有问题 -->					
-<div >									
+<div class="row">									
 
 <label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">采购组织:</label>
 <div class="col-md-2">		
 <input name="org" type="text"  class="form-control" value=<%= rfq.getRfq_purchasing_org()%>>
 
 </div>
-</div>
+
 
 <div >	
 <label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">采购组:</label>
@@ -424,7 +428,8 @@ Vendor v=VendorDao.findVendorbyCode((qo.getVendor_code()));
 <div class="col-md-2">		<input name="vendornum" type="text"  class="form-control" value=<%=v.getVcode() %>> <span><%=v.getVname() %></span>
 </div>
 </div>
-<div >	
+</div>
+<div class="row">	
 <label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">公司代码:</label>
 <div class="col-md-2">		<input name="ccd" type="text"  class="form-control" value="CN00">
 </div>
@@ -457,7 +462,7 @@ Vendor v=VendorDao.findVendorbyCode((qo.getVendor_code()));
                                 <div class="panel-body">
              <div style="width:950px;  overflow-x:scroll;">										
 <div class="table-b">
-<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="100%">
+<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="160%">
 <thead>
 <tr>
 <th><input type="checkbox" id="checkbox0"></th>
@@ -488,23 +493,24 @@ for(int i=0;i<qilist.size();i++)
 	Quotation_item qi=qilist.get(i);
 	Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
 	String s1="<td><input name='";
+
 	
 	String s3="' value='";
 	String s4="'  type='text' class='form-control' /> </td>";
 	out.print("<tr>");
-		out.print("<td>"+"<input type='checkbox' name='cbox'></td>");
+		out.print("<td>"+"<input type='checkbox' name='cbox' class='chbox' value='"+"'></td>");
 		out.print("<td>"+(i*10+10)+"</td>");
 		out.print("<td>"+qo.getStatus()+"</td>");
 		out.print(s1+"material"+s3+m.getMaterial_num()+s4);  //name:material id:m几
-		out.print(s1+"shorttext"+s3+m.getMaterial_shorttext()+s4);
-		out.print(s1+"quantity"+s3+qi.getQuantity()+s4);
+		out.print(s1+"shorttext"+s3+m.getMaterial_discr()+s4);
+		out.print("<td class='quan'><input name='"+"quantity"+s3+qi.getQuantity()+s4);
 		out.print(s1+"baseunit"+s3+m.getMaterial_baseunit()+s4);
-		out.print("<div class='input-group date'> <span class='input-group-addon'>"+
-		"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+i+
-		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div>");
-		out.print("<div class='input-group date'> <span class='input-group-addon'>"+
-		"<i class='fa fa-calendar'></i></span><input name='deliverydate"+i+
-		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div>");
+		out.print("<td><div class='input-group date'> <span class='input-group-addon'>"+
+		"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+
+		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div></td>");
+		out.print("<td><div class='input-group date'> <span class='input-group-addon'>"+
+		"<i class='fa fa-calendar'></i></span><input name='deliverydate"+
+		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div></td>");
 		
 		out.print(s1+"price"+s3+qi.getPrice().toString()+s4);
 		out.print(s1+"currency"+s3+qi.getCurrency_unit()+s4);
@@ -522,7 +528,7 @@ for(int i=0;i<qilist.size();i++)
 
 </tbody>
 </table>
-<input type="button" class="btn btn-info  dim" onClick="addRow();" style="font-size:16px;" value="+"/><span >&nbsp;<button class="btn btn-info " type="button"><i class="fa fa-paste"></i> split</button></span>
+<input type="button" class="btn btn-info  dim" onClick="addRow();" style="font-size:16px;" value="+"/><span >&nbsp;<button class="btn btn-info " type="button" onclick="splitRow()"><i class="fa fa-paste"></i> split</button></span>
 </div>
 </div>
 <br>
@@ -589,16 +595,27 @@ for(int i=0;i<qilist.size();i++)
 
                                 </div>
                             </div>
-                            <div id="tab-2" class="tab-pane">
-                                <div class="panel-body">
-                                    <strong>Donec quam felis</strong>
-
-                                    <p>千未知的植物注意到我：当我听到在茎的小世界的嗡嗡声，和熟悉的昆虫无数难以形容的形式
-                                        然后，我感觉到全能者的存在，他在自己的形象中形成了我们，并且呼吸</p>
-
-                                    <p>I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite
-                                        sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet.</p>
-                                </div>
+                               <div id="tab-2" class="tab-pane">
+                                 <div class="panel-body">
+               <% for(int i=0;i<qilist.size();i++)
+               {
+            	    Quotation_item qi=qilist.get(i);
+            		Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
+                    out.print("<strong>"+m.getMaterial_num()+"<strong>");
+                    out.print("<p>MRP类型:"+m.getMaterial_MRPtype()+"</p>");
+                    out.print("<p>描述:"+m.getMaterial_discr()+"</p>");
+                                    
+               }              
+              %>     
+<script>
+var checkbb= document.getElementsByClassName("chbox");
+for(var i=0;i<checkbb.length;i++ )
+{
+checkbb[i].value=i;
+}
+</script>           
+                                
+                             </div>    
                             </div>
                         </div>
 
@@ -633,10 +650,21 @@ for(int i=0;i<qilist.size();i++)
 						<button type="button" class="btn btn-white" id="cleartoasts"><a href="Home.jsp">返回</a></button>
 					</div>
 				</div>
+					<div style="padding-top: 2px;">
+						
+						<p>
+							<font size="3" color="#1ab394">			
+<%
+if(request.getAttribute("order_code")!=null)
+	{
+	out.print("成功创建订单："+request.getAttribute("order_code").toString());
+	session.setAttribute("onum", request.getAttribute("order_code"));
+	}
+             %>	</font>
+						</p>
+						
+					</div>
 				
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2020-2021
-				</div>
 			</div>
 </form>
 		</div>

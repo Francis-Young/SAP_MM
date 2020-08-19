@@ -391,10 +391,11 @@ function open_and_search()
 											<label class="col-sm-2 control-label">RFQ编号：</label>
 											<div class="col-sm-2">
 												<input name="rfqnum" class="form-control" value=<%=rfqnum%>>
-												<div class="infont col-md-3 col-sm-4" style="Float: right">
-													<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
-												</div>
 
+
+											</div>
+											<div class="infont col-md-3 col-sm-4" style="Float: left">
+												<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
 											</div>
 										</div>
 
@@ -408,6 +409,8 @@ function open_and_search()
 					<div class="pull-right">
 						<div class="text-right">
 							<input type="submit" class="btn btn-primary " value="继续">
+							<a href="${pageContext.request.contextPath}/Home"><button
+									type="button" class="btn btn-white" id="cleartoasts">返回</button></a>
 						</div>
 					</div>
 				</div>

@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>维护报价单</title>
+<title>对比报价单</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -41,7 +41,9 @@ function selectline(ele)
 
 </script>
 <style type="text/css">
-.table-b table td{border:2px solid #808080}
+.table-b table td {
+	border: 2px solid #808080
+}
 </style>
 <script type="text/javascript">
 
@@ -161,51 +163,85 @@ function open_and_search()
 	}
 </script>
 <style>
-#wrapper
-{
-     z-index: 99;
-   position: absolute;
+#wrapper {
+	z-index: 99;
+	position: absolute;
 }
 
-.opbox1{
-    z-index: 100;
-    width:50%; margin-top:10%; margin:auto; padding:28px;
-    top:25%; left:25%;
-    height:350px; border:1px #111 solid;
-    display:none;            /* 默认对话框隐藏 */
-
-position: absolute;
-background:white;
+.opbox1 {
+	z-index: 100;
+	width: 50%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 25%;
+	left: 25%;
+	height: 350px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
 }
-.opbox1.show{display:block;} 
-.opbox1 .x{ font-size:18px; text-align:right; display:block;}
 
-.opbox2{
-    z-index: 101;
-    width:40%; margin-top:10%; margin:auto; padding:28px;
-    top:5%; left:30%;
-    height:550px; border:1px #111 solid;
-    display:none;            /* 默认对话框隐藏 */
-
-position: absolute;
-background:white;
+.opbox1.show {
+	display: block;
 }
-.opbox2.show{display:block;} 
-.opbox2 .x{ font-size:18px; text-align:right; display:block;}
 
-.opbox3{
-    z-index: 101;
-    width:40%; margin-top:10%; margin:auto; padding:28px;
-    top:5%; left:30%;
-    height:650px; border:1px #111 solid;
-    display:none;            /* 默认对话框隐藏 */
-
-position: absolute;
-background:white;
+.opbox1 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
 }
-.opbox3.show{display:block;} 
-.opbox3 .x{ font-size:18px; text-align:right; display:block;}
 
+.opbox2 {
+	z-index: 101;
+	width: 40%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 5%;
+	left: 30%;
+	height: 550px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
+}
+
+.opbox2.show {
+	display: block;
+}
+
+.opbox2 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
+}
+
+.opbox3 {
+	z-index: 101;
+	width: 40%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 5%;
+	left: 30%;
+	height: 650px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
+}
+
+.opbox3.show {
+	display: block;
+}
+
+.opbox3 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
+}
 </style>
 
 
@@ -249,10 +285,11 @@ background:white;
 							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
 
-					<li class="active"><a href="#"><i class="fa fa-shopping-cart"></i><span
-							class="nav-label"> 采购管理 </span><span class="fa arrow"></span></a>
+					<li class="active"><a href="#"><i
+							class="fa fa-shopping-cart"></i><span class="nav-label">
+								采购管理 </span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li class="active"><a href="#">请购单管理 <span class="fa arrow"></span></a>
+							<li><a href="#">请购单管理 <span class="fa arrow"></span></a>
 								<ul class="nav nav-third-level">
 									<li><a href="requisitionini.jsp">创建请购单 </a></li>
 									<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
@@ -262,7 +299,8 @@ background:white;
 									<li><a href="rfqini.jsp">创建RFQ </a></li>
 									<li><a href="rfqleadview.jsp">查看RFQ </a></li>
 								</ul></li>
-							<li><a href="#">报价单管理 <span class="fa arrow"></span></a>
+							<li class="active"><a href="#">报价单管理 <span
+									class="fa arrow"></span></a>
 								<ul class="nav nav-third-level">
 									<li><a href="quotationini.jsp">维护报价单 </a></li>
 									<li><a href="quotationcompare.jsp">比对报价单 </a></li>
@@ -289,7 +327,7 @@ background:white;
 		</nav>
 
 		<div id="page-wrapper" class="gray-bg">
-				<div class="row border-bottom">
+			<div class="row border-bottom">
 				<nav class="navbar navbar-static-top" role="navigation"
 					style="margin-bottom: 0">
 					<div class="navbar-header">
@@ -314,238 +352,249 @@ background:white;
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>报价单比较</h2>
+					<h2>对比报价单</h2>
 					<ol class="breadcrumb">
-						<li><a href="index.html">主页</a></li>
+						<li><a href="Home">主页</a></li>
 						<li>报价单管理</li>
-						<li class="active"><strong>报价单比较</strong></li>
+						<li class="active"><strong>对比报价单</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
 			</div>
 
-<form class="m-t" role="form" action="${pageContext.request.contextPath}/quotation" method="post">
-<input type='text' value='bounce_to_compare' name='action' hidden='true'>
+			<form class="m-t" role="form"
+				action="${pageContext.request.contextPath}/quotation" method="post">
+				<input type='text' value='bounce_to_compare' name='action'
+					hidden='true'>
 
 
-			<div class="wrapper wrapper-content animated fadeIn">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="ibox float-e-margins">
+				<div class="wrapper wrapper-content animated fadeIn">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="ibox float-e-margins">
 
-							<div class="ibox-title">
-								<h5>创建RFQ</h5>
-								<div class="ibox-tools">
-									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
-									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-										<i class="fa fa-wrench"></i>
-									</a>
-									<ul class="dropdown-menu dropdown-user">
-										<li><a href="#">配置 1</a></li>
-										<li><a href="#">配置 2</a></li>
-									</ul>
-									
+								<div class="ibox-title">
+									<h5>报价单比较</h5>
+									<div class="ibox-tools">
+										<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+										</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+											<i class="fa fa-wrench"></i>
+										</a>
+										<ul class="dropdown-menu dropdown-user">
+											<li><a href="#">配置 1</a></li>
+											<li><a href="#">配置 2</a></li>
+										</ul>
+
+									</div>
 								</div>
-							</div>
 
-							<div class="ibox-content">
-								
+								<div class="ibox-content">
+
 									<div class="row">
-
-											<!--RFQ具体信息 -->
-																				<div class="form-group">
-											<label style="padding:0em;" class="col-sm-2 control-label">采购组织</label>
-											<div class="col-sm-10">
-												<input name="org" id="rfqid" style="width:200px;" type="text" class="form-control"> 
-							&emsp;&emsp;&emsp;	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-								<a onclick="openwin(1)"><i class="fa fa-search-plus"></i></a>
-											</div>
-											
-											<label style="padding:0em;" class="col-sm-2 control-label">RFQ集合号</label>
-											<div class="col-sm-10">
-												<input name="coll" id="rfqid" style="width:200px;" type="text" class="form-control"> 
-							&emsp;&emsp;&emsp;	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-								<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
-											</div>
-											
-								<label style="padding:0em;" class="col-sm-2 control-label">有效价格</label>
-											<div class="col-sm-10">
-											<input type='checkbox' checked='' class='i-checks' name='checkname2'></td>
-											</div>			
-										
-											
-											<div class="row">
 										<div class="col-lg-12">
-											<hr>
-											<label style="padding:0em;" class="col-sm-2 control-label">均价比较</label>
-											<div class="col-sm-10">
-											<input type='checkbox' checked='' class='i-checks' name='checkname1'></td>
-											</div>
-											
-											
-										<br>
-										<br>
-										</div>
-									</div>		
-											
-											
-											
-										</div>
-											
+											<!--RFQ具体信息 -->
+											<div class="form-group">
 
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="col-sm-3 control-label">采购组织</label>
+															<div class="col-sm-6">
+																<input name="org" id="rfqid" class="form-control">
+															</div>
+															<div class="infont col-md-3 col-sm-4" style="Float: left">
+																<a onclick="openwin(1)"><i class="fa fa-search-plus"></i></a>
+															</div>
+														</div>
+													</div>
+												</div>
+												<br>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="col-sm-3 control-label">RFQ集合号</label>
+															<div class="col-sm-6">
+																<input name="coll" id="rfqid" class="form-control">
+															</div>
+															<div class="infont col-md-3 col-sm-4" style="Float: left">
+																<a onclick="openwin2(1)"><i
+																	class="fa fa-search-plus"></i></a>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="hr-line-dashed"></div>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="col-sm-3 control-label">有效价格</label> <input
+																type='checkbox' checked class='i-checks'
+																name='checkname2'>
+														</div>
+													</div>
+
+												</div>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="col-sm-3 control-label">均价比较</label> <input
+																type='checkbox' checked class='i-checks'
+																name='checkname1'>
+														</div>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
-
-							
-								
-
-</div>
-
+								</div>
 							</div>
 						</div>
 					</div>
-				
-				
-			
-			
+				</div>
+				<div class="footer">
+					<div class="pull-right">
 
-			<div class="footer">
-			<div class="pull-right">
-						<div class="text-right">
-											<button style="float:right" type="submit" class="btn btn-white" id="clearlasttoast">执行比较</button>
- <a
-								href="${pageContext.request.contextPath}/Home"><button
-									type="button" class="btn btn-white" id="cleartoasts">取消</button></a>
-						</div>
+						<button type="submit" class="btn btn-primary" id="clearlasttoast">执行比较</button>
+						<a href="${pageContext.request.contextPath}/Home"><button
+								type="button" class="btn btn-white" id="cleartoasts">返回</button></a>
 					</div>
-				
-	
-			</div>
-
-		
-	
- </form>
- 	</div>
- </div>
+				</div>
+			</form>
+		</div>
+	</div>
 
 	<!-- Mainly scripts for pop windows-->
-	   <script>  
+	<script>  
         function openwin(n){
             document.getElementById('inputbox').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
         }
-     </script>  
-     <script>  
+     </script>
+	<script>  
         function openwin2(n){
             document.getElementById('inputbox2').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
         }
-     </script>  
-          <script>  
+     </script>
+	<script>  
         function openwin3(n){
             document.getElementById('inputbox3').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
         }
-     </script>  
-     
-     <!-- 第一层弹窗 -->
-     <div id='inputbox' class="opbox1">
-     
-        <a class='x' href=''; onclick="openwin(0); return false;">关闭</a>
-        	
-				<div class="ibox-content"> 					
-                
-					<div class="form-group">
-					
-						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >请购单</label>
-						<div class="col-sm-10" style="width:87%;padding:1px;">
-							<input name="requisition_num" id="reqnum" type="text" class="form-control" style="width:80%">
-							<div  class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a></div>
-						</div>
-						
-						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >工厂</label>
-						<div class="col-sm-10" style="width:87%;padding:1px;">
-							<input name="plant2" type="text" class="form-control" style="width:80%">
-							<div class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="#"><i class="fa fa-search-plus"></i></a></div>
-						</div>
-						
-		<button type="button" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" onclick="openwin(0); return false;">取消</button>
-        <input type="submit" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" value="继续">
-					
+     </script>
+
+	<!-- 第一层弹窗 -->
+	<div id='inputbox' class="opbox1">
+
+		<a class='x' href='' ; onclick="openwin(0); return false;">关闭</a>
+
+		<div class="ibox-content">
+
+			<div class="form-group">
+
+				<label class="col-sm-2 control-label"
+					style="width: 13%; padding: 1px;">请购单</label>
+				<div class="col-sm-10" style="width: 87%; padding: 1px;">
+					<input name="requisition_num" id="reqnum" type="text"
+						class="form-control" style="width: 80%">
+					<div class="infont col-md-3 col-sm-4" style="Float: right">
+						<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
 					</div>
-        
-        <input type="button" value="确定">
-        
-        </div>
-     </div>
-    
-     
-   <!-- 第二层弹窗 -->  
-   <div id="inputbox2" class="opbox2">
-   
-   <a class='x' href=''; onclick="openwin2(0); return false;">关闭</a>
-   <p> 查找RFQ：   输入任意已知信息</p>
-     <div class="ibox-content" style="padding:5px 5px 5px 5px;">
-														<div >
-															<div >
-																	<!--RFQ具体信息 -->
-																	<div class="form-group">
-																		<label for="title">RFQ种类</label> <input id="key1" type="text" class="form-control" >
-																	</div>
+				</div>
 
-																	<div class="form-group">
-																		<label for="message">请购组织</label> <input class="form-control" id="key2" type="text" >
-																	</div>
+				<label class="col-sm-2 control-label"
+					style="width: 13%; padding: 1px;">工厂</label>
+				<div class="col-sm-10" style="width: 87%; padding: 1px;">
+					<input name="plant2" type="text" class="form-control"
+						style="width: 80%">
+					<div class="infont col-md-3 col-sm-4" style="Float: right">
+						<a onclick="#"><i class="fa fa-search-plus"></i></a>
+					</div>
+				</div>
+				<div class="pull-right">
+					<input type="submit" class="btn btn-primary " value="继续">
+					<button type="button" class="btn btn-white "
+						onclick="openwin(0); return false;">取消</button>
+				</div>
+			</div>
 
-																	<div class="form-group">
-																		<label for="message">RFQ集合号</label> <input class="form-control" id="key3" type="text" >
-																	</div>
-
-																	<div class="form-group">
-																		<label for="message">工厂</label> <input class="form-control" id="key4" type="text" >
-																	</div>
+		</div>
+	</div>
 
 
-																	<div class="form-group">
-																		<label for="showMethod">供应商</label> <input id="xxkey1" type="key5" class="form-control">
-																	</div>
-																	
-						
+	<!-- 第二层弹窗 -->
+	<div id="inputbox2" class="opbox2">
 
-																</div><div class="row">
-																	<div class="col-lg-12">
-																		<button type="button" class="btn btn-primary" id="showsimple" onclick=open_and_search()>搜索</button>
-																	</div>
-												
-														</div>
+		<a class='x' href='' ; onclick="openwin2(0); return false;">关闭</a>
+		<p>查找RFQ： 输入任意已知信息</p>
+		<div class="ibox-content" style="padding: 5px 5px 5px 5px;">
+			<div>
+				<div>
+					<!--RFQ具体信息 -->
+					<div class="form-group">
+						<label for="title">RFQ种类</label> <input id="key1" type="text"
+							class="form-control">
+					</div>
 
-													</div>
-     
-     </div>
-     </div>
-     <!-- 第三层弹窗 -->
-   <div id="inputbox3" class="opbox3">
-   
-   <a class='x' href=''; onclick="openwin3(0); return false;">关闭</a>
-   <table id="tbl" class="table table-striped">
+					<div class="form-group">
+						<label for="message">请购组织</label> <input class="form-control"
+							id="key2" type="text">
+					</div>
 
-									<thead id="tableHead">
-										<tr>
-											<th>RFQ编号</th>
-											<th>工厂</th>
-											<th>RFQ集合号</th>
-		
-											
-											<th>供应商</th>
-											<th>截止日期</th>
-										</tr>
-									</thead>
+					<div class="form-group">
+						<label for="message">RFQ集合号</label> <input class="form-control"
+							id="key3" type="text">
+					</div>
+
+					<div class="form-group">
+						<label for="message">工厂</label> <input class="form-control"
+							id="key4" type="text">
+					</div>
 
 
-									<tbody id="tableBody">
-									
+					<div class="form-group">
+						<label for="showMethod">供应商</label> <input id="xxkey1" type="key5"
+							class="form-control">
+					</div>
 
-									</tbody>
-								</table>  
-     </div>
-     
+
+
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<button type="button" class="btn btn-primary" id="showsimple"
+							onclick=open_and_search()>搜索</button>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	<!-- 第三层弹窗 -->
+	<div id="inputbox3" class="opbox3">
+
+		<a class='x' href='' ; onclick="openwin3(0); return false;">关闭</a>
+		<table id="tbl" class="table table-striped">
+
+			<thead id="tableHead">
+				<tr>
+					<th>RFQ编号</th>
+					<th>工厂</th>
+					<th>RFQ集合号</th>
+
+
+					<th>供应商</th>
+					<th>截止日期</th>
+				</tr>
+			</thead>
+
+
+			<tbody id="tableBody">
+
+
+			</tbody>
+		</table>
+	</div>
+
 	<script src="js/jquery-2.1.1.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
@@ -557,9 +606,9 @@ background:white;
 
 	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
-    <!-- Sweet alert -->
-    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
-    
+	<!-- Sweet alert -->
+	<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
 	<script type="text/javascript">
 		$(function() {
 			var i = -1;
@@ -694,7 +743,7 @@ background:white;
 	</script>
 	<!-- float window -->
 
-	
+
 </body>
 
 </html>

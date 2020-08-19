@@ -62,12 +62,7 @@ function initDatePicker(ele){
 	viewDate:new Date()
 	})
 }
-    $(document).ready(function(){
 
-
-		initDatePicker($(".input-group.date"));
-   });
-    
 
     
 </script>
@@ -349,11 +344,11 @@ function splitRow(){
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>创建订单</h2>
+					<h2>查看订单</h2>
 					<ol class="breadcrumb">
 						<li><a href="index.html">主页</a></li>
 						<li>订单管理</li>
-						<li class="active"><strong>创建订单</strong></li>
+						<li class="active"><strong>查看订单</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -399,7 +394,7 @@ Order o = (Order) session.getAttribute("order");
 	<!-- 换行有问题 -->					
 <div >									
 
-<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">订单编号：:</label>
+<label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">订单编号:</label>
 <div class="col-md-2">		
 <input name="org" type="text" readonly="readonly"  class="form-control" value=<%= o.getOrder_num()%>>
 
@@ -408,7 +403,7 @@ Order o = (Order) session.getAttribute("order");
 
 <div >	
 <label class="col-sm-2 control-label" style="width:auto;margin-bottom:0;padding-top:7px">采购组:</label>
-<div class="col-md-2">		<input name="gro" type="text"  class="form-control" value="采购组">
+<div class="col-md-2">		<input name="gro" type="text"  class="form-control" value=<%=o.getPur_group() %>>
 </div>
 </div>
 <div >	
@@ -444,7 +439,7 @@ Order o = (Order) session.getAttribute("order");
                                 <div class="panel-body">
              <div style="width:950px;  overflow-x:scroll;">										
 <div class="table-b">
-<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="100%">
+<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="130%">
 <thead>
 <tr>
 <th><input type="checkbox" id="checkbox0"></th>
@@ -454,7 +449,7 @@ Order o = (Order) session.getAttribute("order");
 <th>短文本</th>
 <th>订购数量</th>
 <th>基本单位</th>
-<th>开始送货时间</th>
+
 <th>送货时间</th>
 <th>净价</th>
 <th>货币单位</th>
@@ -469,8 +464,8 @@ Order o = (Order) session.getAttribute("order");
 
 <%
 
-ArrayList<Order_item> oilist= OrderItemDao.findOrderItemByOCode(o.getOrder_code())
-;for(int i=0;i<oilist.size();i++)
+ArrayList<Order_item> oilist= OrderItemDao.findOrderItemByOCode(o.getOrder_code());
+for(int i=0;i<oilist.size();i++)
 {
 	Order_item qi=oilist.get(i);
 	Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
@@ -486,12 +481,10 @@ ArrayList<Order_item> oilist= OrderItemDao.findOrderItemByOCode(o.getOrder_code(
 		out.print(s1+"shorttext"+s3+m.getMaterial_shorttext()+s4);
 		out.print(s1+"quantity"+s3+qi.getQuantity()+s4);
 		out.print(s1+"baseunit"+s3+m.getMaterial_baseunit()+s4);
-		out.print("<div class='input-group date'> <span class='input-group-addon'>"+
-		"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+i+
-		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div>");
-		out.print("<div class='input-group date'> <span class='input-group-addon'>"+
+		
+		out.print("<td><div class='input-group date'> <span class='input-group-addon'>"+
 		"<i class='fa fa-calendar'></i></span><input name='deliverydate"+i+
-		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div>");
+		"' type='text' value='"+qi.getDelivery_date().toString()+"' class='form-control'></div></td>");
 		
 		out.print(s1+"price"+s3+qi.getPrice().toString()+s4);
 		out.print(s1+"currency"+s3+qi.getCurrency_unit()+s4);
@@ -500,7 +493,7 @@ ArrayList<Order_item> oilist= OrderItemDao.findOrderItemByOCode(o.getOrder_code(
 		out.print(s1+"storageloc"+s3+qi.getSloc()+s4);
 	out.print("</tr>");
 	out.print("<script>");
-	out.print("initDatePicker($('.input-group.date'));");
+	
 	out.print("</script>");
 }
 
@@ -576,16 +569,21 @@ for(int i=0;i<qilist.size();i++)
 
                                 </div>
                             </div>
-                            <div id="tab-2" class="tab-pane">
+                           <div id="tab-2" class="tab-pane">
                                 <div class="panel-body">
-                                    <strong>Donec quam felis</strong>
-
-                                    <p>千未知的植物注意到我：当我听到在茎的小世界的嗡嗡声，和熟悉的昆虫无数难以形容的形式
-                                        然后，我感觉到全能者的存在，他在自己的形象中形成了我们，并且呼吸</p>
-
-                                    <p>I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite
-                                        sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet.</p>
-                                </div>
+               <% for(int i=0;i<oilist.size();i++)
+               {
+            		Order_item qi=oilist.get(i);
+            		Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
+                    out.print("<strong>"+m.getMaterial_num()+"<strong>");
+                    out.print("<p>MRP类型:"+m.getMaterial_MRPtype()+"</p>");
+                    out.print("<p>描述:"+m.getMaterial_discr()+"</p>");
+                                    
+               }              
+              %>                
+                                
+                             </div>    
+                                
                             </div>
                         </div>
 
@@ -621,9 +619,7 @@ for(int i=0;i<qilist.size();i++)
 					</div>
 				</div>
 				
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2020-2021
-				</div>
+		
 			</div>
 </form>
 		</div>

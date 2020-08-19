@@ -487,7 +487,7 @@ function open_and_search()
 				<div class="footer" style="position: fixed; bottom: 0; z-index: 1;">
 					<div class="pull-right">
 						<div class="text-right">
-							<input type="submit" class="btn btn-success btn-sm demo2"
+							<input type="submit" class="btn btn-primary btn-sm demo2"
 								id="showtoast" value="保存"> <a
 								href="${pageContext.request.contextPath}/Home"><button
 									type="button" class="btn btn-white" id="cleartoasts">取消</button></a>

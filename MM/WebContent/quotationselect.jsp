@@ -1,5 +1,5 @@
 <%@ page import="java.util.List,mm.bean.*,mm.dao.*,java.util.ArrayList"
-language="java" contentType="text/html; charset=UTF-8"
+	language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -46,104 +46,135 @@ language="java" contentType="text/html; charset=UTF-8"
 <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
 
 <script>
-function initDatePicker(ele){
-	ele.datepicker({
-	autoSize:true,
-	autoclose: true,
-	language: "zh-CN",
-	viewDate:new Date()
-	})
-}
-    $(document).ready(function(){
+	function initDatePicker(ele) {
+		ele.datepicker({
+			autoSize : true,
+			autoclose : true,
+			language : "zh-CN",
+			viewDate : new Date()
+		})
+	}
+	$(document).ready(function() {
 
 		initDatePicker($(".input-group.date"));
-   });
-    
-
+	});
 </script>
 
 <style type="text/css">
-.table-b td{border:1px solid #808080; padding:0px}
-.table > tbody > tr > td {
-  border-top: 1px solid #e7eaec;
-  line-height: 1.42857;
-  padding: 0px;
-  vertical-align: top;
+.table-b td {
+	border: 1px solid #808080;
+	padding: 0px
+}
+
+.table>tbody>tr>td {
+	border-top: 1px solid #e7eaec;
+	line-height: 1.42857;
+	padding: 0px;
+	vertical-align: top;
 }
 </style>
 <style>
-#wrapper
-{
-     z-index: 99;
-   position: absolute;
+#wrapper {
+	z-index: 99;
+	position: absolute;
 }
 
-.opbox1{
-    z-index: 100;
-    width:50%; margin-top:10%; margin:auto; padding:28px;
-    top:25%; left:25%;
-    height:350px; border:1px #111 solid;
-    display:none;            /* 默认对话框隐藏 */
-
-position: absolute;
-background:white;
+.opbox1 {
+	z-index: 100;
+	width: 50%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 25%;
+	left: 25%;
+	height: 350px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
 }
-.opbox1.show{display:block;} 
-.opbox1 .x{ font-size:18px; text-align:right; display:block;}
 
-.opbox2{
-    z-index: 101;
-    width:40%; margin-top:10%; margin:auto; padding:28px;
-    top:5%; left:30%;
-    height:550px; border:1px #111 solid;
-    display:none;            /* 默认对话框隐藏 */
-
-position: absolute;
-background:white;
+.opbox1.show {
+	display: block;
 }
-.opbox2.show{display:block;} 
-.opbox2 .x{ font-size:18px; text-align:right; display:block;}
 
-.opbox3{
-    z-index: 101;
-    width:40%; margin-top:10%; margin:auto; padding:28px;
-    top:5%; left:30%;
-    height:650px; border:1px #111 solid;
-    display:none;            /* 默认对话框隐藏 */
-
-position: absolute;
-background:white;
+.opbox1 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
 }
-.opbox3.show{display:block;} 
-.opbox3 .x{ font-size:18px; text-align:right; display:block;}
 
+.opbox2 {
+	z-index: 101;
+	width: 40%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 5%;
+	left: 30%;
+	height: 550px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
+}
+
+.opbox2.show {
+	display: block;
+}
+
+.opbox2 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
+}
+
+.opbox3 {
+	z-index: 101;
+	width: 40%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 5%;
+	left: 30%;
+	height: 650px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
+}
+
+.opbox3.show {
+	display: block;
+}
+
+.opbox3 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
+}
 </style>
 <script>
-function vaildday()
-{
-	var selectContent = document.getElementsByName("checkname");       
-    //获取要赋值的input的元素
-    openwin(0);
-  //  var inputElement =  document.getElementById("reqnum");
-    //给input框赋值
-  //  inputElement.value = clickContent.cells[1].innerHTML;//.innerText;
-    //选中input框的内容
-   // inputElement.select();
-     // 执行浏览器复制命令
-   // document.execCommand("Copy");
+	function vaildday() {
+		var selectContent = document.getElementsByName("checkname");
+		//获取要赋值的input的元素
+		openwin(0);
+		//  var inputElement =  document.getElementById("reqnum");
+		//给input框赋值
+		//  inputElement.value = clickContent.cells[1].innerHTML;//.innerText;
+		//选中input框的内容
+		// inputElement.select();
+		// 执行浏览器复制命令
+		// document.execCommand("Copy");
 
 	}
-
-
-
-
 </script>
 
 </head>
 
 <body>
 	<div id="wrapper">
-<form class="m-t" role="form" action="${pageContext.request.contextPath}/quotation" method="post">
+
 
 		<nav class="navbar-default navbar-static-side" role="navigation">
 			<div class="sidebar-collapse" style="z-index: 10";>
@@ -180,10 +211,11 @@ function vaildday()
 							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
 
-					<li class="active"><a href="#"><i class="fa fa-shopping-cart"></i><span
-							class="nav-label"> 采购管理 </span><span class="fa arrow"></span></a>
+					<li class="active"><a href="#"><i
+							class="fa fa-shopping-cart"></i><span class="nav-label">
+								采购管理 </span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li class="active"><a href="#">请购单管理 <span class="fa arrow"></span></a>
+							<li><a href="#">请购单管理 <span class="fa arrow"></span></a>
 								<ul class="nav nav-third-level">
 									<li><a href="requisitionini.jsp">创建请购单 </a></li>
 									<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
@@ -193,7 +225,8 @@ function vaildday()
 									<li><a href="rfqini.jsp">创建RFQ </a></li>
 									<li><a href="rfqleadview.jsp">查看RFQ </a></li>
 								</ul></li>
-							<li><a href="#">报价单管理 <span class="fa arrow"></span></a>
+							<li class="active"><a href="#">报价单管理 <span
+									class="fa arrow"></span></a>
 								<ul class="nav nav-third-level">
 									<li><a href="quotationini.jsp">维护报价单 </a></li>
 									<li><a href="quotationcompare.jsp">比对报价单 </a></li>
@@ -220,7 +253,7 @@ function vaildday()
 		</nav>
 
 		<div id="page-wrapper" class="gray-bg">
-				<div class="row border-bottom">
+			<div class="row border-bottom">
 				<nav class="navbar navbar-static-top" role="navigation"
 					style="margin-bottom: 0">
 					<div class="navbar-header">
@@ -247,226 +280,200 @@ function vaildday()
 				<div class="col-lg-10">
 					<h2>维护报价单</h2>
 					<ol class="breadcrumb">
-						<li><a href="index.html">主页</a></li>
-						<li>报价管理</li>
+						<li><a href="Home">主页</a></li>
+						<li>报价单管理</li>
 						<li class="active"><strong>维护报价单</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
 			</div>
 
+			<form class="m-t" role="form"
+				action="${pageContext.request.contextPath}/quotation" method="post">
 
+				<div class="wrapper wrapper-content animated fadeIn">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="ibox float-e-margins">
 
-			<div class="wrapper wrapper-content animated fadeIn">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="ibox float-e-margins">
-
-							<div class="ibox-title">
-								<h5>创建RFQ</h5>
-								<div class="ibox-tools">
-									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
-									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-										<i class="fa fa-wrench"></i>
-									</a>
-									<ul class="dropdown-menu dropdown-user">
-										<li><a href="#">配置 1</a></li>
-										<li><a href="#">配置 2</a></li>
-									</ul>
-									<a class="close-link"> <i class="fa fa-times"></i>
-									</a>
+								<div class="ibox-title">
+									<h5>维护报价单</h5>
+									<div class="ibox-tools">
+										<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+										</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+											<i class="fa fa-wrench"></i>
+										</a>
+										<ul class="dropdown-menu dropdown-user">
+											<li><a href="#">配置 1</a></li>
+											<li><a href="#">配置 2</a></li>
+										</ul>
+										<a class="close-link"> <i class="fa fa-times"></i>
+										</a>
+									</div>
 								</div>
-							</div>
 
-							<div class="ibox-content">
-<input type="text" value="save" name="action" hidden="true">
+								<div class="ibox-content">
+									<input type="text" value="save" name="action" hidden="true">
 
-<div class="ibox-content">
-								
 									<div class="row">
 
 										<div class="col-md-4">
 											<!--RFQ具体信息 -->
 											<div class="form-group">
-												<label for="title">RFQ:</label> <input id="vname" name="rfq_type"
-													type="text" class="form-control" readonly="readonly" value= ${ rfqnum} />
-											</div>
-                                       <div class="form-group">
-												<label for="message">RFQ类型：</label> <input
-													readonly="readonly" value= ${ rfqtype}  type="text" 
-													class="form-control" ></input>
-												
+												<label for="title">RFQ:</label> <input id="vname"
+													name="rfq_type" type="text" class="form-control"
+													readonly="readonly" value=${ rfqnum} />
 											</div>
 											<div class="form-group">
-												<label for="message">供应商：</label> <input
-													readonly="readonly" value= ${ vendor}  type="text" 
-													class="form-control" ></input>
-													${ vendorname}
+												<label for="message">RFQ类型：</label> <input
+													readonly="readonly" value=${ rfqtype} type="text"
+													class="form-control"></input>
+
+											</div>
+											<div class="form-group">
+												<label for="message">供应商：</label> <input readonly="readonly"
+													value=${ vendor} type="text" class="form-control"></input>
+												${ vendorname}
 											</div>
 
-					
+
 
 										</div>
 
 										<div class="col-md-2"></div>
 
-										<div class="col-md-2" style="width:25%;">
-							
+										<div class="col-md-2" style="width: 25%;">
+
 											<div class="form-group">
-												<label for="showMethod">RFQ日期</label> <input id="showMethod"
-										readonly="readonly" value= ${ rfqdate} class="form-control" />
+												<label for="showMethod">RFQ日期：</label> <input
+													id="showMethod" readonly="readonly" value=${ rfqdate}
+													class="form-control" />
 											</div>
 											<div class="form-group">
-												<label for="showMethod">截止日期</label> <input id="showMethod"
-										readonly="readonly" value= ${ ddldate} class="form-control" />
+												<label for="showMethod">截止日期：</label> <input id="showMethod"
+													readonly="readonly" value=${ ddldate} class="form-control" />
 											</div>
-											
+
 										</div>
 									</div>
+									<div class="table-b">
+										<table id="oTable" class="table table-bordered">
+											<thead>
+												<tr>
+													<th></th>
+													<th>条目</th>
+													<th>材料编号</th>
+													<th>数量</th>
+													<th>运送日期</th>
+													<th>价格</th>
+													<th>工厂</th>
 
 
+												</tr>
+											</thead>
+											<tbody>
 
+												<%
+													//取出请购单的条目
+													RFQ rfq = (RFQ) session.getAttribute("passrfq");
 
-<div class="row">
-<input type="submit" class="btn btn-primary " style="margin:20px 20px 20px 20px;Float:right" value="接受条目">	
-<button type="button" class="btn btn-white" style="margin:20px 20px 20px 20px" id="cleartoasts" onclick="openwin(1)">有效期设置</button>
-	</div>		
-<div class="table-b">
-<table id="oTable" class="table table-bordered" style="border:1 ; width:100;">
-<thead style="border:2 ; width:100;">
-<tr>
-<th></th>
-<th>条目</th>
-<th>材料编号</th>
-<th>数量</th>
-<th>运送日期</th>
-<th>价格</th>
-<th>工厂</th>
+													ArrayList<RFQ_item> rilist = RFQItemDao.findRFQItemByRfqCode(rfq.getRfq_code());
+													for (int i = 0; i < rilist.size(); i++) {
+														RFQ_item ri = rilist.get(i);
 
-
-</tr>
-</thead>
-<tbody>
-
-<%
-//取出请购单的条目
-
-RFQ rfq= (RFQ)session.getAttribute("passrfq");
-
-ArrayList<RFQ_item> rilist=RFQItemDao.findRFQItemByRfqCode(rfq.getRfq_code());
-for(int i=0;i<rilist.size();i++)
-{
-RFQ_item ri = rilist.get(i);
-
-out.print("<tr>");
-out.print("<td align='center'><input  type='checkbox' checked='' class='i-checks' name='checkname' value='"+i+"'></td>");
-out.print("<td>"+(i+10)*10+"</td>");
-out.print("<td>"+ri.getMaterial_num()+"</td>");
-out.print("<td>"+ri.getRequisition_quantity()+"</td>");
-out.print("<td>"+ri.getRequisition_deliverydate()+"</td>");
-out.print("<td><input name='price"+i+"'  type='text' class='form-control'></td>");
-out.print("<td>"+ri.getRequisition_plant()+"</td>");
-
-}
-
-%>
-
-
-
-
-
-
-
-
-
-
-
-</tbody>
-</table>
-</div>
-						
-						
-						
-						
+														out.print("<tr>");
+														out.print("<td><input  type='checkbox' checked='' class='i-checks' name='checkname' value='" + i
+																+ "'></td>");
+														out.print("<td>" + (i + 10) * 10 + "</td>");
+														out.print("<td>" + ri.getMaterial_num() + "</td>");
+														out.print("<td>" + ri.getRequisition_quantity() + "</td>");
+														out.print("<td>" + ri.getRequisition_deliverydate() + "</td>");
+														out.print("<td><input name='price" + i + "'  type='text' class='form-control'></td>");
+														out.print("<td>" + ri.getRequisition_plant() + "</td>");
+													}
+												%>
+											</tbody>
+										</table>
+									</div>
 								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="footer">
-				<div class="pull-right">
+				<div class="footer">
+					<div class="pull-right">
+						<div class="text-right">
+							<input type="submit" class="btn btn-primary " value="接受条目">
+							<button type="button" class="btn btn-white" onclick="openwin(1)">有效期设置</button>
+							<button type="button" class="btn btn-white" id="cleartoasts">取消</button>
+						</div>
+					</div>
+				</div>
+				<!-- Mainly scripts for pop windows-->
+				<script>
+					function openwin(n) {
+						document.getElementById('inputbox').style.display = n ? 'block'
+								: 'none'; /* 点击按钮打开/关闭 对话框 */
+					}
+				</script>
+				<script>
+					function openwin2(n) {
+						document.getElementById('inputbox2').style.display = n ? 'block'
+								: 'none'; /* 点击按钮打开/关闭 对话框 */
+					}
+				</script>
+				<script>
+					function openwin3(n) {
+						document.getElementById('inputbox3').style.display = n ? 'block'
+								: 'none'; /* 点击按钮打开/关闭 对话框 */
+					}
+				</script>
+
+				<!-- 第一层弹窗 -->
+				<div id='inputbox' class="opbox1">
+
+					<a class='x' href='' ; onclick="openwin(0); return false;">关闭</a>
+
+					<div class="ibox-content">
+
+						<div class="form-group">
+
+							<label class="col-sm-2 control-label"
+								style="width: 13%; padding: 1px;">生效时间</label>
+
+
+							<div class="input-group date">
+								<span class="input-group-addon"> <i
+									class="fa fa-calendar"></i></span> <input name="deliverydate"
+									type="text" class="form-control" >
+							</div>
+
+						</div>
+
+						<label class="col-sm-2 control-label"
+							style="width: 13%; padding: 1px;">失效时间</label>
+						<div class="input-group date">
+							<span class="input-group-addon"> <i class="fa fa-calendar"></i></span>
+							<input name="deliverydate" type="text" class="form-control"
+								>
+						</div>
+					</div>
 					<div class="text-right">
-						<button type="submit" class="btn btn-success btn-sm demo2" id="showtoast">保存</button>
-						<button type="button" class="btn btn-white" id="cleartoasts">取消</button>
+						<button type="button" class="btn btn-primary "
+							onclick="openwin(0); return false;">取消</button>
+						<input type="submit" class="btn btn-primary " value="继续">
 					</div>
 				</div>
-
-		
-			</div>
-
+			</form>
 		</div>
-	</div>
-	
-	<!-- Mainly scripts for pop windows-->
-	   <script>  
-        function openwin(n){
-            document.getElementById('inputbox').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
-        }
-     </script>  
-     <script>  
-        function openwin2(n){
-            document.getElementById('inputbox2').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
-        }
-     </script>  
-          <script>  
-        function openwin3(n){
-            document.getElementById('inputbox3').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
-        }
-     </script>  
-     
-     <!-- 第一层弹窗 -->
-     <div id='inputbox' class="opbox1">
-     
-        <a class='x' href=''; onclick="openwin(0); return false;">关闭</a>
-        	
-				<div class="ibox-content"> 					
-                
-					<div class="form-group">
-					
-						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >生效时间</label>
-						
-						
-						<div  class="input-group date"> <span class="input-group-addon">
-				<i class="fa fa-calendar"></i></span>
-			<input name="deliverydate" type="text" class="form-control" readonly="readonly">
-						</div>
-							
-						</div>
-						
-						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >失效时间</label>
-									<div  class="input-group date"> <span class="input-group-addon">
-					<i class="fa fa-calendar"></i></span>
-						<input name="deliverydate" type="text" class="form-control" readonly="readonly">
-								</div>
-				</div>
-						
-		<button type="button" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" onclick="openwin(0); return false;">取消</button>
-        <input type="submit" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" value="继续">
-					
-					</div>
-        
-        <input type="button" value="确定">
-        
-        
-     
-     </form>
-     <!-- 日期框 -->
-     </div>
-	<script>
 
-			initDatePicker($(".input-group.date"));
-</script>
+
+		<!-- 日期框 -->
+	</div>
+	<script>
+		initDatePicker($(".input-group.date"));
+	</script>
 
 	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>

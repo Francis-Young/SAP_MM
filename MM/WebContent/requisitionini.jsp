@@ -272,7 +272,7 @@ function addRow(){
 <div class="row">
 
 								
-										
+	<div class="col-lg-12">									
 <div class="table-b">
 <table id="oTable" class="table table-bordered" style="border:1 ; width:100;">
 <thead style="border:2 ; width:100;">
@@ -300,6 +300,7 @@ function addRow(){
 </div>
 </div>
 </div>
+</div>
 <br>
 <script type="text/javascript">addRow();</script>
 
@@ -322,7 +323,7 @@ function addRow(){
 
 				<div class="pull-right">
 					<div class="text-right">
-						<input type="submit"  value="保存" class="btn btn-success btn-sm demo2" id="showtoast">
+						<input type="submit"  value="保存" class="btn btn-primary" id="showtoast">
 						<a href="${pageContext.request.contextPath}/Home"><button type="button" class="btn btn-white" id="cleartoasts">返回</button></a>
 					</div>
 				</div>
