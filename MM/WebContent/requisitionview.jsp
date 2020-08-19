@@ -456,10 +456,10 @@ Requisition r = (Requisition) session.getAttribute("requisition");
                         <div class="tab-content">
                             <div id="tab-1" class="tab-pane active">
                                 <div class="panel-body">
-             <div style="width:950px;  overflow-x:scroll;">										
-<div class="table-b">
-<table id="oTable" class="table table-bordered" style="border:1 ; width:1200px;">
-<thead style="border:2 ; width:100;">
+             <div style="width:1300px;  overflow-x:scroll;">										
+<div class="table-b" style="width:1500px">
+<table id="oTable" class="table table-bordered" >
+<thead>
 <tr>
 <th><input type="checkbox" id="checkbox0"></th>
 <th>条目</th>
@@ -468,7 +468,7 @@ Requisition r = (Requisition) session.getAttribute("requisition");
 <th>短文本</th>
 <th>订购数量</th>
 <th>基本单位</th>
-<th style="width:10%">送货时间</th>
+<th>送货时间</th>
 <th>物料组</th>
 <th>工厂</th>
 <th>运送点</th>
@@ -485,23 +485,22 @@ for(int i=0;i<oilist.size();i++)
 {
 	Requisition_item qi=oilist.get(i);
 	Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
-	String s1="<td><input name='";
-	
-	String s3="' value='";
-	String s4="'  type='text' readonly='readonly' class='form-control' /> </td>";
+	String s1="<td>";
+
+	String s4="</td>";
 	out.print("<tr>");
 		out.print("<td align='center'>"+"<input type='checkbox' name='cbox'></td>");
 		out.print("<td>"+(i*10+10)+"</td>");
 		out.print("<td>"+1+"</td>");
-		out.print(s1+"material"+s3+m.getMaterial_num()+s4);  //name:material id:m几
-		out.print(s1+"shorttext"+s3+m.getMaterial_discr()+s4);
-		out.print(s1+"quantity"+s3+qi.getRequisition_quantity()+s4);
-		out.print(s1+"baseunit"+s3+m.getMaterial_baseunit()+s4);
-		out.print(s1+s3+ qi.getRequisition_deliverydate().toString() + s4);
+		out.print(s1+m.getMaterial_num()+s4);  //name:material id:m几
+		out.print(s1+m.getMaterial_discr()+s4);
+		out.print(s1+qi.getRequisition_quantity()+s4);
+		out.print(s1+m.getMaterial_baseunit()+s4);
+		out.print(s1+qi.getRequisition_deliverydate().toString() + s4);
 
-		out.print(s1+"materialgroup"+s3+m.getMaterial_group()+s4);
-		out.print(s1+"plant"+s3+qi.getRequisition_plant()+s4);
-		out.print(s1+"storageloc"+s3+qi.getRequisition_storageloc()+s4);
+		out.print(s1+m.getMaterial_group()+s4);
+		out.print(s1+qi.getRequisition_plant()+s4);
+		out.print(s1+qi.getRequisition_storageloc()+s4);
 		System.out.println(qi.getRequisition_storageloc());
 	out.print("</tr>");
 

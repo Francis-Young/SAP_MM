@@ -58,11 +58,11 @@
 					<li><a href="Home"><i class="fa fa-home"></i> <span
 							class="nav-label">主页</span></a></li>
 
-					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
+					<li class="active"><a href="layouts.html"><i class="fa fa-diamond"></i> <span
 							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
 							<li><a href="CreateVendor">创建供应商</a></li>
-							<li><a href="SelectVendor?type=display">查询供应商</a></li>
+							<li class="active"><a href="SelectVendor?type=display">查询供应商</a></li>
 							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
 

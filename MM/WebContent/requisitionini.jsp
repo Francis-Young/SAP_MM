@@ -272,7 +272,7 @@ function addRow(){
 <div class="row">
 
 								
-										
+	<div class="col-lg-12">									
 <div class="table-b">
 <table id="oTable" class="table table-bordered" style="border:1 ; width:100;">
 <thead style="border:2 ; width:100;">
@@ -297,6 +297,7 @@ function addRow(){
 <div class="pull-right">
 <input type="button" class="btn btn-primary" onClick="addRow();" style="font-size: 16px;margin:3px;" value="+" />
 <button type="reset" class="btn btn-white" id="clearlasttoast" style="margin:19px;">清除</button>
+</div>
 </div>
 </div>
 </div>

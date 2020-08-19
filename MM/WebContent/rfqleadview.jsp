@@ -391,11 +391,12 @@ function open_and_search()
 											<label class="col-sm-2 control-label">RFQ编号：</label>
 											<div class="col-sm-2">
 												<input name="rfqnum" class="form-control" value=<%=rfqnum%>>
-												<div class="infont col-md-3 col-sm-4" style="Float: right">
-													<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
-												</div>
+												
 
 											</div>
+											<div class="infont col-md-3 col-sm-4" style="Float: left">
+													<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
+												</div>
 										</div>
 
 									</div>

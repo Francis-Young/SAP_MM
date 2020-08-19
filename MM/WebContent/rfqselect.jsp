@@ -160,34 +160,34 @@
 				<div class="col-lg-2"></div>
 			</div>
 
+			<form class="m-t" role="form"
+				action="${pageContext.request.contextPath}/rfq" method="post">
 
+				<div class="wrapper wrapper-content animated fadeIn">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="ibox float-e-margins">
 
-			<div class="wrapper wrapper-content animated fadeIn">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="ibox float-e-margins">
-
-							<div class="ibox-title">
-								<h5>创建RFQ</h5>
-								<div class="ibox-tools">
-									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
-									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-										<i class="fa fa-wrench"></i>
-									</a>
-									<ul class="dropdown-menu dropdown-user">
-										<li><a href="#">配置 1</a></li>
-										<li><a href="#">配置 2</a></li>
-									</ul>
-									<a class="close-link"> <i class="fa fa-times"></i>
-									</a>
+								<div class="ibox-title">
+									<h5>创建RFQ</h5>
+									<div class="ibox-tools">
+										<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+										</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+											<i class="fa fa-wrench"></i>
+										</a>
+										<ul class="dropdown-menu dropdown-user">
+											<li><a href="#">配置 1</a></li>
+											<li><a href="#">配置 2</a></li>
+										</ul>
+										<a class="close-link"> <i class="fa fa-times"></i>
+										</a>
+									</div>
 								</div>
-							</div>
 
-							<div class="ibox-content">
-								<form class="m-t" role="form"
-									action="${pageContext.request.contextPath}/rfq" method="post">
+								<div class="ibox-content">
+
 									<input type='text' value='bounce_to_edit' name='action'
-										hidden='true'> 
+										hidden='true'>
 									<div class="table-b">
 										<table id="oTable" class="table table-bordered">
 											<thead>
@@ -231,40 +231,37 @@
 											</tbody>
 										</table>
 									</div>
-									<input type="submit"
-										class="btn btn-primary " 
-										value="接受条目">
-								</form>
+
+
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="footer">
-				<div class="pull-right">
-					<div class="text-right">
-						<input type="submit" class="btn btn-success btn-sm demo2"
-							id="showtoast" value="保存"> <a
-							href="${pageContext.request.contextPath}/Home"><button
-								type="button" class="btn btn-white" id="cleartoasts">取消</button></a>
+				<div class="footer">
+					<div class="pull-right">
+						<div class="text-right">
+							<input type="submit" class="btn btn-primary " value="接受条目">
+							<button type="button" class="btn btn-white" id="cleartoasts">取消</button>
+							</a>
+						</div>
 					</div>
-				</div>
-				<div style="padding-top: 2px;">
+					<div style="padding-top: 2px;">
 
-					<p>
-						<font size="3" color="#1ab394"> <%
+						<p>
+							<font size="3" color="#1ab394"> <%
  	if (request.getAttribute("rfq_code") != null) {
  		out.print("成功创建RFQ：" + request.getAttribute("rfq_code").toString());
  		session.setAttribute("rfqnum", request.getAttribute("rfq_code").toString());
  	}
  %>
-						</font>
-					</p>
+							</font>
+						</p>
 
+					</div>
 				</div>
-			</div>
-
+			</form>
 		</div>
 	</div>
 

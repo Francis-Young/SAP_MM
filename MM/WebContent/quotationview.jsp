@@ -573,14 +573,19 @@ for(int i=0;i<qilist.size();i++)
                             </div>
                             <div id="tab-2" class="tab-pane">
                                 <div class="panel-body">
-                                    <strong>Donec quam felis</strong>
-
-                                    <p>千未知的植物注意到我：当我听到在茎的小世界的嗡嗡声，和熟悉的昆虫无数难以形容的形式
-                                        然后，我感觉到全能者的存在，他在自己的形象中形成了我们，并且呼吸</p>
-
-                                    <p>I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite
-                                        sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet.</p>
-                                </div>
+               <% for(int i=0;i<qilist.size();i++)
+               {
+            		Quotation_item qi=qilist.get(i);
+            		Material m = MaterialDao.findMaterialbyNum(qi.getMaterial_num());
+                    out.print("<strong>"+m.getMaterial_num()+"<strong>");
+                    out.print("<p>MRP类型:"+m.getMaterial_MRPtype()+"</p>");
+                    out.print("<p>描述:"+m.getMaterial_discr()+"</p>");
+                                    
+               }              
+              %>                
+                                
+                             </div>    
+                                
                             </div>
                         </div>
 
@@ -616,9 +621,7 @@ for(int i=0;i<qilist.size();i++)
 					</div>
 				</div>
 				
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2020-2021
-				</div>
+
 			</div>
 </form>
 		</div>

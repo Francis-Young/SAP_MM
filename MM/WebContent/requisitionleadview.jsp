@@ -1,5 +1,4 @@
-<%@ page import="java.util.List,mm.bean.*,mm.dao.*,java.util.ArrayList"
-	language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -9,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>维护报价单</title>
+<title>查看请购单</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -20,59 +19,141 @@
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 
-
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
 <!-- Sweet Alert -->
 <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
-<link href="css/animate.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<!-- Mainly scripts 日期-->
-<script src="js/jquery-2.1.1.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-<!-- Custom and plugin javascript -->
-<script src="js/inspinia.js"></script>
-<script src="js/plugins/pace/pace.min.js"></script>
-
-<!-- SUMMERNOTE -->
-<script src="js/plugins/summernote/summernote.min.js"></script>
-
-<!-- Data picker -->
-<script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
-
 <script>
-	function initDatePicker(ele) {
-		ele.datepicker({
-			autoSize : true,
-			autoclose : true,
-			language : "zh-CN",
-			viewDate : new Date()
-		})
+function selectline(ele)
+{
+	var clickContent = ele;         
+    //获取要赋值的input的元素
+    var inputElement =  document.getElementById("requisitionnum");
+    //给input框赋值
+    inputElement.value = clickContent.cells[1].innerHTML;//.innerText;
+    //选中input框的内容
+   // inputElement.select();
+     // 执行浏览器复制命令
+   // document.execCommand("Copy");
+    openwin3(0);
+    openwin2(0);
 	}
-	$(document).ready(function() {
 
-		initDatePicker($(".input-group.date"));
-	});
+
 </script>
 
-<style type="text/css">
-.table-b td {
-	border: 1px solid #808080;
-	padding: 0px
-}
+<script type="text/javascript">
 
-.table>tbody>tr>td {
-	border-top: 1px solid #e7eaec;
-	line-height: 1.42857;
-	padding: 0px;
-	vertical-align: top;
+
+
+function search()
+{    
+	var key = $("#key1").val()+","+ $("#key2").val()
+	var url="${pageContext.request.contextPath}/searchServlet?key="+key
+	
+	function gettext(text)
+	{
+		var subt = text.match(/mark.(\S*?)mark./);
+		return subt[1];
+	}
+	function getdate(text)
+	{
+		var subt = text.match(/mark.(\S*?)mark./);
+		return subt[1];
+	}
+
+    
+
+     $.ajax({
+              type:"post",
+              url:"${pageContext.request.contextPath}/searchServlet",
+              async:true, //默认-异步（true） 同步-false
+              dataType:"text",
+              
+              data:{"key":key},
+              beforeSend: function (){
+                  //ajax刷新前加载load动画
+                  //showLoad();
+              },
+              success:function (dataArray) {
+            	  
+            	  var subnum = dataArray.match(/mark0(\S*?)mark1/g);
+            	  var subdes = dataArray.match(/mark1(\S*?)mark2/g);
+            	  var subgup = dataArray.match(/mark2(\S*?)mark3/g);
+            	 // alert(subtext[1]);
+            	 // alert(decodeURI(subtext[1]))
+            	 // alert(decodeURI(subdate))
+            	  //decodeURI方法返回一个字符数组，所以如果要知道字符串的数量就要分组decode，否则组的每位只有一个字符
+            	  $("tbody#tableBody").remove();//删除已有表格	
+                  var tableBody = "<tbody id='tableBody'>";
+ 				  //alert(subnum.length);
+                  for (var i = 0; i < subnum.length; i++) {
+ 					
+                      tableBody += '<tr onclick="selectline(this)">';
+ 
+                      tableBody += '<td><input type="checkbox" checked="" class="i-checks" name="input[]"></td>';
+                      tableBody += "<td>"+gettext(decodeURI(subnum[i]))+"</td>";
+                      tableBody += "<td>"+gettext(decodeURI(subdes[i]))+"</td>";
+                      tableBody += "<td>"+gettext(decodeURI(subgup[i]))+"</td>";
+                      tableBody += "</tr>";
+                  }
+ 
+                  tableBody += "</tBody>";
+ 
+                  
+                  $("#tableHead").after(tableBody);
+ 
+              },
+              error:function (e,textStatus,request) {
+                  //隐藏load动画
+                  hiddenLoad();
+                  alert("错误！"+e.status);
+                  var json=JSON.parse(request.responseText);  
+                  alert(json.city); 
+                  alert(request.responseText)
+                  alert(" parser error"+textStatus); // parser error;
+              },
+              complete:function () {
+
+                 
+                  //表格隔行显色，鼠标悬浮高亮显示
+                  var oTab = document.getElementById('tbl');
+                  var oldColor = '';//用于保存原来一行的颜色
+ 
+                  for(var i = 0; oTab.tBodies[0].rows.length; i++){
+ 
+                      //当鼠标移上去，改变字体色-背景色
+                      oTab.tBodies[0].rows[i].onmouseover = function () {
+                          oldColor = this.style.background;
+                          this.style.background = "#009B63";
+                          this.style.color = "#ffffff";
+                      };
+ 
+                      //当鼠标移开，恢复原来的颜色
+                      oTab.tBodies[0].rows[i].onmouseout = function () {
+                          this.style.background = oldColor;
+                          this.style.color = "#000000";
+                      };
+ 
+                      //隔行显色
+                      if(i%2){
+                          oTab.tBodies[0].rows[i].style.background = "#EAF2D3";
+                      }
+                      else{
+                          oTab.tBodies[0].rows[i].style.background = "";
+                      }
+                  }
+              }
+          });
+    
 }
-</style>
+</script>
+<script>
+function open_and_search()
+{
+	openwin3(1);
+	search();
+	}
+</script>
 <style>
 #wrapper {
 	z-index: 99;
@@ -112,7 +193,7 @@
 	padding: 28px;
 	top: 5%;
 	left: 30%;
-	height: 550px;
+	height: 650px;
 	border: 1px #111 solid;
 	display: none; /* 默认对话框隐藏 */
 	position: absolute;
@@ -154,30 +235,15 @@
 	display: block;
 }
 </style>
-<script>
-	function vaildday() {
-		var selectContent = document.getElementsByName("checkname");
-		//获取要赋值的input的元素
-		openwin(0);
-		//  var inputElement =  document.getElementById("reqnum");
-		//给input框赋值
-		//  inputElement.value = clickContent.cells[1].innerHTML;//.innerText;
-		//选中input框的内容
-		// inputElement.select();
-		// 执行浏览器复制命令
-		// document.execCommand("Copy");
 
-	}
-</script>
 
 </head>
 
 <body>
+
 	<div id="wrapper">
-
-
 		<nav class="navbar-default navbar-static-side" role="navigation">
-			<div class="sidebar-collapse" style="z-index: 10";>
+			<div class="sidebar-collapse">
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element">
@@ -215,7 +281,8 @@
 							class="fa fa-shopping-cart"></i><span class="nav-label">
 								采购管理 </span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="#">请购单管理 <span class="fa arrow"></span></a>
+							<li class="active"><a href="#">请购单管理 <span
+									class="fa arrow"></span></a>
 								<ul class="nav nav-third-level">
 									<li><a href="requisitionini.jsp">创建请购单 </a></li>
 									<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
@@ -225,8 +292,7 @@
 									<li><a href="rfqini.jsp">创建RFQ </a></li>
 									<li><a href="rfqleadview.jsp">查看RFQ </a></li>
 								</ul></li>
-							<li class="active"><a href="#">报价单管理 <span
-									class="fa arrow"></span></a>
+							<li><a href="#">报价单管理 <span class="fa arrow"></span></a>
 								<ul class="nav nav-third-level">
 									<li><a href="quotationini.jsp">维护报价单 </a></li>
 									<li><a href="quotationcompare.jsp">比对报价单 </a></li>
@@ -274,30 +340,29 @@
 				</nav>
 			</div>
 
-
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>维护报价单</h2>
+					<h2>查看请购单</h2>
 					<ol class="breadcrumb">
-						<li><a href="Home">主页</a></li>
-						<li>报价单管理</li>
-						<li class="active"><strong>维护报价单</strong></li>
+						<li><a href="index.html">主页</a></li>
+						<li>请购单管理</li>
+						<li class="active"><strong>查看请购单</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
 			</div>
 
 			<form class="m-t" role="form"
-				action="${pageContext.request.contextPath}/quotation" method="post">
-
+				action="${pageContext.request.contextPath}/requisition"
+				method="post">
+				<input type='text' value='view' name='action' hidden='true'>
 				<div class="wrapper wrapper-content animated fadeIn">
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="ibox float-e-margins">
-
 								<div class="ibox-title">
-									<h5>维护报价单</h5>
+									<h5>查看请购单</h5>
 									<div class="ibox-tools">
 										<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 										</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -307,129 +372,37 @@
 											<li><a href="#">配置 1</a></li>
 											<li><a href="#">配置 2</a></li>
 										</ul>
-										<a class="close-link"> <i class="fa fa-times"></i>
-										</a>
 									</div>
-								</div>
+								</div><div class="ibox-content">
 
-								<div class="ibox-content">
-									<input type="text" value="save" name="action" hidden="true">
-
+									<%
+										String rnum = "";
+										if (!(session.getAttribute("rnum") == null))
+											rnum = session.getAttribute("rnum").toString();
+									%>
 									<div class="row">
 
-										<div class="col-md-4">
-											<!--RFQ具体信息 -->
-											<div class="form-group">
-												<label for="title">RFQ:</label> <input id="vname"
-													name="rfq_type" type="text" class="form-control"
-													readonly="readonly" value=${ rfqnum} />
+										<div class="form-group">
+											<label class="col-sm-2 control-label">请购单编号：</label>
+											<div class="col-sm-2">
+												<input name="requisitionnum" id="requisitionnum"
+													class="form-control" value=<%=rnum%>>
 											</div>
-											<div class="form-group">
-												<label for="message">RFQ类型：</label> <input
-													readonly="readonly" value=${ rfqtype} type="text"
-													class="form-control"></input>
-
+											<div class="infont col-md-3 col-sm-4" style="Float: left">
+												<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
 											</div>
-											<div class="form-group">
-												<label for="message">供应商：</label> <input readonly="readonly"
-													value=${ vendor} type="text" class="form-control"></input>
-												${ vendorname}
-											</div>
-
-
-
 										</div>
-
-										<div class="col-md-2"></div>
-
-										<div class="col-md-2" style="width: 25%;">
-
-											<div class="form-group">
-												<label for="showMethod">RFQ日期：</label> <input
-													id="showMethod" readonly="readonly" value=${ rfqdate}
-													class="form-control" />
-											</div>
-											<div class="form-group">
-												<label for="showMethod">截止日期：</label> <input id="showMethod"
-													readonly="readonly" value=${ ddldate} class="form-control" />
-											</div>
-
-										</div>
-									</div>
-									<div class="table-b">
-										<table id="oTable" class="table table-bordered">
-											<thead>
-												<tr>
-													<th></th>
-													<th>条目</th>
-													<th>材料编号</th>
-													<th>数量</th>
-													<th>运送日期</th>
-													<th>价格</th>
-													<th>工厂</th>
-
-
-												</tr>
-											</thead>
-											<tbody>
-
-												<%
-													//取出请购单的条目
-													RFQ rfq = (RFQ) session.getAttribute("passrfq");
-
-													ArrayList<RFQ_item> rilist = RFQItemDao.findRFQItemByRfqCode(rfq.getRfq_code());
-													for (int i = 0; i < rilist.size(); i++) {
-														RFQ_item ri = rilist.get(i);
-
-														out.print("<tr>");
-														out.print("<td><input  type='checkbox' checked='' class='i-checks' name='checkname' value='" + i
-																+ "'></td>");
-														out.print("<td>" + (i + 10) * 10 + "</td>");
-														out.print("<td>" + ri.getMaterial_num() + "</td>");
-														out.print("<td>" + ri.getRequisition_quantity() + "</td>");
-														out.print("<td>" + ri.getRequisition_deliverydate() + "</td>");
-														out.print("<td><input name='price" + i + "'  type='text' class='form-control'></td>");
-														out.print("<td>" + ri.getRequisition_plant() + "</td>");
-													}
-												%>
-											</tbody>
-										</table>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-
 				<div class="footer">
 					<div class="pull-right">
-						<div class="text-right">
-							<input type="submit" class="btn btn-primary " value="接受条目">
-							<button type="button" class="btn btn-white" onclick="openwin(1)">有效期设置</button>
-							<button type="button" class="btn btn-white" id="cleartoasts">取消</button>
-						</div>
+						<input type="submit" class="btn btn-primary " value="继续">
 					</div>
 				</div>
-				<!-- Mainly scripts for pop windows-->
-				<script>
-					function openwin(n) {
-						document.getElementById('inputbox').style.display = n ? 'block'
-								: 'none'; /* 点击按钮打开/关闭 对话框 */
-					}
-				</script>
-				<script>
-					function openwin2(n) {
-						document.getElementById('inputbox2').style.display = n ? 'block'
-								: 'none'; /* 点击按钮打开/关闭 对话框 */
-					}
-				</script>
-				<script>
-					function openwin3(n) {
-						document.getElementById('inputbox3').style.display = n ? 'block'
-								: 'none'; /* 点击按钮打开/关闭 对话框 */
-					}
-				</script>
-
 				<!-- 第一层弹窗 -->
 				<div id='inputbox' class="opbox1">
 
@@ -440,43 +413,156 @@
 						<div class="form-group">
 
 							<label class="col-sm-2 control-label"
-								style="width: 13%; padding: 1px;">生效时间</label>
-
-
-							<div class="input-group date">
-								<span class="input-group-addon"> <i
-									class="fa fa-calendar"></i></span> <input name="deliverydate"
-									type="text" class="form-control" >
+								style="width: 13%; padding: 1px;">请购单</label>
+							<div class="col-sm-10" style="width: 87%; padding: 1px;">
+								<input name="requisition_num" id="reqnum" type="text"
+									class="form-control" style="width: 80%">
+								<div class="infont col-md-3 col-sm-4" style="Float: right">
+									<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
+								</div>
 							</div>
 
+							<label class="col-sm-2 control-label"
+								style="width: 13%; padding: 1px;">工厂</label>
+							<div class="col-sm-10" style="width: 87%; padding: 1px;">
+								<input name="plant2" type="text" class="form-control"
+									style="width: 80%">
+								<div class="infont col-md-3 col-sm-4" style="Float: right">
+									<a onclick="#"><i class="fa fa-search-plus"></i></a>
+								</div>
+							</div>
+
+							<button type="button" class="btn btn-primary "
+								style="margin: 60px 20px 0 0; Float: right"
+								onclick="openwin(0); return false;">取消</button>
+							<input type="submit" class="btn btn-primary "
+								style="margin: 60px 20px 0 0; Float: right" value="继续">
+
 						</div>
 
-						<label class="col-sm-2 control-label"
-							style="width: 13%; padding: 1px;">失效时间</label>
-						<div class="input-group date">
-							<span class="input-group-addon"> <i class="fa fa-calendar"></i></span>
-							<input name="deliverydate" type="text" class="form-control"
-								>
-						</div>
-					</div>
-					<div class="text-right">
-						<button type="button" class="btn btn-primary "
-							onclick="openwin(0); return false;">取消</button>
-						<input type="submit" class="btn btn-primary " value="继续">
+						<input type="button" value="确定">
+
 					</div>
 				</div>
 			</form>
 		</div>
-
-
-		<!-- 日期框 -->
 	</div>
-	<script>
-		initDatePicker($(".input-group.date"));
-	</script>
+
+	<!-- Mainly scripts for pop windows-->
+	<script>  
+        function openwin(n){
+            document.getElementById('inputbox').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
+        }
+     </script>
+	<script>  
+        function openwin2(n){
+            document.getElementById('inputbox2').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
+        }
+     </script>
+	<script>  
+        function openwin3(n){
+            document.getElementById('inputbox3').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
+        }
+     </script>
+
+
+
+
+	<!-- 第二层弹窗 -->
+	<div id="inputbox2" class="opbox2">
+
+		<a class='x' href='' ; onclick="openwin2(0); return false;">关闭</a>
+		<p>查找请购单： 输入任意已知信息</p>
+		<div class="ibox-content" style="padding: 5px 5px 5px 5px;">
+			<div>
+				<div>
+					<!--请购单具体信息 -->
+					<div class="form-group">
+						<label for="title">请购单种类</label> <input id="vname" type="text"
+							class="form-control" placeholder="输入请购单种类...">
+					</div>
+
+					<div class="form-group">
+						<label for="message">使用语言</label> <input class="form-control"
+							id="vaddress" type="text" placeholder="输入使用语言...">
+					</div>
+
+					<div class="form-group">
+						<label for="message">请购单日期</label> <input class="form-control"
+							id="vaddress" type="text" placeholder="输入请购单日期 ...">
+					</div>
+
+					<div class="form-group">
+						<label for="message">请购描述</label> <input class="form-control"
+							id="key1" type="text" placeholder="输入请购描述...">
+					</div>
+
+
+					<div class="form-group">
+						<label for="showMethod">请购组织</label> <input id="xxkey1"
+							type="text" placeholder="输入请购组织" class="form-control">
+					</div>
+
+					<div class="form-group">
+						<label for="showMethod">请购小组</label> <input id="key2" type="text"
+							placeholder="输入请购小组" class="form-control">
+					</div>
+
+
+					<div class="form-group">
+						<label for="showEasing">请购运送工厂</label> <input id="showEasing"
+							type="text" placeholder="输入请购运送工厂..." class="form-control">
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<button type="button" class="btn btn-primary" id="showsimple"
+							onclick=open_and_search()>搜索</button>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	<!-- 第三层弹窗 -->
+	<div id="inputbox3" class="opbox3">
+
+		<a class='x' href='' ; onclick="openwin3(0); return false;">关闭</a>
+		<table id="tbl" class="table table-striped">
+
+			<thead id="tableHead">
+				<tr>
+					<th></th>
+					<th>请购单编号</th>
+					<th>请购日期</th>
+					<th>请购组织</th>
+				</tr>
+			</thead>
+
+
+			<tbody id="tableBody">
+
+
+			</tbody>
+		</table>
+	</div>
+
+	<script src="js/jquery-2.1.1.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+	<!-- Custom and plugin javascript -->
+	<script src="js/inspinia.js"></script>
+	<script src="js/plugins/pace/pace.min.js"></script>
 
 	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
+	<!-- Sweet alert -->
+	<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 
 	<script type="text/javascript">
 		$(function() {
@@ -488,10 +574,7 @@
 				return msg;
 			};
 
-			$('#showsimple').click(function() {
-				// Display a success toast, with a title
-				toastr.success('可以添加新的RFQ材料', '提示!')
-			});
+			
 			$('#showtoast')
 					.click(
 							function() {
@@ -613,95 +696,9 @@
 			});
 		})
 	</script>
+	<!-- float window -->
 
-	<!-- Mainly scripts -->
-	<script src="js/jquery-2.1.1.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-	<!-- Custom and plugin javascript -->
-	<script src="js/inspinia.js"></script>
-	<script src="js/plugins/pace/pace.min.js"></script>
-
-	<!-- Sweet alert -->
-	<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
-
-	<script>
-		$(document)
-				.ready(
-						function() {
-
-							$('.demo1')
-									.click(
-											function() {
-												swal({
-													title : "Welcome in Alerts",
-													text : "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-												});
-											});
-
-							$('.demo2').click(function() {
-								swal({
-									title : "Good job!",
-									text : "You clicked the button!",
-									type : "success"
-								});
-							});
-
-							$('.demo3')
-									.click(
-											function() {
-												swal(
-														{
-															title : "Are you sure?",
-															text : "You will not be able to recover this imaginary file!",
-															type : "warning",
-															showCancelButton : true,
-															confirmButtonColor : "#DD6B55",
-															confirmButtonText : "Yes, delete it!",
-															closeOnConfirm : false
-														},
-														function() {
-															swal(
-																	"Deleted!",
-																	"Your imaginary file has been deleted.",
-																	"success");
-														});
-											});
-
-							$('.demo4')
-									.click(
-											function() {
-												swal(
-														{
-															title : "Are you sure?",
-															text : "Your will not be able to recover this imaginary file!",
-															type : "warning",
-															showCancelButton : true,
-															confirmButtonColor : "#DD6B55",
-															confirmButtonText : "Yes, delete it!",
-															cancelButtonText : "No, cancel plx!",
-															closeOnConfirm : false,
-															closeOnCancel : false
-														},
-														function(isConfirm) {
-															if (isConfirm) {
-																swal(
-																		"Deleted!",
-																		"Your imaginary file has been deleted.",
-																		"success");
-															} else {
-																swal(
-																		"Cancelled",
-																		"Your imaginary file is safe :)",
-																		"error");
-															}
-														});
-											});
-
-						});
-	</script>
 </body>
 
 </html>
