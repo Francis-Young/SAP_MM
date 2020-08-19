@@ -428,13 +428,15 @@ Requisition r = (Requisition) session.getAttribute("requisition");
 								
 
 									<div class="row">
+									<div class="col-sm-8">
 								<div class="form-group">
-				<label class="col-sm-2 control-label">头部注明</label>
-				<div class="col-sm-10">
+				<label class="col-sm-4 control-label">头部注明</label>
+		
 					<p><%out.print(r.getRequisition_discription()); %></p>
 				</div>
+					</div>
 			</div>
-									</div>
+				<br><br><br><br>				
 							<!-- tab -->	
 								
 		<div class="tabs-container" >

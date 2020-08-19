@@ -48,9 +48,13 @@ function selectline(ele)
 
 function search()
 {    
-	var key = "key1="$("#key1").val()+"&"+ $("#key2").val()+"&"+$("#key3").val()+"&"+$("#key4").val()+"&"
-	+$("#key5").val()+"&"+$("#key6").val()
-	var url="${pageContext.request.contextPath}/vendorSearchServlet?key="+key
+	var key1 =$("#key1").val();
+	var key2 =$("#key2").val();
+	var key3 =$("#key3").val();
+	var key4 =$("#key4").val();
+	var key5 =$("#key5").val();
+	var key6 =$("#key6").val();
+	var url="${pageContext.request.contextPath}/vendorSearchServlet?key1="+key1+"&key2="+key2+"&key3="+key3+"&key4="+key4+"&key5="+key5+"&key6="+key6
 	
 	function gettext(text)
 	{
@@ -71,7 +75,7 @@ function search()
               async:true, //默认-异步（true） 同步-false
               dataType:"text",
               
-              data:{"key":key},
+              data:{"key1":key1,"key2":key2,"key3":key3,"key4":key4,"key5":key5,"key6":key6},
               beforeSend: function (){
                   //ajax刷新前加载load动画
                   //showLoad();
@@ -246,7 +250,7 @@ function open_and_search()
 </head>
 
 <body>
-	<form class="m-t" role="form" action="/RFQController" method="post">
+	<form class="m-t" role="form" action="${pageContext.request.contextPath}/rfq" method="post">
 		<input type='text' value='save' name='action' hidden='true'>
 		<div id="wrapper">
 
@@ -493,7 +497,7 @@ function open_and_search()
 
 
 
-				<div class="footer">
+				<div class="footer" style="position: fixed; bottom: 0 ;z-index: 1;">
 					<div class="pull-right">
 						<div class="text-right">
 							<input type="submit" class="btn btn-success btn-sm demo2"

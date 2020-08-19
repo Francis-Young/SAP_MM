@@ -49,53 +49,21 @@ public class vendorSearchServlet extends HttpServlet {
 		resp.setContentType("text;charset=utf-8");
 		resp.setCharacterEncoding("UTF-8");
 	    resp.setHeader("Cache-Control", "no-cache"); 
-		String key= req.getParameter("key");
-		String vcity="xx1";
-		String vcountry="xx2";
-		String vcompanycode="xx3";
-		String vname="xx4";
-		String vtype="xx5";
-		String vclerk="xx6";
+	    String vcity="xx";
+		String vcountry="xx";
+		String vcompanycode="xx";
+		String vname="xx";
+		String vtype="xx";
+		String vclerk="xx";
 		
-		String pattern1 ="(.*),mark1";//description
-	    // 创建 Pattern 对象
-	    Pattern r = Pattern.compile(pattern1);
-	    // 现在创建 matcher 对象
-	    Matcher m = r.matcher(key);
-	    if (m.find())
-	    {
-	    	vname=m.group(1);
-	    }
-	    
-	    String pattern2 ;//description
-	    // 创建 Pattern 对象
-	    for (int i=1;i<=5;i++)
-	    	{
-	    	pattern2 =",mark"+i+"(.*),"+",mark"+(i+1);
-	    	 r = Pattern.compile(pattern2);
-	 	    // 现在创建 matcher 对象
-	 	    m = r.matcher(key);
-	    	if(m.find()&&!(m.group(1).equals("")))
-	    	{
-	    		System.out.println("sd"+m.group(1));
-	    		if(i==1)
-	    		    vtype=m.group(1);
-	    		if(i==2)
-		    		vcompanycode=m.group(1);
-	    		if(i==3)
-		    		vcountry=m.group(1);
-	    		if(i==4)
-		    		vcity=m.group(1);
-	    		if(i==5)
-		    		vclerk=m.group(1);
-	    	}
-	    	}
-	    
-		System.out.println(vcity);
-		System.out.println(vclerk);
-		System.out.println(vcompanycode);
-		System.out.println(vcountry);
-		System.out.println(vname);
+		vcity=req.getParameter("key5").equals("")?"xx":req.getParameter("key5");
+		vcountry=req.getParameter("key4").equals("")?"xx":req.getParameter("key4");
+		vcompanycode=req.getParameter("key3").equals("")?"xx":req.getParameter("key3");
+	    vname=req.getParameter("key1").equals("")?"xx":req.getParameter("key1");
+	    vtype=req.getParameter("key2").equals("")?"xx":req.getParameter("key2");
+		vclerk=req.getParameter("key6").equals("")?"xx":req.getParameter("key6");
+		
+		System.out.print(vcity);
 		Vendor vd = new Vendor();
 		vd.setVcity(vcity);
 		vd.setVcountry(vcountry);
@@ -103,7 +71,7 @@ public class vendorSearchServlet extends HttpServlet {
 		vd.setVname(vname);
 		vd.setVtype(vtype);
 		vd.setVclerk(vclerk);
-	
+		
 		
 		List<Vendor> vli=VendorDao.findVendorByAnything(vd);
 		
