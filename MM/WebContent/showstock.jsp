@@ -74,6 +74,7 @@
 					</li>
 					<li><a href="Home"><i class="fa fa-home"></i> <span
 							class="nav-label">主页</span></a></li>
+
 					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
 							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
@@ -81,19 +82,36 @@
 							<li><a href="SelectVendor?type=display">查询供应商</a></li>
 							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
-					<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
-							class="nav-label">采购管理</span><span class="fa arrow"></span></a>
+
+					<li><a href="#"><i class="fa fa-shopping-cart"></i><span
+							class="nav-label"> 采购管理 </span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="requisitionini.jsp">创建请购单 </a></li>
-							<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
-							<li><a href="rfqini.jsp">创建RFQ </a></li>
-							<li><a href="rfqleadview.jsp">查看RFQ </a></li>
-							<li><a href="quotationini.jsp">维护报价单 </a></li>
-							<li><a href="quotationcompare.jsp">比对报价单 </a></li>
-							<li><a href="orderini.jsp">创建订单 </a></li>
-							<li><a href="orderleadview.jsp">查看订单 </a></li>
-							<li><a href="orderleadchange.jsp">维护订单 </a></li>
+							<li><a href="#">请购单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="requisitionini.jsp">创建请购单 </a></li>
+									<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+								</ul></li>
+							<li><a href="#">RFQ管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="rfqini.jsp">创建RFQ </a></li>
+									<li><a href="rfqleadview.jsp">查看RFQ </a></li>
+								</ul></li>
+							<li><a href="#">报价单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="quotationini.jsp">维护报价单 </a></li>
+									<li><a href="quotationcompare.jsp">比对报价单 </a></li>
+
+								</ul></li>
+							<li><a href="#">订单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="orderini.jsp">创建订单 </a></li>
+									<li><a href="orderleadview.jsp">查看订单 </a></li>
+									<li><a href="orderleadchange.jsp">维护订单 </a></li>
+
+								</ul></li>
 						</ul></li>
+
+
 
 					<li><a href="#"><i class="fa fa-files-o"></i> <span
 							class="nav-label">收货管理</span><span class="fa arrow"></span></a>
@@ -244,9 +262,25 @@
 						<div class="row m-t-lg">
 							<div class="pull-right">
 								<button type="submit" class="btn btn-primary" id="showtoast">查看</button>
-								<button type="button" class="btn btn-white" id="cleartoasts">取消</button>
+								<button type="reset" class="btn btn-white" id="clearlasttoast">清除</button>
+									<button type="button" class="btn btn-white" id="cleartoasts">
+										<a href="Home">返回</a></button>
 							</div>
 
+						
+						<div style="padding-top: 2px;">
+							<%
+								String notice = (String) request.getAttribute("notice");
+								if (notice != null && !"".equals(notice)) {
+							%>
+							<p>
+								<font size="3" color=<%=request.getAttribute("color")%>><%=notice%></font>
+							</p>
+							<%
+								request.setAttribute("notice", "");
+								}
+							%>
+						</div>
 						</div>
 					</div>
 			</form>
