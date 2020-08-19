@@ -337,38 +337,79 @@ public class VendorDao {
 
 	public static ArrayList<Vendor> findVendorByAnything(Vendor vd) {
 		ArrayList<Vendor> rqlist = new ArrayList<Vendor>();
-		Vendor vd1 = new Vendor();
+		
 		// 建立数据库连接
 		Connection conn = DBUtil.getConnection();
 		try {
 
 			String sql = "" + "select * from Vendor ";
+			int flag=0;
 			if (!vd.getVname().equals("xx"))
-				sql += "where vendor_name =" + '"' + vd.getVname() + '"' + ",";
+			{
+				sql+="where vendor_name ="+'"'+vd.getVname()+'"';
+				flag=1;
+			}
 			if (!vd.getVtype().equals("xx"))
-				sql += "where vendor_type =" + '"' + vd.getVtype() + '"';
+			{
+				if(flag==1)
+					sql+=" AND  ";
+				else
+					sql+=" where  ";
+				sql+=" where vendor_type ="+'"'+vd.getVtype()+'"';
+				flag=1;
+			}
 			if (!vd.getVclerk().equals("xx"))
-				sql += "where vendor_clerk =" + '"' + vd.getVclerk() + '"';
+			{
+				if(flag==1)
+					sql+=" AND  ";
+				else
+					sql+=" where  ";
+				sql+=" vendor_clerk ="+'"'+vd.getVclerk()+'"';
+				flag=1;
+			}
 			if (!vd.getVcompanycode().equals("xx"))
-				sql += "where vendor_companycode =" + '"' + vd.getVcompanycode() + '"';
+			{
+				if(flag==1)
+					sql+=" AND  ";
+				else
+					sql+=" where  ";
+				sql+=" vendor_companycode ="+'"'+vd.getVcompanycode()+'"';
+				flag=1;
+			}
 			if (!vd.getVcountry().equals("xx"))
-				sql += "where vendor_country =" + '"' + vd.getVcountry() + '"';
+			{
+				if(flag==1)
+					sql+=" AND  ";
+				else
+					sql+=" where  ";
+				sql+=" vendor_country ="+'"'+vd.getVcountry()+'"';
+				flag=1;
+			}
 			if (!vd.getVcity().equals("xx"))
-				sql += "where vendor_city =" + '"' + vd.getVcity() + '"';
+			{
+				if(flag==1)
+					sql+=" AND  ";
+				else
+					sql+=" where  ";
+				sql+=" vendor_city ="+'"'+vd.getVcity()+'"';
+				flag=1;
+			}
+			
 
-			sql = sql.substring(0, sql.length() - 1);
+	
 			System.out.println(sql);
 			PreparedStatement psmt = conn.prepareStatement(sql);
 
 			// 执行查询语句
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
-				vd.setVnum(rs.getString(1));
-				vd.setVtype(rs.getString("vendor_type"));
-				vd.setVname(rs.getString("vendor_name"));
-				vd.setVcompanycode(rs.getString("vendor_companycode"));
-				vd.setVcity(rs.getString("vendor_city"));
-
+				Vendor vd1 = new Vendor();
+				vd1.setVnum(rs.getString(1));
+				vd1.setVtype(rs.getString("vendor_type"));
+				vd1.setVname(rs.getString("vendor_name"));
+				vd1.setVcompanycode(rs.getString("vendor_companycode"));
+				vd1.setVcity(rs.getString("vendor_city"));
+				rqlist.add(vd1);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page import="java.util.List,mm.bean.*,mm.dao.*,java.util.ArrayList"
+language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -8,14 +9,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>创建请购单</title>
-<!--
-
-    <link href="css/plugins/summernote/summernote.css" rel="stylesheet">
-    <link href="css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
--->
-    <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-
+<title>创建RFQ</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -26,6 +20,7 @@
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 
+
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 
@@ -35,84 +30,10 @@
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 
-<!-- Mainly scripts 日期-->
-<script src="js/jquery-2.1.1.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-<!-- Custom and plugin javascript -->
-<script src="js/inspinia.js"></script>
-<script src="js/plugins/pace/pace.min.js"></script>
-
-<!-- SUMMERNOTE -->
-<script src="js/plugins/summernote/summernote.min.js"></script>
-
-<!-- Data picker -->
-<script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
-
-<script>
-function initDatePicker(ele){
-	ele.datepicker({
-	autoSize:true,
-	autoclose: true,
-	language: "zh-CN",
-	viewDate:new Date()
-	})
-}
-    $(document).ready(function(){
-
-		initDatePicker($(".input-group.date"));
-   });
-    
-
-</script>
-
-<script type="text/javascript">
-var itemNo = 0;//---添加行
-</script>
-<script>
-function addRow(){		
-	itemNo+=10;
-	document.getElementById('num').value=itemNo;
-    var oTable = document.getElementById("oTable");
-    var tBodies = oTable.tBodies;
-    var tbody = tBodies[0];
-    var tr = tbody.insertRow(tbody.rows.length);
-    var td_1 = tr.insertCell(0);
-    td_1.innerHTML = itemNo;
-    
-    var td_2 = tr.insertCell(1);
-    td_2.innerHTML = '<input name="material'+itemNo+'" id="vname" type="text" class="form-control" placeholder="输入材料编号..." />';
-    var td_3 = tr.insertCell(2);
-    td_3.innerHTML = '<input class="form-control" name="quantity'+itemNo+'" id="vaddress" type="text" class="form-control" placeholder="输入请购数量 ..."></input>';
-    var td_4 = tr.insertCell(3);
-    td_4.innerHTML = 	'<div id="'+itemNo+'" class="input-group date"> <span class="input-group-addon">'+
-'<i class="fa fa-calendar"></i></span><input name="deliverydate'+itemNo+'" type="text" class="form-control" readonly="readonly">'+
-'</div>';
-    var td_5 = tr.insertCell(4);
-    td_5.innerHTML = '<input name="plant'+itemNo+'" id="showEasing" type="text" placeholder="输入运送工厂..." class="form-control" />';
-    var td_6 = tr.insertCell(5);
-    td_6.innerHTML = '<input name="storloc'+itemNo+'" id="showEasing" type="text" placeholder="输入仓库地点..." class="form-control" />';
-    var td_7 = tr.insertCell(6);
-    td_7.innerHTML = '<input name="organ'+itemNo+'" id="showMethod" type="text" placeholder="输入请购组织" class="form-control" />';
-    initDatePicker($('#'+itemNo));
-    
-    }
-
-</script>
-
-
-
 
 <style type="text/css">
-.table-b td{border:1px solid #808080; padding:0px}
-.table > tbody > tr > td {
-  border-top: 1px solid #e7eaec;
-  line-height: 1.42857;
-  padding: 0px;
-  vertical-align: top;
-}
+.table-b table td{border:1px solid #808080;padding:1%}
+.table-b table th{padding:1%}
 </style>
 
 </head>
@@ -121,7 +42,7 @@ function addRow(){
 
 	<div id="wrapper">
 
-			<nav class="navbar-default navbar-static-side" role="navigation">
+	<nav class="navbar-default navbar-static-side" role="navigation">
 			<div class="sidebar-collapse" style="z-index: 10";>
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
@@ -196,7 +117,7 @@ function addRow(){
 		</nav>
 
 		<div id="page-wrapper" class="gray-bg">
-				<div class="row border-bottom">
+			<div class="row border-bottom">
 				<nav class="navbar navbar-static-top" role="navigation"
 					style="margin-bottom: 0">
 					<div class="navbar-header">
@@ -216,30 +137,30 @@ function addRow(){
 
 				</nav>
 			</div>
+
+
 			<!--正文 -->
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>创建请购单</h2>
+					<h2>创建RFQ</h2>
 					<ol class="breadcrumb">
 						<li><a href="index.html">主页</a></li>
 						<li>请购管理</li>
-						<li class="active"><strong>创建请购单</strong></li>
+						<li class="active"><strong>创建RFQ</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
 			</div>
 
-	<form class="m-t" role="form" action="${pageContext.request.contextPath}/requisition" method="post">
-						       <input type='text' value='creat' name='action' hidden='true'>	<!-- 控制表单名 -->					
-							<input type='text' id='num' value='0' name='num' hidden='true'>    <!-- 条目数量 -->	
-							
+
+
 			<div class="wrapper wrapper-content animated fadeIn">
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="ibox float-e-margins">
 
 							<div class="ibox-title">
-								<h5>创建请购单</h5>
+								<h5>创建RFQ</h5>
 								<div class="ibox-tools">
 									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -249,104 +170,122 @@ function addRow(){
 										<li><a href="#">配置 1</a></li>
 										<li><a href="#">配置 2</a></li>
 									</ul>
-									<a class="close-link" hidden="hidden"> <i class="fa fa-times"></i>
+									<a class="close-link"> <i class="fa fa-times"></i>
 									</a>
 								</div>
 							</div>
 
 							<div class="ibox-content">
-								<div class="row">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="col-sm-2 control-label">头部注明</label>
-												<div class="col-sm-10">
-													<textarea name="head_requisition" placeholder="文本内容可能延伸超出一行"
-														style="width: 700px; height: 100px;" class="form-control"></textarea>
-												</div>
-											</div>
+<form class="m-t" role="form" action="${pageContext.request.contextPath}/rfq" method="post">
 
-										</div>
-									</div>
-		<br>
-																	
-<div class="row">
+<input type='text' value='bounce_to_edit' name='action' hidden='true'>
 
-								
-										
+<input type="submit" class="btn btn-primary " style="margin:60px 20px 0 0;" value="接受条目">	
+<br>
+<br>						
 <div class="table-b">
-<table id="oTable" class="table table-bordered" style="border:1 ; width:100;">
-<thead style="border:2 ; width:100;">
+<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="1" cellpadding="0" width="100%">
+<thead>
 <tr>
+<th></th>
 <th>条目</th>
 <th>材料编号</th>
 <th>请购数量</th>
 <th>请购运送时间</th>
 <th>请购运送工厂</th>
 <th>请购运送地点</th>
-<th>请购组织</th>
+<th>单位</th>
 
 </tr>
 </thead>
 <tbody>
-<tr>
 
-</tr>
+
+<%
+//取出请购单的条目
+
+RFQ rfq= (RFQ)session.getAttribute("passdata");
+String reqnum=rfq.getRequisition_code();
+ArrayList<Requisition_item> rilist=ReqItemDao.findRequItemByReqcode(reqnum);
+
+for(int i=0;i<rilist.size();i++)
+{
+Requisition_item ri = rilist.get(i);
+System.out.print(ri.getReq_item_num());
+out.print("<tr>");
+out.print("<td><input type='checkbox' checked='' class='i-checks' name='checkname' value='"+i+"' ></td>");
+out.print("<td>"+(i+10)*10+"</td>");
+out.print("<td>"+ri.getMaterial_num()+"</td>");
+out.print("<td>"+ri.getRequisition_quantity()+"</td>");
+out.print("<td>"+ri.getRequisition_deliverydate()+"</td>");
+out.print("<td>"+ri.getRequisition_plant()+"</td>");
+out.print("<td>"+ri.getRequisition_storageloc()+"</td>");
+out.print("<td>"+"kg"+"</td>");
+}
+
+%>
+
+
+
+
+
+
+
+
+
+
+
 </tbody>
 </table>
-<div class="row">
-<div class="pull-right">
-<input type="button" class="btn btn-primary" onClick="addRow();" style="font-size: 16px;margin:3px;" value="+" />
-<button type="reset" class="btn btn-white" id="clearlasttoast" style="margin:19px;">清除</button>
 </div>
-</div>
-</div>
-<br>
-<script type="text/javascript">addRow();</script>
-
-
-
-									</div>
+						
+						
+						
+						
+								
+								</form>
 
 							</div>
 						</div>
 					</div>
 				</div>
-
-				
-							
-				
-				
 			</div>
 
-			<div class="footer" style="position: fixed; bottom: 0 ;z-index: 1;">
-
+			<div class="footer">
 				<div class="pull-right">
 					<div class="text-right">
-						<input type="submit"  value="保存" class="btn btn-success btn-sm demo2" id="showtoast">
-						<a href="${pageContext.request.contextPath}/Home"><button type="button" class="btn btn-white" id="cleartoasts">返回</button></a>
+						<input type="submit" class="btn btn-success btn-sm demo2" id="showtoast" value="保存">
+                    <a href="${pageContext.request.contextPath}/Home"><button type="button" class="btn btn-white" id="cleartoasts">取消</button></a>
 					</div>
 				</div>
-				
-				<div style="padding-top: 2px;">
+						<div style="padding-top: 2px;">
 						
 						<p>
 							<font size="3" color="#1ab394">			
 <%
-if(request.getAttribute("requisition_code")!=null)
-	out.print("成功创建请购单："+request.getAttribute("requisition_code").toString());
+if(request.getAttribute("rfq_code")!=null)
+	{out.print("成功创建RFQ："+request.getAttribute("rfq_code").toString());
+	session.setAttribute("rfqnum", request.getAttribute("rfq_code").toString());
+	}
              %>	</font>
 						</p>
 						
 					</div>
 			</div>
-				</form>
-				
-			</div>
 
 		</div>
+	</div>
 
 
+	<!-- Mainly scripts -->
+	<script src="js/jquery-2.1.1.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
+	<!-- Custom and plugin javascript -->
+	<script src="js/inspinia.js"></script>
+	<script src="js/plugins/pace/pace.min.js"></script>
 
 	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
@@ -363,7 +302,7 @@ if(request.getAttribute("requisition_code")!=null)
 
 			$('#showsimple').click(function() {
 				// Display a success toast, with a title
-				toastr.success('可以添加新的请购材料', '提示!')
+				toastr.success('可以添加新的RFQ材料', '提示!')
 			});
 			$('#showtoast')
 					.click(
@@ -484,76 +423,97 @@ if(request.getAttribute("requisition_code")!=null)
 			$('#cleartoasts').click(function() {
 				toastr.clear();
 			});
-		});
-		</script> 
-   
-  
+		})
+	</script>
 
-    <!-- Custom and plugin javascript -->
-    <script src="js/inspinia.js">
-    <script src="js/plugins/pace/pace.min.js"></script>
+	<!-- Mainly scripts -->
+	<script src="js/jquery-2.1.1.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-    <!-- Sweet alert -->
-    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+	<!-- Custom and plugin javascript -->
+	<script src="js/inspinia.js"></script>
+	<script src="js/plugins/pace/pace.min.js"></script>
 
-<script>
+	<!-- Sweet alert -->
+	<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 
-    $(document).ready(function () {
+	<script>
+		$(document)
+				.ready(
+						function() {
 
-        $('.demo1').click(function(){
-            swal({
-                title: "Welcome in Alerts",
-                text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-            });
-        });
+							$('.demo1')
+									.click(
+											function() {
+												swal({
+													title : "Welcome in Alerts",
+													text : "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+												});
+											});
 
-        $('.demo2').click(function(){
-            swal({
-                title: "请购单添加成功!",
-                text: "您的请购单号是10034245",
-                type: "success"
-            });
-        });
+							$('.demo2').click(function() {
+								swal({
+									title : "Good job!",
+									text : "You clicked the button!",
+									type : "success"
+								});
+							});
 
-        $('.demo3').click(function () {
-            swal({
-                title: "Are you sure?",
-                text: "You will not be able to recover this imaginary file!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                closeOnConfirm: false
-            }, function () {
-                swal("Deleted!", "Your imaginary file has been deleted.", "success");
-            });
-        });
+							$('.demo3')
+									.click(
+											function() {
+												swal(
+														{
+															title : "Are you sure?",
+															text : "You will not be able to recover this imaginary file!",
+															type : "warning",
+															showCancelButton : true,
+															confirmButtonColor : "#DD6B55",
+															confirmButtonText : "Yes, delete it!",
+															closeOnConfirm : false
+														},
+														function() {
+															swal(
+																	"Deleted!",
+																	"Your imaginary file has been deleted.",
+																	"success");
+														});
+											});
 
-        $('.demo4').click(function () {
-            swal({
-                        title: "Are you sure?",
-                        text: "Your will not be able to recover this imaginary file!",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Yes, delete it!",
-                        cancelButtonText: "No, cancel plx!",
-                        closeOnConfirm: false,
-                        closeOnCancel: false },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            swal("Deleted!", "Your imaginary file has been deleted.", "success");
-                        } else {
-                            swal("Cancelled", "Your imaginary file is safe :)", "error");
-                        }
-                    });
-        });
+							$('.demo4')
+									.click(
+											function() {
+												swal(
+														{
+															title : "Are you sure?",
+															text : "Your will not be able to recover this imaginary file!",
+															type : "warning",
+															showCancelButton : true,
+															confirmButtonColor : "#DD6B55",
+															confirmButtonText : "Yes, delete it!",
+															cancelButtonText : "No, cancel plx!",
+															closeOnConfirm : false,
+															closeOnCancel : false
+														},
+														function(isConfirm) {
+															if (isConfirm) {
+																swal(
+																		"Deleted!",
+																		"Your imaginary file has been deleted.",
+																		"success");
+															} else {
+																swal(
+																		"Cancelled",
+																		"Your imaginary file is safe :)",
+																		"error");
+															}
+														});
+											});
 
-
-    });
-
-</script>
-	
+						});
+	</script>
 </body>
 
 </html>

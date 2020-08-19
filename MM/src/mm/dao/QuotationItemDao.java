@@ -71,7 +71,6 @@ public class QuotationItemDao {
 	//根据quotation编号查询 
 	public static ArrayList<Quotation_item> findQuotationByQuoCode(String code) {
 		ArrayList<Quotation_item> qilist=new ArrayList<Quotation_item>();
-		Quotation_item qi=new Quotation_item();
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		try {
@@ -82,7 +81,8 @@ public class QuotationItemDao {
 			//执行查询语句
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
-			
+				Quotation_item qi=new Quotation_item();
+
 				qi.setQuotation_item_num(rs.getInt("quotation_item_num"));
 				qi.setQuotation_code(rs.getString("quotation_code"));
 				qi.setPrice(rs.getBigDecimal("price"));
@@ -106,7 +106,6 @@ public class QuotationItemDao {
 	//根据物料查询 
 	public static ArrayList<Quotation_item> findQuotationByMatNum(String num) {
 		ArrayList<Quotation_item> qilist=new ArrayList<Quotation_item>();
-		Quotation_item qi=new Quotation_item();
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		try {
@@ -117,7 +116,8 @@ public class QuotationItemDao {
 			//执行查询语句
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
-			
+				Quotation_item qi=new Quotation_item();
+
 				qi.setQuotation_item_num(rs.getInt("quotation_item_num"));
 				qi.setQuotation_code(rs.getString("quotation_code"));
 				qi.setPrice(rs.getBigDecimal("price"));

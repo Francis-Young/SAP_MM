@@ -111,7 +111,6 @@ public class OrderDao {
 	//根据供应商编号查询 
 	public static ArrayList<Order> findOrderByVendorCode(String code) {
 		ArrayList<Order> qolist=new ArrayList<Order>();
-		Order qo=new Order();
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		try {
@@ -122,7 +121,8 @@ public class OrderDao {
 			//执行查询语句
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
-			
+				Order qo=new Order();
+
 				qo.setOrder_num(rs.getInt("order_num"));
 				qo.setRfq_code(rs.getString("rfq_code"));
 				qo.setVendor_code(rs.getString("vendor_code"));

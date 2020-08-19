@@ -74,7 +74,6 @@ public class OrderItemDao {
 	//根据编号查询
 	public static ArrayList<Order_item> findOrderItemByOCode(String code) {
 		ArrayList <Order_item> oilist = new ArrayList<Order_item>();
-		Order_item oi=new Order_item();
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		try {
@@ -85,6 +84,8 @@ public class OrderItemDao {
 			//执行查询语句
 			ResultSet rs = psmt.executeQuery();
 			if (rs.next()) {
+				Order_item oi=new Order_item();
+
 				oi.setOrder_item_num(rs.getInt("order_item_num"));
 				oi.setOrder_code(rs.getString("order_code"));
 				oi.setPrice(rs.getBigDecimal("price"));
@@ -113,7 +114,6 @@ public class OrderItemDao {
 	//根据order编号查询 
 	public static ArrayList<Order_item> findOrderByVendorCode(String code) {
 		ArrayList<Order_item> oilist=new ArrayList<Order_item>();
-		Order_item oi=new Order_item();
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		try {
@@ -124,7 +124,7 @@ public class OrderItemDao {
 			//执行查询语句
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
-			
+				Order_item oi=new Order_item();
 				oi.setOrder_item_num(rs.getInt("order_item_num"));
 				oi.setOrder_code(rs.getString("order_code"));
 				oi.setPrice(rs.getBigDecimal("price"));
