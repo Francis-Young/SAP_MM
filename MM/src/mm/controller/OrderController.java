@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mysql.cj.Session;
+
 import mm.bean.Material;
 import mm.bean.Order;
 import mm.bean.Order_item;
@@ -49,7 +51,12 @@ public class OrderController extends HttpServlet{
 		switch (action)
 		{
 			case "save":
+			try {
 				save(req,resp);
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 				break;
 			case "bounce_to_select":
 				select(req,resp);
@@ -61,8 +68,16 @@ public class OrderController extends HttpServlet{
 				view(req,resp);
 				break;
 			case "change":
+			try {
 				change(req,resp);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 				break;
+			case "leadchange":
+			leadchange(req,resp);
+					break;
 			default:
 				break;
 		}
@@ -75,42 +90,56 @@ public class OrderController extends HttpServlet{
 
 
 
-	private void change(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	private void leadchange(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String onum= req.getParameter("ordernum");
+		HttpSession session= req.getSession();
+		session.setAttribute("onum", onum);
+		req.getRequestDispatcher("orderchange.jsp").forward(req, resp);
+	}
+
+
+
+
+
+
+
+	private void change(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ParseException {
 		// TODO Auto-generated method stub
 		HttpSession session= req.getSession();
 	
-		Date docdate = new Date((new java.util.Date()).getTime());
-
-		Order o = new Order();
-		//o.setRfq_num(00000000);//"no reference
-		o.setDocdate(docdate);
+		String onum = req.getParameter("onum");
+		Order o = OrderDao.findOrderByCode(onum);
 		String org=req.getParameter("org");
 		String gro=req.getParameter("gro");
 		o.setPur_group(gro);
 		o.setPur_org(org);
 		String vnum=req.getParameter("vendornum");
 		o.setVendor_code(vnum);
-		String onum = OrderDao.addOrder(o);
-		session.setAttribute("onum",onum );
-		String[] answerArr = req.getParameterValues("cbox");//查被选中的item
-	
-		
-		String[] materialrArr = req.getParameterValues("material");//查物料
-		String[] quantityArr = req.getParameterValues("quantity");//查被选中的item
-		String[] deliverydateArr = req.getParameterValues("deliverydate");//查被选中的item
-		String[] statdeliverydateArr = req.getParameterValues("statdeliverydate");//查被选中的item
-
-		String[] priceArr = req.getParameterValues("price");//查被选中的item
-		String[] plantArr = req.getParameterValues("plant");//查被选中的item
-		String[] storagelocArr = req.getParameterValues("storageloc");//查被选中的item
-		String[] currencyArr = req.getParameterValues("currency");
-		//不确定这么写对不对
 		OrderDao.deleteOitemByOnum(o.getOrder_num());
-		for(int i=0;i<answerArr.length;i++ )
-		{
-			Order_item oi = new Order_item();
-			int j=Integer.parseInt(answerArr[i]);
+
+		session.setAttribute("onum",onum );
+	
+		String[] answerArr =(String[]) req.getParameterValues("cbox");//查被选中的item
+
 		
+		String[] materialrArr =(String[]) req.getParameterValues("material");//查物料
+
+		
+		String[] quantityArr =(String[]) req.getParameterValues("quantity");//查被选中的item
+		String[] deliverydateArr =(String[]) req.getParameterValues("deliverydate");//查被选中的item
+		String[] statdeliverydateArr = (String[])req.getParameterValues("statdeliverydate");//查被选中的item
+
+		String[] priceArr =(String[]) req.getParameterValues("price");//查被选中的item
+		String[] plantArr =(String[]) req.getParameterValues("plant");//查被选中的item
+		String[] storagelocArr =(String[]) req.getParameterValues("storageloc");//查被选中的item
+		String[] currencyArr =(String[]) req.getParameterValues("currency");
+		//不确定这么写对不对
+		
+		for(int j=0;j<answerArr.length;j++ )
+		{
+			int i=Integer.parseInt(answerArr[j]);
+			Order_item oi = new Order_item();
 				oi.setOrder_code(onum);
 				String material_num=materialrArr[i];
 				oi.setMaterial_num(material_num);
@@ -122,9 +151,10 @@ public class OrderController extends HttpServlet{
 				oi.setPlant(plantArr[i]);
 				oi.setSloc(storagelocArr[i]);
 				OrderItemDao.addOrderItem(oi);
-			
-			
 		}
+		req.setAttribute("order_code", onum);
+		req.getRequestDispatcher("orderleadchange.jsp").forward(req,resp);//请求转发
+		
 
 	
 	}
@@ -135,13 +165,13 @@ public class OrderController extends HttpServlet{
 
 
 
-	private void view(HttpServletRequest req, HttpServletResponse resp) {
+	private void view(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String ordernum = req.getParameter("ordernum");
 		Order o = OrderDao.findOrderByCode(ordernum);
 		HttpSession session= req.getSession();
 		session.setAttribute("order", o);
-		req.getRequestDispatcher("orderview.jsp");
+		req.getRequestDispatcher("orderview.jsp").forward(req, resp);;
 	}
 
 
@@ -241,7 +271,7 @@ public class OrderController extends HttpServlet{
 
 
 
-	private void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	private void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ParseException {
 		// TODO Auto-generated method stub
 		HttpSession session= req.getSession();
 		String rfq_code = (String) session.getAttribute("rfqnum");
@@ -269,17 +299,23 @@ public class OrderController extends HttpServlet{
 		}
 		
 		String[] materialrArr =(String[]) req.getParameterValues("material");//查物料
+
+		
 		String[] quantityArr =(String[]) req.getParameterValues("quantity");//查被选中的item
 		String[] deliverydateArr =(String[]) req.getParameterValues("deliverydate");//查被选中的item
 		String[] statdeliverydateArr = (String[])req.getParameterValues("statdeliverydate");//查被选中的item
-
+		for(int j=0;j<deliverydateArr.length;j++ )
+		{
+			System.out.println("ddd"+deliverydateArr.length);
+			System.out.println(deliverydateArr[j]);
+		}
 		String[] priceArr =(String[]) req.getParameterValues("price");//查被选中的item
 		String[] plantArr =(String[]) req.getParameterValues("plant");//查被选中的item
 		String[] storagelocArr =(String[]) req.getParameterValues("storageloc");//查被选中的item
 		String[] currencyArr =(String[]) req.getParameterValues("currency");
 		//不确定这么写对不对
 		
-		for(int j=2;j<answerArr.length;j++ )
+		for(int j=0;j<answerArr.length;j++ )
 		{
 			int i=Integer.parseInt(answerArr[j]);
 			Order_item oi = new Order_item();
@@ -298,7 +334,7 @@ public class OrderController extends HttpServlet{
 			
 		}
 		req.setAttribute("order_code", onum);
-		req.getRequestDispatcher("orderfin.jsp").forward(req,resp);//请求转发
+		req.getRequestDispatcher("orderini.jsp").forward(req,resp);//请求转发
 	
 	}
 
@@ -363,7 +399,7 @@ public class OrderController extends HttpServlet{
 		doGet(req, resp);
 	}
 	
-	 private java.sql.Date strToDate(String strDate) {  
+	 private java.sql.Date strToDate(String strDate) throws ParseException {  
 	        String str = strDate;  
 	        
 	        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");  
@@ -371,7 +407,8 @@ public class OrderController extends HttpServlet{
 	        try {  
 	            d = format.parse(str);  
 	        } catch (Exception e) {  
-	            e.printStackTrace();  
+	        	 format = new SimpleDateFormat("yyyy-mm-dd");  
+	        	 d = format.parse(str); 
 	        }  
 	        java.sql.Date date = new java.sql.Date(d.getTime());  
 	        return date;  

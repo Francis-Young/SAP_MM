@@ -14,7 +14,7 @@ public class OrderItemDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 			int order_num_m=OrderDao.findOrderByCode(oi.getOrder_code()).getOrder_num();
-			String sql=""+ "insert into Order_item" +" (order_item_num,order_code,purchase_requisition_num,price,quantity,delivery_date,currency_unit,material_num,sloc,plant,order_num_m) "+"values(default,?,?,?,?,?,?,?,?,?,?)";
+			String sql=""+ "insert into Order_item" +" (order_item_num,`order_code`,purchase_requisition_num,price,quantity,delivery_date,currency_unit,material_num,sloc,plant,order_num_m) "+"values(default,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 		
 			psmt.setString(1, oi.getOrder_code());
@@ -26,7 +26,7 @@ public class OrderItemDao {
 			psmt.setString(7, oi.getMaterial_num());
 			psmt.setString(8, oi.getSloc());
 			psmt.setString(9, oi.getPlant());
-			psmt.setString(9, oi.getPlant());
+	
 			psmt.setInt(10, order_num_m);
 			psmt.execute();
 		}catch(SQLException e) {
@@ -83,7 +83,7 @@ public class OrderItemDao {
 			psmt.setString(1, code);
 			//执行查询语句
 			ResultSet rs = psmt.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				Order_item oi=new Order_item();
 
 				oi.setOrder_item_num(rs.getInt("order_item_num"));
@@ -97,6 +97,7 @@ public class OrderItemDao {
 				oi.setPlant(rs.getString("plant"));
 				oi.setSloc(rs.getString("sloc"));
 				oi.setOrder_item_num(rs.getInt("order_num_m"));
+				oi.setStat_delivery_date(rs.getDate("stat_delivery_date"));
 
 				oilist.add(oi);
 			}

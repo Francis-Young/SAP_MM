@@ -428,9 +428,20 @@ background:white;
 				<input type="submit" class="btn btn-primary " style="margin:10px 20px 0 0;Float:right" value="执行">
 				</div>
 			</div>
-			<div>
-				<strong>Copyright</strong> 版权所有 © 2020-2021
-			</div>
+			<div style="padding-top: 2px;">
+						
+						<p>
+							<font size="3" color="#1ab394">			
+<%
+if(request.getAttribute("order_code")!=null)
+	{
+	out.print("成功创建订单："+request.getAttribute("order_code").toString());
+	session.setAttribute("onum", request.getAttribute("order_code"));
+	}
+             %>	</font>
+						</p>
+						
+					</div>
 		</div>
 			</div>
 

@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>创建RFQ</title>
+<title>查看订单</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -206,7 +206,7 @@ background:white;
 </head>
 
 <body>
-<form class="m-t" role="form" action="/${pageContext.request.contextPath}/order" method="post">
+<form class="m-t" role="form" action="${pageContext.request.contextPath}/order" method="post">
 <input type='text' value='view' name='action' hidden='true'>
 	<div id="wrapper">
 
