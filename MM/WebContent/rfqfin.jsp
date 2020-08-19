@@ -250,125 +250,126 @@ function open_and_search()
 </head>
 
 <body>
-	<form class="m-t" role="form" action="${pageContext.request.contextPath}/rfq" method="post">
-		<input type='text' value='save' name='action' hidden='true'>
-		<div id="wrapper">
 
-			<nav class="navbar-default navbar-static-side" role="navigation">
-				<div class="sidebar-collapse" style="z-index: 10";>
-					<ul class="nav metismenu" id="side-menu">
-						<li class="nav-header">
-							<div class="dropdown profile-element">
-								<span> <img height="48px" width="48px" alt="image"
-									class="img-circle" src="<%=session.getAttribute("uportrait")%>" />
-								</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-									<span class="clear"> <span class="block m-t-xs">
-											<strong class="font-bold"><%=session.getAttribute("uname")%></strong>
-									</span> <span class="text-muted text-xs block"><%=session.getAttribute("upermission")%><b
-											class="caret"></b></span>
-								</span>
-								</a>
-								<ul class="dropdown-menu animated fadeInRight m-t-xs">
-									<li><a>个人信息</a></li>
-									<li><a>联系方式</a></li>
-									<li><a>邮箱</a></li>
-									<li class="divider"></li>
-									<li><a href="Login">退出登录</a></li>
-								</ul>
-							</div>
-							<div class="logo-element">IN+</div>
-						</li>
-						<li><a href="Home"><i class="fa fa-home"></i> <span
-								class="nav-label">主页</span></a></li>
+	<div id="wrapper">
 
-						<li><a href="layouts.html"><i class="fa fa-diamond"></i>
-								<span class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level collapse">
-								<li><a href="CreateVendor">创建供应商</a></li>
-								<li><a href="SelectVendor?type=display">查询供应商</a></li>
-								<li><a href="SelectVendor?type=update">维护供应商</a></li>
-							</ul></li>
-
-						<li class="active"><a href="#"><i
-								class="fa fa-shopping-cart"></i><span class="nav-label">
-									采购管理 </span><span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level collapse">
-								<li class="active"><a href="#">请购单管理 <span
-										class="fa arrow"></span></a>
-									<ul class="nav nav-third-level">
-										<li><a href="requisitionini.jsp">创建请购单 </a></li>
-										<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
-									</ul></li>
-								<li><a href="#">RFQ管理 <span class="fa arrow"></span></a>
-									<ul class="nav nav-third-level ">
-										<li><a href="rfqini.jsp">创建RFQ </a></li>
-										<li><a href="rfqleadview.jsp">查看RFQ </a></li>
-									</ul></li>
-								<li><a href="#">报价单管理 <span class="fa arrow"></span></a>
-									<ul class="nav nav-third-level">
-										<li><a href="quotationini.jsp">维护报价单 </a></li>
-										<li><a href="quotationcompare.jsp">比对报价单 </a></li>
-
-									</ul></li>
-								<li><a href="#">订单管理 <span class="fa arrow"></span></a>
-									<ul class="nav nav-third-level ">
-										<li><a href="orderini.jsp">创建订单 </a></li>
-										<li><a href="orderleadview.jsp">查看订单 </a></li>
-										<li><a href="orderleadchange.jsp">维护订单 </a></li>
-									</ul></li>
-							</ul></li>
-						<li><a href="#"><i class="fa fa-files-o"></i> <span
-								class="nav-label">收货管理</span><span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level collapse">
-								<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
-								<li><a href="showstock.jsp">查询库存 </a></li>
-								<li><a href="createpayment.jsp">创建发票 </a></li>
-								<li><a href="postpayment.jsp">付款 </a></li>
-								<li><a href="account.jsp">查看应付账款 </a></li>
-							</ul></li>
-					</ul>
-				</div>
-			</nav>
-
-			<div id="page-wrapper" class="gray-bg">
-				<div class="row border-bottom">
-					<nav class="navbar navbar-static-top" role="navigation"
-						style="margin-bottom: 0">
-						<div class="navbar-header">
-							<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
-								href="#"><i class="fa fa-bars"></i> </a>
+		<nav class="navbar-default navbar-static-side" role="navigation">
+			<div class="sidebar-collapse">
+				<ul class="nav metismenu" id="side-menu">
+					<li class="nav-header">
+						<div class="dropdown profile-element">
+							<span> <img height="48px" width="48px" alt="image"
+								class="img-circle" src="<%=session.getAttribute("uportrait")%>" />
+							</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<span class="clear"> <span class="block m-t-xs"> <strong
+										class="font-bold"><%=session.getAttribute("uname")%></strong>
+								</span> <span class="text-muted text-xs block"><%=session.getAttribute("upermission")%><b
+										class="caret"></b></span>
+							</span>
+							</a>
+							<ul class="dropdown-menu animated fadeInRight m-t-xs">
+								<li><a>个人信息</a></li>
+								<li><a>联系方式</a></li>
+								<li><a>邮箱</a></li>
+								<li class="divider"></li>
+								<li><a href="Login">退出登录</a></li>
+							</ul>
 						</div>
-						<ul class="nav navbar-top-links navbar-left">
-							<li><a> <i class="fa fa-paper-plane"></i>Be What's Next.
-							</a></li>
-						</ul>
-						<ul class="nav navbar-top-links navbar-right">
-							<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uname")%></span>
-							</li>
-							<li><a href="Login"> <i class="fa fa-sign-out"></i> 退出登录
-							</a></li>
-						</ul>
+						<div class="logo-element">IN+</div>
+					</li>
+					<li><a href="Home"><i class="fa fa-home"></i> <span
+							class="nav-label">主页</span></a></li>
 
-					</nav>
+					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
+							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li><a href="CreateVendor">创建供应商</a></li>
+							<li><a href="SelectVendor?type=display">查询供应商</a></li>
+							<li><a href="SelectVendor?type=update">维护供应商</a></li>
+						</ul></li>
 
+					<li class="active"><a href="#"><i
+							class="fa fa-shopping-cart"></i><span class="nav-label">
+								采购管理 </span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li><a href="#">请购单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="requisitionini.jsp">创建请购单 </a></li>
+									<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+								</ul></li>
+							<li class="active"><a href="#">RFQ管理 <span
+									class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="rfqini.jsp">创建RFQ </a></li>
+									<li><a href="rfqleadview.jsp">查看RFQ </a></li>
+								</ul></li>
+							<li><a href="#">报价单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="quotationini.jsp">维护报价单 </a></li>
+									<li><a href="quotationcompare.jsp">比对报价单 </a></li>
 
-				</div>
+								</ul></li>
+							<li><a href="#">订单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="orderini.jsp">创建订单 </a></li>
+									<li><a href="orderleadview.jsp">查看订单 </a></li>
+									<li><a href="orderleadchange.jsp">维护订单 </a></li>
+								</ul></li>
+						</ul></li>
+					<li><a href="#"><i class="fa fa-files-o"></i> <span
+							class="nav-label">收货管理</span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
+							<li><a href="showstock.jsp">查询库存 </a></li>
+							<li><a href="createpayment.jsp">创建发票 </a></li>
+							<li><a href="postpayment.jsp">付款 </a></li>
+							<li><a href="account.jsp">查看应付账款 </a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</nav>
 
-
-				<!--正文 -->
-				<div class="row wrapper border-bottom white-bg page-heading">
-					<div class="col-lg-10">
-						<h2>创建RFQ</h2>
-						<ol class="breadcrumb">
-							<li><a href="index.html">主页</a></li>
-							<li>RFQ管理</li>
-							<li class="active"><strong>创建RFQ</strong></li>
-						</ol>
+		<div id="page-wrapper" class="gray-bg">
+			<div class="row border-bottom">
+				<nav class="navbar navbar-static-top" role="navigation"
+					style="margin-bottom: 0">
+					<div class="navbar-header">
+						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
+							href="#"><i class="fa fa-bars"></i> </a>
 					</div>
-					<div class="col-lg-2"></div>
+					<ul class="nav navbar-top-links navbar-left">
+						<li><a> <i class="fa fa-paper-plane"></i>Be What's Next.
+						</a></li>
+					</ul>
+					<ul class="nav navbar-top-links navbar-right">
+						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uname")%></span>
+						</li>
+						<li><a href="Login"> <i class="fa fa-sign-out"></i> 退出登录
+						</a></li>
+					</ul>
+
+				</nav>
+
+
+			</div>
+
+
+			<!--正文 -->
+			<div class="row wrapper border-bottom white-bg page-heading">
+				<div class="col-lg-10">
+					<h2>创建RFQ</h2>
+					<ol class="breadcrumb">
+						<li><a href="Home">主页</a></li>
+						<li>RFQ管理</li>
+						<li class="active"><strong>创建RFQ</strong></li>
+					</ol>
 				</div>
+				<div class="col-lg-2"></div>
+			</div>
 
-
+			<form class="m-t" role="form"
+				action="${pageContext.request.contextPath}/rfq" method="post">
+				<input type='text' value='save' name='action' hidden='true'>
 
 				<div class="wrapper wrapper-content animated fadeIn">
 					<div class="row">
@@ -459,45 +460,31 @@ function open_and_search()
 											</div>
 										</div>
 									</div>
-									
-									<div class="ibox float-e-margins">
-											<div class="ibox-content">
-									<div class="col-md-6" style="width: 25%;">
-
-										
-									
-										<div class="form-group">
-											<label for="showMethod">采购组织</label> <input id="showMethod"
-												name="org" type="text" value=<%=organ%> readonly="readonly"
-												class="form-control" />
+									<div class="hr-line-dashed"></div>
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label for="showMethod">采购组织</label> <input id="showMethod"
+													name="org" type="text" value=<%=organ%> readonly="readonly"
+													class="form-control" />
+											</div>
 										</div>
+										<div class="col-md-4">
+
+
+											<div class="form-group">
+												<label for="showMethod">采购小组</label> <input id="showMethod"
+													name="group" type="text" value=<%=group%>
+													readonly="readonly" class="form-control" />
+											</div>
 										</div>
-<div class="col-md-6" style="width: 25%;">
-
-
-										<div class="form-group">
-											<label for="showMethod">采购小组</label> <input id="showMethod"
-												name="group" type="text" value=<%=group%> readonly="readonly"
-												class="form-control" />
-										</div>
-</div>
-
-									</div>
-									</div>
 									</div>
 								</div>
-
-
-
 							</div>
-
 						</div>
 					</div>
 				</div>
-
-
-
-				<div class="footer" style="position: fixed; bottom: 0 ;z-index: 1;">
+				<div class="footer" style="position: fixed; bottom: 0; z-index: 1;">
 					<div class="pull-right">
 						<div class="text-right">
 							<input type="submit" class="btn btn-success btn-sm demo2"
@@ -520,74 +507,75 @@ function open_and_search()
 
 					</div>
 				</div>
-			</div>
-		</div>
 
-
-
-
-
-
-
-		<!-- Mainly scripts for pop windows-->
-		<script>  
+				<!-- Mainly scripts for pop windows-->
+				<script>  
         function openwin(n){
             document.getElementById('inputbox').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
         }
      </script>
-		<script>  
+				<script>  
         function openwin2(n){
             document.getElementById('inputbox2').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
         }
      </script>
-		<script>  
+				<script>  
         function openwin3(n){
             document.getElementById('inputbox3').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
         }
      </script>
 
-		<!-- 第一层弹窗 -->
-		<div id='inputbox' class="opbox1">
+				<!-- 第一层弹窗 -->
+				<div id='inputbox' class="opbox1">
 
-			<a class='x' href='' ; onclick="openwin(0); return false;">关闭</a>
+					<a class='x' href='' ; onclick="openwin(0); return false;">关闭</a>
 
-			<div class="ibox-content">
+					<div class="ibox-content">
 
-				<div class="form-group">
+						<div class="form-group">
 
-					<label class="col-sm-2 control-label"
-						style="width: 13%; padding: 1px;">请购单</label>
-					<div class="col-sm-10" style="width: 87%; padding: 1px;">
-						<input name="requisition_num" id="reqnum" type="text"
-							class="form-control" style="width: 80%">
-						<div class="infont col-md-3 col-sm-4" style="Float: right">
-							<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
+							<label class="col-sm-2 control-label"
+								style="width: 13%; padding: 1px;">请购单</label>
+							<div class="col-sm-10" style="width: 87%; padding: 1px;">
+								<input name="requisition_num" id="reqnum" type="text"
+									class="form-control" style="width: 80%">
+								<div class="infont col-md-3 col-sm-4" style="Float: right">
+									<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
+								</div>
+							</div>
+
+							<label class="col-sm-2 control-label"
+								style="width: 13%; padding: 1px;">工厂</label>
+							<div class="col-sm-10" style="width: 87%; padding: 1px;">
+								<input name="plant2" type="text" class="form-control"
+									style="width: 80%">
+								<div class="infont col-md-3 col-sm-4" style="Float: right">
+									<a onclick="#"><i class="fa fa-search-plus"></i></a>
+								</div>
+							</div>
+
+							<button type="button" class="btn btn-primary "
+								style="margin: 60px 20px 0 0; Float: right"
+								onclick="openwin(0); return false;">取消</button>
+							<input type="submit" class="btn btn-primary "
+								style="margin: 60px 20px 0 0; Float: right" value="继续">
+
 						</div>
+						<input type="button" value="确定">
+
 					</div>
-
-					<label class="col-sm-2 control-label"
-						style="width: 13%; padding: 1px;">工厂</label>
-					<div class="col-sm-10" style="width: 87%; padding: 1px;">
-						<input name="plant2" type="text" class="form-control"
-							style="width: 80%">
-						<div class="infont col-md-3 col-sm-4" style="Float: right">
-							<a onclick="#"><i class="fa fa-search-plus"></i></a>
-						</div>
-					</div>
-
-					<button type="button" class="btn btn-primary "
-						style="margin: 60px 20px 0 0; Float: right"
-						onclick="openwin(0); return false;">取消</button>
-					<input type="submit" class="btn btn-primary "
-						style="margin: 60px 20px 0 0; Float: right" value="继续">
-
 				</div>
-
-				<input type="button" value="确定">
-
-			</div>
+			</form>
 		</div>
-	</form>
+	</div>
+
+
+
+
+
+
+
+
 
 	<!-- 第二层弹窗 -->
 	<div id="inputbox2" class="opbox2">

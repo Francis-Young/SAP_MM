@@ -192,63 +192,96 @@ function open_and_search()
 	}
 </script>
 <style>
-#wrapper
-{
-     z-index: 1;
-   position: absolute;
+#wrapper {
+	z-index: 1;
+	position: absolute;
 }
 
-.opbox1{
-    z-index: 100;
-    width:50%; margin-top:10%; margin:auto; padding:28px;
-    top:25%; left:25%;
-    height:310px; border:1px #111 solid;
-    display:none;            /* 默认对话框隐藏 */
-
-position: absolute;
-background:white;
+.opbox1 {
+	z-index: 100;
+	width: 50%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 25%;
+	left: 25%;
+	height: 310px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
 }
-.opbox1.show{display:block;} 
-.opbox1 .x{ font-size:18px; text-align:right; display:block;}
 
-.opbox2{
-    z-index: 101;
-    width:40%; margin-top:10%; margin:auto; padding:28px;
-    top:5%; left:30%;
-    height:650px; border:1px #111 solid;
-    display:none;            /* 默认对话框隐藏 */
-
-position: absolute;
-background:white;
+.opbox1.show {
+	display: block;
 }
-.opbox2.show{display:block;} 
-.opbox2 .x{ font-size:18px; text-align:right; display:block;}
 
-.opbox3{
-    z-index: 101;
-    width:40%; margin-top:10%; margin:auto; padding:28px;
-    top:5%; left:30%;
-    height:650px; border:1px #111 solid;
-    display:none;            /* 默认对话框隐藏 */
-
-position: absolute;
-background:white;
+.opbox1 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
 }
-.opbox3.show{display:block;} 
-.opbox3 .x{ font-size:18px; text-align:right; display:block;}
 
+.opbox2 {
+	z-index: 101;
+	width: 40%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 5%;
+	left: 30%;
+	height: 650px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
+}
+
+.opbox2.show {
+	display: block;
+}
+
+.opbox2 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
+}
+
+.opbox3 {
+	z-index: 101;
+	width: 40%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 5%;
+	left: 30%;
+	height: 650px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
+}
+
+.opbox3.show {
+	display: block;
+}
+
+.opbox3 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
+}
 </style>
 
 
 </head>
 
 <body>
-<form class="m-t" role="form" action="${pageContext.request.contextPath}//rfq" method="post">
-<input type='text' value='bounce_to_select' name='action' hidden='true'>
+
 	<div id="wrapper">
 
 		<nav class="navbar-default navbar-static-side" role="navigation">
-			<div class="sidebar-collapse" style="z-index: 10";>
+			<div class="sidebar-collapse">
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element">
@@ -282,15 +315,17 @@ background:white;
 							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
 
-					<li class="active"><a href="#"><i class="fa fa-shopping-cart"></i><span
-							class="nav-label"> 采购管理 </span><span class="fa arrow"></span></a>
+					<li class="active"><a href="#"><i
+							class="fa fa-shopping-cart"></i><span class="nav-label">
+								采购管理 </span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li class="active"><a href="#">请购单管理 <span class="fa arrow"></span></a>
+							<li><a href="#">请购单管理 <span class="fa arrow"></span></a>
 								<ul class="nav nav-third-level">
 									<li><a href="requisitionini.jsp">创建请购单 </a></li>
 									<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
 								</ul></li>
-							<li><a href="#">RFQ管理 <span class="fa arrow"></span></a>
+							<li class="active"><a href="#">RFQ管理 <span
+									class="fa arrow"></span></a>
 								<ul class="nav nav-third-level ">
 									<li><a href="rfqini.jsp">创建RFQ </a></li>
 									<li><a href="rfqleadview.jsp">查看RFQ </a></li>
@@ -349,7 +384,7 @@ background:white;
 				<div class="col-lg-10">
 					<h2>创建RFQ</h2>
 					<ol class="breadcrumb">
-						<li><a href="index.html">主页</a></li>
+						<li><a href="Home">主页</a></li>
 						<li>请购管理</li>
 						<li class="active"><strong>创建RFQ</strong></li>
 					</ol>
@@ -358,248 +393,273 @@ background:white;
 			</div>
 
 
+			<form class="m-t" role="form"
+				action="${pageContext.request.contextPath}//rfq" method="post">
+				<input type='text' value='bounce_to_select' name='action'
+					hidden='true'>
+				<div class="wrapper wrapper-content animated fadeIn">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="ibox float-e-margins">
 
-			<div class="wrapper wrapper-content animated fadeIn">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="ibox float-e-margins">
+								<div class="ibox-title">
+									<h5>创建RFQ</h5>
+									<div class="ibox-tools">
+										<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+										</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+											<i class="fa fa-wrench"></i>
+										</a>
+										<ul class="dropdown-menu dropdown-user">
+											<li><a href="#">配置 1</a></li>
+											<li><a href="#">配置 2</a></li>
+										</ul>
 
-							<div class="ibox-title">
-								<h5>创建RFQ</h5>
-								<div class="ibox-tools">
-									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
-									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-										<i class="fa fa-wrench"></i>
-									</a>
-									<ul class="dropdown-menu dropdown-user">
-										<li><a href="#">配置 1</a></li>
-										<li><a href="#">配置 2</a></li>
-									</ul>
-									
-									</a>
+										</a>
+									</div>
 								</div>
-							</div>
 
-							<div class="ibox-content">
-							
-<div class="row">
+								<div class="ibox-content">
+
+									<div class="row">
 										<div class="col-md-2">
 											<!--RFQ具体信息 -->
-											
+
 											<div class="form-group">
-												<label for="title">RFQ种类</label> <input id="vname" name="type"
-													type="text" class="form-control" placeholder="输入RFQ种类..." />
+												<label for="title">RFQ种类</label> <input id="vname"
+													name="type" type="text" class="form-control"
+													placeholder="输入RFQ种类..." />
 											</div>
-</div>
-<div class="col-md-2">
+										</div>
+										<div class="col-md-2">
 											<div class="form-group">
 												<label for="message">使用语言</label> <input
-													class="form-control" id="vaddress" type="text" name="language"
-													class="form-control" placeholder="输入使用语言..."></input>
+													class="form-control" id="vaddress" type="text"
+													name="language" class="form-control"
+													placeholder="输入使用语言..."></input>
 											</div>
-                                         </div>
-  </div>
-  
-  <div class="row">
-  <div class="col-md-2">
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-2">
 											<div class="form-group">
-												<label for="message">RFQ日期</label> <div id="sb" class="input-group date"> <span class="input-group-addon">
-							<i class="fa fa-calendar"></i></span><input name="date" type="text" class="form-control" >
+												<label for="message">RFQ日期</label>
+												<div id="sb" class="input-group date">
+													<span class="input-group-addon"> <i
+														class="fa fa-calendar"></i></span><input name="date" type="text"
+														class="form-control">
+												</div>
 											</div>
-	  </div>
-											</div>
- <div class="col-md-2">
+										</div>
+										<div class="col-md-2">
 											<div class="form-group">
-												<label for="message">RFQ截止日期</label> <div id="sb2"  class="input-group date"> <span class="input-group-addon">
-										<i class="fa fa-calendar"></i></span><input name="deadline" type="text" class="form-control" >
-											</div>
-<script>
+												<label for="message">RFQ截止日期</label>
+												<div id="sb2" class="input-group date">
+													<span class="input-group-addon"> <i
+														class="fa fa-calendar"></i></span><input name="deadline"
+														type="text" class="form-control">
+												</div>
+												<script>
 initDatePicker($("#sb"));
 initDatePicker($("#sb2"));
 </script>
-										</div>
- </div>
-  </div>
-
-										
-										<div  style="width:35%;">
-							
-											<strong></strong> 组织数据
-											<hr style="margin:0px 0px 5px 0px; border:0.1px black solid; "/>
-											<div class="form-group">
-												<label for="showMethod">采购组织</label> <input id="showMethod"
-										name="org"	type="text" placeholder="输入采购组织" class="form-control" />
 											</div>
-											<div class="form-group">
-												<label for="showMethod">采购小组</label> <input id="showMethod"
-										name="group" type="text" placeholder="输入采购小组" class="form-control" />
-											</div>
-											
-											<strong></strong> 商品默认数据
-											<hr style="margin:0px 0px 5px 0px; border:0.1px black solid; "/>
-											<div class="form-group">
-												<label for="showEasing">运送工厂</label> <input
-										name="plant"		id="showEasing" type="text" placeholder="输入运送工厂..."
-													class="form-control" />
-					
-					
-							</div>
-
-										</div>
-								
-	</div>
-
-		
-	<div class="footer" style="position: fixed; bottom: 0;">
-			<div class="pull-right">
-				<div class="text-right">
-	 	<div class="row">
-										<div class="col-lg-12">
-											 <button type="button" class="btn btn-primary " onclick=openwin(1)>参考请购单</button>
-											<button type="button" class="btn btn-white" id="clearlasttoast">直接创建</button>
 										</div>
 									</div>
-				</div>
-			</div>
-		</div>						
+									<br>
 
+									<div style="width: 35%;">
 
-
+										<h3>组织数据</h3>
+										<hr
+											style="margin: 0px 0px 5px 0px; border: 0.1px black solid;" />
+										<div class="form-group">
+											<label for="showMethod">采购组织</label> <input id="showMethod"
+												name="org" type="text" placeholder="输入采购组织"
+												class="form-control" />
+										</div>
+										<div class="form-group">
+											<label for="showMethod">采购小组</label> <input id="showMethod"
+												name="group" type="text" placeholder="输入采购小组"
+												class="form-control" />
+										</div>
+										<br> <h3>商品默认数据</h3>
+										<hr
+											style="margin: 0px 0px 5px 0px; border: 0.1px black solid;" />
+										<div class="form-group">
+											<label for="showEasing">运送工厂</label> <input name="plant"
+												id="showEasing" type="text" placeholder="输入运送工厂..."
+												class="form-control" />
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-
-
-
-		</div>
-	
-
-
-	<!-- Mainly scripts for pop windows-->
-	   <script>  
+				<div class="footer" style="position: fixed; bottom: 0;">
+					<div class="pull-right">
+						<div class="text-right">
+							<div class="row">
+								<div class="col-lg-12">
+									<button type="button" class="btn btn-primary "
+										onclick=openwin(1)>参考请购单</button>
+									<button type="button" class="btn btn-white" id="clearlasttoast">直接创建</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Mainly scripts for pop windows-->
+				<script>  
         function openwin(n){
             document.getElementById('inputbox').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
         }
-     </script>  
-     <script>  
+     </script>
+				<script>  
         function openwin2(n){
             document.getElementById('inputbox2').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
         }
-     </script>  
-          <script>  
+     </script>
+				<script>  
         function openwin3(n){
             document.getElementById('inputbox3').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
         }
-     </script>  
-     
-     <!-- 第一层弹窗 -->
-     <div id='inputbox' class="opbox1">
-     
-        <a class='x' href=''; onclick="openwin(0); return false;">关闭</a>
-        	
-				<div class="ibox-content"> 					
-                
-					<div class="form-group">
-					
-						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >请购单</label>
-						<div class="col-sm-10" style="width:87%;padding:1px;">
-							<input name="requisition_num" id="reqnum" type="text" class="form-control" style="width:80%">
-							<div  class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a></div>
+     </script>
+				<!-- 第一层弹窗 -->
+				<div id='inputbox' class="opbox1">
+
+					<a class='x' href='' ; onclick="openwin(0); return false;">关闭</a>
+
+					<div class="ibox-content">
+
+						<div class="form-group">
+
+							<label class="col-sm-2 control-label"
+								style="width: 13%; padding: 1px;">请购单</label>
+							<div class="col-sm-10" style="width: 87%; padding: 1px;">
+								<input name="requisition_num" id="reqnum" type="text"
+									class="form-control" style="width: 80%">
+								<div class="infont col-md-3 col-sm-4" style="Float: right">
+									<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
+								</div>
+							</div>
+
+							<label class="col-sm-2 control-label"
+								style="width: 13%; padding: 1px;">工厂</label>
+							<div class="col-sm-10" style="width: 87%; padding: 1px;">
+								<input name="plant2" type="text" class="form-control"
+									style="width: 80%">
+								<div class="infont col-md-3 col-sm-4" style="Float: right">
+									<a onclick="#"><i class="fa fa-search-plus"></i></a>
+								</div>
+							</div>
+
+							<button type="button" class="btn btn-primary "
+								style="margin: 60px 20px 0 0; Float: right"
+								onclick="openwin(0); return false;">取消</button>
+							<input type="submit" class="btn btn-primary "
+								style="margin: 60px 20px 0 0; Float: right" value="继续">
+
 						</div>
-						
-						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >工厂</label>
-						<div class="col-sm-10" style="width:87%;padding:1px;">
-							<input name="plant2" type="text" class="form-control" style="width:80%">
-							<div class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="#"><i class="fa fa-search-plus"></i></a></div>
-						</div>
-						
-		<button type="button" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" onclick="openwin(0); return false;">取消</button>
-        <input type="submit" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" value="继续">
-					
+
+
+
 					</div>
-        
-    
-        
-        </div>
-     </div>
-     </form>
-     
-   <!-- 第二层弹窗 -->  
-   <div id="inputbox2" class="opbox2">
-   
-   <a class='x' href=''; onclick="openwin2(0); return false;">关闭</a>
-   <p> 查找请购单：   输入任意已知信息</p>
-     <div class="ibox-content" style="padding:5px 5px 5px 5px;">
-														<div >
-															<div >
-																	<!--请购单具体信息 -->
-																	<div class="form-group">
-																		<label for="title">请购单种类</label> <input id="vname" type="text" class="form-control" placeholder="输入请购单种类...">
-																	</div>
-
-																	<div class="form-group">
-																		<label for="message">使用语言</label> <input class="form-control" id="vaddress" type="text" placeholder="输入使用语言...">
-																	</div>
-
-																	<div class="form-group">
-																		<label for="message">请购单日期</label> <input class="form-control" id="vaddress" type="text" placeholder="输入请购单日期 ...">
-																	</div>
-
-																	<div class="form-group">
-																		<label for="message">请购描述</label> <input class="form-control" id="key1" type="text" placeholder="输入请购描述...">
-																	</div>
+				</div>
+			</form>
+		</div>
+	</div>
 
 
-																	<div class="form-group">
-																		<label for="showMethod">请购组织</label> <input id="xxkey1" type="text" placeholder="输入请购组织" class="form-control">
-																	</div>
-																	
-																	<div class="form-group">
-																		<label for="showMethod">请购小组</label> <input id="key2" type="text" placeholder="输入请购小组" class="form-control">
-																	</div>
 
 
-																	<div class="form-group">
-																		<label for="showEasing">请购运送工厂</label> <input id="showEasing" type="text" placeholder="输入请购运送工厂..." class="form-control">
-																	</div>
-
-																</div><div class="row">
-																	<div class="col-lg-12">
-																		<button type="button" class="btn btn-primary" id="showsimple" onclick=open_and_search()>搜索</button>
-																	</div>
-												
-														</div>
-
-													</div>
-     
-     </div>
-     </div>
-     <!-- 第三层弹窗 -->
-   <div id="inputbox3" class="opbox3">
-   
-   <a class='x' href=''; onclick="openwin3(0); return false;">关闭</a>
-   <table id="tbl" class="table table-striped">
-
-									<thead id="tableHead">
-										<tr>
-											<th></th>
-											<th>请购单编号</th>
-											<th>请购日期</th>
-											<th>请购组织</th>
-										</tr>
-									</thead>
 
 
-									<tbody id="tableBody">
-									
 
-									</tbody>
-								</table>  
-     </div>
-     
-		<!-- Toastr script -->
+	<!-- 第二层弹窗 -->
+	<div id="inputbox2" class="opbox2">
+
+		<a class='x' href='' ; onclick="openwin2(0); return false;">关闭</a>
+		<p>查找请购单： 输入任意已知信息</p>
+		<div class="ibox-content" style="padding: 5px 5px 5px 5px;">
+			<div>
+				<div>
+					<!--请购单具体信息 -->
+					<div class="form-group">
+						<label for="title">请购单种类</label> <input id="vname" type="text"
+							class="form-control" placeholder="输入请购单种类...">
+					</div>
+
+					<div class="form-group">
+						<label for="message">使用语言</label> <input class="form-control"
+							id="vaddress" type="text" placeholder="输入使用语言...">
+					</div>
+
+					<div class="form-group">
+						<label for="message">请购单日期</label> <input class="form-control"
+							id="vaddress" type="text" placeholder="输入请购单日期 ...">
+					</div>
+
+					<div class="form-group">
+						<label for="message">请购描述</label> <input class="form-control"
+							id="key1" type="text" placeholder="输入请购描述...">
+					</div>
+
+
+					<div class="form-group">
+						<label for="showMethod">请购组织</label> <input id="xxkey1"
+							type="text" placeholder="输入请购组织" class="form-control">
+					</div>
+
+					<div class="form-group">
+						<label for="showMethod">请购小组</label> <input id="key2" type="text"
+							placeholder="输入请购小组" class="form-control">
+					</div>
+
+
+					<div class="form-group">
+						<label for="showEasing">请购运送工厂</label> <input id="showEasing"
+							type="text" placeholder="输入请购运送工厂..." class="form-control">
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<button type="button" class="btn btn-primary" id="showsimple"
+							onclick=open_and_search()>搜索</button>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	<!-- 第三层弹窗 -->
+	<div id="inputbox3" class="opbox3">
+
+		<a class='x' href='' ; onclick="openwin3(0); return false;">关闭</a>
+		<table id="tbl" class="table table-striped">
+
+			<thead id="tableHead">
+				<tr>
+					<th></th>
+					<th>请购单编号</th>
+					<th>请购日期</th>
+					<th>请购组织</th>
+				</tr>
+			</thead>
+
+
+			<tbody id="tableBody">
+
+
+			</tbody>
+		</table>
+	</div>
+
+	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
 
 	<script type="text/javascript">
@@ -736,18 +796,18 @@ initDatePicker($("#sb2"));
 				toastr.clear();
 			});
 		});
-		</script> 
-   
-  
+		</script>
 
-    <!-- Custom and plugin javascript -->
-    <script src="js/inspinia.js">
+
+
+	<!-- Custom and plugin javascript -->
+	<script src="js/inspinia.js">
     <script src="js/plugins/pace/pace.min.js"></script>
 
-    <!-- Sweet alert -->
-    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+	<!-- Sweet alert -->
+	<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 
-<script>
+	<script>
 
     $(document).ready(function () {
 
@@ -804,7 +864,7 @@ initDatePicker($("#sb2"));
     });
 
 </script>
-	
+
 </body>
 
 </html>

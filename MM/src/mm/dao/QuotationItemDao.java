@@ -14,7 +14,7 @@ public class QuotationItemDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 			
-			String sql=""+ "insert into Quotation_item" +" (quotation_item_num,quotation_code,price,quantity,delivery_date,currency_unit,material_num,quotation_status) "+"values(default,?,?,?,?,?,?,?)";
+			String sql=""+ "insert into Quotation_item" +" (quotation_item_num,quotation_code,price,quantity,delivery_date,currency_unit,material_num,quotation_status,storageloc) "+"values(default,?,?,?,?,?,?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 		
 			psmt.setString(1, qi.getQuotation_code());
@@ -24,6 +24,7 @@ public class QuotationItemDao {
 			psmt.setString(5, qi.getCurrency_unit());
 			psmt.setString(6, qi.getMaterial_num());
 			psmt.setInt(7, qi.getQuotation_status());
+			psmt.setString(8, qi.getStorageloc());
 			psmt.execute();
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -54,6 +55,8 @@ public class QuotationItemDao {
 				qi.setCurrency_unit(rs.getString("currency_unit"));
 				qi.setDelivery_date(rs.getDate("delivery_date"));
 				qi.setMaterial_num(rs.getString("material_num"));
+				qi.setStorageloc(rs.getString("storageloc"));
+
 				qilist.add(qi);
 			}
 		}catch(SQLException e) {
@@ -91,6 +94,7 @@ public class QuotationItemDao {
 				qi.setCurrency_unit(rs.getString("currency_unit"));
 				qi.setDelivery_date(rs.getDate("delivery_date"));
 				qi.setMaterial_num(rs.getString("material_num"));
+				qi.setStorageloc(rs.getString("storageloc"));
 				qilist.add(qi);
 			}
 		}catch(SQLException e) {
@@ -126,6 +130,8 @@ public class QuotationItemDao {
 				qi.setCurrency_unit(rs.getString("currency_unit"));
 				qi.setDelivery_date(rs.getDate("delivery_date"));
 				qi.setMaterial_num(rs.getString("material_num"));
+				qi.setStorageloc(rs.getString("storageloc"));
+
 				qilist.add(qi);
 			}
 		}catch(SQLException e) {
@@ -183,7 +189,9 @@ public class QuotationItemDao {
 			psmt.setString(5, qi.getCurrency_unit());
 			psmt.setString(6, qi.getMaterial_num());
 			psmt.setInt(7, qi.getQuotation_status());
-			psmt.setInt(8, qi.getQuotation_item_num());
+			
+			psmt.setString(8, qi.getStorageloc());
+			psmt.setInt(9, qi.getQuotation_item_num());
 			//执行查询语句
 			res= psmt.executeUpdate();
 		

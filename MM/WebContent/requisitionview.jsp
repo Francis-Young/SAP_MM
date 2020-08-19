@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>创建请购单</title>
+<title>查看请购单</title>
 <!--
 
     <link href="css/plugins/summernote/summernote.css" rel="stylesheet">
@@ -166,8 +166,17 @@ function splitRow(){
 
 
 
+
+
+
 <style type="text/css">
-.table-b table td{border:2px solid #808080}
+.table-b td{border:1px solid #808080; padding:0px}
+.table > tbody > tr > td {
+  border-top: 1px solid #e7eaec;
+  line-height: 1.42857;
+  padding: 0px;
+  vertical-align: top;
+}
 </style>
 
 </head>
@@ -384,7 +393,7 @@ function splitRow(){
 							</div>
 
 							<div class="ibox-content">
-
+<div class="row">
 <%
 
 Requisition r = (Requisition) session.getAttribute("requisition");
@@ -416,10 +425,9 @@ Requisition r = (Requisition) session.getAttribute("requisition");
 </div>
 </div>
 
+</div>
 
-
-
-<br>						
+					
 						
 
 
@@ -430,9 +438,10 @@ Requisition r = (Requisition) session.getAttribute("requisition");
 									<div class="row">
 									<div class="col-sm-8">
 								<div class="form-group">
-				<label class="col-sm-4 control-label">头部注明</label>
-		
-					<p><%out.print(r.getRequisition_discription()); %></p>
+				<label class="col-sm-2 control-label">头部注明</label>
+		     <textarea rows="4" cols="150" class="form-control">
+<%out.print(r.getRequisition_discription()); %>
+					</textarea>
 				</div>
 					</div>
 			</div>
@@ -448,9 +457,9 @@ Requisition r = (Requisition) session.getAttribute("requisition");
                             <div id="tab-1" class="tab-pane active">
                                 <div class="panel-body">
              <div style="width:950px;  overflow-x:scroll;">										
-<div class="table-b" style="width:1300px">
-<table id="oTable" style="background-color:#F5F5F5;" bordercolor="#aaaaaa" border="2" cellpadding="0" cellpadding="2" width="1250px">
-<thead>
+<div class="table-b">
+<table id="oTable" class="table table-bordered" style="border:1 ; width:1200px;">
+<thead style="border:2 ; width:100;">
 <tr>
 <th><input type="checkbox" id="checkbox0"></th>
 <th>条目</th>
@@ -459,10 +468,10 @@ Requisition r = (Requisition) session.getAttribute("requisition");
 <th>短文本</th>
 <th>订购数量</th>
 <th>基本单位</th>
-<th>送货时间</th>
+<th style="width:10%">送货时间</th>
 <th>物料组</th>
 <th>工厂</th>
-<th>运送地点</th>
+<th>运送点</th>
 
 
 </tr>
@@ -481,20 +490,19 @@ for(int i=0;i<oilist.size();i++)
 	String s3="' value='";
 	String s4="'  type='text' readonly='readonly' class='form-control' /> </td>";
 	out.print("<tr>");
-		out.print("<td>"+"<input type='checkbox' name='cbox'></td>");
+		out.print("<td align='center'>"+"<input type='checkbox' name='cbox'></td>");
 		out.print("<td>"+(i*10+10)+"</td>");
 		out.print("<td>"+1+"</td>");
 		out.print(s1+"material"+s3+m.getMaterial_num()+s4);  //name:material id:m几
 		out.print(s1+"shorttext"+s3+m.getMaterial_discr()+s4);
 		out.print(s1+"quantity"+s3+qi.getRequisition_quantity()+s4);
 		out.print(s1+"baseunit"+s3+m.getMaterial_baseunit()+s4);
-		out.print("<td><div class='input-group date'> <span class='input-group-addon'>"+
-		"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+i+
-		"' type='text' readonly='true' value='"+qi.getRequisition_deliverydate().toString()+"' class='form-control'></div></td>");
+		out.print(s1+s3+ qi.getRequisition_deliverydate().toString() + s4);
 
 		out.print(s1+"materialgroup"+s3+m.getMaterial_group()+s4);
 		out.print(s1+"plant"+s3+qi.getRequisition_plant()+s4);
 		out.print(s1+"storageloc"+s3+qi.getRequisition_storageloc()+s4);
+		System.out.println(qi.getRequisition_storageloc());
 	out.print("</tr>");
 
 }
