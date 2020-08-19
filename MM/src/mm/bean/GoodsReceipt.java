@@ -15,6 +15,7 @@ public class GoodsReceipt implements Serializable  {
 	private String delivery_note;
 	private int pre_m_num;
 	private int end_m_num;
+
 	
 	public int getEnd_m_num() {
 		return end_m_num;
