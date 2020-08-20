@@ -54,7 +54,7 @@ public class SearchOrderServlet extends HttpServlet {
 		//String[] result = key.split(",");
 		
 		String o_vendor="xx";
-		String o_group="xx";
+		//String o_group="xx";
 		String o_org="xx";
 		
 		String pattern1 ="(.*),";//description
@@ -65,37 +65,28 @@ public class SearchOrderServlet extends HttpServlet {
 	    if (m.find() && !(m.group(1).equals("")))
 	    {
 	    	o_vendor=m.group(1);
-	    	o_vendor=o_vendor.substring(0, o_vendor.length()-1);
+	    	//o_vendor=o_vendor.substring(0, o_vendor.length()-1);
 	    }
-	    String pattern2 =",(.*)";//description
-	    // 创建 Pattern 对象
-	    r = Pattern.compile(pattern2);
-	    // 现在创建 matcher 对象
-	    m = r.matcher(key);
-	    if (m.find() && !(m.group(1).equals("")))
-	    {
-	    	o_group=m.group(1);
-	    	o_group=o_group.substring(0, o_group.length()-1);
-	    }
-	    String pattern3 =",(.*)";//description
-	    // 创建 Pattern 对象
-	    r = Pattern.compile(pattern3);
-	    // 现在创建 matcher 对象
-	    m = r.matcher(key);
-	    if (m.find() && !(m.group(1).equals("")))
-	    {
-	    	o_org=m.group(1);
-	    	o_org=o_org.substring(0, o_org.length()-1);
-	    }
+
+	     String pattern2 =",(.*)";//description
+	     // 创建 Pattern 对象
+	     r = Pattern.compile(pattern2);
+	     // 现在创建 matcher 对象
+	     m = r.matcher(key);
+	     if (m.find() && !(m.group(1).equals("")))
+	     {
+	      o_org=m.group(1);
+	      //o_org=o_org.substring(0, o_org.length()-1);
+	     }
 				
 	    System.out.println("vendorcode"+o_vendor);
-	    System.out.println("group"+o_group);
+	    //System.out.println("group"+o_group);
 	    System.out.println("org"+o_org);
 	  
 	    Order od = new Order();
 	    
 	    od.setVendor_code(o_vendor);
-	    od.setPur_group(o_group);
+	    //od.setPur_group(o_group);
 	    od.setPur_org(o_org);
 	    
 		List<Order> odlist=GoodsreceiptDao.findOrderByAnything(od);
