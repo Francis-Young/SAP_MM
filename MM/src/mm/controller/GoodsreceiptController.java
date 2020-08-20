@@ -61,7 +61,7 @@ public class GoodsreceiptController extends HttpServlet {
 					.forward(request, response);
 			return;
 		}
-		view(request,response);
+
 		request.getRequestDispatcher("/goodsreceipt.jsp").forward(request, response);
 
 		// String action = request.getParameter("action");
@@ -69,15 +69,7 @@ public class GoodsreceiptController extends HttpServlet {
 
 	}
 
-	private void view(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String o_vendor = request.getParameter("o_vendor");
-		Order od = GoodsreceiptDao.findOrderByVendor(o_vendor);
-		HttpSession session= request.getSession();
-		session.setAttribute("requisition", od);
-				
-		request.getRequestDispatcher("goodsreceipt.jsp").forward(request,response);
-	}
+
 	
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -90,9 +82,9 @@ public class GoodsreceiptController extends HttpServlet {
 		GoodsReceipt gr = new GoodsReceipt();
 
 		String m_order = request.getParameter("order_num");
-		int order = Integer.parseInt(m_order.trim());
-		gr.setOrder_num(order);
-		System.out.println(order);
+		//int order = Integer.parseInt(m_order.trim());
+		gr.setOrder_num(m_order);
+		System.out.println(m_order);
 
 		String posting_date = (request.getParameter("posting_date")).toString();
 		gr.setPosting_date(posting_date);
