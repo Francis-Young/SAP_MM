@@ -484,7 +484,7 @@ function open_and_search()
 						</div>
 					</div>
 				</div>
-				<div class="footer" style="position: fixed; bottom: 0; z-index: 1;">
+				<div class="footer">
 					<div class="pull-right">
 						<div class="text-right">
 							<input type="submit" class="btn btn-primary btn-sm demo2"

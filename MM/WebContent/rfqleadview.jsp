@@ -405,7 +405,7 @@ function open_and_search()
 						</div>
 					</div>
 				</div>
-				<div class="footer" style="position: fixed; bottom: 0;">
+				<div class="footer">
 					<div class="pull-right">
 						<div class="text-right">
 							<input type="submit" class="btn btn-primary " value="继续">

@@ -440,7 +440,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="footer" style="position: fixed; bottom: 0;">
+					<div class="footer">
 						<div class="pull-right">
 							<div class="text-right">
 								<a href="Home">

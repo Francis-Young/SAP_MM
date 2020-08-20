@@ -280,9 +280,6 @@
 						<button type="button" class="btn btn-white" id="cleartoasts">返回</button>
 					</div>
 				</div>
-				<div>
-					<strong>Copyright</strong> 版权所有 &copy; 2014-2015
-				</div>
 			</div>
 
 		</div>

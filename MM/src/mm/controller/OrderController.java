@@ -95,7 +95,7 @@ public class OrderController extends HttpServlet{
 		String onum= req.getParameter("ordernum");
 		HttpSession session= req.getSession();
 		session.setAttribute("onum", onum);
-		req.getRequestDispatcher("orderchange.jsp").forward(req, resp);
+		req.getRequestDispatcher("/orderchange.jsp").forward(req, resp);
 	}
 
 
