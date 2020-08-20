@@ -79,7 +79,7 @@
 <script type="text/javascript">
 	function search() //异步搜索的函数
 	{
-		  var key = $("#key1").val()+","+ $("#key2").val()//这一段是你要向后台传的数据
+		  var key = $("#key1").val()+","+ $("#key2").val()+","+ $("#key3").val() //这一段是你要向后台传的数据
 		  var url = "${pageContext.request.contextPath}/SearchOrderServlet?key=" + key
 		
 		function gettext(text) //正则解码函数
@@ -267,6 +267,21 @@
 }
 </style>
 
+
+<style type="text/css">
+.table-b td {
+	border: 1px solid #808080;
+	padding: 0px
+}
+
+.table>tbody>tr>td {
+	border-top: 1px solid #e7eaec;
+	line-height: 1.42857;
+	padding: 0px;
+	vertical-align: top;
+}
+</style>
+
 </head>
 
 <body>
@@ -338,10 +353,10 @@
 
 
 
-				<li><a href="#"><i class="fa fa-files-o"></i> <span
-						class="nav-label">收货管理</span><span class="fa arrow"></span></a>
+				<li class="active"><a href="#"><i class="fa fa-files-o"></i>
+						<span class="nav-label">收货管理</span><span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level collapse">
-						<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
+						<li class="active"><a href="goodsreceipt.jsp">创建收货单 </a></li>
 						<li><a href="showstock.jsp">查询库存 </a></li>
 						<li><a href="createpayment.jsp">创建发票 </a></li>
 						<li><a href="postpayment.jsp">付款 </a></li>
@@ -528,9 +543,8 @@
 										<div class="table-b">
 											<div class="wrapper wrapper-content animated fadeIn">
 												<div align="center">
-													<table id="oTable" style="background-color: #f3f3f4;"
-														bordercolor="#e7eaec" border="2" cellpadding="50"
-														cellpadding="50" width="100%" height="200%" align="center">
+													<table id="oTable" class="table table-bordered"
+														width="100%" height="200%" align="center">
 														<thead>
 															<tr>
 																<th>
@@ -581,10 +595,9 @@
 							<div class="col-lg-12">
 								<div class="pull-right">
 									<button type="submit" class="btn btn-primary" id="showtoast">保存</button>
-									<button type="reset" class="btn btn-white" id="clearlasttoast">清除</button>
-									<button type="button" class="btn btn-white" id="cleartoasts">
-										<a href="${pageContext.request.contextPath}/HomeHome">返回</a>
-									</button>
+									
+									<a href="Home"><button type="button" class="btn btn-white"
+											id="cleartoasts">返回</button></a>
 
 								</div>
 							</div>
@@ -668,8 +681,8 @@
 					: 'none'; /* 点击按钮打开/关闭 对话框 */
 		}
 	</script>
-	
-		<!-- 第二层弹窗 -->
+
+	<!-- 第二层弹窗 -->
 	<div id="inputbox2" class="opbox2">
 
 		<a class='x' href='' ; onclick="openwin2(0); return false;">关闭</a>
@@ -683,7 +696,11 @@
 							class="form-control" placeholder="输入交易对象编号...">
 					</div>
 					<div class="form-group">
-						<label for="title">交易组织</label> <input id="key2" type="text"
+						<label for="title">交易小组</label> <input id="key2" type="text"
+							class="form-control" placeholder="输入交易小组编号...">
+					</div>
+					<div class="form-group">
+						<label for="title">交易组织</label> <input id="key3" type="text"
 							class="form-control" placeholder="输入交易组织编号...">
 					</div>
 				</div>
