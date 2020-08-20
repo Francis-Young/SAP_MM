@@ -79,7 +79,7 @@
 <script type="text/javascript">
 	function search() //异步搜索的函数
 	{
-		  var key = $("#key1").val()+","+ $("#key2").val()+","+ $("#key3").val() //这一段是你要向后台传的数据
+		  var key = $("#key1").val()+","+ $("#key2").val()//这一段是你要向后台传的数据
 		  var url = "${pageContext.request.contextPath}/SearchOrderServlet?key=" + key
 		
 		function gettext(text) //正则解码函数
@@ -683,11 +683,7 @@
 							class="form-control" placeholder="输入交易对象编号...">
 					</div>
 					<div class="form-group">
-						<label for="title">交易小组</label> <input id="key2" type="text"
-							class="form-control" placeholder="输入交易小组编号...">
-					</div>
-					<div class="form-group">
-						<label for="title">交易组织</label> <input id="key3" type="text"
+						<label for="title">交易组织</label> <input id="key2" type="text"
 							class="form-control" placeholder="输入交易组织编号...">
 					</div>
 				</div>

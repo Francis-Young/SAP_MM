@@ -12,22 +12,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mm.bean.Material;
 import mm.bean.Order;
-import mm.bean.Requisition;
 import mm.dao.GoodsreceiptDao;
-import mm.dao.RequisitionDao;
 
 /**
- * Servlet implementation class SearchOrderServlet
+ * Servlet implementation class SearchMaterialServlet
  */
-@WebServlet("/SearchOrderServlet")
-public class SearchOrderServlet extends HttpServlet {
+@WebServlet("/SearchMaterialServlet")
+public class SearchMaterialServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchOrderServlet() {
+    public SearchMaterialServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,7 +38,9 @@ public class SearchOrderServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		Search(request,response);
+
 	}
+
 	private void Search(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		// TODO Auto-generated method stub
 		System.out.println("进入搜索！");
@@ -53,9 +54,8 @@ public class SearchOrderServlet extends HttpServlet {
 		//String subkey = key.substring(0, key.length() - 1);
 		//String[] result = key.split(",");
 		
-		String o_vendor="xx";
-		//String o_group="xx";
-		String o_org="xx";
+		String m_des="xx";
+		String m_salesorg="xx";
 		
 		String pattern1 ="(.*),";//description
 	    // 创建 Pattern 对象
@@ -64,34 +64,32 @@ public class SearchOrderServlet extends HttpServlet {
 	    Matcher m = r.matcher(key);
 	    if (m.find() && !(m.group(1).equals("")))
 	    {
-	    	o_vendor=m.group(1);
-	    	//o_vendor=o_vendor.substring(0, o_vendor.length()-1);
+	    	m_des=m.group(1);
+	    	//m_des=m_des.substring(0, m_des.length()-1);
+	    }
+	    String pattern2 =",(.*)";//description
+	    // 创建 Pattern 对象
+	    r = Pattern.compile(pattern2);
+	    // 现在创建 matcher 对象
+	    m = r.matcher(key);
+	    if (m.find() && !(m.group(1).equals("")))
+	    {
+	    	m_salesorg=m.group(1);
+	    	//m_salesorg=m_salesorg.substring(0, m_salesorg.length()-1);
 	    }
 
-	     String pattern2 =",(.*)";//description
-	     // 创建 Pattern 对象
-	     r = Pattern.compile(pattern2);
-	     // 现在创建 matcher 对象
-	     m = r.matcher(key);
-	     if (m.find() && !(m.group(1).equals("")))
-	     {
-	      o_org=m.group(1);
-	      //o_org=o_org.substring(0, o_org.length()-1);
-	     }
 				
-	    System.out.println("vendorcode"+o_vendor);
-	    //System.out.println("group"+o_group);
-	    System.out.println("org"+o_org);
+	    System.out.println("m_des:"+m_des);
+	    System.out.println("m_salesorg:"+m_salesorg);
 	  
-	    Order od = new Order();
+	    Material mat = new Material();
 	    
-	    od.setVendor_code(o_vendor);
-	    //od.setPur_group(o_group);
-	    od.setPur_org(o_org);
+	    mat.setMaterial_discr(m_des);
+	    mat.setMaterial_salesorg(m_salesorg);
 	    
-		List<Order> odlist=GoodsreceiptDao.findOrderByAnything(od);
+	    List<Material> matlist=GoodsreceiptDao.findMaterialByAnything(mat);
 				
-		if (odlist.isEmpty())
+		if (matlist.isEmpty())
 		{
 			System.out.print("无记录？");
 			resp.getWriter().print(URLEncoder.encode("mark0*mark1没有相关记录！mark2","utf-8"));
@@ -100,9 +98,9 @@ public class SearchOrderServlet extends HttpServlet {
 		else
 		{
 			String s="";
-		for(int i=0; i<odlist.size();i++)
+		for(int i=0; i<matlist.size();i++)
 		{
-			s += "mark0"+odlist.get(i).getOrder_code()+"mark1"+odlist.get(i).getDocdate()+"mark2"+odlist.get(i).getPur_org()+"mark3"+odlist.get(i).getRfq_code()+"mark4";
+			s += "mark0"+matlist.get(i).getMaterial_num()+"mark1"+matlist.get(i).getMaterial_unitprice()+"mark2"+matlist.get(i).getMaterial_discr()+"mark3"+matlist.get(i).getMaterial_salesorg()+"mark4";
 			
 		}
 		System.out.println(s);
