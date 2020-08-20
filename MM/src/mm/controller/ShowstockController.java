@@ -61,7 +61,7 @@ public class ShowstockController extends HttpServlet {
 		String color = "#ed5565";
 		
 		String m_text = null;
-		m_text=request.getParameter("m_text");
+		m_text=request.getParameter("m_num");
 		gr.setM_text(m_text);
 		System.out.println(m_text);
 		
