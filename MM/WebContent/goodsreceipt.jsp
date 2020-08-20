@@ -79,34 +79,35 @@
 <script type="text/javascript">
 	function search() //异步搜索的函数
 	{
-		var key = $("#key1").val() + "," + $("#key2").val() //这一段是你要向后台传的数据
-		var url = "${pageContext.request.contextPath}/searchServlet?key=" + key
-
+		  var key = $("#key1").val()+","+ $("#key2").val()+","+ $("#key3").val() //这一段是你要向后台传的数据
+		  var url = "${pageContext.request.contextPath}/SearchOrderServlet?key=" + key
+		
 		function gettext(text) //正则解码函数
 		{
 			var subt = text.match(/mark.(\S*?)mark./);
 			return subt[1];
 		}
 
-		$
-				.ajax({
+		$.ajax({
 					type : "post",
-					url : "${pageContext.request.contextPath}/searchServlet", //后台的地址
+					url : "${pageContext.request.contextPath}/SearchOrderServlet", //后台的地址
 					async : true, //默认-异步（true） 同步-false
 					dataType : "text",
 
 					data : {
 						"key" : key
 					},
-					beforeSend : function() {
+					beforeSend: function (){
 					},
 					success : function(dataArray) { //dataArray就是后台传来的数据
-						//我从后台传回来的数据有3项，所以这里定义了3组变量
+						//从后台传回来的数据有4项，所以这里定义了4组变量
 						var o_num = dataArray.match(/mark0(\S*?)mark1/g);
 						var o_date = dataArray.match(/mark1(\S*?)mark2/g);
+						var pur_org = dataArray.match(/mark2(\S*?)mark3/g);
+						var rfq_code = dataArray.match(/mark3(\S*?)mark4/g);
 
 						$("tbody#tableBody").remove();//删除已有表格	
-						//下面写一个表格，是我要插入到弹窗里的
+						//下面写一个表格，是要插入到弹窗里的
 						var tableBody = "<tbody id='tableBody'>";
 
 						for (var i = 0; i < o_num.length; i++) {
@@ -118,6 +119,10 @@
 									+ "</td>";
 							tableBody += "<td>" + gettext(decodeURI(o_date[i]))
 									+ "</td>";
+							tableBody += "<td>"
+									+ gettext(decodeURI(pur_org[i])) + "</td>";
+							tableBody += "<td>"
+									+ gettext(decodeURI(rfq_code[i])) + "</td>";
 
 							tableBody += "</tr>";
 						}
@@ -435,22 +440,16 @@
 												<div class="col-sm-4">
 													<div class="form-group">
 														<%
-															String o_vendor = "";
-															if (!(session.getAttribute("o_vendor") == null))
-																o_vendor = session.getAttribute("o_vendor").toString();
+															String o_num = "";
+															if (!(session.getAttribute("o_num") == null))
+																o_num = session.getAttribute("o_num").toString();
 														%>
 
-
-
-
-
-														<input name="o_vendor" id="o_vendor" class="form-control"
-															placeholder="采购单号" value=<%=o_vendor%>>
+														<input name="order_num" id="order_num"
+															class="form-control" placeholder="采购单号" value=<%=o_num%>>
 														<div class="infont col-md-3 col-sm-4" style="Float: right">
 															<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
 														</div>
-
-
 
 													</div>
 												</div>
@@ -576,30 +575,7 @@
 							</div>
 						</div>
 					</div>
-					<div id='inputbox' class="opbox1">
-						<a class='x' href='' ; onclick="openwin(0); return false;">关闭</a>
-						<div class="ibox-content">
-							<div class="form-group">
-								<label class="col-sm-2 control-label"
-									style="width: 13%; padding: 1px;">订单</label>
-								<div class="col-sm-10" style="width: 87%; padding: 1px;">
-									<input name="requisition_num" id="reqnum" type="text"
-										class="form-control" style="width: 80%">
-									<div class="infont col-md-3 col-sm-4" style="Float: right">
-										<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
-									</div>
-								</div>
 
-
-								<button type="button" class="btn btn-primary "
-									style="margin: 60px 20px 0 0; Float: right"
-									onclick="openwin(0); return false;">取消</button>
-								<input type="submit" class="btn btn-primary "
-									style="margin: 60px 20px 0 0; Float: right" value="继续">
-							</div>
-							<input type="button" value="确定">
-						</div>
-					</div>
 					<div class="footer">
 						<div class="row">
 							<div class="col-lg-12">
@@ -607,7 +583,7 @@
 									<button type="submit" class="btn btn-primary" id="showtoast">保存</button>
 									<button type="reset" class="btn btn-white" id="clearlasttoast">清除</button>
 									<button type="button" class="btn btn-white" id="cleartoasts">
-										<a href="Home">返回</a>
+										<a href="${pageContext.request.contextPath}/HomeHome">返回</a>
 									</button>
 
 								</div>
@@ -626,6 +602,47 @@
 									}
 								%>
 							</div>
+						</div>
+					</div>
+					<!-- 第一层弹窗 -->
+					<div id='inputbox' class="opbox1">
+
+						<a class='x' href='' ; onclick="openwin(0); return false;">关闭</a>
+
+						<div class="ibox-content">
+
+							<div class="form-group">
+
+								<label class="col-sm-2 control-label"
+									style="width: 13%; padding: 1px;">订单</label>
+								<div class="col-sm-10" style="width: 87%; padding: 1px;">
+									<input name="requisition_num" id="reqnum" type="text"
+										class="form-control" style="width: 80%">
+									<div class="infont col-md-3 col-sm-4" style="Float: right">
+										<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
+									</div>
+								</div>
+
+								<label class="col-sm-2 control-label"
+									style="width: 13%; padding: 1px;">工厂</label>
+								<div class="col-sm-10" style="width: 87%; padding: 1px;">
+									<input name="plant2" type="text" class="form-control"
+										style="width: 80%">
+									<div class="infont col-md-3 col-sm-4" style="Float: right">
+										<a onclick="#"><i class="fa fa-search-plus"></i></a>
+									</div>
+								</div>
+
+								<button type="button" class="btn btn-primary "
+									style="margin: 60px 20px 0 0; Float: right"
+									onclick="openwin(0); return false;">取消</button>
+								<input type="submit" class="btn btn-primary "
+									style="margin: 60px 20px 0 0; Float: right" value="继续">
+
+							</div>
+
+							<input type="button" value="确定">
+
 						</div>
 					</div>
 			</form>
@@ -651,23 +668,62 @@
 					: 'none'; /* 点击按钮打开/关闭 对话框 */
 		}
 	</script>
-	<!--写第1个弹窗的内容-->
-	<div id='inputbox' class="opbox1">
-		<!--第2，3个弹窗就改class为opbox2,3-->
-		<a class='x' href='' ; onclick="openwin1(0); return false;">关闭</a>
-		<!--   第2，3个弹窗就改成openwin2 openwin3 */-->
-		<p>查找订单： 输入相关信息</p>
+	
+		<!-- 第二层弹窗 -->
+	<div id="inputbox2" class="opbox2">
+
+		<a class='x' href='' ; onclick="openwin2(0); return false;">关闭</a>
+		<p>查找订单： 输入任意的订单相关信息</p>
 		<div class="ibox-content" style="padding: 5px 5px 5px 5px;">
-			<div class="form-group">
-				<label for="title">订单交易对象</label> <input id="o_vendor" type="text"
-					class="form-control" placeholder="输入订单交易对象...">
+			<div>
+				<div>
+					<!--请购单具体信息 -->
+					<div class="form-group">
+						<label for="title">交易对象</label> <input id="key1" type="text"
+							class="form-control" placeholder="输入交易对象编号...">
+					</div>
+					<div class="form-group">
+						<label for="title">交易小组</label> <input id="key2" type="text"
+							class="form-control" placeholder="输入交易小组编号...">
+					</div>
+					<div class="form-group">
+						<label for="title">交易组织</label> <input id="key3" type="text"
+							class="form-control" placeholder="输入交易组织编号...">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<button type="button" class="btn btn-primary" id="showsimple"
+							onclick=open_and_search()>搜索</button>
+					</div>
+
+				</div>
 
 			</div>
-			<input type="button" value="确定">
+
 		</div>
-		<!--你要放在第一个弹窗里的东西-->
 	</div>
-	<!--*****************写第2，3个弹窗的内容。。。-->
+	<!-- 第三层弹窗 -->
+	<div id="inputbox3" class="opbox3">
+
+		<a class='x' href='' ; onclick="openwin3(0); return false;">关闭</a>
+		<table id="tbl" class="table table-striped">
+
+			<thead id="tableHead">
+				<tr>
+					<th></th>
+					<th>订单编号</th>
+					<th>订单日期</th>
+					<th>请购组织</th>
+					<th>请购单编号</th>
+				</tr>
+			</thead>
+
+			<tbody id="tableBody">
+
+			</tbody>
+		</table>
+	</div>
 
 	<!-- Mainly scripts -->
 
@@ -792,7 +848,7 @@
 
 			$('#showsimple').click(function() {
 				// Display a success toast, with a title
-				toastr.success('Without any options', 'Simple notification!')
+				toastr.success('搜索结果已展示', '搜索成功')
 			});
 			$('#showtoast')
 					.click(
@@ -913,7 +969,7 @@
 			$('#cleartoasts').click(function() {
 				toastr.clear();
 			});
-		})
+		}
 	</script>
 
 </body>
