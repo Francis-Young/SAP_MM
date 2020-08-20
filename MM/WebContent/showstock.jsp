@@ -381,13 +381,13 @@
 												<div class="col-sm-4">
 													<div class="form-group">
 														<%
-															String m_num = "";
-															if (!(session.getAttribute("m_num") == null))
-																m_num = session.getAttribute("m_num").toString();
+															String m_code = "";
+															if (!(session.getAttribute("m_code") == null))
+																m_code = session.getAttribute("m_code").toString();
 														%>
 
-														<input name="order_num" id="order_num"
-															class="form-control" placeholder="物料编号" value=<%=m_num%>>
+														<input name="m_num" id="m_num"
+															class="form-control" placeholder="物料编号" value=<%=m_code%>>
 														<div class="infont col-md-3 col-sm-4" style="Float: right">
 															<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
 														</div>
