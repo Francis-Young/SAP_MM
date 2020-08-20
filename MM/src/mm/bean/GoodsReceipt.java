@@ -9,7 +9,7 @@ public class GoodsReceipt implements Serializable  {
 	private String check;
 	private int m_num;
 	private String sloc;
-	private int order_num;
+	private String order_num;
 	private String posting_date;
 	private String document_date;
 	private String delivery_note;
@@ -29,10 +29,10 @@ public class GoodsReceipt implements Serializable  {
 	public void setPre_m_num(int pre_m_num) {
 		this.pre_m_num = pre_m_num;
 	}
-	public int getOrder_num() {
+	public String getOrder_num() {
 		return order_num;
 	}
-	public void setOrder_num(int order_num) {
+	public void setOrder_num(String order_num) {
 		this.order_num = order_num;
 	}
 	public String getPosting_date() {

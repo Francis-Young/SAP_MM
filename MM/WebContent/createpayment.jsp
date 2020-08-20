@@ -90,7 +90,7 @@ background:white;
 
 	<div id="wrapper">
 		<nav class="navbar-default navbar-static-side" role="navigation">
-			<div class="sidebar-collapse">
+<div class="sidebar-collapse">
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element">
@@ -115,6 +115,7 @@ background:white;
 					</li>
 					<li><a href="Home"><i class="fa fa-home"></i> <span
 							class="nav-label">主页</span></a></li>
+
 					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
 							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
@@ -122,19 +123,36 @@ background:white;
 							<li><a href="SelectVendor?type=display">查询供应商</a></li>
 							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
-					<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
-							class="nav-label">采购管理</span><span class="fa arrow"></span></a>
+
+					<li><a href="#"><i class="fa fa-shopping-cart"></i><span
+							class="nav-label"> 采购管理 </span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="requisitionini.jsp">创建请购单 </a></li>
-							<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
-							<li><a href="rfqini.jsp">创建RFQ </a></li>
-							<li><a href="rfqleadview.jsp">查看RFQ </a></li>
-							<li><a href="quotationini.jsp">维护报价单 </a></li>
-							<li><a href="quotationcompare.jsp">比对报价单 </a></li>
-							<li><a href="orderini.jsp">创建订单 </a></li>
-							<li><a href="orderleadview.jsp">查看订单 </a></li>
-							<li><a href="orderleadchange.jsp">维护订单 </a></li>
+							<li><a href="#">请购单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="requisitionini.jsp">创建请购单 </a></li>
+									<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+								</ul></li>
+							<li><a href="#">RFQ管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="rfqini.jsp">创建RFQ </a></li>
+									<li><a href="rfqleadview.jsp">查看RFQ </a></li>
+								</ul></li>
+							<li><a href="#">报价单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="quotationini.jsp">维护报价单 </a></li>
+									<li><a href="quotationcompare.jsp">比对报价单 </a></li>
+
+								</ul></li>
+							<li><a href="#">订单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="orderini.jsp">创建订单 </a></li>
+									<li><a href="orderleadview.jsp">查看订单 </a></li>
+									<li><a href="orderleadchange.jsp">维护订单 </a></li>
+
+								</ul></li>
 						</ul></li>
+
+
 
 					<li><a href="#"><i class="fa fa-files-o"></i> <span
 							class="nav-label">收货管理</span><span class="fa arrow"></span></a>
@@ -423,10 +441,7 @@ background:white;
 
     	     return false;
     	 }  
-    	 else if(!reg2.test(obj2.value)){
-    	     alert("材料编号只能输入数字，用英语逗号隔开，请重新输入"); 
-    	     return false;
-    	 }
+    
     	 else{
     	 	return true;
     	 }

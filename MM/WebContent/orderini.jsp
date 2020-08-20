@@ -214,6 +214,7 @@ function open_and_search()
 
 .opbox1.show {
 	display: block;
+
 }
 
 .opbox1 .x {
@@ -260,6 +261,7 @@ function open_and_search()
 	position: absolute;
 	background: white;
 }
+
 
 .opbox3.show {
 	display: block;
@@ -392,7 +394,7 @@ function open_and_search()
 			<form class="m-t" role="form"
 				action="${pageContext.request.contextPath}/order" method="post">
 				<input type='text' value='get_quotation' name='action' hidden='true'>
-				
+
 				<div class="wrapper wrapper-content animated fadeIn">
 					<div class="row">
 						<div class="col-lg-12">
@@ -553,6 +555,7 @@ function open_and_search()
 					<div class="form-group">
 						<label for="message">基本单位</label> <input class="form-control"
 							id="key2" type="text">
+
 					</div>
 
 					<div class="form-group">
@@ -573,6 +576,7 @@ function open_and_search()
 						<button type="button" class="btn btn-primary" id="showsimple"
 							onclick=open_and_search()>搜索</button>
 					</div>
+
 
 				</div>
 

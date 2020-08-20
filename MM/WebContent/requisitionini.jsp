@@ -1,3 +1,4 @@
+<%@page import="mm.dao.MaterialDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -65,6 +66,42 @@ function initDatePicker(ele){
 		initDatePicker($(".input-group.date"));
    });
     
+
+</script>
+<script type="text/javascript">
+var origin= '1px solid #e5e6e7';
+</script>
+
+<script>
+function handin(form)
+{
+
+	for(var i=10;i<=itemNo;i+=10)
+	{
+	
+	var ms=document.getElementsByName("material"+i)[0].value;
+	var legalm=document.getElementById("legalm").innerHTML;
+
+	if((ms.indexOf(",") != -1)||(ms.length!=5))
+		{
+		document.getElementsByName("material"+i)[0].style.border="1px solid red";
+		alert("非法的物料代码，请检查！");
+		return false;
+		}
+	else
+		{
+		if(legalm.indexOf(ms) == -1)
+		{
+		document.getElementsByName("material"+i)[0].style.border="1px solid red";
+		alert("输入的物料代码不存在，请检查！");
+		return false;
+		}
+		}
+	document.getElementsByName("material"+i)[0].style.border=origin;
+	}
+	
+	return true;
+}
 
 </script>
 
@@ -229,7 +266,7 @@ function addRow(){
 				<div class="col-lg-2"></div>
 			</div>
 
-	<form class="m-t" role="form" action="${pageContext.request.contextPath}/requisition" method="post">
+	<form class="m-t" id='form1' role="form" action="${pageContext.request.contextPath}/requisition" method="post">
 						       <input type='text' value='creat' name='action' hidden='true'>	<!-- 控制表单名 -->					
 							<input type='text' id='num' value='0' name='num' hidden='true'>    <!-- 条目数量 -->	
 							
@@ -268,6 +305,11 @@ function addRow(){
 										</div>
 									</div>
 		<br>
+<%
+String mnum=MaterialDao.findallMaterialnum();
+out.print("<p hidden='hidden' id='legalm' >"+mnum+"</p>");
+%>		
+		
 																	
 <div class="row">
 
@@ -323,7 +365,7 @@ function addRow(){
 
 				<div class="pull-right">
 					<div class="text-right">
-						<input type="submit"  value="保存" class="btn btn-primary" id="showtoast">
+						<input type="submit"  value="保存" class="btn btn-primary" onclick="return handin(this.form)" >
 						<a href="${pageContext.request.contextPath}/Home"><button type="button" class="btn btn-white" id="cleartoasts">返回</button></a>
 					</div>
 				</div>

@@ -84,6 +84,22 @@ public class MaterialDao {
 		DBUtil.closeConnection(conn);
 		return flag;
 	}
+	public static  String findallMaterialnum() throws SQLException {
+		Connection conn = DBUtil.getConnection();
+		String m = "";
+		try {
+			PreparedStatement stat = conn.prepareStatement(
+					"select material_num from Material  ");	
+			ResultSet rs = stat.executeQuery();
+			while (rs.next()) {
+				m+=rs.getString("material_num")+",";
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		DBUtil.closeConnection(conn);
+		return m;
+	}
 
 
 }

@@ -52,7 +52,7 @@ public class CreatePayController extends HttpServlet {
 			java.util.Date addtime=df.parse(changedate(request.getParameter("p_time".trim())));
 			String time=df.format(addtime);
 			int status = 0;//
-			String user=request.getSession().getAttribute("uid").toString().trim();//
+			String user=request.getSession().getAttribute("uname").toString().trim();//
 			String text=request.getParameter("o_text").trim();
 			user=new String(user.getBytes("iso8859-1"),"UTF-8");
 			text=new String(text.getBytes("iso8859-1"),"UTF-8");

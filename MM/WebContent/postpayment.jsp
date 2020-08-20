@@ -92,7 +92,7 @@ background:white;
 
 	<div id="wrapper">
 		<nav class="navbar-default navbar-static-side" role="navigation">
-			<div class="sidebar-collapse">
+<div class="sidebar-collapse">
 				<ul class="nav metismenu" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element">
@@ -117,6 +117,7 @@ background:white;
 					</li>
 					<li><a href="Home"><i class="fa fa-home"></i> <span
 							class="nav-label">主页</span></a></li>
+
 					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
 							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
@@ -124,19 +125,36 @@ background:white;
 							<li><a href="SelectVendor?type=display">查询供应商</a></li>
 							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
-					<li><a href="#"><i class="fa fa-shopping-cart"></i> <span
-							class="nav-label">采购管理</span><span class="fa arrow"></span></a>
+
+					<li><a href="#"><i class="fa fa-shopping-cart"></i><span
+							class="nav-label"> 采购管理 </span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
-							<li><a href="requisitionini.jsp">创建请购单 </a></li>
-							<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
-							<li><a href="rfqini.jsp">创建RFQ </a></li>
-							<li><a href="rfqleadview.jsp">查看RFQ </a></li>
-							<li><a href="quotationini.jsp">维护报价单 </a></li>
-							<li><a href="quotationcompare.jsp">比对报价单 </a></li>
-							<li><a href="orderini.jsp">创建订单 </a></li>
-							<li><a href="orderleadview.jsp">查看订单 </a></li>
-							<li><a href="orderleadchange.jsp">维护订单 </a></li>
+							<li><a href="#">请购单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="requisitionini.jsp">创建请购单 </a></li>
+									<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+								</ul></li>
+							<li><a href="#">RFQ管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="rfqini.jsp">创建RFQ </a></li>
+									<li><a href="rfqleadview.jsp">查看RFQ </a></li>
+								</ul></li>
+							<li><a href="#">报价单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="quotationini.jsp">维护报价单 </a></li>
+									<li><a href="quotationcompare.jsp">比对报价单 </a></li>
+
+								</ul></li>
+							<li><a href="#">订单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="orderini.jsp">创建订单 </a></li>
+									<li><a href="orderleadview.jsp">查看订单 </a></li>
+									<li><a href="orderleadchange.jsp">维护订单 </a></li>
+
+								</ul></li>
 						</ul></li>
+
+
 
 					<li><a href="#"><i class="fa fa-files-o"></i> <span
 							class="nav-label">收货管理</span><span class="fa arrow"></span></a>
@@ -256,7 +274,7 @@ background:white;
 
                                         <fieldset class="form-horizontal">
                                           <div class="form-group"><label class="col-sm-2 control-label">支付账户：</label>
-                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入发票名称，如100000" id="o_account" name="o_account"></div>
+                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入支付账户，如100000" id="o_account" name="o_account"></div>
                                             </div>           
                                           <div class="form-group"><label class="col-sm-2 control-label">支付日期: </label>
                                            <div class="input-group date">
@@ -267,7 +285,7 @@ background:white;
                                                 <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入两位小数，如160.00" id="o_price_new" name="o_price_new"></div>
                                             </div>
 											<div class="form-group"><label class="col-sm-2 control-label">发票名称：</label>
-                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入发票名称，如100000" id="o_text_new" name="o_text_new"></div>
+                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入发票名称，如一个发票" id="o_text_new" name="o_text_new"></div>
                                             </div>             
                                                                  
 
@@ -391,10 +409,7 @@ function validate_input(){
 
      return false;
  }  
- else if(!reg2.test(obj2.value)){
-     alert("材料编号只能输入数字，用英语逗号隔开，请重新输入"); 
-     return false;
- }
+
  else{
  	return true;
  }
@@ -523,7 +538,9 @@ $(document).ready(function(){
 }
 function assign(a){
 
-    var mytable = document.getElementById("myTable").rows[a].cells[1].innerHTML;
+    var mytable1 = document.getElementById("myTable").rows[a].cells[1].innerHTML;
+    var mytable2 = document.getElementById("myTable").rows[a].cells[2].innerHTML;
+	var mytable=accMul(mytable1,mytable2);
 	var t=document.getElementById('o_sum').value;
 	mytable=mytable*-1;
 	var c=numAdd(mytable,t);
@@ -537,8 +554,10 @@ function assign(a){
    
 function noassign(a){
 
-    var mytable = document.getElementById("myTable").rows[a].cells[1].innerHTML;
-	var t=document.getElementById('o_sum').value;
+var mytable1 = document.getElementById("myTable").rows[a].cells[1].innerHTML;
+   var mytable2 = document.getElementById("myTable").rows[a].cells[2].innerHTML;
+    var mytable=accMul(mytable1,mytable2);	
+    var t=document.getElementById('o_sum').value;
 	var c=numAdd(mytable,t);
 	var html="<a href=\"javascript:assign(index)\">分配</a>";
 	html=html.replace(/index/,a);
@@ -586,6 +605,13 @@ function numAdd(num1, num2) {
     baseNum = Math.pow(10, Math.max(baseNum1, baseNum2));
 
     return (num1 * baseNum + num2 * baseNum) / baseNum;
+}
+function accMul(arg1,arg2)
+{
+  var m=0,s1=arg1.toString(),s2=arg2.toString();
+  try{m+=s1.split(".")[1].length}catch(e){}
+  try{m+=s2.split(".")[1].length}catch(e){}
+  return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)
 }
 function openwin1_id(n){
     document.getElementById('inputbox').style.display=n?'block':'none';  
