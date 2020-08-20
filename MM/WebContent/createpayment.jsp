@@ -154,12 +154,12 @@ background:white;
 
 
 
-					<li><a href="#"><i class="fa fa-files-o"></i> <span
+					<li class="active"><a href="#"><i class="fa fa-files-o"></i> <span
 							class="nav-label">收货管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
 							<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
 							<li><a href="showstock.jsp">查询库存 </a></li>
-							<li><a href="createpayment.jsp">创建发票 </a></li>
+							<li class="active"><a href="createpayment.jsp">创建发票 </a></li>
 							<li><a href="postpayment.jsp">付款 </a></li>
 							<li><a href="account.jsp">查看应付账款 </a></li>
 						</ul></li>
