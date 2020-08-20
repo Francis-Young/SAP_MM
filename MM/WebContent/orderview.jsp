@@ -446,7 +446,7 @@ Order o = (Order) session.getAttribute("order");
 <th>条目</th>
 <th>状态</th>
 <th>材料编号</th>
-<th>短文本</th>
+<th>描述</th>
 <th>订购数量</th>
 <th>基本单位</th>
 
@@ -478,7 +478,7 @@ for(int i=0;i<oilist.size();i++)
 		out.print("<td>"+(i*10+10)+"</td>");
 		out.print("<td>"+1+"</td>");
 		out.print(s1+"material"+s3+m.getMaterial_num()+s4);  //name:material id:m几
-		out.print(s1+"shorttext"+s3+m.getMaterial_shorttext()+s4);
+		out.print(s1+"shorttext"+s3+m.getMaterial_discr()+s4);
 		out.print(s1+"quantity"+s3+qi.getQuantity()+s4);
 		out.print(s1+"baseunit"+s3+m.getMaterial_baseunit()+s4);
 		
