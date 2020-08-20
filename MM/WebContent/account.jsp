@@ -125,14 +125,14 @@ z-index:10000;
 
 
 
-					<li><a href="#"><i class="fa fa-files-o"></i> <span
+					<li class="active"><a href="#"><i class="fa fa-files-o"></i> <span
 							class="nav-label">收货管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
 							<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
 							<li><a href="showstock.jsp">查询库存 </a></li>
 							<li><a href="createpayment.jsp">创建发票 </a></li>
 							<li><a href="postpayment.jsp">付款 </a></li>
-							<li><a href="account.jsp">查看应付账款 </a></li>
+							<li class="active"><a href="account.jsp">查看应付账款 </a></li>
 						</ul></li>
 				</ul>
 			</div>
@@ -451,7 +451,9 @@ z-index:10000;
     		        paginationLoop: false,   //是否开启分页条无限循环，最后一页时点击下一页是否转到第一页
     		    });
     			$("#myTable").bootstrapTable('hideLoading');
-    			
+    	    	var bottom = document.getElementById("warning");
+
+                bottom.innerText="";
 
     			}
              });  
@@ -526,7 +528,9 @@ z-index:10000;
   			$("#status").html(html0);
   			$("#showResult").html("");
             $('div input').val('');
+           	var bottom = document.getElementById("warning");
 
+            bottom.innerText="";
   			}
            });  
           
