@@ -1,12 +1,14 @@
 package mm.dao;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 import org.json.*;
 
 import mm.bean.GoodsReceipt;
 import mm.bean.Order;
 import mm.bean.Requisition;
+import mm.bean.Vendor;
 import mm.utils.DBUtil;
 
 public class GoodsreceiptDao {
@@ -20,7 +22,7 @@ public class GoodsreceiptDao {
 					+ " (delivery_num,purchase_order_num,posting_date,document_date,delivery_note) "
 					+ "VALUES (default,?,?,?,?)";
 			stat = conn.prepareStatement(sql);
-			stat.setInt(1, gr.getOrder_num());
+			stat.setString(1, gr.getOrder_num());
 			stat.setString(2, gr.getPosting_date());
 			stat.setString(3, gr.getDocument_date());
 			stat.setString(4, gr.getDelivery_note());
@@ -43,27 +45,46 @@ public class GoodsreceiptDao {
 
 	}
 
-	public static Order findOrderByVendor(String o_vendor) {
-
-		Order od = new Order();
-
+	public static ArrayList<Order> findOrderByAnything(Order od) {
+		ArrayList<Order> odlist = new ArrayList<Order>();
 		// 建立数据库连接
 		Connection conn = DBUtil.getConnection();
+		
 		try {
-
-			String sql = "" + "select * from Order where vendor_code = ?";
+			String sql = "" + "SELECT * FROM `Order`";
+			int flag=0;
+			
+			if(!od.getVendor_code().equals("")){
+				sql+=" WHERE vendor_code="+'"'+od.getVendor_code()+'"';
+				flag=1;
+			}
+			if(!od.getPur_org().equals("")){
+				if(flag==1){
+					sql+="AND ";
+				}else{sql+="WHERE ";}
+				sql+="pur_org="+'"'+od.getPur_org()+'"';	
+				flag=1;
+			}
+			if(!od.getPur_group().equals("")){
+				if(flag==1){
+					sql+="AND ";
+				}else{sql+="WHERE ";}
+				sql+="pur_group="+'"'+od.getPur_group()+'"';
+			}
+			
 			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setString(1, o_vendor);
 			// 执行查询语句
 			ResultSet rs = psmt.executeQuery();
-			if (rs.next()) {
-
-				od.setDocdate(rs.getDate("docdate"));
-				od.setOrder_num(rs.getInt("order_num"));
-				od.setPur_org(rs.getString("pur_org"));
-				od.setRfq_code(rs.getString("rfq_code"));
+			while (rs.next()) {
+				Order od1 = new Order();
+				od1.setDocdate(rs.getDate("docdate"));
+				od1.setOrder_code(rs.getString("order_code"));
+				od1.setPur_org(rs.getString("pur_org"));
+				od1.setRfq_code(rs.getString("rfq_code"));
+				odlist.add(od1);
 
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NullPointerException f) {
@@ -72,6 +93,6 @@ public class GoodsreceiptDao {
 			DBUtil.closeConnection(conn);
 		}
 
-		return od;
+		return odlist;
 	}
 }
