@@ -119,7 +119,7 @@ public class OrderController extends HttpServlet{
 		OrderDao.deleteOitemByOnum(o.getOrder_num());
 
 		session.setAttribute("onum",onum );
-	
+		String[] statdeliverydateArr = (String[])req.getParameterValues("statdeliverydate");//查被选中的item
 		String[] answerArr =(String[]) req.getParameterValues("cbox");//查被选中的item
 
 		
@@ -128,7 +128,6 @@ public class OrderController extends HttpServlet{
 		
 		String[] quantityArr =(String[]) req.getParameterValues("quantity");//查被选中的item
 		String[] deliverydateArr =(String[]) req.getParameterValues("deliverydate");//查被选中的item
-		String[] statdeliverydateArr = (String[])req.getParameterValues("statdeliverydate");//查被选中的item
 
 		String[] priceArr =(String[]) req.getParameterValues("price");//查被选中的item
 		String[] plantArr =(String[]) req.getParameterValues("plant");//查被选中的item
@@ -147,9 +146,10 @@ public class OrderController extends HttpServlet{
 				oi.setPrice(new BigDecimal(priceArr[i]));
 				oi.setQuantity(Integer.parseInt(quantityArr[i]));
 				oi.setCurrency_unit(currencyArr[0]);
-				oi.setStat_delivery_date(strToDate(statdeliverydateArr[i]));
 				oi.setPlant(plantArr[i]);
 				oi.setSloc(storagelocArr[i]);
+				oi.setStat_delivery_date(strToDate(statdeliverydateArr[i]));
+
 				OrderItemDao.addOrderItem(oi);
 		}
 		req.setAttribute("order_code", onum);
@@ -218,6 +218,7 @@ public class OrderController extends HttpServlet{
 		
 			Vendor v=venlist.get(i);
 			System.out.println(v.getVname());
+			System.out.println(v.getVcode());
 		}
 		System.out.println(venlist);
 		

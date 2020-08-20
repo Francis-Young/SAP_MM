@@ -374,7 +374,7 @@ function splitRow(){
 String onum = (String) session.getAttribute("onum");
 Order o = OrderDao.findOrderByCode(onum);
 
-
+System.out.println(o.getVendor_code());
 Vendor v=VendorDao.findVendorbyCode((o.getVendor_code()));
 
 
@@ -483,9 +483,8 @@ for(int i=0;i<oilist.size();i++)
 				"<i class='fa fa-calendar'></i></span><input name='statdeliverydate"+
 				"' type='text' value='"+oi.getStat_delivery_date().toString()+"' class='form-control'></div></td>");
 		out.print("<td><div class='input-group date'> <span class='input-group-addon'>"+
-		"<i class='fa fa-calendar'></i></span><input name='deliverydate"+
-		"' type='text' value='"+oi.getDelivery_date().toString()+"' class='form-control'></div></td>");
-		
+				"<i class='fa fa-calendar'></i></span><input name='deliverydate"+
+				"' type='text' value='"+oi.getDelivery_date().toString()+"' class='form-control'></div></td>");
 		out.print(s1+"price"+s3+oi.getPrice().toString()+s4);
 		out.print(s1+"currency"+s3+oi.getCurrency_unit()+s4);
 		out.print(s1+"materialgroup"+s3+m.getMaterial_group()+s4);

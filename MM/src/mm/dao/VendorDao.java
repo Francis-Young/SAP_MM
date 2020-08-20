@@ -404,7 +404,7 @@ public class VendorDao {
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
 				Vendor vd1 = new Vendor();
-				vd1.setVnum(rs.getString(1));
+				vd1.setVcode(rs.getString("vendor_code"));
 				vd1.setVtype(rs.getString("vendor_type"));
 				vd1.setVname(rs.getString("vendor_name"));
 				vd1.setVcompanycode(rs.getString("vendor_companycode"));
