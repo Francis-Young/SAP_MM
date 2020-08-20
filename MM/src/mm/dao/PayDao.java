@@ -146,15 +146,23 @@ public class PayDao {
 			}
 			else if(o4.indexOf(",")>0) 
 			{
-			o4=" in ("+o4+")";	
+				String s11=" in (";
+				String[] splitM=o4.split(",");
+				for(int i=0;i<splitM.length;i++) {
+					String x11="\'"+splitM[i]+"',";
+				s11+=x11;
+				}
+			s11=s11.substring(0,s11.length()-1);	
+			s11+=")";
+			o4=s11;
 			}
 			else
 			{
-				o4="="+o4;
+				o4="=\'"+o4+"'";
 			}
 			Connection connectionnew = DBUtil.getConnection();
-	        String sql="select * FROM Order_item JOIN `Order` ON Order_item.order_num_m=`Order`.order_num JOIN Vendor ON `Order`.vendor_code=Vendor.vendor_num where vendor_name"+o2+
-	        		" and Vendor.vendor_num"+o3+" and material_num"+o4+" and delivery_date"+o1+"";
+	        String sql="select * FROM Order_item JOIN `Order` ON Order_item.order_num_m=`Order`.order_num JOIN Vendor ON `Order`.vendor_code=Vendor.vendor_code where vendor_name"+o2+
+	        		" and Vendor.vendor_code"+o3+" and material_num"+o4+" and delivery_date"+o1+"";
 	        		; 
 	        Statement stmt = connectionnew.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);     
@@ -212,12 +220,19 @@ public class PayDao {
 				o4=" is not null ";
 			}
 			else if(o4.indexOf(",")>0) 
-			{
-			o4=" in ("+o4+")";	
+			{		String s11=" in (";
+			String[] splitM=o4.split(",");
+			for(int i=0;i<splitM.length;i++) {
+				String x11="\'"+splitM[i]+"',";
+			s11+=x11;
+			}
+		s11=s11.substring(0,s11.length()-1);	
+		s11+=")";
+		o4=s11;
 			}
 			else
 			{
-				o4="="+o4;
+				o4="=\'"+o4+"'";
 			}
 
 			o5="'"+o5+"'";
@@ -255,8 +270,8 @@ public class PayDao {
 	        		+ "Join Payment On Order_item.order_num_m=Payment.Order_num "
 	        		+ " JOIN `Order` ON Order_item.order_num_m=`Order`.order_num "
 	        		+ "JOIN Vendor ON `Order`.vendor_code"
-	        		+ "=Vendor.vendor_num where vendor_name"+o2+
-	        		" and Vendor.vendor_num"+o3+" and material_num"+o4+" and delivery_date"+o1+""+
+	        		+ "=Vendor.vendor_code where vendor_name"+o2+
+	        		" and Vendor.vendor_code"+o3+" and material_num"+o4+" and delivery_date"+o1+""+
     		" and Pay_time"+o5+" and Pay_User"+o6+" and Invoice_Text"+o7+"";
 		
 	        ; 
@@ -277,7 +292,7 @@ public class PayDao {
 		try {
 			String ownid=id;
 			Connection connectionnew = DBUtil.getConnection();
-	        String sql="select * FROM Order_item JOIN `Order` ON Order_item.order_num_m=`Order`.order_num JOIN Vendor ON `Order`.vendor_code=Vendor.vendor_num where Order_item.order_num_m="+ownid+""; 
+	        String sql="select * FROM Order_item JOIN `Order` ON Order_item.order_num_m=`Order`.order_num JOIN Vendor ON `Order`.vendor_code=Vendor.vendor_code where Order_item.order_num_m="+ownid+""; 
 	        Statement stmt = connectionnew.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);     
 	        s=resultSetToJson(rs);
@@ -385,12 +400,19 @@ public class PayDao {
 				o4=" is not null ";
 			}
 			else if(o4.indexOf(",")>0) 
-			{
-			o4=" in ("+o4+")";	
+			{		String s11=" in (";
+			String[] splitM=o4.split(",");
+			for(int i=0;i<splitM.length;i++) {
+				String x11="\'"+splitM[i]+"',";
+			s11+=x11;
+			}
+		s11=s11.substring(0,s11.length()-1);	
+		s11+=")";
+		o4=s11;
 			}
 			else
 			{
-				o4="="+o4;
+				o4="=\'"+o4+"'";
 			}
 
 			o5="'"+o5+"'";
@@ -444,7 +466,7 @@ public class PayDao {
 	        		+ "Join Payment On Order_item.order_num_m=Payment.Order_num "
 	        		+ " JOIN `Order` ON Order_item.order_num_m=`Order`.order_num "
 	        		+ "JOIN Vendor ON `Order`.vendor_code"
-	        		+ "=Vendor.vendor_num where vendor_name"+o2+
+	        		+ "=Vendor.vendor_code where vendor_name"+o2+
 	        		" and Vendor.vendor_num"+o3+" and material_num"+o4+" and delivery_date"+o1+""+
     		" and Pay_time"+o5+" and Pay_User"+o6+" and Invoice_Text"+o7+" "
     				+ "and Pay_id"+o8+" and Pay_Account"+o9;
