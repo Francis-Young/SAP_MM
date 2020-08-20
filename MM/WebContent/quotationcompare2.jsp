@@ -253,124 +253,124 @@ function open_and_search()
 </head>
 
 <body>
-	<form class="m-t" role="form" action="/QoatationController"
-		method="post">
-		<input type='text' value='bounce_to_compare' name='action'
-			hidden='true'>
-		<div id="wrapper">
 
-			<nav class="navbar-default navbar-static-side" role="navigation">
-				<div class="sidebar-collapse">
-					<ul class="nav metismenu" id="side-menu">
-						<li class="nav-header">
-							<div class="dropdown profile-element">
-								<span> <img height="48px" width="48px" alt="image"
-									class="img-circle" src="<%=session.getAttribute("uportrait")%>" />
-								</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-									<span class="clear"> <span class="block m-t-xs">
-											<strong class="font-bold"><%=session.getAttribute("uname")%></strong>
-									</span> <span class="text-muted text-xs block"><%=session.getAttribute("upermission")%><b
-											class="caret"></b></span>
-								</span>
-								</a>
-								<ul class="dropdown-menu animated fadeInRight m-t-xs">
-									<li><a>个人信息</a></li>
-									<li><a>联系方式</a></li>
-									<li><a>邮箱</a></li>
-									<li class="divider"></li>
-									<li><a href="Login">退出登录</a></li>
-								</ul>
-							</div>
-							<div class="logo-element">IN+</div>
-						</li>
-						<li><a href="Home"><i class="fa fa-home"></i> <span
-								class="nav-label">主页</span></a></li>
+	<div id="wrapper">
 
-						<li><a href="layouts.html"><i class="fa fa-diamond"></i>
-								<span class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level collapse">
-								<li><a href="CreateVendor">创建供应商</a></li>
-								<li><a href="SelectVendor?type=display">查询供应商</a></li>
-								<li><a href="SelectVendor?type=update">维护供应商</a></li>
-							</ul></li>
-
-						<li class="active"><a href="#"><i
-								class="fa fa-shopping-cart"></i><span class="nav-label">
-									采购管理 </span><span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level collapse">
-								<li><a href="#">请购单管理 <span class="fa arrow"></span></a>
-									<ul class="nav nav-third-level">
-										<li><a href="requisitionini.jsp">创建请购单 </a></li>
-										<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
-									</ul></li>
-								<li><a href="#">RFQ管理 <span class="fa arrow"></span></a>
-									<ul class="nav nav-third-level ">
-										<li><a href="rfqini.jsp">创建RFQ </a></li>
-										<li><a href="rfqleadview.jsp">查看RFQ </a></li>
-									</ul></li>
-								<li class="active"><a href="#">报价单管理 <span
-										class="fa arrow"></span></a>
-									<ul class="nav nav-third-level">
-										<li><a href="quotationini.jsp">维护报价单 </a></li>
-										<li><a href="quotationcompare.jsp">比对报价单 </a></li>
-									</ul></li>
-								<li><a href="#">订单管理 <span class="fa arrow"></span></a>
-									<ul class="nav nav-third-level ">
-										<li><a href="orderini.jsp">创建订单 </a></li>
-										<li><a href="orderleadview.jsp">查看订单 </a></li>
-										<li><a href="orderleadchange.jsp">维护订单 </a></li>
-									</ul></li>
-							</ul></li>
-						<li><a href="#"><i class="fa fa-files-o"></i> <span
-								class="nav-label">收货管理</span><span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level collapse">
-								<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
-								<li><a href="showstock.jsp">查询库存 </a></li>
-								<li><a href="createpayment.jsp">创建发票 </a></li>
-								<li><a href="postpayment.jsp">付款 </a></li>
-								<li><a href="account.jsp">查看应付账款 </a></li>
-							</ul></li>
-					</ul>
-				</div>
-			</nav>
-
-			<div id="page-wrapper" class="gray-bg">
-				<div class="row border-bottom">
-					<nav class="navbar navbar-static-top" role="navigation"
-						style="margin-bottom: 0">
-						<div class="navbar-header">
-							<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
-								href="#"><i class="fa fa-bars"></i> </a>
+		<nav class="navbar-default navbar-static-side" role="navigation">
+			<div class="sidebar-collapse">
+				<ul class="nav metismenu" id="side-menu">
+					<li class="nav-header">
+						<div class="dropdown profile-element">
+							<span> <img height="48px" width="48px" alt="image"
+								class="img-circle" src="<%=session.getAttribute("uportrait")%>" />
+							</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<span class="clear"> <span class="block m-t-xs"> <strong
+										class="font-bold"><%=session.getAttribute("uname")%></strong>
+								</span> <span class="text-muted text-xs block"><%=session.getAttribute("upermission")%><b
+										class="caret"></b></span>
+							</span>
+							</a>
+							<ul class="dropdown-menu animated fadeInRight m-t-xs">
+								<li><a>个人信息</a></li>
+								<li><a>联系方式</a></li>
+								<li><a>邮箱</a></li>
+								<li class="divider"></li>
+								<li><a href="Login">退出登录</a></li>
+							</ul>
 						</div>
-						<ul class="nav navbar-top-links navbar-left">
-							<li><a> <i class="fa fa-paper-plane"></i>Be What's Next.
-							</a></li>
-						</ul>
-						<ul class="nav navbar-top-links navbar-right">
-							<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uname")%></span>
-							</li>
-							<li><a href="Login"> <i class="fa fa-sign-out"></i> 退出登录
-							</a></li>
-						</ul>
+						<div class="logo-element">IN+</div>
+					</li>
+					<li><a href="Home"><i class="fa fa-home"></i> <span
+							class="nav-label">主页</span></a></li>
 
-					</nav>
-				</div>
+					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
+							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li><a href="CreateVendor">创建供应商</a></li>
+							<li><a href="SelectVendor?type=display">查询供应商</a></li>
+							<li><a href="SelectVendor?type=update">维护供应商</a></li>
+						</ul></li>
 
+					<li class="active"><a href="#"><i
+							class="fa fa-shopping-cart"></i><span class="nav-label">
+								采购管理 </span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li><a href="#">请购单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="requisitionini.jsp">创建请购单 </a></li>
+									<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+								</ul></li>
+							<li><a href="#">RFQ管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="rfqini.jsp">创建RFQ </a></li>
+									<li><a href="rfqleadview.jsp">查看RFQ </a></li>
+								</ul></li>
+							<li class="active"><a href="#">报价单管理 <span
+									class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="quotationini.jsp">维护报价单 </a></li>
+									<li><a href="quotationcompare.jsp">比对报价单 </a></li>
+								</ul></li>
+							<li><a href="#">订单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="orderini.jsp">创建订单 </a></li>
+									<li><a href="orderleadview.jsp">查看订单 </a></li>
+									<li><a href="orderleadchange.jsp">维护订单 </a></li>
+								</ul></li>
+						</ul></li>
+					<li><a href="#"><i class="fa fa-files-o"></i> <span
+							class="nav-label">收货管理</span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
+							<li><a href="showstock.jsp">查询库存 </a></li>
+							<li><a href="createpayment.jsp">创建发票 </a></li>
+							<li><a href="postpayment.jsp">付款 </a></li>
+							<li><a href="account.jsp">查看应付账款 </a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</nav>
 
-				<!--正文 -->
-				<div class="row wrapper border-bottom white-bg page-heading">
-					<div class="col-lg-10">
-						<h2>报价单比较</h2>
-						<ol class="breadcrumb">
-							<li><a href="Home">主页</a></li>
-							<li>报价单管理</li>
-							<li class="active"><strong>报价单比较</strong></li>
-						</ol>
+		<div id="page-wrapper" class="gray-bg">
+			<div class="row border-bottom">
+				<nav class="navbar navbar-static-top" role="navigation"
+					style="margin-bottom: 0">
+					<div class="navbar-header">
+						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
+							href="#"><i class="fa fa-bars"></i> </a>
 					</div>
-					<div class="col-lg-2"></div>
+					<ul class="nav navbar-top-links navbar-left">
+						<li><a> <i class="fa fa-paper-plane"></i>Be What's Next.
+						</a></li>
+					</ul>
+					<ul class="nav navbar-top-links navbar-right">
+						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uname")%></span>
+						</li>
+						<li><a href="Login"> <i class="fa fa-sign-out"></i> 退出登录
+						</a></li>
+					</ul>
+
+				</nav>
+			</div>
+
+
+			<!--正文 -->
+			<div class="row wrapper border-bottom white-bg page-heading">
+				<div class="col-lg-10">
+					<h2>报价单比较</h2>
+					<ol class="breadcrumb">
+						<li><a href="Home">主页</a></li>
+						<li>报价单管理</li>
+						<li class="active"><strong>报价单比较</strong></li>
+					</ol>
 				</div>
+				<div class="col-lg-2"></div>
+			</div>
 
-
+			<form class="m-t" role="form" action="/QoatationController"
+				method="post">
+				<input type='text' value='bounce_to_compare' name='action'
+					hidden='true'>
 
 				<div class="wrapper wrapper-content animated fadeIn">
 					<div class="row">
@@ -575,72 +575,40 @@ function open_and_search()
 														}
 														out.print("</tr>");
 													%>
-
-
-
-
-
 												</tbody>
-
 											</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 											<!--RFQ具体信息 -->
 										</div>
-
-
 									</div>
-
-
-
-
 								</div>
 
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="footer">
-				<div style="padding-top: 2px;">
 
-					<p>
-						<font size="3" color="#1ab394"> <%
+				<div class="footer">
+					<div class="pull-right">
+						<a href="${pageContext.request.contextPath}/Home"><button
+								type="button" class="btn btn-white" id="cleartoasts">返回</button></a>
+					</div>
+					<div style="padding-top: 2px;">
+
+						<p>
+							<font size="3" color="#1ab394"> <%
  	if (request.getAttribute("quonum") != null) {
  		out.print("报价单已维护：" + request.getAttribute("quonum").toString());
  		session.setAttribute("quonum", request.getAttribute("quonum").toString());
  	}
  %>
-						</font>
-					</p>
+							</font>
+						</p>
 
+					</div>
 				</div>
-
-			</div>
-
-
 		</div>
+
 		<!-- Mainly scripts for pop windows-->
 		<script>  
         function openwin(n){
@@ -699,7 +667,9 @@ function open_and_search()
 
 			</div>
 		</div>
-	</form>
+		</form>
+	</div>
+
 
 	<!-- 第二层弹窗 -->
 	<div id="inputbox2" class="opbox2">

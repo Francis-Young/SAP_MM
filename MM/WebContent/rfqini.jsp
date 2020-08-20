@@ -414,7 +414,6 @@ function open_and_search()
 											<li><a href="#">配置 2</a></li>
 										</ul>
 
-										</a>
 									</div>
 								</div>
 
@@ -496,7 +495,7 @@ initDatePicker($("#sb2"));
 						</div>
 					</div>
 				</div>
-				<div class="footer" style="position: fixed; bottom: 0;">
+				<div class="footer">
 					<div class="pull-right">
 						<div class="text-right">
 							<div class="row">

@@ -177,7 +177,6 @@ function open_and_search()
 
 .opbox1.show {
 	display: block;
-
 }
 
 .opbox1 .x {
@@ -229,7 +228,6 @@ function open_and_search()
 .opbox3.show {
 	display: block;
 }
-
 
 .opbox3 .x {
 	font-size: 18px;
@@ -360,13 +358,10 @@ function open_and_search()
 			<form class="m-t" role="form"
 				action="${pageContext.request.contextPath}/order" method="post">
 
-
-
 				<div class="wrapper wrapper-content animated fadeIn">
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="ibox float-e-margins">
-
 
 								<div class="ibox-title">
 									<h5>维护订单</h5>
@@ -379,7 +374,6 @@ function open_and_search()
 											<li><a href="#">配置 1</a></li>
 											<li><a href="#">配置 2</a></li>
 										</ul>
-
 
 
 									</div>
@@ -531,7 +525,6 @@ if(request.getAttribute("order_code")!=null)
 					<div class="form-group">
 						<label for="title">请购单种类</label> <input id="vname" type="text"
 							class="form-control" placeholder="输入请购单种类...">
-
 					</div>
 
 					<div class="form-group">
@@ -572,7 +565,6 @@ if(request.getAttribute("order_code")!=null)
 						<button type="button" class="btn btn-primary" id="showsimple"
 							onclick=open_and_search()>搜索</button>
 					</div>
-
 
 				</div>
 

@@ -361,7 +361,7 @@ out.print("<p hidden='hidden' id='legalm' >"+mnum+"</p>");
 				
 			</div>
 
-			<div class="footer" style="position: fixed; bottom: 0 ;z-index: 1;">
+			<div class="footer">
 
 				<div class="pull-right">
 					<div class="text-right">

@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" import="java.util.List,mm.bean.*,mm.dao.*,java.util.ArrayList"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	import="java.util.List,mm.bean.*,mm.dao.*,java.util.ArrayList"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -8,7 +9,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>维护报价单</title>
+<title>创建订单</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -68,94 +69,93 @@ function openMenu(obj) {
 </script>
 
 <style>
-.menus { 
-width: 190px; 
-overflow: hidden; 
-box-shadow: 1px 1px 4px gray; 
-/* border-bottom: 1px solid black; 
-border-top: 1px solid black; */ 
-border: 1px solid gray; 
-border-radius: 5px; 
+.menus {
+	width: 190px;
+	overflow: hidden;
+	box-shadow: 1px 1px 4px gray;
+	/* border-bottom: 1px solid black; 
+border-top: 1px solid black; */
+	border: 1px solid gray;
+	border-radius: 5px;
 }
 
-.menu { 
-overflow: hidden; 
-height: 0px; 
-transition: all 0.3s ease; 
+.menu {
+	overflow: hidden;
+	height: 0px;
+	transition: all 0.3s ease;
 }
 
-.menu_title { 
-width: 195px; 
-height: 40px; 
-line-height: 40px; 
-background: #fafafa; 
-color: gray; 
-font-size: 15px; 
-padding-left: 32px; 
-transition: all 0.3s ease; 
-cursor: pointer; 
-position: relative; 
-font-weight: bold; 
-overflow: hidden; 
+.menu_title {
+	width: 195px;
+	height: 40px;
+	line-height: 40px;
+	background: #fafafa;
+	color: gray;
+	font-size: 15px;
+	padding-left: 32px;
+	transition: all 0.3s ease;
+	cursor: pointer;
+	position: relative;
+	font-weight: bold;
+	overflow: hidden;
 }
 
-.menu_title:hover { 
-background: #dedede; 
-color: black; 
+.menu_title:hover {
+	background: #dedede;
+	color: black;
 }
 
-.indicator { 
-width: 40px; 
-height: 40px; 
-font-weight: bold; 
-position: absolute; 
-left: 0px; 
-top: 0px; 
-transition: all 0.3s ease; 
-font-weight: bold; 
-text-align: center; 
-transform: rotate(180deg);
+.indicator {
+	width: 40px;
+	height: 40px;
+	font-weight: bold;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	transition: all 0.3s ease;
+	font-weight: bold;
+	text-align: center;
+	transform: rotate(180deg);
 }
 
-.item { 
-width: 195px; 
-height: 32px; 
-line-height: 32px; 
-background: gray; 
-color: white; 
-padding-left: 30px; 
-transition: all 0.3s ease; 
-cursor: pointer; 
-overflow: hidden; 
+.item {
+	width: 195px;
+	height: 32px;
+	line-height: 32px;
+	background: gray;
+	color: white;
+	padding-left: 30px;
+	transition: all 0.3s ease;
+	cursor: pointer;
+	overflow: hidden;
 }
 
-.item:hover { 
-background: #B22222; 
+.item:hover {
+	background: #B22222;
 }
 
-.item a { 
-width: 290px; 
-height: 40px; 
-display: block; 
-text-decoration: none; 
-color: white; 
-text-decoration: none; 
+.item a {
+	width: 290px;
+	height: 40px;
+	display: block;
+	text-decoration: none;
+	color: white;
+	text-decoration: none;
 }
 
-.item_divider { 
-width: 322px; 
-height: 1px; 
-background: white; 
-display: block; 
-opacity: 0.8; 
+.item_divider {
+	width: 322px;
+	height: 1px;
+	background: white;
+	display: block;
+	opacity: 0.8;
 }
 
-.menu_divider { 
-width: 100%; 
-height: 1px; 
-background: gray; 
+.menu_divider {
+	width: 100%;
+	height: 1px;
+	background: gray;
 }
-
 </style>
 <script type="text/javascript">
 
@@ -275,58 +275,90 @@ function open_and_search()
 	}
 </script>
 <style>
-#wrapper
-{
-     z-index: 99;
-   position: absolute;
+#wrapper {
+	z-index: 99;
+	position: absolute;
 }
 
-.opbox1{
-    z-index: 100;
-    width:50%; margin-top:10%; margin:auto; padding:28px;
-    top:25%; left:25%;
-    height:350px; border:1px #111 solid;
-    display:none;            /* 默认对话框隐藏 */
-
-position: absolute;
-background:white;
+.opbox1 {
+	z-index: 100;
+	width: 50%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 25%;
+	left: 25%;
+	height: 350px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
 }
-.opbox1.show{display:block;} 
-.opbox1 .x{ font-size:18px; text-align:right; display:block;}
 
-.opbox2{
-    z-index: 101;
-    width:40%; margin-top:10%; margin:auto; padding:28px;
-    top:5%; left:30%;
-     border:1px #111 solid;
-    display:none;            /* 默认对话框隐藏 */
-
-position: absolute;
-background:white;
+.opbox1.show {
+	display: block;
 }
-.opbox2.show{display:block;} 
-.opbox2 .x{ font-size:18px; text-align:right; display:block;}
 
-.opbox3{
-    z-index: 101;
-    width:40%; margin-top:10%; margin:auto; padding:28px;
-    top:5%; left:30%;
-    height:650px; border:1px #111 solid;
-    display:none;            /* 默认对话框隐藏 */
-
-position: absolute;
-background:white;
+.opbox1 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
 }
-.opbox3.show{display:block;} 
-.opbox3 .x{ font-size:18px; text-align:right; display:block;}
 
+.opbox2 {
+	z-index: 101;
+	width: 40%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 5%;
+	left: 30%;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
+}
+
+.opbox2.show {
+	display: block;
+}
+
+.opbox2 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
+}
+
+.opbox3 {
+	z-index: 101;
+	width: 40%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 5%;
+	left: 30%;
+	height: 650px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
+}
+
+.opbox3.show {
+	display: block;
+}
+
+.opbox3 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
+}
 </style>
 
 </head>
 
 <body>
-<form class="m-t" role="form" action="${pageContext.request.contextPath}/order" method="post">
-<input type='text' value='bounce_to_select' name='action' hidden='true'>
+
 	<div id="wrapper">
 
 		<nav class="navbar-default navbar-static-side" role="navigation">
@@ -353,70 +385,47 @@ background:white;
 						</div>
 						<div class="logo-element">IN+</div>
 					</li>
-					<li><a href="Home"><i class="fa fa-home"></i> <span class="nav-label">主页</span></a></li>
-					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
+					<li><a href="Home"><i class="fa fa-home"></i> <span
+							class="nav-label">主页</span></a></li>
+
+					<li><a href="layouts.html"><i class="fa fa-diamond"></i> <span
+							class="nav-label">供应商管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
 							<li><a href="CreateVendor">创建供应商</a></li>
 							<li><a href="SelectVendor?type=display">查询供应商</a></li>
 							<li><a href="SelectVendor?type=update">维护供应商</a></li>
 						</ul></li>
-						
-						
-						
-						<li class="active">
-                      <a href="#"><i class="fa fa-shopping-cart"></i><span class="nav-label">采购管理 </span><span class="fa arrow"></span></a>
-                      <ul class="nav nav-second-level collapse in" style="">
-                          <li class="">
-                              <a href="#">请购单管理 <span class="fa arrow"></span></a>
-                              <ul class="nav nav-third-level collapse" style="height: 0px;">
-                                  <li>
-                                      <a href="requisitionini.jsp">创建请购单 </a>
-                                  </li>
-                                  <li>
-                                      <li><a href="requisitionleadview.jsp">查看请购单 </a></li>
-                                
-                              
 
-                              </ul>
-                          </li>
-                           <li class="">
-                              <a href="#">RFQ管理 <span class="fa arrow"></span></a>
-                              <ul class="nav nav-third-level collapse" style="height: 0px;">
-                                  <li>
-                                     <a href="rfqini.jsp">创建RFQ </a>
-                                  </li>
-                                  <li>
-                                     <a href="rfqleadview.jsp">查看RFQ </a>
-                                  </li>
-                            
+					<li class="active"><a href="#"><i
+							class="fa fa-shopping-cart"></i><span class="nav-label">
+								采购管理 </span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li><a href="#">请购单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="requisitionini.jsp">创建请购单 </a></li>
+									<li><a href="requisitionleadview.jsp">查看请购单 </a></li>
+								</ul></li>
+							<li><a href="#">RFQ管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="rfqini.jsp">创建RFQ </a></li>
+									<li><a href="rfqleadview.jsp">查看RFQ </a></li>
+								</ul></li>
+							<li><a href="#">报价单管理 <span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="quotationini.jsp">维护报价单 </a></li>
+									<li><a href="quotationcompare.jsp">比对报价单 </a></li>
 
-                              </ul>
-                          </li> <li class="">
-                              <a href="#">报价单管理 <span class="fa arrow"></span></a>
-                              <ul class="nav nav-third-level collapse" style="height: 0px;">
-                                  <li>
-                                      <a href="quotationini.jsp">维护报价单 </a>
-                                  </li>
-                                  <li>
-                                      <a href="quotationcompare.jsp">比对报价单 </a>
-                                  </li>
-
-                              </ul>
-                          </li> <li class="">
-                              <a href="#">订单管理 <span class="fa arrow"></span></a>
-                              <ul class="nav nav-third-level collapse" style="height: 0px;">
-							<li><a href="orderini.jsp">创建订单 </a></li>
-							<li><a href="orderleadview.jsp">查看订单 </a></li>
-							<li><a href="orderleadchange.jsp">维护订单 </a></li>
-
-                              </ul>
-                          </li>
-                      </ul>
-                  </li>
-                  
-		
-
-					<li><a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">收货管理</span><span class="fa arrow"></span></a>
+								</ul></li>
+							<li class="active"><a href="#">订单管理 <span
+									class="fa arrow"></span></a>
+								<ul class="nav nav-third-level ">
+									<li><a href="orderini.jsp">创建订单 </a></li>
+									<li><a href="orderleadview.jsp">查看订单 </a></li>
+									<li><a href="orderleadchange.jsp">维护订单 </a></li>
+								</ul></li>
+						</ul></li>
+					<li><a href="#"><i class="fa fa-files-o"></i> <span
+							class="nav-label">收货管理</span><span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
 							<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
 							<li><a href="showstock.jsp">查询库存 </a></li>
@@ -435,64 +444,15 @@ background:white;
 					<div class="navbar-header">
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
 							href="#"><i class="fa fa-bars"></i> </a>
-
 					</div>
+					<ul class="nav navbar-top-links navbar-left">
+						<li><a> <i class="fa fa-paper-plane"></i>Be What's Next.
+						</a></li>
+					</ul>
 					<ul class="nav navbar-top-links navbar-right">
-						<li><span class="m-r-sm text-muted welcome-message">欢迎回来！</span></li>
-						<li class="dropdown"><a class="dropdown-toggle count-info"
-							data-toggle="dropdown" href="#"> <i class="fa fa-envelope"></i>
-								<span class="label label-warning">16</span>
-						</a>
-							<ul class="dropdown-menu dropdown-messages">
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/a7.jpg">
-										</a>
-										<div class="media-body">
-											<small class="pull-right">46小时前</small> <strong>李文俊</strong>
-											关注了 <strong>刘海洋</strong>. <br> <small class="text-muted">3
-												天 前- 10.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/a4.jpg">
-										</a>
-										<div class="media-body ">
-											<small class="pull-right text-navy">5小时前</small> <strong>王昆</strong>
-											关注了 <strong>李文俊</strong>. <br> <small class="text-muted">昨天下午1:21
-												- 11.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/profile.jpg">
-										</a>
-										<div class="media-body ">
-											<small class="pull-right">23小时前</small> <strong>张三</strong>
-											赞了 <strong>李四</strong>. <br> <small class="text-muted">2天前
-												- 11.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="text-center link-block">
-										<a href="mailbox.html"> <i class="fa fa-envelope"></i> <strong>查看更多消息</strong>
-										</a>
-									</div>
-								</li>
-							</ul></li>
-
-						<li><a href="login.html"> <i class="fa fa-sign-out"></i>
-								退出登录
+						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uname")%></span>
+						</li>
+						<li><a href="Login"> <i class="fa fa-sign-out"></i> 退出登录
 						</a></li>
 					</ul>
 
@@ -513,210 +473,225 @@ background:white;
 				<div class="col-lg-2"></div>
 			</div>
 
+			<form class="m-t" role="form"
+				action="${pageContext.request.contextPath}/order" method="post">
+				<input type='text' value='bounce_to_select' name='action'
+					hidden='true'>
+
+				<div class="wrapper wrapper-content animated fadeIn">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="ibox float-e-margins">
+
+								<div class="ibox-title">
+									<h5>创建订单</h5>
+									<div class="ibox-tools">
+										<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+										</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+											<i class="fa fa-wrench"></i>
+										</a>
+										<ul class="dropdown-menu dropdown-user">
+											<li><a href="#">配置 1</a></li>
+											<li><a href="#">配置 2</a></li>
+										</ul>
+
+									</div>
+								</div>
+
+								<div class="ibox-content">
 
 
-			<div class="wrapper wrapper-content animated fadeIn">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="ibox float-e-margins">
+									<!--展开式报价单选择列表 -->
 
-							<div class="ibox-title">
-								<h5>创建订单</h5>
-								<div class="ibox-tools">
-									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
-									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-										<i class="fa fa-wrench"></i>
-									</a>
-									<ul class="dropdown-menu dropdown-user">
-										<li><a href="#">配置 1</a></li>
-										<li><a href="#">配置 2</a></li>
-									</ul>
-									
+									<div class="menus">
+										<%
+											@SuppressWarnings("unchecked")
+											ArrayList<Quotation> qolist = (ArrayList<Quotation>) session.getAttribute("qolist");
+											@SuppressWarnings("unchecked")
+											ArrayList<Vendor> venlist = (ArrayList<Vendor>) session.getAttribute("venlist");
+											for (int i = 0; i < venlist.size(); i++) {
+												int i1 = i + 1;
+												out.print("<div id='menu_title" + i1 + "' class='menu_title' onclick='openMenu(this)'>"
+														+ venlist.get(i).getVname() + " <div class='indicator' id='indicator" + i1
+														+ "' >^</div> </div>");
+												out.print("<div class='menu' id='menu" + i1 + "'>");//"+i1+"
+												for (int j = 0; j < qolist.size(); j++) {
+													Quotation qo = qolist.get(j);
+													if (String.valueOf(qo.getVendor_code()).equals(venlist.get(i).getVcode()))//如果是此供应商
+													{
+														out.print("<div class='item'>");
+														out.print("<a href='orderfin.jsp?quo=" + qo.getQuotation_code() + "'>" + qo.getQuotation_code()
+																+ "</a></div>");
+														out.print("<li class='item_divider'></li>");
+													}
+												}
+												out.print("</div><li class='menu_divider'></li>");
+											}
+										%>
+
+
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="footer">
+
+					<div class="pull-right">
+						<div class="text-right">
+
+							<a href="${pageContext.request.contextPath}/Home"><button
+									type="button" class="btn btn-white" id="cleartoasts">返回</button></a>
+						</div>
+					</div>
+				</div>
+
+				<!-- 第一层弹窗 -->
+				<div id='inputbox' class="opbox1">
+
+					<a class='x' href='' ; onclick="openwin(0); return false;">关闭</a>
+
+					<div class="ibox-content">
+
+						<div class="form-group">
+
+							<label class="col-sm-2 control-label"
+								style="width: 13%; padding: 1px;">请购单</label>
+							<div class="col-sm-10" style="width: 87%; padding: 1px;">
+								<input name="requisition_num" id="reqnum" type="text"
+									class="form-control" style="width: 80%">
+								<div class="infont col-md-3 col-sm-4" style="Float: right">
+									<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
 								</div>
 							</div>
 
-							<div class="ibox-content">
-								
-								
-
-<!--展开式报价单选择列表 -->
-
-<div class="menus">
-<%
-@SuppressWarnings("unchecked")
-ArrayList<Quotation> qolist= (ArrayList<Quotation>) session.getAttribute("qolist");
-@SuppressWarnings("unchecked")
-ArrayList<Vendor> venlist= (ArrayList<Vendor>) session.getAttribute("venlist");
-for(int i=0;i<venlist.size();i++)
-{
-	int i1=i+1;
-	out.print("<div id='menu_title"+i1+"' class='menu_title' onclick='openMenu(this)'>"+venlist.get(i).getVname()+
-		   " <div class='indicator' id='indicator"+i1+"' >^</div> </div>"  );
-	out.print("<div class='menu' id='menu"+i1+"'>");//"+i1+"
-	for(int j=0;j<qolist.size();j++)
-	{
-		Quotation qo=qolist.get(j);
-		if(String.valueOf(qo.getVendor_code()).equals(venlist.get(i).getVcode()) )//如果是此供应商
-		{
-		out.print("<div class='item'>");
-		out.print("<a href='orderfin.jsp?quo="+qo.getQuotation_code()+"'>"+qo.getQuotation_code()+"</a></div>");
-		out.print("<li class='item_divider'></li>");
-		}
-	}
-	out.print("</div><li class='menu_divider'></li>");
-}
-
-
-%>
-</div>
-
-
-
-						
-						
-																		
-									
-										</div>
-									</div>
-</div>
+							<label class="col-sm-2 control-label"
+								style="width: 13%; padding: 1px;">工厂</label>
+							<div class="col-sm-10" style="width: 87%; padding: 1px;">
+								<input name="plant2" type="text" class="form-control"
+									style="width: 80%">
+								<div class="infont col-md-3 col-sm-4" style="Float: right">
+									<a onclick="#"><i class="fa fa-search-plus"></i></a>
+								</div>
 							</div>
+
+							<button type="button" class="btn btn-primary "
+								style="margin: 60px 20px 0 0; Float: right"
+								onclick="openwin(0); return false;">取消</button>
+							<input type="submit" class="btn btn-primary "
+								style="margin: 60px 20px 0 0; Float: right" value="继续">
+
 						</div>
+
+						<input type="button" value="确定">
+
 					</div>
 				</div>
-			<div class="footer" style="position: fixed; bottom: 0;">
-
-			<div class="pull-right">
-				<div class="text-right">
-					<button type="submit" class="btn btn-primary" id="showtoast">执行</button>
-				</div>
-			</div>
-			<div>
-				<strong>Copyright</strong> 版权所有 © 2014-2015
-			</div>
+			</form>
 		</div>
-	
+	</div>
 
 
-	
 
-	
-	
+
+
+
+
+
 
 
 	<!-- Mainly scripts for pop windows-->
-	   <script>  
+	<script>  
         function openwin(n){
             document.getElementById('inputbox').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
         }
-     </script>  
-     <script>  
+     </script>
+	<script>  
         function openwin2(n){
             document.getElementById('inputbox2').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
         }
-     </script>  
-          <script>  
+     </script>
+	<script>  
         function openwin3(n){
             document.getElementById('inputbox3').style.display=n?'block':'none';     /* 点击按钮打开/关闭 对话框 */
         }
-     </script>  
-     
-     <!-- 第一层弹窗 -->
-     <div id='inputbox' class="opbox1">
-     
-        <a class='x' href=''; onclick="openwin(0); return false;">关闭</a>
-        	
-				<div class="ibox-content"> 					
-                
+     </script>
+
+
+
+	<!-- 第二层弹窗 -->
+	<div id="inputbox2" class="opbox2">
+
+		<a class='x' href='' ; onclick="openwin2(0); return false;">关闭</a>
+		<p>查找材料： 输入任意已知信息</p>
+		<div class="ibox-content" style="padding: 5px 5px 5px 5px;">
+			<div>
+				<div>
+					<!--material具体信息 -->
 					<div class="form-group">
-					
-						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >请购单</label>
-						<div class="col-sm-10" style="width:87%;padding:1px;">
-							<input name="requisition_num" id="reqnum" type="text" class="form-control" style="width:80%">
-							<div  class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a></div>
-						</div>
-						
-						<label class="col-sm-2 control-label" style="width:13%;padding:1px;" >工厂</label>
-						<div class="col-sm-10" style="width:87%;padding:1px;">
-							<input name="plant2" type="text" class="form-control" style="width:80%">
-							<div class="infont col-md-3 col-sm-4" style="Float:right"><a onclick="#"><i class="fa fa-search-plus"></i></a></div>
-						</div>
-						
-		<button type="button" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" onclick="openwin(0); return false;">取消</button>
-        <input type="submit" class="btn btn-primary " style="margin:60px 20px 0 0;Float:right" value="继续">
-					
+						<label for="title">描述</label> <input id="key1" type="text"
+							class="form-control">
 					</div>
-        
-        <input type="button" value="确定">
-        
-        </div>
-     </div>
-     </form>
-     
-   <!-- 第二层弹窗 -->  
-   <div id="inputbox2" class="opbox2">
-   
-   <a class='x' href=''; onclick="openwin2(0); return false;">关闭</a>
-   <p> 查找材料：   输入任意已知信息</p>
-     <div class="ibox-content" style="padding:5px 5px 5px 5px;">
-														<div >
-															<div >
-																	<!--material具体信息 -->
-																	<div class="form-group">
-																		<label for="title">描述</label> <input id="key1" type="text" class="form-control" >
-																	</div>
 
-																	<div class="form-group">
-																		<label for="message">基本单位</label> <input class="form-control" id="key2" type="text" >
-																	</div>
+					<div class="form-group">
+						<label for="message">基本单位</label> <input class="form-control"
+							id="key2" type="text">
+					</div>
 
-																	<div class="form-group">
-																		<label for="message">MRP类型</label> <input class="form-control" id="key3" type="text" >
-																	</div>
+					<div class="form-group">
+						<label for="message">MRP类型</label> <input class="form-control"
+							id="key3" type="text">
+					</div>
 
-																	<div class="form-group">
-																		<label for="message">产品组</label> <input class="form-control" id="key4" type="text" >
-																	</div>
+					<div class="form-group">
+						<label for="message">产品组</label> <input class="form-control"
+							id="key4" type="text">
+					</div>
 
 
-						
-
-																</div><div class="row">
-																	<div class="col-lg-12">
-																		<button type="button" class="btn btn-primary" id="showsimple" onclick=open_and_search()>搜索</button>
-																	</div>
-												
-														</div>
-
-													</div>
-     
-     </div>
-     </div>
-     <!-- 第三层弹窗 -->
-   <div id="inputbox3" class="opbox3">
-   
-   <a class='x' href=''; onclick="openwin3(0); return false;">关闭</a>
-   <table id="tbl" class="table table-striped">
-
-									<thead id="tableHead">
-										<tr>
-											<th>RFQ编号</th>
-											<th>工厂</th>
-											<th>RFQ集合号</th>
-		
-											
-											<th>供应商</th>
-											<th>截止日期</th>
-										</tr>
-									</thead>
 
 
-									<tbody id="tableBody">
-									
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<button type="button" class="btn btn-primary" id="showsimple"
+							onclick=open_and_search()>搜索</button>
+					</div>
 
-									</tbody>
-								</table>  
-     </div>
-     
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	<!-- 第三层弹窗 -->
+	<div id="inputbox3" class="opbox3">
+
+		<a class='x' href='' ; onclick="openwin3(0); return false;">关闭</a>
+		<table id="tbl" class="table table-striped">
+
+			<thead id="tableHead">
+				<tr>
+					<th>RFQ编号</th>
+					<th>工厂</th>
+					<th>RFQ集合号</th>
+
+
+					<th>供应商</th>
+					<th>截止日期</th>
+				</tr>
+			</thead>
+
+
+			<tbody id="tableBody">
+
+
+			</tbody>
+		</table>
+	</div>
+
 	<script src="js/jquery-2.1.1.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
@@ -728,9 +703,9 @@ for(int i=0;i<venlist.size();i++)
 
 	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
-    <!-- Sweet alert -->
-    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
-    
+	<!-- Sweet alert -->
+	<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
 	<script type="text/javascript">
 		$(function() {
 			var i = -1;
@@ -865,7 +840,7 @@ for(int i=0;i<venlist.size();i++)
 	</script>
 	<!-- float window -->
 
-	
+
 </body>
 
 </html>

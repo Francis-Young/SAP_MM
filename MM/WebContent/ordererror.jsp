@@ -416,7 +416,7 @@ int i=0;
 				</div>
 			</div>
 
-			<div class="footer" style="position: fixed; bottom: 0;">
+			<div class="footer">
 				<div class="pull-right">
 					<div class="text-right">
 						<input type="submit"  value="保存" class="btn btn-success btn-sm demo2" id="showtoast">
