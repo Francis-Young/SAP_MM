@@ -14,7 +14,7 @@ public class OrderItemDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 			int order_num_m=OrderDao.findOrderByCode(oi.getOrder_code()).getOrder_num();
-			String sql=""+ "insert into Order_item" +" (order_item_num,`order_code`,purchase_requisition_num,price,quantity,delivery_date,currency_unit,material_num,sloc,plant,order_num_m) "+"values(default,?,?,?,?,?,?,?,?,?,?)";
+			String sql=""+ "insert into Order_item" +" (order_item_num,`order_code`,purchase_requisition_num,price,quantity,delivery_date,currency_unit,material_num,sloc,plant,order_num_m,stat_delivery_date) "+"values(default,?,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 		
 			psmt.setString(1, oi.getOrder_code());
@@ -28,6 +28,7 @@ public class OrderItemDao {
 			psmt.setString(9, oi.getPlant());
 	
 			psmt.setInt(10, order_num_m);
+			psmt.setDate(11, oi.getStat_delivery_date());
 			psmt.execute();
 		}catch(SQLException e) {
             e.printStackTrace();
@@ -135,7 +136,7 @@ public class OrderItemDao {
 				oi.setDelivery_date(rs.getDate("delivery_date"));
 				oi.setMaterial_num(rs.getString("material_num"));
 				oi.setOrder_item_num(rs.getInt("order_num_m"));
-
+				oi.setStat_delivery_date(rs.getDate("stat_delivery_date"));
 				oilist.add(oi);
 			}
 		}catch(SQLException e) {
