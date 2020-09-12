@@ -12,16 +12,20 @@ import java.util.regex.Pattern;
 
 import mm.bean.User;
 import mm.utils.DBUtil;
+import mm.utils.HashUtil;
 
 public class LoginDao {
-	public boolean isValid(String unum, String ucode) {
+	
+	
+	public boolean isValid(String unum, String password) {
 		boolean valid = false;
 		Connection conn = DBUtil.getConnection();
-
+		String hashPassword = HashUtil.hash(password, "SHA1");
+		System.out.println(hashPassword);
 		try {
 			PreparedStatement stat = conn.prepareStatement("select * from User where user_num=? and user_password=?");
 			stat.setString(1, unum);
-			stat.setString(2, ucode);
+			stat.setString(2, hashPassword);
 			ResultSet rs = stat.executeQuery();// ��ɾ�ĺͲ�ѯ�����ò�ͬ�ĺ���
 			if (rs.next())
 				valid = true;
