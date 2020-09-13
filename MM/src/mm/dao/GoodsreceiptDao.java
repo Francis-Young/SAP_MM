@@ -52,21 +52,21 @@ public class GoodsreceiptDao {
 		Connection conn = DBUtil.getConnection();
 		
 		try {
-			String sql = "" + "SELECT * FROM `Order`";
+			int x=0;
+			String sql = "" + "SELECT * FROM `Order`"+"WHERE receipt_checked!="+'"'+x+'"';
 			int flag=0;
 			
 			if(!od.getVendor_code().equals("xx")){
-				sql+=" WHERE vendor_code="+'"'+od.getVendor_code()+'"';
+				sql+="AND vendor_code="+'"'+od.getVendor_code()+'"';
 				flag=1;
 			}
 			if(!od.getPur_org().equals("xx")){
 				if(flag==1){
 					sql+="AND ";
-				}else{sql+="WHERE ";}
+				}else{sql+="AND ";}
 				sql+="pur_org="+'"'+od.getPur_org()+'"';	
 				flag=1;
 			}
-
 			
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			// 执行查询语句
@@ -101,7 +101,7 @@ public class GoodsreceiptDao {
 			int flag=0;
 			
 			if(!mat.getMaterial_discr().equals("xx")){
-				sql+=" WHERE material_discr LIKE '%"+mat.getMaterial_discr()+"%'";
+				sql+=" WHERE material_discr LIKE "+'"'+"%"+mat.getMaterial_discr()+"%"+'"';
 				flag=1;
 			}
 			if(!mat.getMaterial_salesorg().equals("xx")){
