@@ -15,8 +15,15 @@ public class GoodsReceipt implements Serializable  {
 	private String delivery_note;
 	private int pre_m_num;
 	private int end_m_num;
+	private int receipt_checked;
 
 	
+	public int getReceipt_checked() {
+		return receipt_checked;
+	}
+	public void setReceipt_checked(int receipt_checked) {
+		this.receipt_checked = receipt_checked;
+	}
 	public int getEnd_m_num() {
 		return end_m_num;
 	}
