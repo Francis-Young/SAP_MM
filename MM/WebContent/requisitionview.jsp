@@ -385,8 +385,6 @@
 									</div>
 									<br>
 									<br>
-									<br>
-									<br>
 									<!-- tab -->
 
 									<div class="tabs-container">
@@ -408,7 +406,7 @@
 																		<th>条目</th>
 																		<th>状态</th>
 																		<th>材料编号</th>
-																		<th>短文本</th>
+																		<th>描述</th>
 																		<th>订购数量</th>
 																		<th>基本单位</th>
 																		<th>送货时间</th>
