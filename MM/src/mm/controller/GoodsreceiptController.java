@@ -112,7 +112,8 @@ public class GoodsreceiptController extends HttpServlet {
 		int itemNo = Integer.parseInt(request.getParameter("num"));
 		System.out.println(itemNo);
 
-		int y = 0;
+		int y = 0;//检查信息是否完整
+		int z = 0;//检查物料是否被运完
 
 		for (int i = 1; i <= itemNo; i++) {
 
@@ -133,20 +134,34 @@ public class GoodsreceiptController extends HttpServlet {
 			System.out.println(gr.getSloc());
 			try {
 				GoodsreceiptItemDao gridao = new GoodsreceiptItemDao();
-				gridao.addgoodsreceiptitem(gr);
+				z = gridao.orderitemchecked(gr);
+				System.out.println(z);
+				if(z==1){
+					
 				y = gridao.changeinventory(gr);
 				System.out.println(gr.getEnd_m_num());
+				gridao.addgoodsreceiptitem(gr);
+				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 		}
 
-		if (m_order != null && y !=0&&!"".equals(m_order)) {
-
-			notice = "收货单50000000" + x+"保存成功";
+		if(z==0){
+			notice = "保存失败：运输数据错误，请检查输入";
+			color = "#ed5565";
+			}
+		if(z==1){
+			notice = "收货单5000000" + x+"保存成功";
 			color = "#1ab394";
 		}
+		if(z==3){
+			notice = "保存失败：订单已完成运输";
+			color = "#ed5565";
+		}
+		
 		request.setAttribute("notice", notice);
 		request.setAttribute("color", color);
 
