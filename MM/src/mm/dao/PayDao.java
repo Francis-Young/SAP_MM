@@ -112,6 +112,7 @@ public class PayDao {
 			String o2=name;
 			String o3=num;
 			String o4=text;
+			
 			o1="'"+o1+"'";
 			
 			if(o1.equals("\'\'"))
@@ -161,9 +162,10 @@ public class PayDao {
 				o4="=\'"+o4+"'";
 			}
 			Connection connectionnew = DBUtil.getConnection();
-	        String sql="select * FROM Order_item JOIN `Order` ON Order_item.order_num_m=`Order`.order_num JOIN Vendor ON `Order`.vendor_code=Vendor.vendor_code where vendor_name"+o2+
+	        String sql="select * FROM Order_item JOIN `Order` ON Order_item.order_num_m=`Order`.order_num JOIN Vendor ON `Order`.vendor_code=Vendor.vendor_code "
+	        		+ "where `Order`.receipt_checked=1 and vendor_name"+o2+
 	        		" and Vendor.vendor_code"+o3+" and material_num"+o4+" and delivery_date"+o1+"";
-	        		; 
+	        		
 	        Statement stmt = connectionnew.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);     
 	        s=resultSetToJson(rs);

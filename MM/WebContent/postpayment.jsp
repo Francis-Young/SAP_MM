@@ -257,8 +257,8 @@ background:white;
 
             <div class="row">
                 <div class="col-lg-12">
-  				<div class="form-group"><label class="col-sm-2 control-label">订单编号：<a href="javascript:openwin1_id(1)"> 前往查询 </a> </label>
-                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入订单编号，如100000" id="o_num_new" name="o_num_new"></div>
+  				<div class="form-group"><label class="col-sm-2 control-label">支付编号：<a href="javascript:openwin1_id(1)"> 前往查询 </a> </label>
+                                                <div class="col-sm-10"><input type="text" class="form-control" placeholder="请输入支付编号，如1" id="o_num_new" name="o_num_new"></div>
                                             </div>
                     <br>     
                              <button class="btn btn-primary pull-right" onclick="getit()" type="button"> 查询</button>                  
