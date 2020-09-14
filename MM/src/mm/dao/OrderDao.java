@@ -63,6 +63,7 @@ public class OrderDao {
 				rq.setPur_org(rs.getString("pur_org"));
 				rq.setPur_group(rs.getString("pur_group"));
 				rq.setOrder_code(rs.getString("order_code"));
+				System.out.println("orderdao_Pur_group"+rq.getPur_group());
 			}
 		}catch(SQLException e) {
             e.printStackTrace();

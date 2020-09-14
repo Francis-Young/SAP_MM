@@ -148,6 +148,7 @@ public class OrderController extends HttpServlet{
 				oi.setPlant(plantArr[i]);
 				oi.setSloc(storagelocArr[i]);
 				oi.setStat_delivery_date(strToDate(statdeliverydateArr[i]));
+				System.out.println("order_contr_oisata"+oi.getStat_delivery_date());
 
 				OrderItemDao.addOrderItem(oi);
 		}
