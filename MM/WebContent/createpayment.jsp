@@ -502,7 +502,7 @@ background:white;
 				
 			}
 			else{
-				var ids=result[0].order_num;
+				var ids=result[0].order_code;
 
 				var bottom = document.getElementById("warning");
                 bottom.style.color = "#1ab394";
@@ -631,7 +631,7 @@ background:white;
 			var v=result[0].Vendor_id;
 
 			for(var i=0;i<data.length;i++){
-			var id=result[i].order_num;
+			var id=result[i].order_code;
 			var amount=result[i].delivery_date;
 			var user=result[i].vendor_name;
 			var mar=result[i].material_num;
