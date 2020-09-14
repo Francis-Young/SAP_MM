@@ -322,7 +322,7 @@
 												style="width: auto; margin-bottom: 0; padding-top: 7px">订单编号:</label>
 											<div class="col-md-2">
 												<input name="org" type="text" readonly="readonly"
-													class="form-control" value=<%=o.getOrder_num()%>>
+													class="form-control" value=<%=o.getOrder_code()%>>
 
 											</div>
 										</div>
