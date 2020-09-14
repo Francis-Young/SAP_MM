@@ -278,7 +278,7 @@ public class VendorDao {
 		Vendor v = new Vendor();
 		try {
 			PreparedStatement stat = conn.prepareStatement(
-					"select vendor_name, vendor_type,vendor_taxnum,vendor_companycode,vendor_reconacct,vendor_paymentterms,vendor_currency,vendor_street,vendor_postalcode,vendor_city,vendor_country,vendor_region,vendor_clerk,vendor_language from Vendor where vendor_num=?");
+					"select vendor_name, vendor_type,vendor_taxnum,vendor_companycode,vendor_reconacct,vendor_paymentterms,vendor_currency,vendor_street,vendor_postalcode,vendor_city,vendor_country,vendor_region,vendor_clerk,vendor_language from Vendor where vendor_code=?");
 			stat.setInt(1, vnum);
 			ResultSet rs = stat.executeQuery();
 			if (rs.next()) {

@@ -201,6 +201,7 @@ public class QuotationController extends HttpServlet{
 			
 				RFQ_item ri= rilist.get(j);
 				String price = req.getParameter("price"+j);
+				System.out.println("price_contr_"+price);
 				int quantity=ri.getRequisition_quantity();
 				
 				BigDecimal deprice=new BigDecimal(price);
@@ -211,11 +212,12 @@ public class QuotationController extends HttpServlet{
 				qi.setQuotation_code(quo_code);
 				qi.setQuotation_status(0);//还没定。。
 				qi.setCurrency_unit("RMB");
+				BigDecimal ff= new BigDecimal(price);
+				qi.setPrice(ff);
+
 				QuotationItemDao.addQuotationItem(qi);
 				
 				
-				BigDecimal ff= new BigDecimal(price);
-				qi.setPrice(ff);
 			    BigDecimal dd= new BigDecimal(quantity);
 			    value=value.add(ff.multiply(dd));
 				

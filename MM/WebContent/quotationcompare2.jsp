@@ -467,6 +467,7 @@ function open_and_search()
 																	{
 																		quantity += qit.getQuantity();
 																		BigDecimal bigdem_quantity = new BigDecimal(qit.getQuantity());
+																		System.out.println("qitcode" + qit.getQuotation_code());
 																		System.out.println("price" + qit.getPrice());
 																		BigDecimal this_itemval = qit.getPrice().multiply(bigdem_quantity);//这一项的价值
 																		sumval = sumval.add(this_itemval);
