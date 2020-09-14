@@ -205,16 +205,16 @@ public class OrderDao {
 	}
 	
 	//修改报价单
-	public static int deleteOitemByOnum(int order_num) {
+	public static int deleteOitemByOnum(String order_num) {
 		
 		//建立数据库连接
 		Connection conn=DBUtil.getConnection();
 		int res=-1;
 		try {
 		
-			String sql=""+"delete from `Order` where order_num = ?";
+			String sql=""+"delete from `Order_item` where order_code = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, order_num);
+			psmt.setString(1, order_num);
 			
 			res= psmt.executeUpdate();
 		

@@ -35,6 +35,8 @@ import mm.dao.VendorDao;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @WebServlet(urlPatterns="/order")
 public class OrderController extends HttpServlet{
@@ -115,7 +117,7 @@ public class OrderController extends HttpServlet{
 		o.setPur_org(org);
 		String vnum=req.getParameter("vendornum");
 		o.setVendor_code(vnum);
-		OrderDao.deleteOitemByOnum(o.getOrder_num());
+		OrderDao.deleteOitemByOnum(o.getOrder_code());
 
 		session.setAttribute("onum",onum );
 		String[] statdeliverydateArr = (String[])req.getParameterValues("statdeliverydate");//查被选中的item
@@ -324,10 +326,13 @@ public class OrderController extends HttpServlet{
 				String material_num=materialrArr[i];
 				oi.setMaterial_num(material_num);
 				oi.setDelivery_date(strToDate(deliverydateArr[i]));
+				System.out.println("oi_date"+oi.getDelivery_date());
 				oi.setPrice(new BigDecimal(priceArr[i]));
 				oi.setQuantity(Integer.parseInt(quantityArr[i]));
 				oi.setCurrency_unit(currencyArr[0]);
 				oi.setStat_delivery_date(strToDate(statdeliverydateArr[i]));
+				System.out.println("oi_satadate"+statdeliverydateArr[i]);
+				System.out.println("oi_satadate"+oi.getStat_delivery_date());
 				oi.setPlant(plantArr[i]);
 				oi.setSloc(storagelocArr[i]);
 				OrderItemDao.addOrderItem(oi);
@@ -402,7 +407,17 @@ public class OrderController extends HttpServlet{
 	
 	 private java.sql.Date strToDate(String strDate) throws ParseException {  
 	        String str = strDate;  
+	        String pattern = "(.*)-(.*)-(.*)";
+	        Pattern r = Pattern.compile(pattern);
 	        
+	        // 现在创建 matcher 对象
+	        Matcher m = r.matcher(str);
+	        if(m.find())
+	        {
+	        	str=m.group(2)+'/'+m.group(3)+'/'+m.group(1);
+	        }
+	        
+
 	        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");  
 	        java.util.Date d = null;  
 	        try {  
