@@ -197,7 +197,7 @@ function open_and_search()
 
 .opbox2 {
 	z-index: 101;
-	width: 40%;
+	width: 50%;
 	margin-top: 10%;
 	margin: auto;
 	padding: 28px;
@@ -588,36 +588,36 @@ function open_and_search()
 					<!--请购单具体信息 -->
 					<div class="form-group">
 						<label for="title">供应商名称</label> <input id="key1" type="text"
-							class="form-control" placeholder="输入请购单种类...">
+							class="form-control" placeholder="输入供应商名称...">
 					</div>
 
 					<div class="form-group">
 						<label for="message">类型</label> <input id="key2"
 							class="form-control" id="vaddress" type="text"
-							placeholder="输入使用语言...">
+							placeholder="输入类型...">
 					</div>
 
 					<div class="form-group">
 						<label for="message">公司代码</label> <input id="key3"
 							class="form-control" id="vaddress" type="text"
-							placeholder="输入请购单日期 ...">
+							placeholder="输入公司代码 ...">
 					</div>
 
 					<div class="form-group">
 						<label for="message">国家</label> <input id="key4"
 							class="form-control" id="key2" type="text"
-							placeholder="输入请购描述...">
+							placeholder="输入国家...">
 					</div>
 
 
 					<div class="form-group">
 						<label for="showMethod">城市</label> <input id="key5" type="text"
-							placeholder="输入请购组织" class="form-control">
+							placeholder="输入城市" class="form-control">
 					</div>
 
 					<div class="form-group">
 						<label for="showMethod">联络员</label> <input id="key6" type="text"
-							placeholder="输入请购小组" class="form-control">
+							placeholder="输入联络员" class="form-control">
 					</div>
 
 

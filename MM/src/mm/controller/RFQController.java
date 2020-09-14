@@ -104,6 +104,7 @@ public class RFQController extends HttpServlet{
 			
 		}
 		req.setAttribute("rfq_code", rfq_code);
+		session.setAttribute("rfq_num", rfq_code);
 		req.getRequestDispatcher("rfqfin.jsp").forward(req,resp);//请求转发
 
 	}
