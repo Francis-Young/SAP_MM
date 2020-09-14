@@ -45,9 +45,9 @@ public class Permissions {
 			}
 		}else if(department1.equals("02")) {
 			if(department2.equals("01")) {
-				pn="采购职员";
-			}else if(department2.equals("02")) {
 				pn="收货职员";
+			}else if(department2.equals("02")) {
+				pn="采购职员";
 			}else if(department2.equals("03")) {
 				pn="仓库管理员";
 			}
