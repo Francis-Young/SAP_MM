@@ -50,6 +50,7 @@ public class MaintainVendorController extends HttpServlet {
 			}
 			vdao.findVendor(vnum, v);
 			request.setAttribute("vendor", v);
+			session.setAttribute("vcode", v.getVcode());
 			ArrayList<DownList> reconacct = new ArrayList<DownList>();
 			ArrayList<DownList> paymentterms = new ArrayList<DownList>();
 			ArrayList<DownList> language = new ArrayList<DownList>();
@@ -98,7 +99,7 @@ public class MaintainVendorController extends HttpServlet {
 		vdao.updateVendor(vnum, v);
 		;
 		if (vnum != null && !"".equals(vnum)) {
-			notice = "成功保存供应商" + vnum;
+			notice = "成功保存供应商" + session.getAttribute("vcode");
 			color = "#1ab394";
 		}
 		request.setAttribute("notice", notice);

@@ -119,6 +119,7 @@ public class OrderController extends HttpServlet{
 		o.setVendor_code(vnum);
 		OrderDao.deleteOitemByOnum(o.getOrder_code());
 
+
 		session.setAttribute("onum",onum );
 		String[] statdeliverydateArr = (String[])req.getParameterValues("statdeliverydate");//查被选中的item
 		String[] answerArr =(String[]) req.getParameterValues("cbox");//查被选中的item

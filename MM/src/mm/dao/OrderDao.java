@@ -150,7 +150,7 @@ public class OrderDao {
 		Connection conn=DBUtil.getConnection();
 		try {
 			//查询语句，根据学号查询
-			String sql=""+"select * from `Order` where Order_num = ?";
+			String sql=""+"select * from `Order_item` where Order_code = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, num);
 			//执行查询语句
