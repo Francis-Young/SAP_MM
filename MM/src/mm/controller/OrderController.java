@@ -115,7 +115,7 @@ public class OrderController extends HttpServlet{
 		o.setPur_org(org);
 		String vnum=req.getParameter("vendornum");
 		o.setVendor_code(vnum);
-		OrderDao.deleteOitemByOnum(o.getOrder_num());
+		OrderDao.deleteOitemByOnum(o.getOrder_code);
 
 		session.setAttribute("onum",onum );
 		String[] statdeliverydateArr = (String[])req.getParameterValues("statdeliverydate");//查被选中的item
