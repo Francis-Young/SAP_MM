@@ -58,7 +58,7 @@
 			autoSize : true,
 			autoclose : true,
 			language : "zh-CN",
-			viewDate : new Date()
+			setDate : new Date()
 		})
 	}
 	$(document).ready(function() {
@@ -383,7 +383,7 @@
 										<div class="tab-content">
 											<div id="tab-1" class="tab-pane active">
 												<div class="panel-body">
-													<div style="width: 1300px; overflow-x: scroll;">
+													<div style="width: 900px; overflow-x: scroll;">
 														<div class="table-b" style="width: 2000px">
 															<table id="oTable" class="table table-bordered">
 																<thead>

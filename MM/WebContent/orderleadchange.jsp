@@ -360,6 +360,7 @@ function open_and_search()
 			<form class="m-t" role="form"
 				action="${pageContext.request.contextPath}/order" method="post">
 
+				<input type='text' value='leadchange' name='action' hidden='true'>
 
 
 				<div class="wrapper wrapper-content animated fadeIn">

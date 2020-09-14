@@ -219,7 +219,7 @@
 														out.print("<tr>");
 														out.print("<td><input type='checkbox' checked='' class='i-checks' name='checkname' value='" + i
 																+ "' ></td>");
-														out.print("<td>" + (i + 10) * 10 + "</td>");
+														out.print("<td>" + (i + 1) * 10 + "</td>");
 														out.print("<td>" + ri.getMaterial_num() + "</td>");
 														out.print("<td>" + ri.getRequisition_quantity() + "</td>");
 														out.print("<td>" + ri.getRequisition_deliverydate() + "</td>");
