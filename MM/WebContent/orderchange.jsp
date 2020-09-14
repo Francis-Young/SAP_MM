@@ -261,69 +261,21 @@ function splitRow(){
 		</nav>
 
 		<div id="page-wrapper" class="gray-bg">
-			<div class="row border-bottom">
+						<div class="row border-bottom">
 				<nav class="navbar navbar-static-top" role="navigation"
 					style="margin-bottom: 0">
 					<div class="navbar-header">
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
 							href="#"><i class="fa fa-bars"></i> </a>
 					</div>
+					<ul class="nav navbar-top-links navbar-left">
+						<li><a> <i class="fa fa-paper-plane"></i>Be What's Next.
+						</a></li>
+					</ul>
 					<ul class="nav navbar-top-links navbar-right">
-						<li><span class="m-r-sm text-muted welcome-message">欢迎回来！</span></li>
-						<li class="dropdown"><a class="dropdown-toggle count-info"
-							data-toggle="dropdown" href="#"> <i class="fa fa-envelope"></i>
-								<span class="label label-warning">16</span>
-						</a>
-							<ul class="dropdown-menu dropdown-messages">
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/a7.jpg">
-										</a>
-										<div class="media-body">
-											<small class="pull-right">46小时前</small> <strong>李文俊</strong>
-											关注了 <strong>刘海洋</strong>. <br> <small class="text-muted">3
-												天 前- 10.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/a4.jpg">
-										</a>
-										<div class="media-body ">
-											<small class="pull-right text-navy">5小时前</small> <strong>王昆</strong>
-											关注了 <strong>李文俊</strong>. <br> <small class="text-muted">昨天下午1:21
-												- 11.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="dropdown-messages-box">
-										<a href="profile.html" class="pull-left"> <img alt="image"
-											class="img-circle" src="img/profile.jpg">
-										</a>
-										<div class="media-body ">
-											<small class="pull-right">23小时前</small> <strong>张三</strong>
-											赞了 <strong>李四</strong>. <br> <small class="text-muted">2天前
-												- 11.06.2014</small>
-										</div>
-									</div>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<div class="text-center link-block">
-										<a href="mailbox.html"> <i class="fa fa-envelope"></i> <strong>查看更多消息</strong>
-										</a>
-									</div>
-								</li>
-							</ul></li>
-
-						<li><a href="login.html"> <i class="fa fa-sign-out"></i>
-								退出登录
+						<li><span class="m-r-sm text-muted welcome-message">欢迎你，<%=session.getAttribute("uname")%></span>
+						</li>
+						<li><a href="Login"> <i class="fa fa-sign-out"></i> 退出登录
 						</a></li>
 					</ul>
 
@@ -373,7 +325,6 @@ function splitRow(){
 
 String onum = (String) session.getAttribute("onum");
 Order o = OrderDao.findOrderByCode(onum);
-
 System.out.println(o.getVendor_code());
 Vendor v=VendorDao.findVendorbyCode((o.getVendor_code()));
 
