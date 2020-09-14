@@ -480,6 +480,8 @@ background:white;
       	            });}
     	else{
     		alert("订单号不规范，请重新输入");
+	   			$("#myTable").html("");
+
     	}
 
 
