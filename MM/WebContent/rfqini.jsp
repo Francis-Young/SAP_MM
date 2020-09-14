@@ -644,7 +644,7 @@ initDatePicker($("#sb2"));
 				<tr>
 					<th></th>
 					<th>请购单编号</th>
-					<th>请购日期</th>
+					<th>请购描述</th>
 					<th>请购组织</th>
 				</tr>
 			</thead>
