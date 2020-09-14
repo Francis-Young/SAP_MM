@@ -73,15 +73,14 @@ public class ShowstockController extends HttpServlet {
 		
 		GoodsreceiptItemDao grdao = new GoodsreceiptItemDao();
 		int x = grdao.checkmat(gr);
-		System.out.println(x);
+		System.out.println("x="+x);
 		
-		if (x==1) {
-			notice = gr.getM_text()+"库存信息如上所示";
-			color = "#1ab394";
-		}
-		if(x==0){
-			notice = "请输入正确的物料编号/存储位置";
-			color = "#ed5565";
+		if(x==1){
+		notice = gr.getM_text()+"库存信息如上所示";
+		color = "#1ab394";
+		}else{
+		notice = "请输入正确的物料编号/存储位置";
+		color = "#ed5565";
 		}
 		
 		request.setAttribute("notice", notice);

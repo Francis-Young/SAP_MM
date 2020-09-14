@@ -249,7 +249,7 @@ public class GoodsreceiptItemDao {
 	public int checkmat(GoodsReceipt gr) {
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement stat = null;
-		int x=0;//不存在物料
+		int x=1;//存在物料
 
 		try {
 
@@ -259,8 +259,10 @@ public class GoodsreceiptItemDao {
 			stat.setString(1, gr.getM_text());
 			stat.setString(2, gr.getSloc());
 			ResultSet rs = stat.executeQuery();
-			if(rs.getString("material_num")==gr.getM_text()){
-				x=1;
+			
+			if(rs.next()==false)
+			{
+				x=0;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
