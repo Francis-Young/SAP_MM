@@ -212,7 +212,7 @@ public class OrderDao {
 		int res=-1;
 		try {
 		
-			String sql=""+"delete from `Order_item` where order_num = ?";
+			String sql=""+"delete from `Order_item` where order_code = ?";
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, order_num);
 			
