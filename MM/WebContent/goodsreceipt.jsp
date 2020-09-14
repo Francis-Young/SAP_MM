@@ -79,7 +79,7 @@
 <script type="text/javascript">
 	function search() //异步搜索的函数
 	{
-		  var key = $("#key1").val()+","+ $("#key2").val()+","+ $("#key3").val() //这一段是你要向后台传的数据
+		  var key = $("#key1").val()+","+ $("#key2").val() //这一段是你要向后台传的数据
 		  var url = "${pageContext.request.contextPath}/SearchOrderServlet?key=" + key
 		
 		function gettext(text) //正则解码函数
@@ -107,14 +107,15 @@
 						var rfq_code = dataArray.match(/mark3(\S*?)mark4/g);
 
 						$("tbody#tableBody").remove();//删除已有表格	
+						
 						//下面写一个表格，是要插入到弹窗里的
 						var tableBody = "<tbody id='tableBody'>";
-
+						
 						for (var i = 0; i < o_num.length; i++) {
 
 							tableBody += '<tr onclick="selectline(this)">';
 
-							tableBody += '<td><input type="checkbox" checked="" class="i-checks" name="input[]"></td>';
+							tableBody += '<td><input type="checkbox" value="unchecked" class="i-checks" name="input[]"></td>';
 							tableBody += "<td>" + gettext(decodeURI(o_num[i]))
 									+ "</td>";
 							tableBody += "<td>" + gettext(decodeURI(o_date[i]))
@@ -130,6 +131,7 @@
 						tableBody += "</tBody>";
 
 						$("#tableHead").after(tableBody); //这个表格将位于id是tableHead的表头后面
+						
 
 					},
 					error : function(e, textStatus, request) {
@@ -461,7 +463,7 @@
 														%>
 
 														<input name="order_num" id="order_num"
-															class="form-control" placeholder="采购单号" value=<%=o_num%>>
+															class="form-control" placeholder="订单号" value=<%=o_num%>>
 														<div class="infont col-md-3 col-sm-4" style="Float: right">
 															<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
 														</div>
@@ -591,75 +593,72 @@
 					</div>
 
 					<div class="footer">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="pull-right">
-									<button type="submit" class="btn btn-primary" id="showtoast">保存</button>
-									
-									<a href="Home"><button type="button" class="btn btn-white"
-											id="cleartoasts">返回</button></a>
-
-								</div>
-							</div>
-
-							<div style="padding-top: 2px;">
-								<%
-									String notice = (String) request.getAttribute("notice");
-									if (notice != null && !"".equals(notice)) {
-								%>
-								<p>
-									<font size="3" color=<%=request.getAttribute("color")%>><%=notice%></font>
-								</p>
-								<%
-									request.setAttribute("notice", "");
-									}
-								%>
-							</div>
+						<div class="pull-right">
+							<button type="submit" class="btn btn-primary" id="showtoast">保存</button>
+							<a href="Home"><button type="button" class="btn btn-white"
+									id="cleartoasts">返回</button></a>
+						</div>
+						<div style="padding-top: 2px;">
+							<%
+								String notice = (String) request.getAttribute("notice");
+								if (notice != null && !"".equals(notice)) {
+							%>
+							<p>
+								<font size="3" color=<%=request.getAttribute("color")%>><%=notice%></font>
+							</p>
+							<%
+								request.setAttribute("notice", "");
+								}
+							%>
 						</div>
 					</div>
-					<!-- 第一层弹窗 -->
-					<div id='inputbox' class="opbox1">
-
-						<a class='x' href='' ; onclick="openwin(0); return false;">关闭</a>
-
-						<div class="ibox-content">
-
-							<div class="form-group">
-
-								<label class="col-sm-2 control-label"
-									style="width: 13%; padding: 1px;">订单</label>
-								<div class="col-sm-10" style="width: 87%; padding: 1px;">
-									<input name="requisition_num" id="reqnum" type="text"
-										class="form-control" style="width: 80%">
-									<div class="infont col-md-3 col-sm-4" style="Float: right">
-										<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
-									</div>
-								</div>
-
-								<label class="col-sm-2 control-label"
-									style="width: 13%; padding: 1px;">工厂</label>
-								<div class="col-sm-10" style="width: 87%; padding: 1px;">
-									<input name="plant2" type="text" class="form-control"
-										style="width: 80%">
-									<div class="infont col-md-3 col-sm-4" style="Float: right">
-										<a onclick="#"><i class="fa fa-search-plus"></i></a>
-									</div>
-								</div>
-
-								<button type="button" class="btn btn-primary "
-									style="margin: 60px 20px 0 0; Float: right"
-									onclick="openwin(0); return false;">取消</button>
-								<input type="submit" class="btn btn-primary "
-									style="margin: 60px 20px 0 0; Float: right" value="继续">
-
-							</div>
-
-							<input type="button" value="确定">
-
-						</div>
-					</div>
-			</form>
+				</div>
+				</form>
 		</div>
+		
+		<!-- 第一层弹窗 -->
+		<div id='inputbox' class="opbox1">
+
+			<a class='x' href='' ; onclick="openwin(0); return false;">关闭</a>
+
+			<div class="ibox-content">
+
+				<div class="form-group">
+
+					<label class="col-sm-2 control-label"
+						style="width: 13%; padding: 1px;">订单</label>
+					<div class="col-sm-10" style="width: 87%; padding: 1px;">
+						<input name="requisition_num" id="reqnum" type="text"
+							class="form-control" style="width: 80%">
+						<div class="infont col-md-3 col-sm-4" style="Float: right">
+							<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
+						</div>
+					</div>
+
+					<label class="col-sm-2 control-label"
+						style="width: 13%; padding: 1px;">工厂</label>
+					<div class="col-sm-10" style="width: 87%; padding: 1px;">
+						<input name="plant2" type="text" class="form-control"
+							style="width: 80%">
+						<div class="infont col-md-3 col-sm-4" style="Float: right">
+							<a onclick="#"><i class="fa fa-search-plus"></i></a>
+						</div>
+					</div>
+
+					<button type="button" class="btn btn-primary "
+						style="margin: 60px 20px 0 0; Float: right"
+						onclick="openwin(0); return false;">取消</button>
+					<input type="submit" class="btn btn-primary "
+						style="margin: 60px 20px 0 0; Float: right" value="继续">
+
+				</div>
+
+				<input type="button" value="确定">
+
+			</div>
+		</div>
+		</form>
+	</div>
 
 	</div>
 	<!-- Mainly scripts for pop windows-->
@@ -696,17 +695,13 @@
 							class="form-control" placeholder="输入交易对象编号...">
 					</div>
 					<div class="form-group">
-						<label for="title">交易小组</label> <input id="key2" type="text"
-							class="form-control" placeholder="输入交易小组编号...">
-					</div>
-					<div class="form-group">
-						<label for="title">交易组织</label> <input id="key3" type="text"
+						<label for="title">交易组织</label> <input id="key2" type="text"
 							class="form-control" placeholder="输入交易组织编号...">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-lg-12">
-						<button type="button" class="btn btn-primary" id="showsimple"
+						<button type="button" class="btn btn-primary" id="shownoti"
 							onclick=open_and_search()>搜索</button>
 					</div>
 
@@ -774,81 +769,7 @@
 
 	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
-	<script>
-		$(document)
-				.ready(
-						function() {
 
-							$('.demo1')
-									.click(
-											function() {
-												swal({
-													title : "Welcome in Alerts",
-													text : "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-												});
-											});
-
-							$('.demo2').click(function() {
-								swal({
-									title : "收货单添加成功!",
-									text : "您的请购单号是10034245",
-									type : "success"
-								});
-							});
-
-							$('.demo3')
-									.click(
-											function() {
-												swal(
-														{
-															title : "Are you sure?",
-															text : "You will not be able to recover this imaginary file!",
-															type : "warning",
-															showCancelButton : true,
-															confirmButtonColor : "#DD6B55",
-															confirmButtonText : "Yes, delete it!",
-															closeOnConfirm : false
-														},
-														function() {
-															swal(
-																	"Deleted!",
-																	"Your imaginary file has been deleted.",
-																	"success");
-														});
-											});
-
-							$('.demo4')
-									.click(
-											function() {
-												swal(
-														{
-															title : "Are you sure?",
-															text : "Your will not be able to recover this imaginary file!",
-															type : "warning",
-															showCancelButton : true,
-															confirmButtonColor : "#DD6B55",
-															confirmButtonText : "Yes, delete it!",
-															cancelButtonText : "No, cancel plx!",
-															closeOnConfirm : false,
-															closeOnCancel : false
-														},
-														function(isConfirm) {
-															if (isConfirm) {
-																swal(
-																		"Deleted!",
-																		"Your imaginary file has been deleted.",
-																		"success");
-															} else {
-																swal(
-																		"Cancelled",
-																		"Your imaginary file is safe :)",
-																		"error");
-															}
-														});
-											});
-
-						});
-	</script>
 	<script type="text/javascript">
 		$(function() {
 			var i = -1;
@@ -859,13 +780,17 @@
 				return msg;
 			};
 
-			$('#showsimple').click(function() {
+			$('#shownoti').click(function() {
+				var a = dataArray.match(/mark0(\S*?)mark1/g);
+				var b = dataArray.match(/mark1(\S*?)mark2/g);
 				// Display a success toast, with a title
-				toastr.success('搜索结果已展示', '搜索成功')
+				toastr.success(a, b)
 			});
 			$('#showtoast')
 					.click(
 							function() {
+								var a = dataArray.match(/mark0(\S*?)mark1/g);
+								var b = dataArray.match(/mark1(\S*?)mark2/g);
 								var shortCutFunction = $(
 										"#toastTypeGroup input:radio:checked")
 										.val();
