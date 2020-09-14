@@ -246,4 +246,28 @@ public class GoodsreceiptItemDao {
 			DBUtil.closeConnection(conn);
 		}
 	}
+	public int checkmat(GoodsReceipt gr) {
+		Connection conn = DBUtil.getConnection();
+		PreparedStatement stat = null;
+		int x=0;//不存在物料
+
+		try {
+
+			String sql= ""
+					+ "SELECT * FROM Inventory WHERE material_num=? AND material_storageloc=?";
+			stat = conn.prepareStatement(sql);
+			stat.setString(1, gr.getM_text());
+			stat.setString(2, gr.getSloc());
+			ResultSet rs = stat.executeQuery();
+			if(rs.getString("material_num")==gr.getM_text()){
+				x=1;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+		return x;
+	}
+
 }

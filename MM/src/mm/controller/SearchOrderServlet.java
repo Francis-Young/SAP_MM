@@ -94,7 +94,9 @@ public class SearchOrderServlet extends HttpServlet {
 		if (odlist.isEmpty())
 		{
 			System.out.print("无记录？");
-			resp.getWriter().print(URLEncoder.encode("mark0*mark1没有相关记录！mark2","utf-8"));
+			String a = "";
+			a="mark0"+"不存在相关订单，请重新输入"+"mark1"+""+"mark2"+""+"mark3"+""+"mark4";
+			resp.getWriter().print(URLEncoder.encode(a,"utf-8"));
 			
 		}
 		else

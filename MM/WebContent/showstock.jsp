@@ -8,22 +8,10 @@
 <html>
 
 <head>
-
-
-<style type="text/css">
-.table-b table td {
-	border: 2px solid #e7eaec
-}
-</style>
-<style type="text/css">
-.table-b table td {
-	border: 2px solid #e7eaec
-}
-</style>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>查询库存</title>
+<title>展示收货单</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -42,6 +30,218 @@
 
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
+
+<!-- 弹出框 -->
+<script>
+	function selectline(ele) //单击后赋值的函数
+	{
+		var clickContent = ele;
+		//获取要赋值的input的元素
+		var inputElement = document.getElementById("m_num");
+		//给input框赋值
+		inputElement.value = clickContent.cells[1].innerHTML;//.innerText;
+
+		openwin3(0); //关掉两个弹窗
+		openwin2(0);
+	}
+</script>
+
+<script type="text/javascript">
+	function search() //异步搜索的函数
+	{
+		  var key = $("#key1").val()+","+ $("#key2").val() //这一段是你要向后台传的数据
+		  var url = "${pageContext.request.contextPath}/SearchMaterialServlet?key=" + key
+		
+		function gettext(text) //正则解码函数
+		{
+			var subt = text.match(/mark.(\S*?)mark./);
+			return subt[1];
+		}
+
+		$.ajax({
+					type : "post",
+					url : "${pageContext.request.contextPath}/SearchMaterialServlet", //后台的地址
+					async : true, //默认-异步（true） 同步-false
+					dataType : "text",
+
+					data : {
+						"key" : key
+					},
+					beforeSend: function (){
+					},
+					success : function(dataArray) { //dataArray就是后台传来的数据
+						//从后台传回来的数据有4项，所以这里定义了4组变量
+						var m_num = dataArray.match(/mark0(\S*?)mark1/g);
+						var m_pri = dataArray.match(/mark1(\S*?)mark2/g);
+						var m_des = dataArray.match(/mark2(\S*?)mark3/g);
+						var m_salesorg = dataArray.match(/mark3(\S*?)mark4/g);
+
+						$("tbody#tableBody").remove();//删除已有表格	
+						//下面写一个表格，是要插入到弹窗里的
+						var tableBody = "<tbody id='tableBody'>";
+
+						for (var i = 0; i < m_num.length; i++) {
+
+							tableBody += '<tr onclick="selectline(this)">';
+
+							tableBody += '<td><input type="checkbox" value="unchecked" class="i-checks" name="input[]"></td>';
+							tableBody += "<td>" + gettext(decodeURI(m_num[i]))
+									+ "</td>";
+							tableBody += "<td>" + gettext(decodeURI(m_pri[i]))
+									+ "</td>";
+							tableBody += "<td>"
+									+ gettext(decodeURI(m_des[i])) + "</td>";
+							tableBody += "<td>"
+									+ gettext(decodeURI(m_salesorg[i])) + "</td>";
+
+							tableBody += "</tr>";
+						}
+
+						tableBody += "</tBody>";
+
+						$("#tableHead").after(tableBody); //这个表格将位于id是tableHead的表头后面
+
+					},
+					error : function(e, textStatus, request) {
+
+						alert("错误！" + e.status);
+						var json = JSON.parse(request.responseText);
+						alert(json.city);
+						alert(request.responseText)
+						alert(" parser error" + textStatus); // parser error;
+					},
+					complete : function() {
+
+						//表格隔行显色，鼠标悬浮高亮显示
+						var oTab = document.getElementById('tbl');
+						var oldColor = '';//用于保存原来一行的颜色
+
+						for (var i = 0; oTab.tBodies[0].rows.length; i++) {
+
+							//当鼠标移上去，改变字体色-背景色
+							oTab.tBodies[0].rows[i].onmouseover = function() {
+								oldColor = this.style.background;
+								this.style.background = "#009B63";
+								this.style.color = "#ffffff";
+							};
+
+							//当鼠标移开，恢复原来的颜色
+							oTab.tBodies[0].rows[i].onmouseout = function() {
+								this.style.background = oldColor;
+								this.style.color = "#000000";
+							};
+
+							//隔行显色
+							if (i % 2) {
+								oTab.tBodies[0].rows[i].style.background = "#EAF2D3";
+							} else {
+								oTab.tBodies[0].rows[i].style.background = "";
+							}
+						}
+					}
+				});
+
+	}
+</script>
+<script>
+	function open_and_search() //点击搜索按钮后会触发的弹窗和搜索事件
+	{
+		openwin3(1);
+		search();
+	}
+</script>
+<style>
+#wrapper //正常页面层 {
+	z-index: 99;
+	position: absolute;
+}
+
+.opbox1 {
+	z-index: 100;
+	width: 50%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 25%;
+	left: 25%;
+	height: 350px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
+}
+
+.opbox1.show {
+	display: block;
+}
+
+.opbox1 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
+}
+
+.opbox2 {
+	z-index: 101;
+	width: 40%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 5%;
+	left: 30%;
+	height: 650px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
+}
+
+.opbox2.show {
+	display: block;
+}
+
+.opbox2 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
+}
+
+.opbox3 {
+	z-index: 101;
+	width: 40%;
+	margin-top: 10%;
+	margin: auto;
+	padding: 28px;
+	top: 5%;
+	left: 30%;
+	height: 650px;
+	border: 1px #111 solid;
+	display: none; /* 默认对话框隐藏 */
+	position: absolute;
+	background: white;
+}
+
+.opbox3.show {
+	display: block;
+}
+
+.opbox3 .x {
+	font-size: 18px;
+	text-align: right;
+	display: block;
+}
+</style>
+<style type="text/css">
+.table-b table td {
+	border: 2px solid #e7eaec
+}
+</style>
+<style type="text/css">
+.table-b table td {
+	border: 2px solid #e7eaec
+}
+</style>
+
 </head>
 
 <body>
@@ -107,10 +307,14 @@
 								<li><a href="orderini.jsp">创建订单 </a></li>
 								<li><a href="orderleadview.jsp">查看订单 </a></li>
 								<li><a href="orderleadchange.jsp">维护订单 </a></li>
+
 							</ul></li>
 					</ul></li>
-				<li class="active"><a href="#"><i class="fa fa-files-o"></i>
-						<span class="nav-label">收货管理</span><span class="fa arrow"></span></a>
+
+
+
+				<li class="active"><a href="#"><i class="fa fa-files-o"></i> <span
+						class="nav-label">收货管理</span><span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level collapse">
 						<li><a href="goodsreceipt.jsp">创建收货单 </a></li>
 						<li class="active"><a href="showstock.jsp">查询库存 </a></li>
@@ -146,11 +350,11 @@
 			<form class="m-t" role="form" action="Showstock" method="post">
 				<div class="row wrapper border-bottom white-bg page-heading">
 					<div class="col-lg-10">
-						<h2>查询库存</h2>
+						<h2>查看库存</h2>
 						<ol class="breadcrumb">
-							<li><a href="Home">主页</a></li>
+							<li><a href="index.html">主页</a></li>
 							<li>收货管理</li>
-							<li class="active"><strong>查询库存</strong></li>
+							<li class="active"><strong>查看库存</strong></li>
 						</ol>
 					</div>
 
@@ -173,13 +377,24 @@
 									<div class="ibox-content m-b-sm border-bottom">
 										<div class="row">
 											<div class="input-group m-b">
-												<!-- 还要做出搜索效果 -->
+												<!-- 搜索效果 -->
 												<div class="col-sm-4">
 													<div class="form-group">
-														<input type="text" id="order_num" name="m_text" value=""
-															placeholder="物料名称" class="form-control">
+														<%
+															String m_code = "";
+															if (!(session.getAttribute("m_code") == null))
+																m_code = session.getAttribute("m_code").toString();
+														%>
+
+														<input name="m_num" id="m_num" class="form-control"
+															placeholder="物料编号" value=<%=m_code%>>
+														<div class="infont col-md-3 col-sm-4" style="Float: right">
+															<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
+														</div>
+
 													</div>
 												</div>
+
 												<div class="col-sm-4">
 													<div class="form-group">
 														<input type="text" id="order_num" name="sloc" value=""
@@ -206,14 +421,13 @@
 									</div>
 
 								</div>
-
 								<div class="ibox ">
 									<div class="ibox-title">
 										<h5>存货情况</h5>
 										<div class="ibox-tools">
 											<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
-											</a> <a class="close-link"> <i class="fa fa-times"></i>
-											</a>
+												</a> <a class="close-link"> <i class="fa fa-times"></i>
+													</a> 
 										</div>
 									</div>
 									<div class="ibox-content">
@@ -229,64 +443,92 @@
 											<tbody>
 												<tr>
 													<td>
-														<%
-															String str1 = (String) request.getAttribute("m_text");
-															if (str1 != null && !"".equals(str1)) {
-														%> <%=str1%> <%
- 	} else {
- %>请输入物料信息<%
- 	}
- %>
+														<%String str1 = (String) request.getAttribute("m_text");
+															if (str1 != null && !"".equals(str1)) {%> 
+															<%=str1%> <%} else { %><%}%>
 													</td>
 													<td>
-														<%
-															String str2 = (String) request.getAttribute("sloc");
-															if (str2 != null && !"".equals(str2)) {
-														%> <%=str2%> <%
- 	}
- %>
+														<%String str2 = (String) request.getAttribute("sloc");
+															if (str2 != null && !"".equals(str2)) {%> <%=str2%> <%}%>
 													</td>
 													<td>
-														<%
-															Integer str3 = (Integer) request.getAttribute("m_amount");
-															if (str3 != null && !"".equals(str3)) {
-														%> <%=str3%> <%
- 	}
- %>
-
+														<%Integer str3 = (Integer) request.getAttribute("m_amount");
+														if (str3 != null && !"".equals(str3)) {%> <%=str3%> <%}%>
 													</td>
 												</tr>
 											</tbody>
 										</table>
 									</div>
 								</div>
+								
+
 							</div>
 						</div>
 					</div>
 					<div class="footer">
+						
+							<div class="pull-right">
+								<button type="submit" class="btn btn-primary" id="showtoast">查看</button>
 
-						<div class="pull-right">
-							<button type="submit" class="btn btn-primary" id="showtoast">查看</button>
-
-							<a href="Home">
 								<button type="button" class="btn btn-white" id="cleartoasts">
-									返回</button>
-							</a>
+									<a href="Home">返回</a>
+								</button>
+							</div>
+
+
+							<div style="padding-top: 2px;">
+								<%
+									String notice = (String) request.getAttribute("notice");
+									if (notice != null && !"".equals(notice)) {
+								%>
+								<p>
+									<font size="3" color=<%=request.getAttribute("color")%>><%=notice%></font>
+								</p>
+								<%
+									request.setAttribute("notice", "");
+									}
+								%>
+							
 						</div>
+					</div>
+					<!-- 第一层弹窗 -->
+					<div id='inputbox' class="opbox1">
 
+						<a class='x' href='' ; onclick="openwin(0); return false;">关闭</a>
 
-						<div style="padding-top: 2px;">
-							<%
-								String notice = (String) request.getAttribute("notice");
-								if (notice != null && !"".equals(notice)) {
-							%>
-							<p>
-								<font size="3" color=<%=request.getAttribute("color")%>><%=notice%></font>
-							</p>
-							<%
-								request.setAttribute("notice", "");
-								}
-							%>
+						<div class="ibox-content">
+
+							<div class="form-group">
+
+								<label class="col-sm-2 control-label"
+									style="width: 13%; padding: 1px;">物料</label>
+								<div class="col-sm-10" style="width: 87%; padding: 1px;">
+									<input name="requisition_num" id="reqnum" type="text"
+										class="form-control" style="width: 80%">
+									<div class="infont col-md-3 col-sm-4" style="Float: right">
+										<a onclick="openwin2(1)"><i class="fa fa-search-plus"></i></a>
+									</div>
+								</div>
+
+								<label class="col-sm-2 control-label"
+									style="width: 13%; padding: 1px;">工厂</label>
+								<div class="col-sm-10" style="width: 87%; padding: 1px;">
+									<input name="plant2" type="text" class="form-control"
+										style="width: 80%">
+									<div class="infont col-md-3 col-sm-4" style="Float: right">
+										<a onclick="#"><i class="fa fa-search-plus"></i></a>
+									</div>
+								</div>
+
+								<button type="button" class="btn btn-primary "
+									style="margin: 60px 20px 0 0; Float: right"
+									onclick="openwin(0); return false;">取消</button>
+								<input type="submit" class="btn btn-primary "
+									style="margin: 60px 20px 0 0; Float: right" value="继续">
+
+							</div>
+
+							<input type="button" value="确定">
 
 						</div>
 					</div>
@@ -294,7 +536,77 @@
 		</div>
 	</div>
 
+	<!-- Mainly scripts for pop windows-->
+	<script>
+		function openwin(n) {
+			document.getElementById('inputbox').style.display = n ? 'block'
+					: 'none'; /* 点击按钮打开/关闭 对话框 */
+		}
+	</script>
+	<script>
+		function openwin2(n) {
+			document.getElementById('inputbox2').style.display = n ? 'block'
+					: 'none'; /* 点击按钮打开/关闭 对话框 */
+		}
+	</script>
+	<script>
+		function openwin3(n) {
+			document.getElementById('inputbox3').style.display = n ? 'block'
+					: 'none'; /* 点击按钮打开/关闭 对话框 */
+		}
+	</script>
 
+	<!-- 第二层弹窗 -->
+	<div id="inputbox2" class="opbox2">
+
+		<a class='x' href='' ; onclick="openwin2(0); return false;">关闭</a>
+		<p>查找物料： 输入任意的物料相关信息</p>
+		<div class="ibox-content" style="padding: 5px 5px 5px 5px;">
+			<div>
+				<div>
+					<!--请购单具体信息 -->
+					<div class="form-group">
+						<label for="title">物料描述</label> <input id="key1" type="text"
+							class="form-control" placeholder="输入物料描述（支持模糊搜索）...">
+					</div>
+					<div class="form-group">
+						<label for="title">物料销售组织</label> <input id="key2" type="text"
+							class="form-control" placeholder="输入物料销售组织...">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<button type="button" class="btn btn-primary" id="showsimple"
+							onclick=open_and_search()>搜索</button>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	<!-- 第三层弹窗 -->
+	<div id="inputbox3" class="opbox3">
+
+		<a class='x' href='' ; onclick="openwin3(0); return false;">关闭</a>
+		<table id="tbl" class="table table-striped">
+
+			<thead id="tableHead">
+				<tr>
+					<th></th>
+					<th>物料编号</th>
+					<th>物料价格</th>
+					<th>物料描述</th>
+					<th>物料销售组织</th>
+				</tr>
+			</thead>
+
+			<tbody id="tableBody">
+
+			</tbody>
+		</table>
+	</div>
 	<!-- Mainly scripts -->
 
 
@@ -331,141 +643,7 @@
 	<!-- Toastr script -->
 	<script src="js/plugins/toastr/toastr.min.js"></script>
 
-	<script type="text/javascript">
-		$(function() {
-			var i = -1;
-			var toastCount = 0;
-			var $toastlast;
-			var getMessage = function() {
-				var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
-				return msg;
-			};
-
-			$('#showsimple').click(function() {
-				// Display a success toast, with a title
-				toastr.success('Without any options', 'Simple notification!')
-			});
-			$('#showtoast')
-					.click(
-							function() {
-								var shortCutFunction = $(
-										"#toastTypeGroup input:radio:checked")
-										.val();
-								var msg = $('#message').val();
-								var title = $('#title').val() || '';
-								var $showDuration = $('#showDuration');
-								var $hideDuration = $('#hideDuration');
-								var $timeOut = $('#timeOut');
-								var $extendedTimeOut = $('#extendedTimeOut');
-								var $showEasing = $('#showEasing');
-								var $hideEasing = $('#hideEasing');
-								var $showMethod = $('#showMethod');
-								var $hideMethod = $('#hideMethod');
-								var toastIndex = toastCount++;
-								toastr.options = {
-									closeButton : $('#closeButton').prop(
-											'checked'),
-									debug : $('#debugInfo').prop('checked'),
-									progressBar : $('#progressBar').prop(
-											'checked'),
-									preventDuplicates : $('#preventDuplicates')
-											.prop('checked'),
-									positionClass : $(
-											'#positionGroup input:radio:checked')
-											.val()
-											|| 'toast-top-right',
-									onclick : null
-								};
-								if ($('#addBehaviorOnToastClick').prop(
-										'checked')) {
-									toastr.options.onclick = function() {
-										alert('You can perform some custom action after a toast goes away');
-									};
-								}
-								if ($showDuration.val().length) {
-									toastr.options.showDuration = $showDuration
-											.val();
-								}
-								if ($hideDuration.val().length) {
-									toastr.options.hideDuration = $hideDuration
-											.val();
-								}
-								if ($timeOut.val().length) {
-									toastr.options.timeOut = $timeOut.val();
-								}
-								if ($extendedTimeOut.val().length) {
-									toastr.options.extendedTimeOut = $extendedTimeOut
-											.val();
-								}
-								if ($showEasing.val().length) {
-									toastr.options.showEasing = $showEasing
-											.val();
-								}
-								if ($hideEasing.val().length) {
-									toastr.options.hideEasing = $hideEasing
-											.val();
-								}
-								if ($showMethod.val().length) {
-									toastr.options.showMethod = $showMethod
-											.val();
-								}
-								if ($hideMethod.val().length) {
-									toastr.options.hideMethod = $hideMethod
-											.val();
-								}
-								if (!msg) {
-									msg = getMessage();
-								}
-								$("#toastrOptions").text(
-										"Command: toastr["
-												+ shortCutFunction
-												+ "](\""
-												+ msg
-												+ (title ? "\", \"" + title
-														: '')
-												+ "\")\n\ntoastr.options = "
-												+ JSON
-														.stringify(
-																toastr.options,
-																null, 2));
-								var $toast = toastr[shortCutFunction](msg,
-										title); // Wire up an event handler to a button in the toast, if it exists
-								$toastlast = $toast;
-								if ($toast.find('#okBtn').length) {
-									$toast
-											.delegate(
-													'#okBtn',
-													'click',
-													function() {
-														alert('you clicked me. i was toast #'
-																+ toastIndex
-																+ '. goodbye!');
-														$toast.remove();
-													});
-								}
-								if ($toast.find('#surpriseBtn').length) {
-									$toast
-											.delegate(
-													'#surpriseBtn',
-													'click',
-													function() {
-														alert('Surprise! you clicked me. i was toast #'
-																+ toastIndex
-																+ '. You could perform an action here.');
-													});
-								}
-							});
-			function getLastToast() {
-				return $toastlast;
-			}
-			$('#clearlasttoast').click(function() {
-				toastr.clear(getLastToast());
-			});
-			$('#cleartoasts').click(function() {
-				toastr.clear();
-			});
-		})
-	</script>
+	
 
 </body>
 </html>

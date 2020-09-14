@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import mm.bean.GoodsReceipt;
+import mm.dao.GoodsreceiptDao;
 import mm.dao.GoodsreceiptItemDao;
 
 /**
@@ -70,12 +71,16 @@ public class ShowstockController extends HttpServlet {
 		gr.setSloc(sloc);
 		System.out.println(gr.getSloc());
 		
-		if (m_text != null && sloc !=null&&!"".equals(m_text)&&!"".equals(sloc)) {
+		GoodsreceiptItemDao grdao = new GoodsreceiptItemDao();
+		int x = grdao.checkmat(gr);
+		System.out.println(x);
+		
+		if (x==1) {
 			notice = gr.getM_text()+"库存信息如上所示";
 			color = "#1ab394";
 		}
-		else{
-			notice = "请输入物料编号/存储位置";
+		if(x==0){
+			notice = "请输入正确的物料编号/存储位置";
 			color = "#ed5565";
 		}
 		

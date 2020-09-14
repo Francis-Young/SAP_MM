@@ -76,7 +76,7 @@ public class GoodsreceiptController extends HttpServlet {
 
 		response.setCharacterEncoding("utf-8");
 
-		String notice = "保存失败，请检查输入的信息";
+		String notice = "保存失败：订单中不存在该物料";
 		String color = "#ed5565";
 
 		GoodsReceipt gr = new GoodsReceipt();
@@ -137,7 +137,6 @@ public class GoodsreceiptController extends HttpServlet {
 				z = gridao.orderitemchecked(gr);
 				System.out.println(z);
 				if(z==1){
-					
 				y = gridao.changeinventory(gr);
 				System.out.println(gr.getEnd_m_num());
 				gridao.addgoodsreceiptitem(gr);
@@ -150,7 +149,7 @@ public class GoodsreceiptController extends HttpServlet {
 		}
 
 		if(z==0){
-			notice = "保存失败：运输数据错误，请检查输入";
+			notice = "保存失败：运输数据超过订购数，请检查";
 			color = "#ed5565";
 			}
 		if(z==1){
