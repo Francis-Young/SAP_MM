@@ -398,7 +398,7 @@ function open_and_search()
 												<div class="row">
 													<div class="col-md-4">
 														<div class="form-group">
-															<label class="col-sm-3 control-label">采购组织</label>
+															<label class="col-sm-3 control-label">采购<br>组织</label>
 															<div class="col-sm-6">
 																<input name="org" id="rfqid" class="form-control">
 															</div>
@@ -412,7 +412,7 @@ function open_and_search()
 												<div class="row">
 													<div class="col-md-4">
 														<div class="form-group">
-															<label class="col-sm-3 control-label">RFQ集合号</label>
+															<label class="col-sm-3 control-label">RFQ<br>集合号</label>
 															<div class="col-sm-6">
 																<input name="coll" id="rfqid" class="form-control">
 															</div>
@@ -427,7 +427,7 @@ function open_and_search()
 												<div class="row">
 													<div class="col-md-4">
 														<div class="form-group">
-															<label class="col-sm-3 control-label">有效价格</label> <input
+															<label class="col-sm-3 control-label">有效<br>价格</label> <input
 																type='checkbox' checked class='i-checks'
 																name='checkname2'>
 														</div>
@@ -437,7 +437,7 @@ function open_and_search()
 												<div class="row">
 													<div class="col-md-4">
 														<div class="form-group">
-															<label class="col-sm-3 control-label">均价比较</label> <input
+															<label class="col-sm-3 control-label">均价<br>比较</label> <input
 																type='checkbox' checked class='i-checks'
 																name='checkname1'>
 														</div>
