@@ -291,9 +291,9 @@ public class PayDao {
         PreparedStatement pstmt =null;
         String s="";
 		try {
-			String ownid=id;
+			String ownid="\'"+id+"\'";
 			Connection connectionnew = DBUtil.getConnection();
-	        String sql="select * FROM Order_item JOIN `Order` ON Order_item.order_num_m=`Order`.order_num JOIN Vendor ON `Order`.vendor_code=Vendor.vendor_code where Order_item.order_num_m="+ownid+""; 
+	        String sql="select * FROM Order_item JOIN `Order` ON Order_item.order_num_m=`Order`.order_num JOIN Vendor ON `Order`.vendor_code=Vendor.vendor_code where Order_item.order_code="+ownid+""; 
 	        Statement stmt = connectionnew.createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);     
 	        s=resultSetToJson(rs);
